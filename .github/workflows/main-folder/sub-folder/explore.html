@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    index explore.html;
+  <title>Zach</title>
+    <style>
+        
+        /* الجذور */
+        :root {
+            --black: #000;
+            --red: #e50914;
+            --white: #fff;
+        }
+
+        /* تنسيق الصفحة بالكامل */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: var(--black);
+            color: var(--white);
+            line-height: 1.6;
+        }
+
+        /* إطار الموقع */
+        .container {
+            max-width: 1200px; /* عرض أقصى للموقع */
+            margin: 0 auto;    /* توسيط الإطار */
+            padding: 0 1rem;  /* مساحة داخلية لتجنب الالتصاق بالأطراف */
+        }
+
+        /* الترويسة */
+        header {
+            background: var(--black);
+            color: var(--white);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            color: var(--red);
+            margin: 0;
+        }
+
+        nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--white);
+            font-size: 1rem;
+            transition: color 0.3s ease-in-out;
+        }
+
+        nav a:hover {
+            color: var(--red);
+        }
+
+        /* القسم الرئيسي */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQV_zQTyF3P_K4omaCT1AubNHfvD0kcVYdYvA&usqp=CAU') no-repeat center/cover;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--white);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .hero button {
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            background: var(--red);
+            color: var(--white);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .hero button:hover {
+            background: var(--white);
+            color: var(--red);
+        }
+
+        /* الأقسام */
+        section {
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--red);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature {
+            background: var(--white);
+            color: var(--black);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .feature:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature h3 {
+            margin-bottom: 1rem;
+            color: var(--red);
+        }
+
+        /* التذييل */
+        footer {
+            background: var(--black);
+            color: var(--white);
+            text-align: center;
+            padding: 1.5rem 0;
+        }
+
+        footer a {
+            color: var(--red);
+            text-decoration: none;
+            margin: 0 0.5rem;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+        
+        
+    </style>
+    
+                        
+</head>
+<body>
+    
+   
+
+    <!-- الترويسة -->
+  
+<header>
+    <div class="container">
+        <h1>Zach</h1>
+        <nav>
+            <!-- الروابط المعدلة للتوجيه إلى صفحات مختلفة -->
+            <a href="explore.html">الرئيسية</a>
+            <a href="index.html">عن الموقع</a>
+            <a href="features.html">الميزات</a>
+            <a href="contact.html">تواصل معنا</a>
+        </nav>
+    </div>
+</header>
+
+ <!-- القسم الرئيسي -->
+<div class="hero" id="home">
+    <div class="container">
+        <h2>مرحباً بكم في موقع Zach</h2>
+        <p>نقدم لكم حلولاً مبتكرة وتجربة لا تُنسى.</p>
+    </div>
+    <!-- زر العودة -->
+    <a href="index.html" class="return-button">إعرفنا</a>
+</div>
+    
+<!-- التنسيقات الخاصة بالزر -->
+<style>
+    .return-button {
+        display: inline-block; /* يجعل الرابط يظهر كزر */
+        background-color: #e50914; /* لون الخلفية أحمر */
+        color: #fff; /* لون النص أبيض */
+        padding: 10px 20px; /* تباعد داخلي */
+        font-size: 1rem; /* حجم النص */
+        text-decoration: none; /* إزالة التسطير */
+        border: none; /* بدون إطار */
+        border-radius: 5px; /* حواف مستديرة قليلاً */
+        transition: background-color 0.3s ease, transform 0.2s ease; /* تأثير سلس */
+        text-align: center;
+    }
+
+    /* تأثير عند تمرير الماوس */
+    .return-button:hover {
+        background-color: #fff; /* يتغير إلى أبيض */
+        color: #e50914; /* النص يصبح أحمر */
+        transform: scale(1.05); /* تكبير طفيف */
+    }
+
+    /* تأثير عند الضغط */
+    .return-button:active {
+        background-color: #ffcccc; /* تأثير أفتح عند الضغط */
+        color: #e50914; /* النص أحمر */
+        transform: scale(0.98); /* تصغير طفيف */
+    }
+
+    /* تخصيص القسم */
+    .hero {
+        text-align: center;
+        padding: 4rem 0;
+        background-color: #000; /* خلفية سوداء */
+        color: #fff; /* النص أبيض */
+    }
+</style>
+ 
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 100vh;
+        }
+
+        .rating-container {
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .stars {
+            display: inline-flex;
+            gap: 10px;
+        }
+
+        .star {
+            width: 40px;
+            height: 40px;
+            background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTpp5UssPAdL0Em6msN2o5Vp8C9FvWzFcoXw&s') no-repeat center;
+            background-size: contain;
+            cursor: pointer;
+            transition: transform 0.7s ease, filter 0.7s ease;
+            filter: grayscale(100%);
+        }
+
+        .star.active {
+            filter: grayscale(0%);
+            transform: scale(1.2);
+        }
+
+        .special-effect {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            animation: pop 2.9s ease-out forwards;
+        }
+
+        @keyframes pop {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- محتوى الصفحة -->
+    <div style="flex-grow: 1;"></div>
+
+    <!-- نظام التقييم -->
+    <div class="rating-container">
+        <h3>قيم تجربتك معنا</h3>
+        <div class="stars">
+            <div class="star" data-value="1"></div>
+            <div class="star" data-value="2"></div>
+            <div class="star" data-value="3"></div>
+            <div class="star" data-value="4"></div>
+            <div class="star" data-value="5"></div>
+        </div>
+    </div>
+
+    <!-- تأثير خاص -->
+    <div class="special-effect">
+        <img id="specialGif" src="https://i.pinimg.com/originals/4a/10/e3/4a10e39ee8325a06daf00881ac321b2f.gif" alt="Special Effect" style="width: 100%; height: 100%;">
+    </div>
+
+    <script>
+        const stars = document.querySelectorAll('.star');
+        const specialEffect = document.querySelector('.special-effect');
+        const specialGif = document.getElementById('specialGif');
+
+        // استبدال GIF بسهولة من هنا
+        const gifUrl = "https://www.icegif.com/wp-content/uploads/2022/02/icegif-666.gif";
+        specialGif.src = gifUrl;
+
+        stars.forEach((star, index) => {
+            star.addEventListener('click', () => {
+                // إزالة التنشيط عن جميع النجوم
+                stars.forEach(s => s.classList.remove('active'));
+
+                // تنشيط النجوم المحددة
+                for (let i = 0; i <= index; i++) {
+                    stars[i].classList.add('active');
+                }
+
+                // إذا كان التقييم 5، تشغيل التأثير الخاص
+                if (index === 4) {
+                    specialEffect.style.display = 'block';
+                    setTimeout(() => {
+                        specialEffect.style.display = 'none';
+                    }, 2900); // زمن العرض
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            overflow-x: hidden;
+        }
+
+        /* الحاوية الدائرية */
+        .circle-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.1);
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* النقطة */
+        .spiral-dot {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #e50914;
+            border-radius: 50%;
+            box-shadow: 0 0 10px 5px rgba(229, 9, 20, 0.5);
+            animation: spiralMotion 2s linear infinite;
+        }
+
+        /* الحركات */
+        @keyframes spiralMotion {
+            0% {
+                transform: rotate(0deg) translateX(50px);
+            }
+            100% {
+                transform: rotate(360deg) translateX(50px);
+            }
+        }
+
+        /* تأثير الضوء على الموقع */
+        .light-effect {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(229, 9, 20, 0.2);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+
+        .light-effect.active {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="circle-container" id="circleContainer">
+        <div class="spiral-dot"></div>
+    </div>
+
+    <div class="light-effect" id="lightEffect"></div>
+
+    <script>
+        // متغيرات
+        let startY = 0;
+        let isPulling = false;
+        let canRefresh = false;
+        const circleContainer = document.getElementById('circleContainer');
+        const lightEffect = document.getElementById('lightEffect');
+
+        // تتبع بداية السحب
+        window.addEventListener('touchstart', (e) => {
+            startY = e.touches[0].clientY;
+        });
+
+        // تتبع السحب
+        window.addEventListener('touchmove', (e) => {
+            const currentY = e.touches[0].clientY;
+            const pullDistance = currentY - startY;
+
+            // إذا وصل المستخدم إلى أعلى الصفحة وبدأ السحب مجددًا
+            if (window.scrollY === 0 && pullDistance > 50) {
+                isPulling = true;
+            }
+        });
+
+        // إنهاء السحب
+        window.addEventListener('touchend', () => {
+            if (isPulling) {
+                isPulling = false;
+
+                // إذا تم السحب مرة أخرى عند أعلى الصفحة، يتم تفعيل التحديث
+                if (!canRefresh) {
+                    canRefresh = true;
+
+                    // تشغيل التأثيرات
+                    circleContainer.style.display = 'flex';
+                    lightEffect.classList.add('active');
+
+                    // انتظار ثانيتين قبل تحديث الصفحة
+                    setTimeout(() => {
+                        location.reload();
+                    }, 2000);
+                }
+            } else {
+                canRefresh = false; // إعادة ضبط الحالة
+            }
+        });
+
+        // إخفاء الحاوية والتأثير بعد التحديث
+        document.addEventListener('DOMContentLoaded', () => {
+            circleContainer.style.display = 'none';
+            lightEffect.classList.remove('active');
+        });
+    </script>
+</body>
+</html>
+    
+    <div style="
+    background-color: rgba(0, 0, 0, 0.9);
+    color: #fff;
+    padding: 20px;
+    border: 2px solid #e50914;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 600px;
+    margin: auto;
+    box-shadow: 0 4px 20px rgba(229, 9, 20, 0.5);
+    font-family: Arial, sans-serif;
+
+    <h1 style="color: #e50914; font-size: 2.5rem; margin-bottom: 10px;">مرحبًا بك!</h1>
+    <p style="font-size: 1.2rem; line-height: 1.5;">نحن سعداء بوجودك هنا. استمتع بتجربة مميزة مليئة بالمقالات والمحتوى الرائع.</p>
+    <button style="
+        background-color: #e50914;
+        color: #fff;
+        padding: 10px 20px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-transform: uppercase;
+        transition: transform 0.2s ease, background-color 0.2s ease;
+    " onclick="startExperience()">ابدأ الآن</button>
+</div>
+
+<script>
+    function startExperience() {
+        alert("أهلاً بك! لنبدأ رحلتنا.");
+    }
+</script>
+    
+</head>
+<body>
+    <div class="welcome-tree" id="welcomeTree">
+        <div class="leaves">
+            <div class="flower"></div>
+            <div class="flower"></div>
+            <div class="flower"></div>
+            <div class="flower"></div>
+        </div>
+        
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            min-height: 200vh;
+        }
+
+        .content {
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* الزر */
+        .scroll-button {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #e50914;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: 
+                opacity 0.5s ease, 
+                transform 0.3s ease, 
+                background-color 0.3s ease;
+            opacity: 0.89; /* شفافية افتراضية */
+        }
+
+        /* إزالة الشفافية عند التحويم */
+        .scroll-button:hover {
+            transform: scale(1.1);
+            background-color: #ff3b3f;
+            opacity: 1;
+        }
+
+        /* السهم */
+        .scroll-button svg {
+            fill: #fff;
+            transition: transform 0.5s ease;
+        }
+
+        /* السهم يشير للأعلى */
+        .scroll-button.up svg {
+            transform: rotate(180deg);
+        }
+
+        /* الزر عند الضغط */
+        .scroll-button.active {
+            opacity: 1; /* وضوح كامل عند النقر */
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        
+
+    <!-- زر التمرير -->
+    <div class="scroll-button" id="scrollButton">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <path d="M12 21l-8-8h16l-8 8zm8-14h-16l8-8 8 8z"/>
+        </svg>
+    </div>
+
+    <script>
+        const scrollButton = document.getElementById('scrollButton');
+
+        // مراقبة التمرير لإظهار السهم للأعلى أو للأسفل
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > window.innerHeight / 2) {
+                scrollButton.classList.add('up');
+            } else {
+                scrollButton.classList.remove('up');
+            }
+        });
+
+        // إضافة حدث للنقر على الزر
+        scrollButton.addEventListener('click', () => {
+            if (scrollButton.classList.contains('up')) {
+                // التمرير إلى الأعلى
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                // التمرير إلى الأسفل
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            }
+
+            // عند الضغط، يتم إزالة الشفافية مؤقتًا
+            scrollButton.classList.add('active');
+
+            // إعادة الشفافية بعد ثانيتين
+            setTimeout(() => {
+                scrollButton.classList.remove('active');
+            }, 2000);
+        });
+    </script>
+</style>
+               
+  
+    <!-- تضمين الخط Mada من Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Mada:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Mada', sans-serif; /* استخدام الخط Mada */
+        }
+    </style>
+</head>
+<body>
+    <p>هذا نص باستخدام الخط العربي "Mada" من Google Fonts.</p>
+</body>
+</html>
+             
+     
+    
+
+    <!-- عن الموقع -->
+    <section id="about" class="container">
+        <h2>عن الموقع</h2>
+        <p>موقع Zach يهدف إلى تقديم محتوى عالي الجودة وتصميم جذاب للمستخدمين من جميع أنحاء العالم.</p>
+    </section>
+
+    <!-- الميزات -->
+    <section id="features" class="container">
+        <h2>الميزات</h2>
+        <div class="features">
+            <div class="feature">
+                <h3>التصميم العصري</h3>
+                <p>نقدم تصميمات حديثة وسهلة الاستخدام لكل المستخدمين.</p>
+            </div>
+            <div class="feature">
+                <h3>أداء سريع</h3>
+                <p>موقعنا مُحسن ليعمل بأعلى كفاءة وسرعة.</p>
+            </div>
+            <div class="feature">
+                <h3>دعم متواصل</h3>
+                <p>فريقنا مستعد لتقديم المساعدة على مدار الساعة.</p>
+            </div>
+        </div>
+    </section>
+
+<section id="comments" class="container">
+    <h2 style="color: var(--red);">صندوق التعليقات</h2>
+
+    <!-- صندوق إدخال التعليقات -->
+    <div class="comment-box">
+        <textarea id="commentText" placeholder="اكتب تعليقك هنا..." rows="5"></textarea>
+        <button onclick="addComment()">إضافة تعليق</button>
+    </div>
+
+    <!-- رسائل التفاعل -->
+    <div class="messages">
+        <div id="confirmationMessage" class="message success">👀 .تمت إضافة تعليقك بنجاح</div>
+        <div id="warningMessage" class="message error">💭 !يرجى كتابة تعليق قبل الإرسال</div>
+    </div>
+
+    <!-- قائمة التعليقات -->
+    <div class="comment-list" id="commentList">
+        <!-- التعليقات ستُضاف هنا باستخدام JavaScript -->
+    </div>
+</section>
+
+<style>
+    /* تنسيق قسم التعليقات */
+    #comments {
+        margin-top: 3rem;
+        text-align: center;
+    }
+
+    #comments h2 {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    /* صندوق التعليقات */
+    .comment-box {
+        background: var(--black);
+        padding: 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        max-width: 600px;
+        margin: 0 auto 2rem;
+    }
+
+    .comment-box textarea {
+        width: 100%;
+        height: 100px;
+        padding: 1rem;
+        border-radius: 8px;
+        border: 1px solid var(--red);
+        background: #1a1a1a;
+        color: var(--white);
+        font-size: 1rem;
+        outline: none;
+        resize: none;
+        transition: border 0.3s ease;
+    }
+
+    .comment-box textarea:focus {
+        border-color: var(--white);
+    }
+
+    .comment-box button {
+        margin-top: 1rem;
+        padding: 0.75rem 1.5rem;
+        background: var(--red);
+        color: var(--white);
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    .comment-box button:hover {
+        background: var(--white);
+        color: var(--red);
+    }
+
+    /* رسائل التفاعل */
+    .messages .message {
+        max-width: 600px;
+        margin: 1rem auto;
+        padding: 0.75rem 1rem;
+        border-radius: 5px;
+        text-align: center;
+        display: none;
+    }
+
+    .messages .message.success {
+        background-color: #004d00;
+        color: #ccffcc;
+        border: 1px solid #00cc00;
+        animation: glowGreen 1.5s infinite alternate;
+        box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+    }
+
+    .messages .message.error {
+        background-color: #400000;
+        color: #fff;
+        border: 1px solid #ff4d4d;
+        animation: glowRed 1.5s infinite alternate;
+        box-shadow: 0 0 10px rgba(255, 77, 77, 0.5);
+    }
+
+    /* التعليقات */
+    .comment-list {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .comment-item {
+        background: #1a1a1a;
+        color: var(--white);
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        animation: fadeIn 0.5s ease-out;
+    }
+
+    .comment-item h4 {
+        color: var(--red);
+        cursor: pointer;
+        text-decoration: underline;
+    }
+
+    .username-input {
+        font-size: 1.2rem;
+        border: 1px solid var(--red);
+        border-radius: 5px;
+        padding: 5px;
+        width: auto;
+        background: #1a1a1a;
+        color: var(--white);
+    }
+
+    .save-btn {
+        background: var(--red);
+        color: var(--white);
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 5px;
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+        cursor: pointer;
+    }
+
+    .save-btn:hover {
+        background: var(--white);
+        color: var(--red);
+    }
+
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+<script>
+    function addComment() {
+        const commentText = document.getElementById("commentText").value.trim();
+        const confirmationMessage = document.getElementById("confirmationMessage");
+        const warningMessage = document.getElementById("warningMessage");
+        const commentList = document.getElementById("commentList");
+
+        if (!commentText) {
+            warningMessage.style.display = "block";
+            confirmationMessage.style.display = "none";
+            setTimeout(() => (warningMessage.style.display = "none"), 3000);
+            return;
+        }
+
+        const commentItem = document.createElement("div");
+        commentItem.className = "comment-item";
+
+        const commentHeader = document.createElement("h4");
+        commentHeader.textContent = "مستخدم جديد";
+        commentHeader.setAttribute("onclick", "editUsername(this)");
+        commentItem.appendChild(commentHeader);
+
+        const commentContent = document.createElement("p");
+        commentContent.textContent = commentText;
+        commentItem.appendChild(commentContent);
+
+        commentList.appendChild(commentItem);
+
+        confirmationMessage.style.display = "block";
+        warningMessage.style.display = "none";
+        setTimeout(() => (confirmationMessage.style.display = "none"), 3000);
+
+        document.getElementById("commentText").value = "";
+    }
+
+    function editUsername(element) {
+        const currentName = element.textContent;
+
+        const input = document.createElement("input");
+        input.type = "text";
+        input.className = "username-input";
+        input.value = currentName;
+
+        const saveButton = document.createElement("button");
+        saveButton.className = "save-btn";
+        saveButton.textContent = "حفظ";
+        saveButton.onclick = function () {
+            element.textContent = input.value || "مستخدم جديد";
+            element.style.display = "block";
+            input.remove();
+            saveButton.remove();
+        };
+
+        element.style.display = "none";
+        element.parentNode.insertBefore(input, element);
+        element.parentNode.insertBefore(saveButton, input.nextSibling);
+        input.focus();
+    }
+</script>
+</style>
+    <!-- التذييل -->
+<footer>
+    <div class="container">
+        <p>جميع الحقوق محفوظة © 2024 Zach</p>
+        <a href="https://www.facebook.com" target="_blank">Facebook</a> | 
+        <a href="https://www.twitter.com" target="_blank">Twitter</a> | 
+        <a href="https://www.linkedin.com" target="_blank">LinkedIn</a>
+    </div>
+</footer>   
+
+</body>
+</html>
