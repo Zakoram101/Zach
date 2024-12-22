@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مكتبة الصور - نتفلكس</title>
+    <style>
+        /* تصميم الصفحة العامة */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #141414; /* خلفية داكنة */
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* عنوان الصفحة */
+        h1 {
+            font-size: 48px;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+            letter-spacing: 2px;
+            color: white;
+            text-transform: uppercase;
+        }
+
+        /* الشبكة */
+        .library {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* تصميم شبكة متجاوبة */
+            gap: 15px;
+            width: 90%;
+            margin: 20px auto;
+        }
+
+        /* تصميم المربعات */
+        .library-item {
+            background-color: #222;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .library-item:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 15px rgba(255, 0, 0, 0.5);
+        }
+
+        /* الصور داخل المربعات */
+        .library-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 2px solid red;
+        }
+
+        /* النصوص داخل المربعات */
+        .library-item h3 {
+            font-size: 16px;
+            font-weight: bold;
+            margin: 10px 0;
+            color: white;
+        }
+
+        /* زر العودة */
+        .back-button {
+            margin: 20px;
+            padding: 15px 30px;
+            background-color: red;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: #e50914;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- عنوان الصفحة -->
+    <h1>مكتبة الصور</h1>
+
+    <!-- الشبكة -->
+    <div class="library">
+        <!-- 10 مربعات -->
+        <div class="library-item">
+            <img src="your-image1.jpg" alt="صورة 1">
+            <h3>عنوان الصورة 1</h3>
+        </div>
+        <div class="library-item">
+            <img src="your-image2.jpg" alt="صورة 2">
+            <h3>عنوان الصورة 2</h3>
+        </div>
+        <div class="library-item">
+            <img src="your-image3.jpg" alt="صورة 3">
+            <h3>عنوان الصورة 3</h3>
+        </div>
+        <div class="library-item">
+            <img src="your-image4.jpg" alt="صورة 4">
+            <h3>عنوان الصورة 4</h3>
+        </div>
+        <div class="library-item">
+            <img src="your-image5.jpg" alt="صورة 5">
+            <h3>عنوان الصورة 5</h3>
+        </div>
+        <div class="library-item">
+            <img src="your-image6.jpg" alt="صورة 6">
+            <h3>عنوان الصورة 6</h3>
+        </div>
+        <div class="library-item">
+            <img src="your-image7.jpg" alt="صورة 7">
+            <h3>عنوان الصورة 7</h3>
+        </div>
+        <div class="library-item">
+            <img src="your-image8.jpg" alt="صورة 8">
+            <h3>عنوان الصورة 8</h3>
+        </div>
+        <div class="library-item">
+            <img src="your-image9.jpg" alt="صورة 9">
+            <h3>عنوان الصورة 9</h3>
+        </div>
+        <div class="library-item">
+            <img src="your-image10.jpg" alt="صورة 10">
+            <h3>عنوان الصورة 10</h3>
+        </div>
+    </div>
+
+    <!-- زر العودة -->
+    <a href="home.html" class="back-button">العودة إلى الصفحة الرئيسية</a>
+
+</body>
+</html>
