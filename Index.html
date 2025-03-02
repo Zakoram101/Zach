@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>ZakBook - مكتبة المستقبل</title>
+    <style>
+        :root {
+            --primary-dark: #0A0A1A;
+            --accent-gold: #D4AF37;
+            --vintage-paper: #F0EAD6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path fill="%23D4AF37" d="M16 2L2 16l14 14 14-14z"/></svg>'), auto;
+        }
+
+        body {
+            background: var(--primary-dark);
+            overflow: hidden;
+            font-family: 'Cairo', sans-serif;
+            touch-action: pan-y;
+        }
+
+        #sceneContainer {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .library-ui {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 15px;
+        }
+
+        .control-btn {
+            width: 50px;
+            height: 50px;
+            background: rgba(212, 175, 55, 0.2);
+            border: 2px solid var(--accent-gold);
+            border-radius: 50%;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s;
+        }
+
+        .control-btn:hover {
+            transform: scale(1.1);
+            background: rgba(212, 175, 55, 0.4);
+        }
+
+        .immersive-reader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(10, 10, 26, 0.98);
+            backdrop-filter: blur(15px);
+            padding: 2rem;
+            color: var(--vintage-paper);
+            opacity: 0;
+            transition: opacity 0.5s;
+            overflow-y: auto;
+        }
+
+        .immersive-reader::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/png;base64,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');
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        @media (max-width: 768px) {
+            .library-ui {
+                bottom: 20px;
+                top: auto;
+                flex-direction: column;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="sceneContainer"></div>
+    
+    <div class="library-ui">
+        <div class="control-btn" onclick="zakBook.toggleViewMode()"></div>
+        <div class="control-btn" onclick="zakBook.toggleSound()"></div>
+    </div>
+
+    <div id="immersiveReader" class="immersive-reader">
+        <button onclick="zakBook.closeReader()" style="position: fixed; top: 20px; right: 20px;">✕</button>
+        <div id="bookContent"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js"></script>
+    <script>
+        class ZakBook {
+            constructor() {
+                this.books = [];
+                this.isSoundOn = true;
+                this.initScene();
+                this.initAudio();
+                this.createBooks();
+                this.createParticles();
+                this.setupEventListeners();
+                this.animate();
+            }
+
+            initScene() {
+                this.scene = new THREE.Scene();
+                this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                this.renderer = new THREE.WebGLRenderer({ antialias: true });
+                this.renderer.setSize(window.innerWidth, window.innerHeight);
+                this.renderer.shadowMap.enabled = true;
+                document.getElementById('sceneContainer').appendChild(this.renderer.domElement);
+
+                this.camera.position.set(0, 5, 15);
+                
+                // الإضاءة المتقدمة
+                this.lights = {
+                    ambient: new THREE.AmbientLight(0x404040),
+                    directional: new THREE.DirectionalLight(0xD4AF37, 1),
+                    point: new THREE.PointLight(0xD4AF37, 2, 50)
+                };
+                this.lights.directional.position.set(5, 5, 5);
+                this.lights.directional.castShadow = true;
+                this.lights.point.position.set(0, 10, 0);
+                this.scene.add(...Object.values(this.lights));
+            }
+
+            createBooks() {
+                const bookGeometry = new THREE.BoxGeometry(1.8, 2.5, 0.4);
+                const materials = Array.from({length: 5}, () => 
+                    new THREE.MeshPhongMaterial({ 
+                        color: Math.random() * 0x808080 + 0x808080,
+                        specular: 0x111111,
+                        shininess: 100
+                    })
+                );
+
+                for(let i = 0; i < 30; i++) {
+                    const book = new THREE.Mesh(bookGeometry, materials);
+                    book.position.set(
+                        (i % 6) * 3.5 - 10,
+                        Math.floor(i / 6) * 3.5 - 7,
+                        0
+                    );
+                    book.rotation.y = (Math.PI / 180) * (Math.random() * 30 - 15);
+                    book.castShadow = true;
+                    book.receiveShadow = true;
+                    book.userData = {
+                        id: i,
+                        title: `الكتاب السري ${i+1}`,
+                        content: `هذا نص تجريبي لمحتوى الكتاب ${i+1}...`,
+                        audio: this.createBookSound()
+                    };
+                    this.scene.add(book);
+                    this.books.push(book);
+                }
+            }
+
+            createParticles() {
+                const geometry = new THREE.BufferGeometry();
+                const vertices = [];
+                for(let i = 0; i < 1000; i++) {
+                    vertices.push(
+                        Math.random() * 100 - 50,
+                        Math.random() * 100 - 50,
+                        Math.random() * 100 - 50
+                    );
+                }
+                geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+                
+                const material = new THREE.PointsMaterial({
+                    size: 0.1,
+                    color: 0xD4AF37,
+                    transparent: true,
+                    opacity: 0.5
+                });
+                
+                this.particles = new THREE.Points(geometry, material);
+                this.scene.add(this.particles);
+            }
+
+            initAudio() {
+                this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                this.loader = new THREE.AudioLoader();
+            }
+
+            createBookSound() {
+                const oscillator = this.audioContext.createOscillator();
+                const gainNode = this.audioContext.createGain();
+                oscillator.connect(gainNode);
+                gainNode.connect(this.audioContext.destination);
+                oscillator.type = 'sine';
+                gainNode.gain.value = 0.1;
+                return { oscillator, gainNode };
+            }
+
+            setupEventListeners() {
+                this.renderer.domElement.addEventListener('click', (e) => this.handleClick(e));
+                window.addEventListener('resize', () => this.onWindowResize());
+                window.addEventListener('mousemove', (e) => this.handleLightMove(e));
+            }
+
+            handleClick(e) {
+                const mouse = new THREE.Vector2(
+                    (e.clientX / window.innerWidth) * 2 - 1,
+                    -(e.clientY / window.innerHeight) * 2 + 1
+                );
+
+                const raycaster = new THREE.Raycaster();
+                raycaster.setFromCamera(mouse, this.camera);
+
+                const intersects = raycaster.intersectObjects(this.books);
+                if(intersects.length > 0) {
+                    this.openBook(intersects[0].object);
+                }
+            }
+
+            openBook(book) {
+                if(this.isSoundOn) {
+                    book.userData.audio.oscillator.start();
+                    setTimeout(() => book.userData.audio.oscillator.stop(), 300);
+                }
+                
+                gsap.to(book.position, {
+                    z: -5,
+                    duration: 1,
+                    ease: "power3.out"
+                });
+
+                document.getElementById('bookContent').innerHTML = `
+                    <h2 style="color: var(--accent-gold); margin-bottom: 2rem">${book.userData.title}</h2>
+                    <div class="ink-effect" style="padding: 2rem; border-radius: 10px; line-height: 2">
+                        ${book.userData.content}
+                    </div>
+                `;
+                
+                gsap.to("#immersiveReader", {opacity: 1, duration: 0.5});
+            }
+
+            closeReader() {
+                gsap.to("#immersiveReader", {opacity: 0, duration: 0.3});
+                this.books.forEach(book => {
+                    gsap.to(book.position, {z: 0, duration: 1, ease: "back.out"});
+                });
+            }
+
+            toggleViewMode() {
+                this.scene.background = this.scene.background ? null : new THREE.Color(0x0A0A1A);
+                this.lights.point.intensity = this.lights.point.intensity === 2 ? 0.5 : 2;
+            }
+
+            toggleSound() {
+                this.isSoundOn = !this.isSoundOn;
+            }
+
+            onWindowResize() {
+                this.camera.aspect = window.innerWidth / window.innerHeight;
+                this.camera.updateProjectionMatrix();
+                this.renderer.setSize(window.innerWidth, window.innerHeight);
+            }
+
+            handleLightMove(e) {
+                this.lights.point.position.set(
+                    (e.clientX / window.innerWidth) * 20 - 10,
+                    (e.clientY / window.innerHeight) * 10,
+                    10
+                );
+            }
+
+            animate() {
+                requestAnimationFrame(() => this.animate());
+                
+                // تحريك الجسيمات
+                const positions = this.particles.geometry.attributes.position.array;
+                for(let i = 0; i < positions.length; i += 3) {
+                    positions[i] += Math.sin(Date.now() * 0.001 + i) * 0.01;
+                    positions[i+1] += Math.cos(Date.now() * 0.001 + i) * 0.01;
+                }
+                this.particles.geometry.attributes.position.needsUpdate = true;
+
+                this.renderer.render(this.scene, this.camera);
+            }
+        }
+
+        // بدء التطبيق
+        const zakBook = new ZakBook();
+
+        // شاشة التحميل
+        window.addEventListener('load', () => {
+            const loader = document.createElement('div');
+            loader.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: var(--primary-dark);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 10000;
+                color: var(--accent-gold);
+                font-size: 2rem;
+            `;
+            loader.innerHTML = `
+                <div style="text-align: center">
+                    <div class="loader-anim" style="
+                        width: 50px;
+                        height: 50px;
+                        border: 3px solid var(--accent-gold);
+                        border-radius: 50%;
+                        margin: 0 auto 1rem;
+                        border-top-color: transparent;
+                        animation: spin 1s linear infinite;
+                    "></div>
+                    <p>جاري تحميل المكتبة...</p>
+                </div>
+            `;
+            document.body.appendChild(loader);
+            
+            setTimeout(() => {
+                gsap.to(loader, {opacity: 0, duration: 0.5, onComplete: () => loader.remove()});
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
