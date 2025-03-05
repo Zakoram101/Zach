@@ -166,29 +166,5 @@
             </a>
         </div>
     </div>
-
-    <script>
-        // Improve performance by lazy loading iframe
-        document.addEventListener('DOMContentLoaded', () => {
-            const iframe = document.querySelector('.pdf-viewer');
-            if ('loading' in HTMLIFrameElement.prototype) {
-                iframe.setAttribute('loading', 'lazy');
-            } else {
-                // Fallback for browsers that don't support loading="lazy"
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            const src = iframe.dataset.src;
-                            if (src) {
-                                iframe.src = src;
-                            }
-                            observer.disconnect();
-                        }
-                    });
-                });
-                observer.observe(iframe);
-            }
-        });
-    </script>
 </body>
 </html>
