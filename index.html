@@ -4,644 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZakBook - عالم الكتب المميز</title>
-    <style>
-        :root {
-            --primary-color: #2c3e50;
-            --accent-color: #e74c3c;
-            --light-color: #ecf0f1;
-            --dark-color: #34495e;
-            --font-main: 'Tajawal', sans-serif;
-        }
-        
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap');
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: var(--font-main);
-        }
-        
-        body {
-            background-color: var(--light-color);
-            overflow-x: hidden;
-            position: relative;
-        }
-        
-        /* صفحة البداية المميزة */
-        .intro-container {
-            height: 100vh;
-            display: flex;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .book-spine {
-            width: 15%;
-            height: 100%;
-            background: var(--accent-color);
-            position: relative;
-            z-index: 5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 5px 0 15px rgba(0,0,0,0.3);
-            cursor: pointer;
-            transition: width 1s ease;
-        }
-        
-        .book-spine:hover {
-            width: 12%;
-        }
-        
-        .book-spine h1 {
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
-            transform: rotate(180deg);
-            color: white;
-            font-size: 3rem;
-            letter-spacing: 8px;
-            text-transform: uppercase;
-        }
-        
-        .book-pages {
-            width: 90%;
-            height: 100%;
-            background: var(--light-color);
-            position: relative;
-            overflow-y: auto;
-            scroll-behavior: smooth;
-        }
-        
-        /* شريط التنقل المميز */
-        .nav-bookmark {
-            position: absolute;
-            top: 30px;
-            right: 50px;
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        
-        .bookmark {
-            background: var(--primary-color);
-            color: white;
-            padding: 10px 25px;
-            border-radius: 0 10px 10px 0;
-            transform: translateX(20px);
-            transition: transform 0.3s ease;
-            cursor: pointer;
-            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-        }
-        
-        .bookmark:hover {
-            transform: translateX(0);
-        }
-        
-        /* عرض الكتب بطريقة مميزة */
-        .books-showcase {
-            padding: 50px;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 30px;
-        }
-        
-        .book-card {
-            height: 350px;
-            perspective: 1500px;
-            position: relative;
-        }
-        
-        .book-inner {
-            width: 100%;
-            height: 100%;
-            transform-style: preserve-3d;
-            transition: transform 1.6s;
-            position: relative;
-        }
-        
-        .book-card:hover .book-inner {
-            transform: rotateY(180deg);
-        }
-        
-        .book-front, .book-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            border-radius: 10px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-        
-        .book-front {
-            background-color: white;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        
-        .book-cover {
-            height: 200px;
-            width: 150px;
-            object-fit: cover;
-            border-radius: 5px;
-            box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease;
-        }
-        
-        .book-card:hover .book-cover {
-            transform: scale(1.05);
-        }
-        
-        .book-title {
-            margin-top: 15px;
-            text-align: center;
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: var(--primary-color);
-        }
-        
-        .book-author {
-            color: var(--accent-color);
-            font-size: 0.9rem;
-            margin-top: 5px;
-        }
-        
-        .book-back {
-            background-color: var(--dark-color);
-            color: white;
-            transform: rotateY(180deg);
-            padding: 25px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        
-        .book-description {
-            font-size: 0.9rem;
-            line-height: 1.5;
-            overflow: hidden;
-            display: -webkit-box;
-            -webkit-line-clamp: 8;
-            -webkit-box-orient: vertical;
-        }
-        
-        .book-actions {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 15px;
-        }
-        
-        .book-btn {
-            background: var(--accent-color);
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            transition: all 0.3s ease;
-        }
-        
-        .book-btn:hover {
-            background: white;
-            color: var(--accent-color);
-        }
-        
-        /* قسم مميز لاستعراض كتاب الشهر */
-        .featured-book {
-            padding: 100px 50px;
-            background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
-            color: white;
-            display: flex;
-            gap: 50px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .featured-book::before {
-            content: "";
-            position: absolute;
-            right: -50px;
-            top: -50px;
-            width: 200px;
-            height: 200px;
-            background: var(--accent-color);
-            border-radius: 50%;
-            opacity: 0.3;
-        }
-        
-        .featured-book::after {
-            content: "";
-            position: absolute;
-            left: -30px;
-            bottom: -30px;
-            width: 150px;
-            height: 150px;
-            background: var(--accent-color);
-            border-radius: 50%;
-            opacity: 0.2;
-        }
-        
-        .featured-cover {
-            width: 300px;
-            height: 450px;
-            object-fit: cover;
-            border-radius: 10px;
-            box-shadow: 0 20px 30px rgba(0,0,0,0.3);
-            transform: rotate(-5deg);
-            transition: transform 0.5s ease;
-        }
-        
-        .featured-cover:hover {
-            transform: rotate(0deg) scale(1.05);
-        }
-        
-        .featured-info {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        
-        .featured-label {
-            background: var(--accent-color);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            display: inline-block;
-            margin-bottom: 20px;
-            font-size: 0.9rem;
-        }
-        
-        .featured-title {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-        }
-        
-        .featured-author {
-            font-size: 1.2rem;
-            color: var(--accent-color);
-            margin-bottom: 20px;
-        }
-        
-        .featured-description {
-            line-height: 1.8;
-            margin-bottom: 30px;
-        }
-        
-        .featured-btn {
-            background: white;
-            color: var(--primary-color);
-            border: none;
-            padding: 12px 25px;
-            border-radius: 25px;
-            font-weight: bold;
-            cursor: pointer;
-            width: fit-content;
-            transition: all 0.3s ease;
-        }
-        
-        .featured-btn:hover {
-            background: var(--accent-color);
-            color: white;
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-        
-        /* تصميم مميز لقسم التصنيفات */
-        .categories-section {
-            padding: 50px;
-        }
-        
-        .section-title {
-            text-align: center;
-            font-size: 2rem;
-            color: var(--primary-color);
-            margin-bottom: 40px;
-            position: relative;
-        }
-        
-        .section-title::after {
-            content: "";
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 4px;
-            background: var(--accent-color);
-        }
-        
-        .categories-container {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-        
-        .category-item {
-            width: 150px;
-            height: 200px;
-            background: white;
-            border-radius: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-        }
-        
-        .category-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-        }
-        
-        .category-icon {
-            font-size: 2.5rem;
-            color: var(--accent-color);
-            margin-bottom: 15px;
-        }
-        
-        .category-name {
-            color: var(--primary-color);
-            font-weight: bold;
-        }
-        
-        .category-count {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: var(--accent-color);
-            color: white;
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-        }
-        
-        /* تذييل الصفحة بتصميم مميز */
-        footer {
-            background: var(--primary-color);
-            color: white;
-            padding: 50px;
-            text-align: center;
-        }
-        
-        .footer-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .logo-footer {
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 20px;
-            letter-spacing: 2px;
-        }
-        
-        .footer-nav {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin: 30px 0;
-        }
-        
-        .footer-link {
-            color: white;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        
-        .footer-link:hover {
-            color: var(--accent-color);
-        }
-        
-        .social-icons {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin: 30px 0;
-        }
-        
-        .social-icon {
-            width: 40px;
-            height: 40px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-        }
-        
-        .social-icon:hover {
-            background: var(--accent-color);
-            transform: translateY(-5px);
-        }
-        
-        .copyright {
-            margin-top: 30px;
-            opacity: 0.7;
-            font-size: 0.9rem;
-        }
-        
-        /* شكل تحميل الصفحة المميز */
-        .page-loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--primary-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            animation: fadeOut 0.7s ease 1.7s forwards;
-        }
-        
-        .book-loader {
-            width: 75px;
-            height: 90px;
-            position: relative;
-            perspective: 500px;
-        }
-        
-        .book-page {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            right: 0;
-            background: var(--accent-color);
-            transform-origin: right;
-            animation: flip 1.5s infinite linear;
-            animation-delay: calc(var(--i) * 0.22s);
-        }
-        
-        @keyframes flip {
-            0% {
-                transform: rotateY(-30deg);
-            }
-            100% {
-                transform: rotateY(200deg);
-            }
-        }
-        
-        @keyframes fadeOut {
-            0% {
-                opacity: 1;
-                visibility: visible;
-            }
-            100% {
-                opacity: 0;
-                visibility: hidden;
-            }
-        }
-        
-        /* تصميم مميز للزر العائم للبحث */
-        .search-float {
-            position: fixed;
-            bottom: 30px;
-            left: 30px;
-            width: 60px;
-            height: 60px;
-            background: var(--accent-color);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            z-index: 100;
-            transition: all 0.3s ease;
-        }
-        
-        .search-float:hover {
-            transform: scale(1.1);
-            background: var(--primary-color);
-        }
-        
-        .search-panel {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(44, 62, 80, 0.95);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 200;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.5s ease;
-        }
-        
-        .search-panel.active {
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        .search-form {
-            width: 70%;
-            max-width: 800px;
-            position: relative;
-        }
-        
-        .search-input {
-            width: 100%;
-            padding: 20px;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.2rem;
-            outline: none;
-            background: rgba(255,255,255,0.9);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-        
-        .search-btn {
-            position: absolute;
-            top: 50%;
-            left: 20px;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: var(--primary-color);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-        
-        .close-search {
-            position: absolute;
-            top: 30px;
-            right: 30px;
-            color: white;
-            font-size: 2rem;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-        
-        .close-search:hover {
-            transform: rotate(90deg);
-            color: var(--accent-color);
-        }
-
-        @media (max-width: 768px) {
-            .book-spine {
-                width: 15%;
-            }
-            
-            .book-pages {
-                width: 85%;
-            }
-            
-            .featured-book {
-                flex-direction: column;
-                padding: 50px 20px;
-                align-items: center;
-            }
-            
-            .featured-cover {
-                width: 200px;
-                height: 300px;
-                margin-bottom: 30px;
-            }
-            
-            .books-showcase {
-                padding: 20px;
-            }
-            
-            .categories-section {
-                padding: 30px 20px;
-            }
-            
-            footer {
-                padding: 30px 20px;
-            }
-            
-            .footer-nav {
-                flex-direction: column;
-                gap: 15px;
-            }
-        }
-    </style>
-</head>
+    <link rel="stylesheet" href="css/style.css"> 
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
 <body>
     <!-- شاشة التحميل المميزة -->
     <div class="page-loader">
@@ -660,45 +24,197 @@
             <h1>ZakBook</h1>
         </div>
         <div class="book-pages">
-            <!-- العلامات المرجعية للتنقل -->
-            <div class="nav-bookmark">
-                <div class="bookmark">الرئيسية</div>
-                <div class="bookmark">الكتب</div>
-                <div class="bookmark">التصنيفات</div>
-                <div class="bookmark">تواصل معنا</div>
-            </div>
-            
-            <!-- عرض الكتب المميزة -->
-            <div class="featured-book">
-                <img src="/api/placeholder/400/600" alt="كتاب الشهر" class="featured-cover">
+          <!-- العلامات المرجعية للتنقل -->
+<div class="nav-bookmark">
+    <div class="bookmark" data-link="index.html">الرئيسية</div>
+    <div class="bookmark" data-link="Pages/books.html">الكتب</div>
+    <div class="bookmark" data-link="Pages/categories.html">التصنيفات</div>
+    <div class="bookmark" data-link="Pages/contact.html">تواصل معنا</div>
+</div>
+
+                 <!-- عرض الكتب المميزة -->
+       <div class="featured-book">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNflmD2LJhuZGA8-lyXxm8879MOpTkh0PLuW4T-zhKHIAZfDA_OOBybh0&s=10" 
+       alt="كتاب معلم" class="featured-cover">
                 <div class="featured-info">
-                    <span class="featured-label">كتاب الشهر</span>
-                    <h2 class="featured-title">فن اللامبالاة</h2>
-                    <p class="featured-author">بقلم: مارك مانسون</p>
+                    <span class="featured-label">كتاب معلم</span>
+                    <h2 class="featured-title">ذلّ مقيم</h2>
+                    <p class="featured-author">بقلم: عباس زكريا</p>
                     <p class="featured-description">
-                        كتاب يقدم نظرة مختلفة عن التنمية الذاتية، مليء بالقصص الواقعية والحكم الصادمة والصراحة التي تميز أسلوب مارك المميز. يتناول الكتاب كيفية التوقف عن محاولة أن تكون إيجابياً طوال الوقت، لكي تصبح إنساناً أفضل وأكثر سعادة حقيقية.
+                        تركُ الصلاة مهلكةٌ للروح، ومزلَّةٌ في الدنيا، ومَغبَّةٌ في الآخرة، لا يتركها إلا غافلٌ عن وعدِ الله ووعيدِه، قد باعَ النورَ بالظُّلْمَة، والهدى بالتيه، والعافيةَ بالضنك، فويلٌ له من يومٍ تُكشَفُ فيه الحقيقةُ، ولا مناص!
+
                     </p>
-                    <button class="featured-btn">اقرأ الآن</button>
+                <button class="featured-btn" onclick="window.location.href='Moon/moon1.html'">اقرأ الآن</button>
                 </div>
             </div>
             
-            <!-- عرض الكتب بطريقة مميزة -->
+            
+     
+
+         <!-- قسم التصنيفات المميز -->
+<section class="categories-section">
+    <h2 class="section-title">تصفح حسب التصنيف</h2>
+    <div class="categories-container">
+
+        <!-- تصنيف 1 -->
+        <a href="Moon/moon2.html" class="category-item">
+            <div class="category-icon">
+                <img src="https://i.pinimg.com/originals/e7/eb/f6/e7ebf6bec4e144db3d6696e9c77726bb.gif" alt="تنمية ذاتية">
+            </div>
+            <div class="category-name">قراءة</div>
+            <div class="category-count">0</div>
+        </a>
+
+        <!-- تصنيف 2 -->
+        <a href="Moon/moon3.html" class="category-item">
+            <div class="category-icon">
+                <img src="https://i.pinimg.com/originals/36/7a/8b/367a8b98906c3e4f29545f9a998282b6.gif" alt="علم نفس">
+            </div>
+            <div class="category-name">فكرة</div>
+            <div class="category-count">0</div>
+        </a>
+
+        <!-- تصنيف 3 -->
+        <a href="Moon/moon4.html" class="category-item">
+            <div class="category-icon">
+                <img src="https://i.pinimg.com/originals/e8/2c/ef/e82cef45667cbcfe0c7cf595794e3416.gif" alt="أعجبني">
+            </div>
+            <div class="category-name">أعجبني</div>
+            <div class="category-count">0</div>
+        </a>
+
+        <!-- تصنيف 4 -->
+        <a href="Moon/moon5.html" class="category-item">
+            <div class="category-icon">
+                <img src="https://i.pinimg.com/originals/6c/62/af/6c62afaeacb7912abe8a04af0ff20d91.gif" alt="أعجبني بقوة">
+            </div>
+            <div class="category-name">أعجبني بقوة</div>
+            <div class="category-count">0</div>
+        </a>
+
+        <!-- تصنيف 5 -->
+        <a href="Moon/moon6.html" class="category-item">
+            <div class="category-icon">
+                <img src="https://gifdb.com/images/high/delete-498-x-373-gif-n0b2zu813qm7f5hf.webp" alt="لا أحتاجه">
+            </div>
+            <div class="category-name">لا أحتاجه</div>
+            <div class="category-count">0</div>
+        </a>
+
+        <!-- تصنيف 6 -->
+        <a href="Moon/moon7.html" class="category-item">
+            <div class="category-icon">
+                <img src="https://miro.medium.com/v2/resize:fit:1400/0*YGPHb9m4Sa6HON_u.gif" alt="توضيح">
+            </div>
+            <div class="category-name">توضيح</div>
+            <div class="category-count">0</div>
+        </a>
+
+    </div>
+</section>
+   <!-- زر البحث العائم -->
+<div class="search-float" onclick="toggleSearch()">
+    <img src="https://www.emojiall.com/images/240/telegram/telemoji-november-2023/1f50e.gif" alt="بحث" style="width: 32px; height: 32px;">
+</div>
+
+<!-- نافذة البحث -->
+<div class="search-panel">
+    <div class="close-search" onclick="toggleSearch()">×</div>
+    <form class="search-form" onsubmit="return searchBooks()">
+        <input type="text" id="search-input" class="search-input" placeholder="ابحث عن كتاب، مؤلف، تصنيف..." oninput="searchBooks()">
+        <button type="button" class="reset-btn" onclick="resetSearch()">عودة</button>
+        <button type="submit" class="search-btn">
+            <img src="https://www.emojiall.com/images/240/telegram/telemoji-november-2023/1f50e.gif" alt="Search" style="width: 25px; height: 25px;">
+        </button>
+    </form>
+
+    <section class="books-showcase">
+    <a href="books/book1.html" class="book-card">
+        <img src="/api/placeholder/200/300" alt="غلاف الكتاب" class="book-cover">
+        <h3 class="book-title">عودة العقل</h3>
+        <p class="book-author">عباس زكريا</p>
+    </a>
+
+    <a href="books/book2.html" class="book-card">
+        <img src="/api/placeholder/200/300" alt="غلاف الكتاب" class="book-cover">
+        <h3 class="book-title">روح اليقين</h3>
+        <p class="book-author">عباس زكريا</p>
+    </a>
+
+    <a href="books/book3.html" class="book-card">
+        <img src="/api/placeholder/200/300" alt="غلاف الكتاب" class="book-cover">
+        <h3 class="book-title">رائد الشعر</h3>
+        <p class="book-author">عباس زكريا</p>
+    </a>
+
+    <a href="books/book4.html" class="book-card">
+        <img src="/api/placeholder/200/300" alt="غلاف الكتاب" class="book-cover">
+        <h3 class="book-title">فن الحر</h3>
+        <p class="book-author">عباس زكريا</p>
+    </a>
+
+    <a href="books/book5.html" class="book-card">
+        <img src="/api/placeholder/200/300" alt="غلاف الكتاب" class="book-cover">
+        <h3 class="book-title">شر حاسد</h3>
+        <p class="book-author">عباس زكريا</p>
+    </a>
+
+    <a href="books/book6.html" class="book-card">
+        <img src="/api/placeholder/200/300" alt="غلاف الكتاب" class="book-cover">
+        <h3 class="book-title">فارض الغل</h3>
+        <p class="book-author">عباس زكريا</p>
+    </a>
+
+    <a href="books/book7.html" class="book-card">
+        <img src="/api/placeholder/200/300" alt="غلاف الكتاب" class="book-cover">
+        <h3 class="book-title">حنان الأموة</h3>
+        <p class="book-author">عباس زكريا</p>
+    </a>
+
+    <a href="books/book8.html" class="book-card">
+        <img src="/api/placeholder/200/300" alt="غلاف الكتاب" class="book-cover">
+        <h3 class="book-title">ليث القول</h3>
+        <p class="book-author">عباس زكريا</p>
+    </a>
+
+    <a href="books/book9.html" class="book-card">
+        <img src="/api/placeholder/200/300" alt="غلاف الكتاب" class="book-cover">
+        <h3 class="book-title">قطمير الباطل</h3>
+        <p class="book-author">عباس زكريا</p>
+    </a>
+</section>
+    <p id="no-results" style="display: none; color: red; text-align: center;">لم يتم العثور على نتائج</p>
+</div>
+
+<!-- نافذة التنبيه المخصصة -->
+<div class="custom-alert" id="customAlert" style="display: none;">
+    <p>يرجى إدخال كلمة للبحث!</p>    
+   <button onclick="closeAlert()">حسناً</but>
+  <script src="script.js"></script>  
+</div>
+           
+<section class="categories-section">
+    <h2 class="section-title">فواصل الكتب</h2>
+    <div class="categories-container">
+      
+           <!-- عرض الكتب بطريقة مميزة -->
             <section class="books-showcase">
                 <!-- كتاب 1 -->
                 <div class="book-card">
                     <div class="book-inner">
                         <div class="book-front">
                             <img src="/api/placeholder/200/300" alt="غلاف الكتاب" class="book-cover">
-                            <h3 class="book-title">عادات العقل</h3>
-                            <p class="book-author">جيمس كليار</p>
+                            <h3 class="book-title">عودة العقل</h3>
+                            <p class="book-author">عباس زكريا</p>
                         </div>
                         <div class="book-back">
                             <p class="book-description">
-                                كتاب يتحدث عن كيفية بناء عادات جيدة والتخلص من العادات السيئة باستخدام مبادئ علم النفس والأعصاب. يقدم الكتاب نظاماً واضحاً لتغيير العادات بأسلوب عملي وبسيط.
+                                عودة العقل كتابٌ يجلو غشاوة الغفلة عن البصائر، ويسير بالقارئ في رياض الفِكر النقي، حيث تتهدم أسوار العادات الذميمة، وتُشاد قلاع الفضائل الراسخة. يبوح بأن العقل، متى استقام أمره، صار المرء به سيد أفعاله، لا عبد عاداته. وهو مرآة تعكس طبائع النفوس، وكيف يُروض الجامح منها، ويُصقل الواضح، حتى يصير صاحبه مثالًا للحكمة والتدبير. ينهل من معين العلم، ويستنير بمصابيح الفهم، ليخط للمرء دربًا يجمع بين رشد التدبير وحسن المسير.
+
                             </p>
                             <div class="book-actions">
-                                <button class="book-btn">اقرأ الآن</button>
-                                <button class="book-btn">أضف للمفضلة</button>
+                                <button class="featured-btn"data-page="Pages/page1.html">اقرأ الآن</button>
+                                <button class="book-btn" onclick="openCategoryMenu('page1')">أضف للمفضلة</button>
                             </div>
                         </div>
                     </div>
@@ -709,15 +225,16 @@
                     <div class="book-inner">
                         <div class="book-front">
                             <img src="/api/placeholder/200/300" alt="غلاف الكتاب" class="book-cover">
-                            <h3 class="book-title">سيكولوجية المال</h3>
-                            <p class="book-author">مورجان هاوسل</p>
+                            <h3 class="book-title">روح اليقين</h3>
+                            <p class="book-author">عباس زكريا</p>
                         </div>
                         <div class="book-back">
                             <p class="book-description">
-                                كتاب استثنائي يتناول العلاقة المعقدة بين الإنسان والمال. يستكشف الكتاب كيف أن التاريخ الشخصي والثقافة والتجارب الفردية تؤثر بشكل كبير على قراراتنا المالية بطرق غير متوقعة.
+                                روح اليقين كتابٌ يضيء بصائر العقول، فيكشف كيف يتقلب الإنسان بين يدي المال، فتارة يكون المال في يده، وتارة يكون في قلبه، وبين هاتين الحالين يكمن الاختبار. يسرد المؤلف بفصاحةٍ بليغة كيف أن المال زينة الحياة، لكنه لا يغني عن يقين القلب، ولا يسد حاجة الروح إلى الطمأنينة. يبين أن للرزق أبوابًا، ولليقين مراتب، فمن وثق بأن العطاء بيد الله، هانت عليه الدنيا، وأحسن التدبير، وسار في درب الكسب الحلال بقلب مطمئن، ونفس راضية، وعقل راشد.
+
                             </p>
                             <div class="book-actions">
-                                <button class="book-btn">اقرأ الآن</button>
+                                <button class="featured-btn"data-page="Pages/page2.html">اقرأ الآن</button>
                                 <button class="book-btn">أضف للمفضلة</button>
                             </div>
                         </div>
@@ -729,15 +246,17 @@
                     <div class="book-inner">
                         <div class="book-front">
                             <img src="/api/placeholder/200/300" alt="غلاف الكتاب" class="book-cover">
-                            <h3 class="book-title">البداية والنهاية</h3>
-                            <p class="book-author">ابن كثير</p>
+                            <h3 class="book-title">رائد الشعر</h3>
+                            <p class="book-author">عباس زكريا</p>
                         </div>
                         <div class="book-back">
                             <p class="book-description">
-                                كتاب في التاريخ الإسلامي، يتناول قصص الأنبياء والأمم السابقة، ثم يستعرض السيرة النبوية وأهم الأحداث التاريخية حتى عصر المؤلف، وينتهي بذكر الفتن وأشراط الساعة.
+                                رائد الشعر كتابٌ يجمع بين روعة البيان وعمق المعاني، يبحر بالقارئ في عوالم الأدب الرفيع، حيث تتهادى القوافي كأمواج بحرٍ زاخِر، فتُطرب الأذن، وتُحرك الوجدان. يسبر المؤلف أغوار الشعر، فيكشف عن أسرار البلاغة، ومواطن الجمال، ومآثر الفحول من الشعراء، الذين نطقوا بالحكمة، وجادوا بروائع الكلام. بين دفتيه، يجد القارئ سردًا ماتعًا لمسيرة الشعر عبر العصور، كيف نشأ، وكيف صار سلاحًا في ميادين الفخر، ورسالةً في رحاب الحكمة، ولوحةً تنبض بالعواطف والمشاعر. إنه زادُ كل محبٍّ للفصاحة، ودليلُ كل طالبٍ للبيان، ومُعينٌ لمن أراد أن ينهل من معين الأدب العذب، فيرتوي.
+
+
                             </p>
                             <div class="book-actions">
-                                <button class="book-btn">اقرأ الآن</button>
+                                <button class="featured-btn"data-page="Pages/page3.html">اقرأ الآن</button>
                                 <button class="book-btn">أضف للمفضلة</button>
                             </div>
                         </div>
@@ -749,106 +268,58 @@
                     <div class="book-inner">
                         <div class="book-front">
                             <img src="/api/placeholder/200/300" alt="غلاف الكتاب" class="book-cover">
-                            <h3 class="book-title">فن الحرب</h3>
-                            <p class="book-author">سون تزو</p>
+                            <h3 class="book-title">قطمير الباطل</h3>
+                            <p class="book-author">عباس زكريا</p>
                         </div>
                         <div class="book-back">
                             <p class="book-description">
-                                من أقدم وأشهر النصوص العسكرية في العالم، يتناول استراتيجيات وفلسفة الحرب والصراع. رغم قدمه، إلا أنه لا يزال يُدرس ويُطبق في مجالات متعددة كالأعمال والقيادة.
+                                قطمير الباطل كتابٌ يكشف دهاليز الصراع، ويُميط اللثام عن مكر الحروب، حيث تتجلى الحيلة قبل السيف، وتُكتب الغلبة بمداد الفطنة قبل أن تُحسم بحدِّ السنان. يفيض بأساليب الحِجاج والمناورة، ويصور كيف تُبنى الاستراتيجيات، لا على القوة وحدها، بل على فقه العقول، وحسن التدبير. يجمع بين دروس التاريخ وعبر الأيام، فيُريك كيف ساد الحكماء، وهلك الطائشون، وكيف أن الباطل، وإن انتفش، يظل واهنًا كقطميرٍ لا يغني ولا يدفع، متى قامت في وجهه بصيرةٌ نافذةٌ وإرادةٌ صلبة.
+
+
                             </p>
                             <div class="book-actions">
-                                <button class="book-btn">اقرأ الآن</button>
+                                <button class="featured-btn"data-page="Pages/page4.html">اقرأ الآن</button>
                                 <button class="book-btn">أضف للمفضلة</button>
-                            </div>
+                          
+                            </div>                          
                         </div>
                     </div>
                 </div>
             </section>
             
-            <!-- قسم التصنيفات المميز -->
-            <section class="categories-section">
-                <h2 class="section-title">تصفح حسب التصنيف</h2>
-                <div class="categories-container">
-                    <!-- تصنيف 1 -->
-                    <div class="category-item">
-                        <div class="category-icon">📚</div>
-                        <div class="category-name">تنمية ذاتية</div>
-                        <div class="category-count">42</div>
-                    </div>
-                    
-                    <!-- تصنيف 2 -->
-                    <div class="category-item">
-                        <div class="category-icon">🧠</div>
-                        <div class="category-name">علم نفس</div>
-                        <div class="category-count">35</div>
-                    </div>
-                    
-                    <!-- تصنيف 3 -->
-                    <div class="category-item">
-                        <div class="category-icon">💼</div>
-                        <div class="category-name">إدارة أعمال</div>
-                        <div class="category-count">27</div>
-                    </div>
-                    
-                    <!-- تصنيف 4 -->
-                    <div class="category-item">
-                        <div class="category-icon">🌙</div>
-                        <div class="category-name">دين</div>
-                        <div class="category-count">56</div>
-                    </div>
-                    
-                    <!-- تصنيف 5 -->
-                    <div class="category-item">
-                        <div class="category-icon">📝</div>
-                        <div class="category-name">أدب</div>
-                        <div class="category-count">63</div>
-                    </div>
-                    
-                    <!-- تصنيف 6 -->
-                    <div class="category-item">
-                        <div class="category-icon">🔍</div>
-                        <div class="category-name">تاريخ</div>
-                        <div class="category-count">29</div>
-                    </div>
-                </div>
-            </section>
-            
+      
             <!-- تذييل الصفحة -->
             <footer>
                 <div class="footer-content">
                     <div class="logo-footer">ZakBook</div>
-                    <p>عالم من المعرفة والإلهام في مكتبة رقمية فريدة من نوعها</p>
-                    
-                    <div class="footer-nav">
-                        <a href="#" class="footer-link">الرئيسية</a>
-                        <a href="#" class="footer-link">الكتب</a>
-                        <a href="#" class="footer-link">التصنيفات</a>
-                        <a href="#" class="footer-link">عن الموقع</a>
-                        <a href="#" class="footer-link">تواصل معنا</a>
-                    </div>
-                    
-                    <div class="social-icons">
-                        <div class="social-icon">f</div>
-                        <div class="social-icon">t</div>
-                        <div class="social-icon">in</div>
-                        <div class="social-icon">ig</div>
-                    </div>
-                    
+                    <p>كتب العرب منارةٌ للعلم، تجمع نفائس المصنفات، وتمد القارئ بعيون الأدب وروائع الفكر. هو دارٌ للمعرفة، لا يخبو سناها، ومجلسٌ للبيان، تُصاغ فيه الحروف دررًا.
+</p>
+               <footer class="footer">
+    <nav class="footer-nav">
+        <a href="index.html" class="glow-btn">الرئيسية</a>
+        <a href="books.html" class="glow-btn">الكتب</a>
+        <a href="categories.html" class="glow-btn">التصنيفات</a>
+        <a href="about.html" class="glow-btn">عن الموقع</a>
+        <a href="contact.html" class="glow-btn">تواصل معنا</a>
+    </nav>
+
+    <div class="social-icons">
+        <a href="https://www.facebook.com" class="glow-btn facebook" target="_blank">F</a>
+        <a href="https://twitter.com" class="glow-btn twitter" target="_blank">T</a>
+        <a href="https://www.linkedin.com" class="glow-btn linkedin" target="_blank">in</a>
+        <a href="https://www.instagram.com" class="glow-btn instagram" target="_blank">IG</a>
+    </div>
+</footer>
+
+<script src="js1/script.js"></script>
+               <script src="js/script.js"></script>
+               
                     <p class="copyright">جميع الحقوق محفوظة &copy; 2025 ZakBook</p>
                 </div>
             </footer>
         </div>
     </div>
-    
-    <!-- زر البحث العائم -->
-    <div class="search-float">🔍</div>
-    
-    <!-- شاشة البحث -->
-    <div class="search-panel">
-        <div class="close-search">×</div>
-        <form class="search-form">
-            <input type="text" class="search-input" placeholder="ابحث عن كتاب، مؤلف، تصنيف...">
-            <button type="submit" class="search-btn">🔍</button>
-        </form>
-    </div>
+   
+  </body>
+</head>
     
