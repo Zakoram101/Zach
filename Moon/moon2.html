@@ -1,1 +1,500 @@
 
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المواعظ | أقوال العلماء الأجلاء</title>
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap');
+
+:root {
+    --primary-color: #2c3e50;
+    --accent-color: #e74c3c;
+    --light-color: #ecf0f1;
+    --dark-color: #34495e;
+    --font-main: 'Tajawal', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--font-main);
+}
+
+body {
+    background-color: var(--light-color);
+    overflow-x: hidden;
+    position: relative;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    color: white;
+}
+
+header h2 {
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--light-color);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.search-container {
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.search-box {
+    width: 100%;
+    max-width: 500px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    background-color: white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.search-box:focus {
+    outline: none;
+    box-shadow: 0 5px 20px rgba(231, 76, 60, 0.3);
+}
+
+.quotes-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.quote-card {
+    background-color: white;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.quote-card::before {
+    content: """;
+    position: absolute;
+    top: -20px;
+    right: 20px;
+    font-size: 6rem;
+    color: var(--accent-color);
+    opacity: 0.1;
+}
+
+.quote-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+}
+
+.quote-text {
+    margin-bottom: 15px;
+    line-height: 1.8;
+    font-size: 1rem;
+    color: var(--dark-color);
+}
+
+.scholar-name {
+    color: var(--accent-color);
+    font-weight: 500;
+    font-size: 0.9rem;
+    text-align: left;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    padding-top: 10px;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+#loadMoreBtn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+#loadMoreBtn:hover {
+    background-color: var(--accent-color);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: var(--primary-color);
+    color: var(--light-color);
+    margin-top: 30px;
+    border-radius: 10px;
+}
+
+.hidden {
+    display: none;
+}
+
+/* تجاوب الموقع مع أحجام الشاشات المختلفة */
+@media (max-width: 768px) {
+    .quotes-container {
+        grid-template-columns: 1fr;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+
+    header h2 {
+        font-size: 1rem;
+    }
+    
+    .quote-card {
+        padding: 20px;
+    }
+}
+
+/* تأثيرات إضافية لتحسين تجربة المستخدم */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.quote-card {
+    animation: fadeIn 0.5s ease forwards;
+}
+
+/* تأخير تحميل البطاقات بشكل متتابع */
+.quotes-container .quote-card:nth-child(1) { animation-delay: 0.1s; }
+.quotes-container .quote-card:nth-child(2) { animation-delay: 0.2s; }
+.quotes-container .quote-card:nth-child(3) { animation-delay: 0.3s; }
+.quotes-container .quote-card:nth-child(4) { animation-delay: 0.4s; }
+.quotes-container .quote-card:nth-child(5) { animation-delay: 0.5s; }
+.quotes-container .quote-card:nth-child(6) { animation-delay: 0.6s; }
+.quotes-container .quote-card:nth-child(7) { animation-delay: 0.7s; }
+.quotes-container .quote-card:nth-child(8) { animation-delay: 0.8s; }
+.quotes-container .quote-card:nth-child(9) { animation-delay: 0.9s; }
+.quotes-container .quote-card:nth-child(10) { animation-delay: 1s; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>المواعظ</h1>
+        <h2>من أقوال علماء أهل السنة والجماعة</h2>
+    </header>
+    
+    <div class="container">
+        <div class="search-container">
+            <input type="text" class="search-box" placeholder="ابحث في أقوال العلماء..." id="searchInput">
+        </div>
+        
+        <div class="quotes-container" id="quotesContainer">
+            <!-- Quotes will be generated by JavaScript -->
+        </div>
+        
+        <div class="controls">
+            <button id="loadMoreBtn">عرض المزيد من الأقوال</button>
+        </div>
+    </div>
+    
+    <footer>
+        <p>المواعظ - مجموعة من أقوال علماء أهل السنة والجماعة</p>
+    </footer>
+    
+    <script>
+        // Quotes data - 50 quotes from prominent Sunni scholars
+        const quotes = [
+            {
+                text: "اعلم أن العلم ما نفع، ليس العلم ما حُفظ.",
+                scholar: "الإمام الشافعي رحمه الله"
+            },
+            {
+                text: "إذا أردت أن تعرف فضل الصدق فانظر إلى مضرة الكذب، وإذا أردت أن تعرف فضل العلم فانظر إلى مضرة الجهل.",
+                scholar: "الإمام أبو حنيفة رحمه الله"
+            },
+            {
+                text: "من تواضع لله رفعه، ومن تكبر وضعه.",
+                scholar: "الإمام أحمد بن حنبل رحمه الله"
+            },
+            {
+                text: "لا تنظر إلى صغر المعصية، ولكن انظر إلى عظمة من عصيت.",
+                scholar: "ابن القيم رحمه الله"
+            },
+            {
+                text: "ما نقص مال من صدقة، وما زاد الله عبداً بعفو إلا عزاً.",
+                scholar: "الإمام مالك بن أنس رحمه الله"
+            },
+            {
+                text: "إن المؤمن إذا عرف ربه أحبه، وإذا عرف الدنيا زهد فيها، وإذا عرف الآخرة سعى لها.",
+                scholar: "الإمام الغزالي رحمه الله"
+            },
+            {
+                text: "الإخلاص سر بين العبد وربه، لا يعلمه ملك فيكتبه، ولا شيطان فيفسده.",
+                scholar: "ابن قدامة المقدسي رحمه الله"
+            },
+            {
+                text: "من أراد أن يزهد في الدنيا فلينظر إلى آخرها، ومن أراد أن يرغب في الآخرة فلينظر إلى أولها.",
+                scholar: "الإمام ابن تيمية رحمه الله"
+            },
+            {
+                text: "الصبر كالدواء المر، كريه مذاقه لكن عاقبته أحلى من العسل.",
+                scholar: "ابن القيم رحمه الله"
+            },
+            {
+                text: "ليس العاقل الذي يعرف الخير من الشر، لكن العاقل الذي يعرف خير الشرين.",
+                scholar: "الإمام ابن حزم رحمه الله"
+            },
+            {
+                text: "من لم يذق مرارة التعلم ساعة، ذاق ذل الجهل طول حياته.",
+                scholar: "الإمام الشافعي رحمه الله"
+            },
+            {
+                text: "لا تنتظر الشكر من أحد، واجعل عملك لله خالصاً، فهو الشكور.",
+                scholar: "الإمام الذهبي رحمه الله"
+            },
+            {
+                text: "إنما يخشى الله من عباده العلماء، فمن كان بالله أعلم كان منه أخوف.",
+                scholar: "ابن القيم رحمه الله"
+            },
+            {
+                text: "سل الله علماً نافعاً، وتعوذ به من علم لا ينفع.",
+                scholar: "الإمام النووي رحمه الله"
+            },
+            {
+                text: "أصل كل داء البرد، وأصل كل دواء الحمية.",
+                scholar: "ابن القيم رحمه الله"
+            },
+            {
+                text: "إن الدنيا ليست بدار قرار، وإنما هي معبر إلى الدار الآخرة.",
+                scholar: "الإمام ابن تيمية رحمه الله"
+            },
+            {
+                text: "ليس الشأن أن تصلي وتصوم وتتصدق، إنما الشأن أن تصلي بقلب حاضر، وأن تصوم بجوارح صائمة، وأن تتصدق وأنت موقن أنها لن تخرج من يدك حتى تقع في يد الله.",
+                scholar: "الإمام الجنيد رحمه الله"
+            },
+            {
+                text: "لا يستقيم إيمان عبد حتى يستقيم قلبه، ولا يستقيم قلبه حتى يستقيم لسانه.",
+                scholar: "الإمام الحسن البصري رحمه الله"
+            },
+            {
+                text: "إذا رأيت الله يعطيك في المنع فاعلم أنه يعاملك بكرمه.",
+                scholar: "الإمام ابن عطاء الله السكندري رحمه الله"
+            },
+            {
+                text: "أكمل الناس عقلاً أشدهم تواضعاً، وأكملهم أدباً أحسنهم خلقاً.",
+                scholar: "الإمام الماوردي رحمه الله"
+            },
+            {
+                text: "المؤمن كيّس فطن حذر، وهو يحسن الظن بالله ويسيء الظن بنفسه.",
+                scholar: "الإمام الحسن البصري رحمه الله"
+            },
+            {
+                text: "من لم تنهه صلاته عن الفحشاء والمنكر لم يزدد بها من الله إلا بعدًا.",
+                scholar: "الإمام أبو الدرداء رضي الله عنه"
+            },
+            {
+                text: "خير الزاد التقوى، وخير ما ألقي في القلب اليقين.",
+                scholar: "الإمام أبو حنيفة رحمه الله"
+            },
+            {
+                text: "إذا أحب الله عبداً ألهمه ذكره، وإذا أحبه أكثر فتح له باب الدعاء، وإذا أحبه أكثر فتح له باب المحبة، وإذا أحبه أكثر فتح له باب المعرفة.",
+                scholar: "الإمام ابن القيم رحمه الله"
+            },
+            {
+                text: "العلم إمام العمل، والعمل تابعه.",
+                scholar: "الإمام البخاري رحمه الله"
+            },
+            {
+                text: "من عامل الناس ولم يظلمهم، وحدثهم ولم يكذبهم، ووعدهم ولم يخلفهم، فهو ممن كملت مروءته.",
+                scholar: "الإمام مالك بن أنس رحمه الله"
+            },
+            {
+                text: "ما أكثر العبر وأقل الاعتبار، وما أوضح الطريق لولا ظلمة النفوس.",
+                scholar: "الإمام أبو حازم رحمه الله"
+            },
+            {
+                text: "من أعطي القناعة فقد أعطي الغنى كله.",
+                scholar: "الإمام الشافعي رحمه الله"
+            },
+            {
+                text: "تفكر ساعة خير من عبادة سنة.",
+                scholar: "الإمام الحسن البصري رحمه الله"
+            },
+            {
+                text: "اللهم لا تجعل الدنيا أكبر همنا ولا مبلغ علمنا.",
+                scholar: "الإمام ابن تيمية رحمه الله"
+            },
+            {
+                text: "ما طابت الدنيا إلا بذكر الله، وما طابت الآخرة إلا بعفو الله، وما طاب الجنة إلا برؤية الله.",
+                scholar: "الإمام أحمد بن حنبل رحمه الله"
+            },
+            {
+                text: "الصبر عند الصدمة الأولى، فإن جزعت بعد ذلك فليس بصبر.",
+                scholar: "الإمام الشعبي رحمه الله"
+            },
+            {
+                text: "القلوب أوعية الله في أرضه، فأحبها إليه أرقها وأصلبها وأصفاها.",
+                scholar: "الإمام ابن القيم رحمه الله"
+            },
+            {
+                text: "من تفقه في دين الله كفاه الله همه ورزقه من حيث لا يحتسب.",
+                scholar: "الإمام الشافعي رحمه الله"
+            },
+            {
+                text: "لا يبلغ العبد حقيقة الإيمان حتى يحب للناس ما يحب لنفسه.",
+                scholar: "الإمام البخاري رحمه الله"
+            },
+            {
+                text: "العلم ما هتف في القلب، وما سواه فهو وسواس الشيطان.",
+                scholar: "الإمام الشافعي رحمه الله"
+            },
+            {
+                text: "ليس العاقل الذي يعرف الخير من الشر، لكن العاقل الذي يعرف خير الشرين.",
+                scholar: "الإمام المروزي رحمه الله"
+            },
+            {
+                text: "ما رأيت أحداً نال من الدنيا شيئاً إلا نالت منه أشياء.",
+                scholar: "الإمام سفيان الثوري رحمه الله"
+            },
+            {
+                text: "الذكر شفاء القلوب.",
+                scholar: "الإمام ابن تيمية رحمه الله"
+            },
+            {
+                text: "من أصلح ما بينه وبين الله أصلح الله ما بينه وبين الناس.",
+                scholar: "الإمام وهب بن منبه رحمه الله"
+            },
+            {
+                text: "من خاف الله خافه كل شيء، ومن لم يخف الله أخافه الله من كل شيء.",
+                scholar: "الإمام ابن القيم رحمه الله"
+            },
+            {
+                text: "لو صدق العبد في طلب النجاة لنجا، ولكن النفوس مولعة بالتسويف.",
+                scholar: "الإمام ابن الجوزي رحمه الله"
+            },
+            {
+                text: "الدنيا حلم، والآخرة يقظة، والموت متوسط بينهما، ونحن في أضغاث أحلام.",
+                scholar: "الإمام ابن مسعود رضي الله عنه"
+            },
+            {
+                text: "من كثرت ذنوبه فعليه بالاستغفار، ومن ضاقت عليه الدنيا فعليه بقول لا حول ولا قوة إلا بالله.",
+                scholar: "الإمام أحمد بن حنبل رحمه الله"
+            },
+            {
+                text: "أوثق عرى الإيمان الحب في الله والبغض في الله.",
+                scholar: "الإمام البخاري رحمه الله"
+            },
+            {
+                text: "لكل شيء زكاة، وزكاة العلم نشره.",
+                scholar: "الإمام الشافعي رحمه الله"
+            },
+            {
+                text: "العافية تاج على رؤوس الأصحاء لا يراه إلا المرضى.",
+                scholar: "الإمام ابن القيم رحمه الله"
+            },
+            {
+                text: "كن في الدنيا كأنك غريب أو عابر سبيل.",
+                scholar: "الإمام البخاري رحمه الله"
+            },
+            {
+                text: "التوبة هي العودة إلى الله بعد الفرار منه.",
+                scholar: "الإمام ابن رجب رحمه الله"
+            },
+            {
+                text: "كلما ازداد العبد معرفة بربه، ازداد خوفاً منه.",
+                scholar: "الإمام ابن تيمية رحمه الله"
+            }
+        ];
+        
+        // Variables to keep track of quotes displayed
+        let currentQuotesDisplayed = 0;
+        const quotesPerLoad = 10;
+        const totalQuotes = quotes.length;
+        
+        // Function to create and display quotes
+        function displayQuotes(startIndex, count) {
+            const container = document.getElementById('quotesContainer');
+            
+            for (let i = startIndex; i < startIndex + count && i < totalQuotes; i++) {
+                const quoteCard = document.createElement('div');
+                quoteCard.className = 'quote-card';
+                
+                const quoteText = document.createElement('div');
+                quoteText.className = 'quote-text';
+                quoteText.textContent = quotes[i].text;
+                
+                const scholarName = document.createElement('div');
+                scholarName.className = 'scholar-name';
+                scholarName.textContent = quotes[i].scholar;
+                
+                quoteCard.appendChild(quoteText);
+                quoteCard.appendChild(scholarName);
+                
+                container.appendChild(quoteCard);
+            }
+            
+            currentQuotesDisplayed += count;
+            
+            // Hide "Load More" button if all quotes are displayed
+            if (currentQuotesDisplayed >= totalQuotes) {
+                document.getElementById('loadMoreBtn').style.display = 'none';
+            }
+        }
+        
+        // Initial display of quotes
+        displayQuotes(0, quotesPerLoad);
+        
+        // Load more quotes on button click
+        document.getElementById('loadMoreBtn').addEventListener('click', function() {
+            displayQuotes(currentQuotesDisplayed, quotesPerLoad);
+        });
+        
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const quoteCards = document.querySelectorAll('.quote-card');
+            
+            quoteCards.forEach(card => {
+                const quoteText = card.querySelector('.quote-text').textContent.toLowerCase();
+                const scholarName = card.querySelector('.scholar-name').textContent.toLowerCase();
+                
+                if (quoteText.includes(searchTerm) || scholarName.includes(searchTerm)) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
