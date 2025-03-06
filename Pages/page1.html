@@ -167,8 +167,21 @@
         }
         
      
+  .btn {
+    font-family: 'Tajawal', Arial, sans-serif !important;
+}
 
-
+        .watermark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    color: rgba(0, 0, 0, 0.1);
+    pointer-events: none;
+    z-index: 5;
+    white-space: nowrap;
+}
     </style>
 </head>
 <body oncontextmenu="return false;">
@@ -179,8 +192,9 @@
             </span>
             عرض الكتاب
         </h1>
-
-        <div class="pdf-container">
+<div class="watermark">للقراءة فقط</div>
+     
+    <div class="pdf-container">
             <iframe 
                 src="https://drive.google.com/file/d/1-xE3Ye9PvvtDpU2GbDRHg1HZ5fuDWo-y/preview"
                 class="pdf-viewer"
