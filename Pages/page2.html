@@ -1,1 +1,234 @@
 
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عرض الكتاب</title>
+    <link rel="preconnect" href="https://drive.google.com">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    
+    <meta name="description" content="صفحة عرض وتحميل الكتاب">
+    
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --primary-hover-color: #0056b3;
+            --background-color: #f4f4f4;
+            --text-color: #333;
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Tajawal', Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: var(--background-color);
+            direction: rtl;
+            text-align: right;
+            line-height: 1.6;
+        }
+
+        .container {
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            padding: 30px;
+            overflow: hidden;
+        }
+
+        .title {
+            color: var(--text-color);
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pdf-container {
+            position: relative;
+            width: 100%;
+            height: 80vh;
+            max-height: 800px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+      .pdf-viewer {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+        /* طبقة شفافة فوق PDF لمنع النقر */
+      .overlay {
+    display: none; /* إخفاء التغطية */
+}
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            font-size: 1rem;
+            background-color: var(--primary-color);
+            color: var(--white);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover-color);
+            transform: translateY(-2px);
+        }
+
+        /* نافذة التنبيه */
+        .alert-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            text-align: center;
+            width: 300px;
+            display: none;
+            z-index: 1000;
+        }
+
+        .alert-box p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            color: var(--text-color);
+        }
+
+        .alert-box .close-btn {
+            padding: 8px 20px;
+            border: none;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .alert-box .close-btn:hover {
+            background: var(--primary-hover-color);
+        }
+
+        /* خلفية معتمة عند ظهور التنبيه */
+        .overlay-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 999;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+        
+     
+  .btn {
+    font-family: 'Tajawal', Arial, sans-serif !important;
+}
+
+        .watermark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    color: rgba(0, 0, 0, 0.1);
+    pointer-events: none;
+    z-index: 5;
+    white-space: nowrap;
+}
+    </style>
+</head>
+<body oncontextmenu="return false;">
+    <div class="container">
+        <h1 class="title">
+            <span class="title-icon">
+                <img src="https://emojigraph.org/media/lg/open-book_1f4d6.png" alt="أيقونة" width="20">
+            </span>
+            عرض الكتاب
+        </h1>
+<div class="watermark">للقراءة فقط</div>
+     
+    <div class="pdf-container">
+            <iframe 
+                src="https://drive.google.com/file/d/11Fe-AsMnhBwQ0x5F1kOa_dsHSQrKWGA8/preview"
+                class="pdf-viewer"
+                sandbox="allow-scripts allow-same-origin"
+                referrerpolicy="no-referrer"
+                allow="fullscreen">
+            </iframe>
+            <div class="overlay" onclick="showAlert()"></div>
+        </div>
+
+        <div class="action-buttons">
+            <button onclick="goBack()" class="btn">← العودة للصفحة السابقة</button>
+        </div>
+    </div>
+
+ 
+
+    <script>
+        function showAlert() {
+            document.getElementById("alertBox").style.display = "block";
+            document.getElementById("overlayBg").style.display = "block";
+        }
+
+        function closeAlert() {
+            document.getElementById("alertBox").style.display = "none";
+            document.getElementById("overlayBg").style.display = "none";
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+
+     
+    </script>
+</body>
+</html>
