@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZakBook - عالم الكتب المميز</title>
+    <link rel="stylesheet" href="css/style.css"> 
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+<body>
+    <!-- شاشة التحميل المميزة -->
+    <div class="page-loader">
+        <div class="book-loader">
+            <div class="book-page" style="--i:0;"></div>
+            <div class="book-page" style="--i:1;"></div>
+            <div class="book-page" style="--i:2;"></div>
+            <div class="book-page" style="--i:3;"></div>
+            <div class="book-page" style="--i:4;"></div>
+        </div>
+    </div>
+    
+    <!-- تصميم كتاب للصفحة الرئيسية -->
+    <div class="intro-container">
+        <div class="book-spine">
+            <h1>ZakBook</h1>
+        </div>
+        <div class="book-pages">
+          <!-- العلامات المرجعية للتنقل -->
+<div class="nav-bookmark">
+    <div class="bookmark" data-link="index.html">الرئيسية</div>
+    <div class="bookmark" data-link="Pages/books.html">الكتب</div>
+    <div class="bookmark" data-link="Pages/categories.html">التصنيفات</div>
+    <div class="bookmark" data-link="Pages/contact.html">تواصل معنا</div>
+</div>
+
+                 <!-- عرض الكتب المميزة -->
+       <div class="featured-book">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYjf1XVFcdCKTZ_mwv14mSIeHaMMDTmvbrM3WF6OH2GfoWdcbstTM6gazo&s=10" 
+       alt="كتاب معلم" class="featured-cover">
+                <div class="featured-info">
+                    <span class="featured-label">كتاب معلم</span>
+                    <h2 class="featured-title">كتاب التوحيد</h2>
+                    <p class="featured-author">مؤلفه: محمد بن عبد الوهاب</p>
+                    <p class="featured-description">
+                     كتاب التوحيد للإمام محمد بن عبد الوهاب (1703-1792م) هو أحد أبرز الكتب في العقيدة الإسلامية، حيث يعالج بأسلوب دقيق مسألة إفراد الله بالعبادة ونبذ الشرك بجميع صوره. يتكون الكتاب من 66 بابًا، يستند فيها المؤلف إلى القرآن الكريم، والأحاديث النبوية، وأقوال السلف الصالح، ويعرض المسائل بأسلوب واضح مدعوم بالأدلة، مما يجعله مرجعًا أساسيًا لفهم التوحيد الخالص.
+
+                    </p>
+                <button class="featured-btn" onclick="window.location.href='Moon/moon1.html'">اقرأ الآن</button>
+                </div>
+            </div>
+            
+            
+     
+
+         <!-- قسم التصنيفات المميز -->
+<section class="categories-section">
+    <h2 class="section-title">تفقه حسب التصنيف</h2>
+    <div class="categories-container">
+
+        <!-- تصنيف 1 -->
+        <a href="Moon/moon2.html" class="category-item">
+            <div class="category-icon">
+                <img src="https://i.pinimg.com/originals/b9/1e/11/b91e1131ca20f6369aa68d21cb3a8960.gif" alt="تنمية ذاتية">
+            </div>
+            <div class="category-name">مواعظ العلماء</div>
+            <div class="category-count">50</div>
+        </a>
+
+        <!-- تصنيف 2 -->
+        <a href="Moon/moon3.html" class="category-item">
+            <div class="category-icon">
+                <img src="https://i.pinimg.com/originals/25/7c/a5/257ca595dd14fb0f43ee592134af200f.gif" alt="علم نفس">
+            </div>
+            <div class="category-name">أخذ فكرة</div>
+            <div class="category-count">0</div>
+        </a>
+
+        <!-- تصنيف 3 -->
+        <a href="Moon/moon4.html" class="category-item">
+            <div class="category-icon">
+                <img src="https://i.pinimg.com/originals/54/37/de/5437ded68e0d3d23df07a7e01db37426.gif" alt="أعجبني">
+            </div>
+          
+            <div class="category-name">نزل كتبك</div>
+            <div class="category-count">0</div>
+        </a>
+
+        <!-- تصنيف 6 -->
+        <a href="Moon/moon5.html" class="category-item">
+            <div class="category-icon">
+                <img src="https://i.pinimg.com/originals/68/49/58/684958aab526a221805b0036275937b4.gif" alt="توضيح">
+            </div>
+            <div class="category-name">توضيح</div>
+            <div class="category-count">0</div>
+        </a>
+
+    </div>
+</section>
+   <!-- زر البحث العائم -->
+<div class="search-float" onclick="toggleSearch()">
+    <img src="https://www.emojiall.com/images/240/telegram/telemoji-november-2023/1f50e.gif" alt="بحث" style="width: 32px; height: 32px;">
+</div>
+
+<!-- نافذة البحث -->
+<div class="search-panel">
+    <div class="close-search" onclick="toggleSearch()">×</div>
+    <form class="search-form" onsubmit="return searchBooks()">
+        <input type="text" id="search-input" class="search-input" placeholder="ابحث عن كتاب، مؤلف، تصنيف..." oninput="searchBooks()">
+        <button type="button" class="reset-btn" onclick="resetSearch()">عودة</button>
+        <button type="submit" class="search-btn">
+            <img src="https://www.emojiall.com/images/240/telegram/telemoji-november-2023/1f50e.gif" alt="Search" style="width: 25px; height: 25px;">
+        </button>
+    </form>
+
+    <section class="books-showcase">
+    <a href="books/book1.html" class="book-card">
+        <img src="https://m.media-amazon.com/images/I/81IeD7RL-BL._UF1000,1000_QL80_FMwebp_.jpg" alt="غلاف الكتاب" class="book-cover">
+        <h3 class="book-title">الداء ودواء</h3>
+        <p class="book-author">ابن القيم الجوزية</p>
+    </a>
+
+    <a href="books/book2.html" class="book-card">
+        <img src="https://pbs.twimg.com/media/GXc4yy5XsAAT5sn?format=jpg&name=900x900" alt="غلاف الكتاب" class="book-cover">
+        <h3 class="book-title">رياض الصالحين</h3>
+        <p class="book-author">يحي بن شرف النووي الدمشقي أبو زكريا</p>
+    </a>
+
+    <a href="books/book3.html" class="book-card">
+        <img src="https://www.muslim-library.com/wp-content/uploads/2019/05/%D8%A5%D8%AD%D9%8A%D8%A7%D8%A1-%D8%B9%D9%84%D9%88%D9%85-%D8%A7%D9%84%D8%AF%D9%8A%D9%86.jpg" alt="غلاف الكتاب" class="book-cover">
+        <h3 class="book-title">احياء علوم الدين</h3>
+        <p class="book-author">ابو حامد الغزالي</p>
+    </a>
+
+    <a href="books/book4.html" class="book-card">
+        <img src="https://ia800307.us.archive.org/BookReader/BookReaderImages.php?zip=/2/items/sa71mir_gmail_20160529/%D8%A7%D9%84%D8%A8%D8%B1%D9%87%D8%A7%D9%86%20%D9%81%D9%8A%20%D8%B9%D9%84%D9%88%D9%85%20%D8%A7%D9%84%D9%82%D8%B1%D8%A2%D9%86%20%D9%84%D9%84%D8%B2%D8%B1%D9%83%D8%B4%D9%8A_jp2.zip&file=%D8%A7%D9%84%D8%A8%D8%B1%D9%87%D8%A7%D9%86%20%D9%81%D9%8A%20%D8%B9%D9%84%D9%88%D9%85%20%D8%A7%D9%84%D9%82%D8%B1%D8%A2%D9%86%20%D9%84%D9%84%D8%B2%D8%B1%D9%83%D8%B4%D9%8A_jp2/%D8%A7%D9%84%D8%A8%D8%B1%D9%87%D8%A7%D9%86%20%D9%81%D9%8A%20%D8%B9%D9%84%D9%88%D9%85%20%D8%A7%D9%84%D9%82%D8%B1%D8%A2%D9%86%20%D9%84%D9%84%D8%B2%D8%B1%D9%83%D8%B4%D9%8A_0000.jp2&id=sa71mir_gmail_20160529&scale=4&rotate=0" alt="غلاف الكتاب" class="book-cover">
+        <h3 class="book-title">البرهان في علوم القرآن</h3>
+        <p class="book-author">محمد بن عبد الله الزركشي بدر الدين</p>
+    </a>
+
+    <a href="books/book5.html" class="book-card">
+        <img src="/api/placeholder/200/300" alt="غلاف الكتاب" class="book-cover">
+        <h3 class="book-title">شر حاسد</h3>
+        <p class="book-author">عباس زكريا</p>
+    </a>
+
+    <a href="books/book6.html" class="book-card">
+        <img src="/api/placeholder/200/300" alt="غلاف الكتاب" class="book-cover">
+        <h3 class="book-title">فارض الغل</h3>
+        <p class="book-author">عباس زكريا</p>
+    </a>
+
+    <a href="books/book7.html" class="book-card">
+        <img src="/api/placeholder/200/300" alt="غلاف الكتاب" class="book-cover">
+        <h3 class="book-title">حنان الأموة</h3>
+        <p class="book-author">عباس زكريا</p>
+    </a>
+
+    <a href="books/book8.html" class="book-card">
+        <img src="/api/placeholder/200/300" alt="غلاف الكتاب" class="book-cover">
+        <h3 class="book-title">ليث القول</h3>
+        <p class="book-author">عباس زكريا</p>
+    </a>
+
+    <a href="books/book9.html" class="book-card">
+        <img src="/api/placeholder/200/300" alt="غلاف الكتاب" class="book-cover">
+        <h3 class="book-title">قطمير الباطل</h3>
+        <p class="book-author">عباس زكريا</p>
+    </a>
+</section>
+    <p id="no-results" style="display: none; color: red; text-align: center;">لم يتم العثور على نتائج</p>
+</div>
+
+<!-- نافذة التنبيه المخصصة -->
+<div class="custom-alert" id="customAlert" style="display: none;">
+    <p>يرجى إدخال كلمة للبحث!</p>    
+   <button onclick="closeAlert()">حسناً</but>
+  <script src="script.js"></script>  
+</div>
+           
+<section class="categories-section">
+    <h2 class="section-title">فواصل الكتب</h2>
+    <div class="categories-container">
+      
+           <!-- عرض الكتب بطريقة مميزة -->
+            <section class="books-showcase">
+                <!-- كتاب 1 -->
+                <div class="book-card">
+                    <div class="book-inner">
+                        <div class="book-front">
+                            <img src="https://m.media-amazon.com/images/I/81IeD7RL-BL._UF1000,1000_QL80_FMwebp_.jpg" alt="غلاف الكتاب" class="book-cover">
+                            <h3 class="book-title">الداء ودواء</h3>
+                            <p class="book-author">ابن القيم الجوزية</p>
+                        </div>
+                        <div class="book-back">
+                            <p class="book-description">
+                                كتاب -الداء والدواء-، المعروف أيضًا بـ -الجواب الكافي لمن سأل عن الدواء الشافي-، هو أحد مؤلفات الإمام ابن القيم الجوزية (691هـ - 751هـ)، حيث يغوص في أعماق النفس البشرية، محللًا المعاصي وأسبابها وآثارها، وموضحًا سبل الخلاص منها بتوجيهات مستقاة من القرآن الكريم والسنة النبوية. فهو مرجع نفيس في تزكية النفوس والإصلاح الروحي، يكشف آفات النفس الأمارة بالسوء، ويفضح سلطة الشهوات ومكائد الشيطان، محذرًا من الانجراف وراء الدنيا وزخرفها. ببلاغة وحكمة، يقدّم الكتاب دليلًا عمليًا للسالكين درب التوبة، مستنيرًا بالهدي الإلهي ليكون نبراسًا لكل من يبتغي صفاء القلب وقرب المولى.
+
+
+
+                            </p>
+                            <div class="book-actions">
+                                <button class="featured-btn"data-page="Pages/page1.html">اقرأ الآن</button>
+                                <button class="book-btn" onclick="openCategoryMenu('page1')">أضف للمفضلة</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- كتاب 2 -->
+                <div class="book-card">
+                    <div class="book-inner">
+                        <div class="book-front">
+                            <img src="https://pbs.twimg.com/media/GXc4yy5XsAAT5sn?format=jpg&name=900x900" alt="غلاف الكتاب" class="book-cover">
+                            <h3 class="book-title">رياض الصالحين</h3>
+                            <p class="book-author">يحي بن شرف النووي الدمشقي أبو زكريا</p>
+                        </div>
+                        <div class="book-back">
+                            <p class="book-description">
+                                كتاب -رياض الصالحين-، من تأليف الإمام يحيى بن شرف النووي الدمشقي (631هـ - 676هـ)، هو مؤلَّف يجمع بين دفتيه ما يقرب من ألفي حديث شريف، تغطي مختلف جوانب العقيدة والحياة. يُعتبر هذا الكتاب مرجعًا مهمًا في مجال التزكية والإصلاح النفسي والروحي، حيث يعرض الأحاديث مرتبة في أبواب وفصول، مما يسهل على القارئ الوصول إليها والاستفادة منها. 
+نال الكتاب قبولًا واسعًا بين المسلمين، ويُستخدم في المساجد والمجالس للتعليم والتذكير، مما يعكس نية المؤلف الصالحة وقصده النبيل في نفع الأمة. يُعد -رياض الصالحين- دليلًا عمليًا لكل من يسعى إلى التوبة والقرب من الله، حيث يقدم نصائح عملية مستمدة من القرآن الكريم والسنة النبوية لإصلاح النفوس والمجتمع.
+
+
+
+                            </p>
+                            <div class="book-actions">
+                                <button class="featured-btn"data-page="Pages/page2.html">اقرأ الآن</button>
+                                <button class="book-btn">أضف للمفضلة</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- كتاب 3 -->
+                <div class="book-card">
+                    <div class="book-inner">
+                        <div class="book-front">
+                            <img src="https://www.muslim-library.com/wp-content/uploads/2019/05/%D8%A5%D8%AD%D9%8A%D8%A7%D8%A1-%D8%B9%D9%84%D9%88%D9%85-%D8%A7%D9%84%D8%AF%D9%8A%D9%86.jpg" alt="غلاف الكتاب" class="book-cover">
+                            <h3 class="book-title">إحياء علوم الدين</h3> </h3>
+                            <p class="book-author">أبو حامد الغزالي</p>
+                        </div>
+                        <div class="book-back">
+                            <p class="book-description">
+                               يُعَدُّ كتاب -إحياء علوم الدين- للإمام أبي حامد الغزالي (450هـ - 505هـ) من أعظم المؤلفات في الفكر الإسلامي، حيث يسعى إلى إحياء العلوم الدينية واستجلاء مناهج الأئمة المتقدمين، مع التركيز على العلوم النافعة في الدين والتربية الروحية والأخلاق. فهو مرجع شامل يجمع بين الأخلاق والتربية والتصوف والعقيدة والفقه، مما جعله منبعًا للنفع والبركة بين العلماء والمشايخ وطلاب العلم. حظي الكتاب بقبول واسع بين المسلمين، واتخذوه في المساجد والمجالس نبراسًا للتعليم والتذكير، مما يعكس إخلاص مؤلفه وعمق أثره في الأمة. ومع ذلك، أشار بعض العلماء إلى وجود أحاديث ضعيفة وأخطاء محتملة، مما يستدعي قراءته بتمييز وتدقيق، لا سيما للمتخصصين. ورغم ذلك، يظل -إحياء علوم الدين- دليلًا عمليًا للساعين إلى التوبة والقرب من الله، حيث يفيض بنصائح مستمدة من القرآن والسنة لإصلاح النفوس والمجتمع.
+
+
+
+                            </p>
+                            <div class="book-actions">
+                                <button class="featured-btn"data-page="Pages/page3.html">اقرأ الآن</button>
+                                <button class="book-btn">أضف للمفضلة</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- كتاب 4 -->
+                <div class="book-card">
+                    <div class="book-inner">
+                        <div class="book-front">
+                            <img src="https://ia800307.us.archive.org/BookReader/BookReaderImages.php?zip=/2/items/sa71mir_gmail_20160529/%D8%A7%D9%84%D8%A8%D8%B1%D9%87%D8%A7%D9%86%20%D9%81%D9%8A%20%D8%B9%D9%84%D9%88%D9%85%20%D8%A7%D9%84%D9%82%D8%B1%D8%A2%D9%86%20%D9%84%D9%84%D8%B2%D8%B1%D9%83%D8%B4%D9%8A_jp2.zip&file=%D8%A7%D9%84%D8%A8%D8%B1%D9%87%D8%A7%D9%86%20%D9%81%D9%8A%20%D8%B9%D9%84%D9%88%D9%85%20%D8%A7%D9%84%D9%82%D8%B1%D8%A2%D9%86%20%D9%84%D9%84%D8%B2%D8%B1%D9%83%D8%B4%D9%8A_jp2/%D8%A7%D9%84%D8%A8%D8%B1%D9%87%D8%A7%D9%86%20%D9%81%D9%8A%20%D8%B9%D9%84%D9%88%D9%85%20%D8%A7%D9%84%D9%82%D8%B1%D8%A2%D9%86%20%D9%84%D9%84%D8%B2%D8%B1%D9%83%D8%B4%D9%8A_0000.jp2&id=sa71mir_gmail_20160529&scale=4&rotate=0" alt="غلاف الكتاب" class="book-cover">
+                            <h3 class="book-title">البرهان في علوم القرآن</h3>
+                            <p class="book-author">محمد بن عبد الله الزركشي بدر الدين</p>
+                        </div>
+                        <div class="book-back">
+                            <p class="book-description">
+                              يُعَدُّ كتاب -البرهان في علوم القرآن- للإمام بدر الدين الزركشي (ت. 794هـ) من أعظم المراجع في علوم القرآن، حيث جمع فيه سبعة وأربعين نوعًا من مباحثه، مستوعبًا دقائقها بأسلوب دقيق ومنهج محكم. وقد أُجمِع على نسبته إليه، وأشاد به الحافظ ابن حجر العسقلاني واصفًا إياه بأنه من أعجب الكتب وأبدعها، إذ أحاط بما نيف على أربعين علمًا من علوم القرآن، مما جعله مرجعًا موسوعيًا للباحثين وطلاب العلم، ومصدرًا لا غنى عنه في الدراسات القرآنية، حيث يُجلِّي أسرار التنزيل، ويكشف كنوز البيان، فيفيض علمًا ويزخر فقهًا، جامعًا بين دقة التأصيل وسعة الاستيعاب.
+
+
+                            </p>
+                            <div class="book-actions">
+                                <button class="featured-btn"data-page="Pages/page4.html">اقرأ الآن</button>
+                                <button class="book-btn">أضف للمفضلة</button>
+                          
+                            </div>                          
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+      
+            <!-- تذييل الصفحة -->
+            <footer>
+                <div class="footer-content">
+                    <div class="logo-footer">ZakBook</div>
+                    <p>كتب العرب منارةٌ للعلم، تجمع نفائس المصنفات، وتمد القارئ بعيون الأدب وروائع الفكر. هو دارٌ للمعرفة، لا يخبو سناها، ومجلسٌ للبيان، تُصاغ فيه الحروف دررًا.
+</p>
+               <footer class="footer">
+    <nav class="footer-nav">
+        <a href="index.html" class="glow-btn">الرئيسية</a>
+        <a href="Pages/books.html" class="glow-btn">الكتب</a>
+        <a href="Pages/categories.html" class="glow-btn">التصنيفات</a>
+        <a href="Pages/colod.html" class="glow-btn">عن الموقع</a>
+        <a href="Pages/contact.html" class="glow-btn">تواصل معنا</a>
+    </nav>
+
+    <div class="social-icons">
+        <a href="https://www.facebook.com" class="glow-btn facebook" target="_blank">F</a>
+        <a href="https://twitter.com" class="glow-btn twitter" target="_blank">T</a>
+        <a href="https://www.linkedin.com" class="glow-btn linkedin" target="_blank">in</a>
+        <a href="https://www.instagram.com" class="glow-btn instagram" target="_blank">IG</a>
+    </div>
+</footer>
+
+<script src="script.js"></script>  
+               
+               
+                    <p class="copyright">جميع الحقوق محفوظة &copy; 2025 ZakBook</p>
+                </div>
+            </footer>
+        </div>
+    </div>
+   
+  </body>
+</head>
+
+    
