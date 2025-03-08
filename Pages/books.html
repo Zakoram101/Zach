@@ -5,380 +5,396 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مكتبة الكتب الدينية</title>
     <style>
-     @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap');
 
-:root {
-    --primary-color: #2c3e50;
-    --accent-color: #e74c3c;
-    --light-color: #ecf0f1;
-    --dark-color: #34495e;
-    --gold-color: #f1c40f;
-    --font-main: 'Tajawal', sans-serif;
-}
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+            --gold-color: #f1c40f;
+            --font-main: 'Tajawal', sans-serif;
+        }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: var(--font-main);
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--font-main);
+        }
 
-body {
-    background-color: var(--light-color);
-    overflow-x: hidden;
-    position: relative;
-    padding: 20px;
-    direction: rtl;
-}
+        body {
+            background-color: var(--light-color);
+            overflow-x: hidden;
+            position: relative;
+            padding: 20px;
+            direction: rtl;
+        }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
-}
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
 
-/* العناصر التزيينية */
-.decoration {
-    position: fixed;
-    opacity: 0.05;
-    z-index: 0;
-}
+        /* العناصر التزيينية */
+        .decoration {
+            position: fixed;
+            opacity: 0.05;
+            z-index: 0;
+        }
 
-.deco1 {
-    top: 10%;
-    right: 5%;
-    width: 300px;
-    height: 300px;
-    background: var(--accent-color);
-    border-radius: 50%;
-}
+        .deco1 {
+            top: 10%;
+            right: 5%;
+            width: 300px;
+            height: 300px;
+            background: var(--accent-color);
+            border-radius: 50%;
+        }
 
-.deco2 {
-    bottom: 10%;
-    left: 5%;
-    width: 200px;
-    height: 200px;
-    background: var(--primary-color);
-    border-radius: 50%;
-}
+        .deco2 {
+            bottom: 10%;
+            left: 5%;
+            width: 200px;
+            height: 200px;
+            background: var(--primary-color);
+            border-radius: 50%;
+        }
 
-.deco3 {
-    top: 40%;
-    left: 10%;
-    width: 150px;
-    height: 150px;
-    background: var(--gold-color);
-    border-radius: 50%;
-}
+        .deco3 {
+            top: 40%;
+            left: 10%;
+            width: 150px;
+            height: 150px;
+            background: var(--gold-color);
+            border-radius: 50%;
+        }
 
-.islamic-pattern {
-    position: fixed;
-    z-index: 0;
-    opacity: 0.03;
-    background-size: cover;
-    background-repeat: no-repeat;
-}
+        .islamic-pattern {
+            position: fixed;
+            z-index: 0;
+            opacity: 0.03;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
 
-.pattern1 {
-    top: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M0,0 L100,0 L100,100 L0,100 Z" fill="none" stroke="%232c3e50" stroke-width="1"/><path d="M50,0 L50,100 M0,50 L100,50" stroke="%232c3e50" stroke-width="0.5"/><circle cx="50" cy="50" r="40" fill="none" stroke="%232c3e50" stroke-width="0.5"/></svg>');
-}
+        .pattern1 {
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M0,0 L100,0 L100,100 L0,100 Z" fill="none" stroke="%232c3e50" stroke-width="1"/><path d="M50,0 L50,100 M0,50 L100,50" stroke="%232c3e50" stroke-width="0.5"/><circle cx="50" cy="50" r="40" fill="none" stroke="%232c3e50" stroke-width="0.5"/></svg>');
+        }
 
-.light-effect {
-    position: fixed;
-    width: 700px;
-    height: 700px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%);
-    pointer-events: none;
-    z-index: 0;
-    transform: translate(-50%, -50%);
-}
+        .light-effect {
+            position: fixed;
+            width: 700px;
+            height: 700px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%);
+            pointer-events: none;
+            z-index: 0;
+            transform: translate(-50%, -50%);
+        }
 
-/* الهيدر */
-header {
-    text-align: center;
-    margin-bottom: 40px;
-    padding: 40px 20px;
-    color: white;
-    border-radius: 15px;
-    box-shadow: 0 5px 25px rgba(0,0,0,0.2);
-    position: relative;
-    overflow: hidden;
-}
+        /* الهيدر */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 20px;
+            color: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
 
-.header-bg {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
-    z-index: -1;
-}
+        .header-bg {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+            z-index: -1;
+        }
 
-header h1 {
-    font-size: 2.8rem;
-    margin-bottom: 15px;
-    color: white;
-    position: relative;
-}
+        header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            color: white;
+            position: relative;
+        }
 
-header h1::after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    right: 50%;
-    transform: translateX(50%);
-    width: 100px;
-    height: 3px;
-    background-color: var(--accent-color);
-}
+        header h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            right: 50%;
+            transform: translateX(50%);
+            width: 100px;
+            height: 3px;
+            background-color: var(--accent-color);
+        }
 
-.subtitle {
-    font-size: 1.2rem;
-    font-weight: 400;
-    color: var(--light-color);
-    opacity: 0.8;
-}
+        .subtitle {
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: var(--light-color);
+            opacity: 0.8;
+        }
 
-/* شبكة الكتب */
-.book-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 30px;
-    margin-bottom: 40px;
-}
+        /* شبكة الكتب */
+        .book-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
 
-.book-item {
-    background-color: white;
-    border-radius: 15px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    transition: all 0.3s ease;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    position: relative;
-}
+        .book-item {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+        }
 
-.book-item:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-}
+        .book-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
 
-.book-cover {
-    width: 120px;
-    height: 160px;
-    background: linear-gradient(135deg, var(--dark-color), var(--primary-color));
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
+        .book-cover {
+            width: 120px;
+            height: 160px;
+            background: linear-gradient(135deg, var(--dark-color), var(--primary-color));
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
 
-.book-icon {
-    font-size: 3rem;
-}
+        .book-icon {
+            font-size: 3rem;
+        }
 
-.book-info {
-    text-align: center;
-    width: 100%;
-}
+        .book-info {
+            text-align: center;
+            width: 100%;
+        }
 
-.book-title {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: var(--dark-color);
-    margin-bottom: 5px;
-}
+        .book-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--dark-color);
+            margin-bottom: 5px;
+        }
 
-.book-author {
-    font-size: 0.9rem;
-    color: var(--accent-color);
-    margin-bottom: 15px;
-}
+        .book-author {
+            font-size: 0.9rem;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+        }
 
-.download-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--primary-color);
-    color: white;
-    text-decoration: none;
-    padding: 10px 20px;
-    border-radius: 25px;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-    width: 80%;
-    margin-top: 10px;
-}
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            width: 80%;
+            margin-top: 10px;
+            border: none;
+            cursor: pointer;
+        }
 
-.download-btn:hover {
-    background-color: var(--accent-color);
-}
+        .download-btn:hover {
+            background-color: var(--accent-color);
+        }
 
-.download-icon {
-    margin-right: 8px;
-    font-size: 1.1rem;
-}
+        .download-icon {
+            margin-right: 8px;
+            font-size: 1.1rem;
+        }
 
-/* نافذة التحميل المنبثقة */
-.download-popup {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-color: rgba(0,0,0,0.7);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 999;
-}
+        /* نافذة التحميل المنبثقة */
+        .download-popup {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background-color: rgba(0,0,0,0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
 
-.popup-content {
-    background-color: white;
-    border-radius: 15px;
-    padding: 40px;
-    text-align: center;
-    position: relative;
-    max-width: 400px;
-    width: 90%;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    animation: popupFadeIn 0.3s ease forwards;
-}
+        .popup-content {
+            background-color: white;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: popupFadeIn 0.3s ease forwards;
+        }
 
-@keyframes popupFadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+        @keyframes popupFadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-.close-popup {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    font-size: 1.5rem;
-    color: var(--dark-color);
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
+        .close-popup {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            color: var(--dark-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
 
-.close-popup:hover {
-    color: var(--accent-color);
-}
+        .close-popup:hover {
+            color: var(--accent-color);
+        }
 
-.popup-icon {
-    font-size: 3rem;
-    margin-bottom: 20px;
-    color: var(--primary-color);
-}
+        .popup-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
 
-.popup-title {
-    font-size: 1.3rem;
-    color: var(--dark-color);
-    margin-bottom: 15px;
-}
+        .popup-title {
+            font-size: 1.3rem;
+            color: var(--dark-color);
+            margin-bottom: 15px;
+        }
 
-.popup-message {
-    font-size: 0.9rem;
-    color: var(--dark-color);
-    margin-bottom: 25px;
-    opacity: 0.7;
-}
+        .popup-message {
+            font-size: 0.9rem;
+            color: var(--dark-color);
+            margin-bottom: 25px;
+            opacity: 0.7;
+        }
 
-.direct-download-btn {
-    background-color: var(--accent-color);
-    color: white;
-    border: none;
-    padding: 12px 30px;
-    border-radius: 25px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    width: 100%;
-}
+        #downloadMessage {
+            margin: 15px 0;
+            font-size: 0.9rem;
+            color: var(--dark-color);
+        }
 
-.direct-download-btn:hover {
-    background-color: var(--primary-color);
-    transform: translateY(-3px);
-}
+        #progressContainer {
+            width: 100%;
+            height: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
 
-/* تجاوب الموقع مع أحجام الشاشات المختلفة */
-@media (max-width: 768px) {
-    .book-grid {
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-        gap: 20px;
-    }
+        #progressBar {
+            height: 100%;
+            width: 0%;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
 
-    header h1 {
-        font-size: 2rem;
-    }
+        #startDownload {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
 
-    .subtitle {
-        font-size: 1rem;
-    }
-    
-    .book-item {
-        padding: 15px;
-    }
-    
-    .book-cover {
-        width: 100px;
-        height: 140px;
-    }
-    
-    .book-title {
-        font-size: 1.1rem;
-    }
-}
+        #startDownload:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-3px);
+        }
 
-@media (max-width: 480px) {
-    .book-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .popup-content {
-        padding: 30px 20px;
-    }
-}
+        /* تجاوب الموقع مع أحجام الشاشات المختلفة */
+        @media (max-width: 768px) {
+            .book-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+                gap: 20px;
+            }
 
-/* تأثيرات إضافية لتحسين تجربة المستخدم */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+            header h1 {
+                font-size: 2rem;
+            }
 
-.book-item {
-    animation: fadeIn 0.5s ease forwards;
-}
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .book-item {
+                padding: 15px;
+            }
+            
+            .book-title {
+                font-size: 1.1rem;
+            }
+        }
 
-/* تأخير تحميل الكتب بشكل متتابع */
-.book-grid .book-item:nth-child(1) { animation-delay: 0.05s; }
-.book-grid .book-item:nth-child(2) { animation-delay: 0.1s; }
-.book-grid .book-item:nth-child(3) { animation-delay: 0.15s; }
-.book-grid .book-item:nth-child(4) { animation-delay: 0.2s; }
-.book-grid .book-item:nth-child(5) { animation-delay: 0.25s; }
-.book-grid .book-item:nth-child(6) { animation-delay: 0.3s; }
-.book-grid .book-item:nth-child(7) { animation-delay: 0.35s; }
-.book-grid .book-item:nth-child(8) { animation-delay: 0.4s; }
-.book-grid .book-item:nth-child(9) { animation-delay: 0.45s; }
-.book-grid .book-item:nth-child(10) { animation-delay: 0.5s; }
-.book-grid .book-item:nth-child(11) { animation-delay: 0.55s; }
-.book-grid .book-item:nth-child(12) { animation-delay: 0.6s; }
-.book-grid .book-item:nth-child(13) { animation-delay: 0.65s; }
-.book-grid .book-item:nth-child(14) { animation-delay: 0.7s; }
-.book-grid .book-item:nth-child(15) { animation-delay: 0.75s; }
-</style>
+        @media (max-width: 480px) {
+            .book-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .popup-content {
+                padding: 30px 20px;
+            }
+        }
 
-       
+        /* تأثيرات إضافية لتحسين تجربة المستخدم */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .book-item {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        /* تأخير تحميل الكتب بشكل متتابع */
+        .book-grid .book-item:nth-child(1) { animation-delay: 0.05s; }
+        .book-grid .book-item:nth-child(2) { animation-delay: 0.1s; }
+        .book-grid .book-item:nth-child(3) { animation-delay: 0.15s; }
+        .book-grid .book-item:nth-child(4) { animation-delay: 0.2s; }
+        .book-grid .book-item:nth-child(5) { animation-delay: 0.25s; }
+        .book-grid .book-item:nth-child(6) { animation-delay: 0.3s; }
+        .book-grid .book-item:nth-child(7) { animation-delay: 0.35s; }
+        .book-grid .book-item:nth-child(8) { animation-delay: 0.4s; }
+        .book-grid .book-item:nth-child(9) { animation-delay: 0.45s; }
+        .book-grid .book-item:nth-child(10) { animation-delay: 0.5s; }
+        .book-grid .book-item:nth-child(11) { animation-delay: 0.55s; }
+        .book-grid .book-item:nth-child(12) { animation-delay: 0.6s; }
+        .book-grid .book-item:nth-child(13) { animation-delay: 0.65s; }
+        .book-grid .book-item:nth-child(14) { animation-delay: 0.7s; }
+    </style>
 </head>
 <body>
     <!-- العناصر التزيينية -->
@@ -386,345 +402,202 @@ header h1::after {
     <div class="decoration deco2"></div>
     <div class="decoration deco3"></div>
     <div class="islamic-pattern pattern1"></div>
-    <div class="islamic-pattern pattern2"></div>
-    <div class="light-effect" id="light"></div>
     
     <div class="container">
         <header>
             <div class="header-bg"></div>
             <h1>مكتبة الكتب الدينية</h1>
-            <p class="subtitle">نزل كتبك في مكتبتك الشاملة</p>
+            <p class="subtitle">نزّل كتبك في مكتبتك الشاملة</p>
         </header>
         
         <div class="book-grid">
-            <!-- كتاب 15 -->
+            <!-- كتاب 1 -->
             <div class="book-item">
-                <div class="book-cover">
-                    <div class="book-icon">
-                        <img src="https://em-content.zobj.net/source/telegram/386/books_1f4da.webp" alt="كتاب" style="width: 94px; height: 94px;">
-                    </div>
-                </div>
                 <div class="book-info">
                     <h3 class="book-title">الداء والدواء</h3>
                     <p class="book-author">ابن القيم الجوزية</p>
-                    <a href="#" class="download-btn" data-book="الداء والدواء" data-author="ابن القيم الجوزية" data-file="aldaawaaldawaa.pdf">
+                    <button class="download-btn" data-book="الداء والدواء" data-author="ابن القيم الجوزية" data-file="الداء والدواء.pdf">
                         تحميل مباشر
-                        <img src="https://em-content.zobj.net/source/telegram/386/open-book_1f4d6.webp" 
-                             class="download-icon" 
-                             alt="Download" 
-                             style="width: 24px; height: 24px;">
-                    </a>
+                    </button>
                 </div>    
             </div>
 
-            <!-- كتاب 16 -->
+            <!-- كتاب 2 -->
             <div class="book-item">
-                <div class="book-cover">
-                    <div class="book-icon">
-                        <img src="https://em-content.zobj.net/source/telegram/386/books_1f4da.webp" alt="كتاب" style="width: 94px; height: 94px;">
-                    </div>
-                </div>
                 <div class="book-info">
                     <h3 class="book-title">رسائل إخوان الصفا</h3>
                     <p class="book-author">إخوان الصفا</p>
-                    <a href="#" class="download-btn" data-book="رسائل إخوان الصفا" data-author="إخوان الصفا" data-file="rasaelihwanalsafa.pdf">
+                    <button class="download-btn" data-book="رسائل إخوان الصفا" data-author="إخوان الصفا" data-file="رسائل إخوان الصفا.pdf">
                         تحميل مباشر
-                        <img src="https://em-content.zobj.net/source/telegram/386/open-book_1f4d6.webp" 
-                             class="download-icon" 
-                             alt="Download" 
-                             style="width: 24px; height: 24px;">
-                    </a>
+                    </button>
                 </div>    
             </div>
 
-            <!-- كتاب 17 -->
+            <!-- كتاب 3 -->
             <div class="book-item">
-                <div class="book-cover">
-                    <div class="book-icon">
-                        <img src="https://em-content.zobj.net/source/telegram/386/books_1f4da.webp" alt="كتاب" style="width: 94px; height: 94px;">
-                    </div>
-                </div>
                 <div class="book-info">
                     <h3 class="book-title">الإشارات والتنبيهات</h3>
                     <p class="book-author">ابن سينا</p>
-                    <a href="#" class="download-btn" data-book="الإشارات والتنبيهات" data-author="ابن سينا" data-file="alisharatwaltanbihat.pdf">
+                    <button class="download-btn" data-book="الإشارات والتنبيهات" data-author="ابن سينا" data-file="الإشارات والتنبيهات.pdf">
                         تحميل مباشر
-                        <img src="https://em-content.zobj.net/source/telegram/386/open-book_1f4d6.webp" 
-                             class="download-icon" 
-                             alt="Download" 
-                             style="width: 24px; height: 24px;">
-                    </a>
+                    </button>
                 </div>    
             </div>
 
-            <!-- كتاب 18 -->
+            <!-- كتاب 4 -->
             <div class="book-item">
-                <div class="book-cover">
-                    <div class="book-icon">
-                        <img src="https://em-content.zobj.net/source/telegram/386/books_1f4da.webp" alt="كتاب" style="width: 94px; height: 94px;">
-                    </div>
-                </div>
                 <div class="book-info">
                     <h3 class="book-title">النجاة</h3>
                     <p class="book-author">ابن سينا</p>
-                    <a href="#" class="download-btn" data-book="النجاة" data-author="ابن سينا" data-file="alnajat.pdf">
+                    <button class="download-btn" data-book="النجاة" data-author="ابن سينا" data-file="النجاة.pdf">
                         تحميل مباشر
-                        <img src="https://em-content.zobj.net/source/telegram/386/open-book_1f4d6.webp" 
-                             class="download-icon" 
-                             alt="Download" 
-                             style="width: 24px; height: 24px;">
-                    </a>
+                    </button>
                 </div>    
             </div>
 
-            <!-- كتاب 19 -->
+            <!-- كتاب 5 -->
             <div class="book-item">
-                <div class="book-cover">
-                    <div class="book-icon">
-                        <img src="https://em-content.zobj.net/source/telegram/386/books_1f4da.webp" alt="كتاب" style="width: 94px; height: 94px;">
-                    </div>
-                </div>
                 <div class="book-info">
                     <h3 class="book-title">القانون في الطب</h3>
                     <p class="book-author">ابن سينا</p>
-                    <a href="#" class="download-btn" data-book="القانون في الطب" data-author="ابن سينا" data-file="alqanunfialtibb.pdf">
+                    <button class="download-btn" data-book="القانون في الطب" data-author="ابن سينا" data-file="القانون في الطب.pdf">
                         تحميل مباشر
-                        <img src="https://em-content.zobj.net/source/telegram/386/open-book_1f4d6.webp" 
-                             class="download-icon" 
-                             alt="Download" 
-                             style="width: 24px; height: 24px;">
-                    </a>
+                    </button>
                 </div>    
             </div>
 
-            <!-- كتاب 20 -->
+            <!-- كتاب 6 -->
             <div class="book-item">
-                <div class="book-cover">
-                    <div class="book-icon">
-                        <img src="https://em-content.zobj.net/source/telegram/386/books_1f4da.webp" alt="كتاب" style="width: 94px; height: 94px;">
-                    </div>
-                </div>
                 <div class="book-info">
                     <h3 class="book-title">رسالة الغفران</h3>
                     <p class="book-author">أبو العلاء المعري</p>
-                    <a href="#" class="download-btn" data-book="رسالة الغفران" data-author="أبو العلاء المعري" data-file="risalatalghufran.pdf">
+                    <button class="download-btn" data-book="رسالة الغفران" data-author="أبو العلاء المعري" data-file="رسالة الغفران.pdf">
                         تحميل مباشر
-                        <img src="https://em-content.zobj.net/source/telegram/386/open-book_1f4d6.webp" 
-                             class="download-icon" 
-                             alt="Download" 
-                             style="width: 24px; height: 24px;">
-                    </a>
+                    </button>
                 </div>    
             </div>
 
-            <!-- كتاب 21 -->
+            <!-- كتاب 7 -->
             <div class="book-item">
-                <div class="book-cover">
-                    <div class="book-icon">
-                        <img src="https://em-content.zobj.net/source/telegram/386/books_1f4da.webp" alt="كتاب" style="width: 94px; height: 94px;">
-                    </div>
-                </div>
                 <div class="book-info">
                     <h3 class="book-title">حي بن يقظان</h3>
                     <p class="book-author">ابن طفيل</p>
-                    <a href="#" class="download-btn" data-book="حي بن يقظان" data-author="ابن طفيل" data-file="hayibnyaqdhan.pdf">
+                    <button class="download-btn" data-book="حي بن يقظان" data-author="ابن طفيل" data-file="حي بن يقظان.pdf">
                         تحميل مباشر
-                        <img src="https://em-content.zobj.net/source/telegram/386/open-book_1f4d6.webp" 
-                             class="download-icon" 
-                             alt="Download" 
-                             style="width: 24px; height: 24px;">
-                    </a>
+                    </button>
                 </div>    
             </div>
 
-            <!-- كتاب 22 -->
+            <!-- كتاب 8 -->
             <div class="book-item">
-                <div class="book-cover">
-                    <div class="book-icon">
-                        <img src="https://em-content.zobj.net/source/telegram/386/books_1f4da.webp" alt="كتاب" style="width: 94px; height: 94px;">
-                    </div>
-                </div>
                 <div class="book-info">
                     <h3 class="book-title">المقدمة</h3>
                     <p class="book-author">ابن خلدون</p>
-                    <a href="#" class="download-btn" data-book="المقدمة" data-author="ابن خلدون" data-file="almuqaddimah.pdf">
+                    <button class="download-btn" data-book="المقدمة" data-author="ابن خلدون" data-file="المقدمة.pdf">
                         تحميل مباشر
-                        <img src="https://em-content.zobj.net/source/telegram/386/open-book_1f4d6.webp" 
-                             class="download-icon" 
-                             alt="Download" 
-                             style="width: 24px; height: 24px;">
-                    </a>
+                    </button>
                 </div>    
             </div>
 
-            <!-- كتاب 23 -->
+            <!-- كتاب 9 -->
             <div class="book-item">
-                <div class="book-cover">
-                    <div class="book-icon">
-                        <img src="https://em-content.zobj.net/source/telegram/386/books_1f4da.webp" alt="كتاب" style="width: 94px; height: 94px;">
-                    </div>
-                </div>
                 <div class="book-info">
                     <h3 class="book-title">تاريخ ابن خلدون</h3>
                     <p class="book-author">ابن خلدون</p>
-                    <a href="#" class="download-btn" data-book="تاريخ ابن خلدون" data-author="ابن خلدون" data-file="tarikhikhaldun.pdf">
+                    <button class="download-btn" data-book="تاريخ ابن خلدون" data-author="ابن خلدون" data-file="تاريخ ابن خلدون.pdf">
                         تحميل مباشر
-                        <img src="https://em-content.zobj.net/source/telegram/386/open-book_1f4d6.webp" 
-                             class="download-icon" 
-                             alt="Download" 
-                             style="width: 24px; height: 24px;">
-                    </a>
+                    </button>
                 </div>    
             </div>
 
-            <!-- كتاب 24 -->
+            <!-- كتاب 10 -->
             <div class="book-item">
-                <div class="book-cover">
-                    <div class="book-icon">
-                        <img src="https://em-content.zobj.net/source/telegram/386/books_1f4da.webp" alt="كتاب" style="width: 94px; height: 94px;">
-                    </div>
-                </div>
                 <div class="book-info">
                     <h3 class="book-title">المستطرف في كل فن مستظرف</h3>
                     <p class="book-author">الأبشيهي</p>
-                    <a href="#" class="download-btn" data-book="المستطرف في كل فن مستظرف" data-author="الأبشيهي" data-file="almustatraffikulfan.pdf">
+                    <button class="download-btn" data-book="المستطرف في كل فن مستظرف" data-author="الأبشيهي" data-file="المستطرف في كل فن مستظرف.pdf">
                         تحميل مباشر
-                        <img src="https://em-content.zobj.net/source/telegram/386/open-book_1f4d6.webp" 
-                             class="download-icon" 
-                             alt="Download" 
-                             style="width: 24px; height: 24px;">
-                    </a>
+                    </button>
                 </div>    
             </div>
 
-            <!-- كتاب 25 -->
+            <!-- كتاب 11 -->
             <div class="book-item">
-                <div class="book-cover">
-                    <div class="book-icon">
-                        <img src="https://em-content.zobj.net/source/telegram/386/books_1f4da.webp" alt="كتاب" style="width: 94px; height: 94px;">
-                    </div>
-                </div>
                 <div class="book-info">
                     <h3 class="book-title">ألف ليلة وليلة</h3>
                     <p class="book-author">مجهول</p>
-                    <a href="#" class="download-btn" data-book="ألف ليلة وليلة" data-author="مجهول" data-file="alflayla.pdf">
+                    <button class="download-btn" data-book="ألف ليلة وليلة" data-author="مجهول" data-file="ألف ليلة وليلة.pdf">
                         تحميل مباشر
-                        <img src="https://em-content.zobj.net/source/telegram/386/open-book_1f4d6.webp" 
-                             class="download-icon" 
-                             alt="Download" 
-                             style="width: 24px; height: 24px;">
-                    </a>
+                    </button>
                 </div>    
             </div>
 
-            <!-- كتاب 26 -->
+            <!-- كتاب 12 -->
             <div class="book-item">
-                <div class="book-cover">
-                    <div class="book-icon">
-                        <img src="https://em-content.zobj.net/source/telegram/386/books_1f4da.webp" alt="كتاب" style="width: 94px; height: 94px;">
-                    </div>
-                </div>
                 <div class="book-info">
                     <h3 class="book-title">صبح الأعشى</h3>
                     <p class="book-author">القلقشندي</p>
-                    <a href="#" class="download-btn" data-book="صبح الأعشى" data-author="القلقشندي" data-file="subhalasha.pdf">
+                    <button class="download-btn" data-book="صبح الأعشى" data-author="القلقشندي" data-file="صبح الأعشى.pdf">
                         تحميل مباشر
-                        <img src="https://em-content.zobj.net/source/telegram/386/open-book_1f4d6.webp" 
-                             class="download-icon" 
-                             alt="Download" 
-                             style="width: 24px; height: 24px;">
-                    </a>
+                    </button>
                 </div>    
             </div>
 
-            <!-- كتاب 27 -->
+            <!-- كتاب 13 -->
             <div class="book-item">
-                <div class="book-cover">
-                    <div class="book-icon">
-                        <img src="https://em-content.zobj.net/source/telegram/386/books_1f4da.webp" alt="كتاب" style="width: 94px; height: 94px;">
-                    </div>
-                </div>
                 <div class="book-info">
                     <h3 class="book-title">نفح الطيب</h3>
                     <p class="book-author">المقري التلمساني</p>
-                    <a href="#" class="download-btn" data-book="نفح الطيب" data-author="المقري التلمساني" data-file="nafhaltib.pdf">
+                    <button class="download-btn" data-book="نفح الطيب" data-author="المقري التلمساني" data-file="نفح الطيب.pdf">
                         تحميل مباشر
-                        <img src="https://em-content.zobj.net/source/telegram/386/open-book_1f4d6.webp" 
-                             class="download-icon" 
-                             alt="Download" 
-                             style="width: 24px; height: 24px;">
-                    </a>
+                    </button>
                 </div>    
             </div> 
                     
-            <!-- كتاب 28 -->
+            <!-- كتاب 14 -->
             <div class="book-item">
-                <div class="book-cover">
-                    <div class="book-icon">
-                        <img src="https://em-content.zobj.net/source/telegram/386/books_1f4da.webp" alt="كتاب" style="width: 94px; height: 94px;">
-                    </div>
-                </div>
                 <div class="book-info">
                     <h3 class="book-title">تهذيب الأخلاق</h3>
                     <p class="book-author">ابن مسكويه</p>
-                    <a href="#" class="download-btn" data-book="تهذيب الأخلاق" data-author="ابن مسكويه" data-file="tatheebalakhlaq.pdf">
+                    <button class="download-btn" data-book="تهذيب الأخلاق" data-author="ابن مسكويه" data-file="تهذيب الأخلاق.pdf">
                         تحميل مباشر
-                        <img src="https://em-content.zobj.net/source/telegram/386/open-book_1f4d6.webp" 
-                             class="download-icon" 
-                             alt="Download" 
-                             style="width: 24px; height: 24px;">
-                    </a>
+                    </button>
                 </div>
             </div>
         </div>
     </div>
     
     <!-- نافذة التحميل المنبثقة -->
-    <div class="download-popup" id="downloadPopup">
+    <div id="downloadPopup" class="download-popup">
         <div class="popup-content">
-            <span class="close-popup" id="closePopup">×</span>
-            <div class="popup-icon">
-                <img src="https://em-content.zobj.net/source/telegram/386/key_1f511.webp" alt="تحميل" style="width: 64px; height: 64px;">
+            <span id="closePopup" class="close-popup">×</span>
+            <h3 id="popupBookTitle" class="popup-title">عنوان الكتاب</h3>
+            <p id="downloadMessage">جاري تحضير الملف للتحميل...</p>
+            <div id="progressContainer">
+                <div id="progressBar"></div>
             </div>
-            <h3 class="popup-title" id="popupBookTitle">عنوان الكتاب</h3>
-            <p class="popup-message" id="downloadMessage">جاري تحضير الملف للتحميل...</p>
-            <div class="progress-container" id="progressContainer">
-                <div class="progress-bar" id="progressBar"></div>
-            </div>
-            <button class="direct-download-btn" id="startDownload">بدء التحميل</button>
+            <button id="startDownload">بدء التحميل</button>
         </div>
     </div>
-    
-    <!-- iframe خفي للتحميل -->
-    <iframe id="downloadFrame" style="display:none;"></iframe>
     
     <script>
         // تخزين روابط الكتب
         const bookLinks = {
-            'aldaawaaldawaa.pdf': 'https://www.mediafire.com/file/7350862yzid831o/Zakbook.com++الداء+والدواء+(1).pdf/file',
-            'rasaelihwanalsafa.pdf': 'https://www.mediafire.com/file/rasaelihwanalsafa.pdf/file',
-            'alisharatwaltanbihat.pdf': 'https://www.mediafire.com/file/alisharatwaltanbihat.pdf/file',
-            'alnajat.pdf': 'https://www.mediafire.com/file/alnajat.pdf/file',
-            'alqanunfialtibb.pdf': 'https://www.mediafire.com/file/alqanunfialtibb.pdf/file',
-            'risalatalghufran.pdf': 'https://www.mediafire.com/file/risalatalghufran.pdf/file',
-            'hayibnyaqdhan.pdf': 'https://www.mediafire.com/file/hayibnyaqdhan.pdf/file',
-            'almuqaddimah.pdf': 'https://www.mediafire.com/file/almuqaddimah.pdf/file',
-            'tarikhikhaldun.pdf': 'https://www.mediafire.com/file/tarikhikhaldun.pdf/file',
-            'almustatraffikulfan.pdf': 'https://www.mediafire.com/file/almustatraffikulfan.pdf/file',
-            'alflayla.pdf': 'https://www.mediafire.com/file/alflayla.pdf/file',
-            'subhalasha.pdf': 'https://www.mediafire.com/file/subhalasha.pdf/file',
-            'nafhaltib.pdf': 'https://www.mediafire.com/file/nafhaltib.pdf/file',
-            'tatheebalakhlaq.pdf': 'https://www.mediafire.com/file/tatheebalakhlaq.pdf/file'
+            'الداء والدواء.pdf': 'https://zakoram101.github.io/Zach/Book/الداء والدواء.pdf',
+            'رسائل إخوان الصفا.pdf': 'https://zakoram101.github.io/Zach/Book/رسائل إخوان الصفا.pdf',
+            'الإشارات والتنبيهات.pdf': 'https://zakoram101.github.io/Zach/Book/الإشارات والتنبيهات.pdf',
+            'النجاة.pdf': 'https://zakoram101.github.io/Zach/Book/النجاة.pdf',
+            'القانون في الطب.pdf': 'https://zakoram101.github.io/Zach/Book/القانون في الطب.pdf',
+            'رسالة الغفران.pdf': 'https://zakoram101.github.io/Zach/Book/رسالة الغفران.pdf',
+            'حي بن يقظان.pdf': 'https://zakoram101.github.io/Zach/Book/حي بن يقظان.pdf',
+            'المقدمة.pdf': 'https://zakoram101.github.io/Zach/Book/المقدمة.pdf',
+            'تاريخ ابن خلدون.pdf': 'https://zakoram101.github.io/Zach/Book/تاريخ ابن خلدون.pdf',
+            'المستطرف في كل فن مستظرف.pdf': 'https://zakoram101.github.io/Zach/Book/المستطرف في كل فن مستظرف.pdf',
+            'ألف ليلة وليلة.pdf': 'https://zakoram101.github.io/Zach/Book/ألف ليلة وليلة.pdf',
+            'صبح الأعشى.pdf': 'https://zakoram101.github.io/Zach/Book/صبح الأعشى.pdf',
+            'نفح الطيب.pdf': 'https://zakoram101.github.io/Zach/Book/نفح الطيب.pdf',
+            'تهذيب الأخلاق.pdf': 'https://zakoram101.github.io/Zach/Book/تهذيب الأخلاق.pdf'
         };
-        
-        // إضافة تأثير الضوء المتحرك
-        document.addEventListener('mousemove', function(e) {
-            const light = document.getElementById('light');
-            if (light) {
-                light.style.top = (e.clientY - 350) + 'px';
-                light.style.right = (e.clientX - 350) + 'px';
-            }
-        });
         
         // تفعيل نافذة التحميل المنبثقة
         document.addEventListener('DOMContentLoaded', function() {
@@ -733,7 +606,6 @@ header h1::after {
             const closePopup = document.getElementById('closePopup');
             const popupBookTitle = document.getElementById('popupBookTitle');
             const startDownloadBtn = document.getElementById('startDownload');
-            const downloadFrame = document.getElementById('downloadFrame');
             const downloadMessage = document.getElementById('downloadMessage');
             const progressContainer = document.getElementById('progressContainer');
             const progressBar = document.getElementById('progressBar');
@@ -752,7 +624,7 @@ header h1::after {
                     downloadPopup.style.display = 'flex';
                     
                     // إخفاء شريط التقدم في البداية
-                    progressContainer.style.display = 'none';
+                    progressContainer.style.display = 'block';
                     progressBar.style.width = '0%';
                     downloadMessage.textContent = 'جاري تحضير الملف للتحميل...';
                     startDownloadBtn.style.display = 'block';
@@ -764,26 +636,21 @@ header h1::after {
                 downloadPopup.style.display = 'none';
             });
             
-            // إغلاق النافذة عند النقر خارجها
-            downloadPopup.addEventListener('click', function(e) {
-                if (e.target === downloadPopup) {
-                    downloadPopup.style.display = 'none';
-                }
-            });
-            
             // تفعيل زر التحميل المباشر
             startDownloadBtn.addEventListener('click', function() {
-                if (!currentBookFile || !bookLinks[currentBookFile]) {
+                // التحقق من وجود الملف
+                const fileUrl = bookLinks[currentBookFile];
+                if (!currentBookFile || !fileUrl) {
                     downloadMessage.textContent = 'حدث خطأ في التحميل، يرجى المحاولة مرة أخرى';
                     return;
                 }
                 
-                // إظهار شريط التقدم وإخفاء زر التحميل
-                progressContainer.style.display = 'block';
+                // إخفاء زر التحميل وإظهار شريط التقدم
                 startDownloadBtn.style.display = 'none';
+                progressContainer.style.display = 'block';
                 downloadMessage.textContent = 'جاري تحميل الكتاب...';
                 
-                // محاكاة عملية التحميل
+                // محاكاة عملية التحميل مع تقدم واقعي
                 let progress = 0;
                 const interval = setInterval(() => {
                     progress += Math.random() * 10;
@@ -796,34 +663,37 @@ header h1::after {
                             downloadMessage.textContent = 'تم التحميل بنجاح!';
                             setTimeout(() => {
                                 downloadPopup.style.display = 'none';
-                                // استخدام الـ iframe للتحميل في الخلفية
+                                // بدء التحميل الفعلي
                                 startActualDownload(currentBookFile);
                             }, 1000);
                         }, 500);
                     }
                     progressBar.style.width = progress + '%';
-                }, 300);
+                }, 200);
             });
             
             // وظيفة بدء التحميل الفعلي
             function startActualDownload(fileName) {
                 const url = bookLinks[fileName];
                 
-                // إنشاء رابط للتحميل المباشر
+                if (!url) {
+                    console.error('رابط الملف غير موجود: ' + fileName);
+                    alert('الملف غير متوفر حالياً، يرجى المحاولة لاحقاً.');
+                    return;
+                }
+                
+                // إنشاء رابط مؤقت للتحميل
                 const a = document.createElement('a');
                 a.style.display = 'none';
                 a.href = url;
-                a.setAttribute('download', fileName);
+                a.download = fileName;
                 document.body.appendChild(a);
                 a.click();
                 
-                // حذف الرابط بعد بدء التحميل
+                // تنظيف بعد التحميل
                 setTimeout(() => {
                     document.body.removeChild(a);
                 }, 100);
-                
-                // استخدام الـ iframe للتحميل في الخلفية كاحتياط
-                downloadFrame.src = url;
             }
         });
     </script>
