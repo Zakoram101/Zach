@@ -316,7 +316,32 @@
             </footer>
         </div>
     </div>
-   
+   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    
+    <script>
+         // تهيئة Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyBxdiEgTVpx7grXqOoFkmnDqQANvoZYGgs",
+            authDomain: "firebase-adminsdk-fbsvc@zakbook-53053.iam.gserviceaccount.com",
+            projectId: "zakbook-53053",
+        };
+
+        // تهيئة Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // مراقبة حالة المصادقة
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                // إذا كان المستخدم مسجل الدخول، اعرض المحتوى
+                document.body.style.display = 'block';
+            } else {
+                // إذا لم يكن مسجل، توجيه إلى صفحة التسجيل
+                window.location.href = 'Pages/inde.html';
+            }
+        });
+    </script>
   </body>
 </head>
 
