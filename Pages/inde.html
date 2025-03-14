@@ -266,32 +266,33 @@
             loginSection.classList.remove('active');
         });
 
-        // تسجيل الدخول
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
+       // تسجيل الدخول
+loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-password').value;
 
-            auth.signInWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    showAlert('تم تسجيل الدخول بنجاح!', 'success');
-                    loginForm.reset();
-                })
-                .catch((error) => {
-                    let errorMessage;
-                    switch (error.code) {
-                        case 'auth/user-not-found':
-                            errorMessage = 'البريد الإلكتروني غير مسجل';
-                            break;
-                        case 'auth/wrong-password':
-                            errorMessage = 'كلمة المرور غير صحيحة';
-                            break;
-                        default:
-                            errorMessage = 'حدث خطأ أثناء تسجيل الدخول';
-                    }
-                    showAlert(errorMessage, 'error');
-                });
+    auth.signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+            showAlert('تم تسجيل الدخول بنجاح!', 'success');
+            loginForm.reset();
+            window.location.href = "Pages/inde.html"; // نقل المستخدم بعد تسجيل الدخول
+        })
+        .catch((error) => {
+            let errorMessage;
+            switch (error.code) {
+                case 'auth/user-not-found':
+                    errorMessage = 'البريد الإلكتروني غير مسجل';
+                    break;
+                case 'auth/wrong-password':
+                    errorMessage = 'كلمة المرور غير صحيحة';
+                    break;
+                default:
+                    errorMessage = 'حدث خطأ أثناء تسجيل الدخول';
+            }
+            showAlert(errorMessage, 'error');
         });
+});
 
         // إنشاء حساب جديد
         registerForm.addEventListener('submit', (e) => {
