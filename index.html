@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/style.css"> 
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
 <body>
+    
     <!-- شاشة التحميل المميزة -->
     <div class="page-loader">
         <div class="book-loader">
@@ -17,6 +18,113 @@
             <div class="book-page" style="--i:4;"></div>
         </div>
     </div>
+    
+    <div id="auth-container">
+        <div id="alert-box">
+            <h2>يجب تسجيل الدخول أولاً</h2>
+            <button id="register-btn">سجل الآن</button>
+        </div>
+    </div>
+
+    <div id="main-content" style="display: none;">
+        <h1>مرحباً بك في موقعنا!</h1>
+        <p>هذا هو محتوى الموقع الذي يظهر فقط إذا كنت مسجلاً.</p>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
+    <script>
+        // 🔥 تهيئة Firebase
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // التحقق من تسجيل الدخول
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                // ✅ المستخدم مسجل دخول -> عرض الموقع
+                document.getElementById("auth-container").style.display = "none";
+                document.getElementById("main-content").style.display = "block";
+            } else {
+                // ❌ المستخدم غير مسجل -> عرض زر "سجل الآن"
+                document.getElementById("auth-container").style.display = "flex";
+                document.getElementById("main-content").style.display = "none";
+            }
+        });
+
+        // توجيه المستخدم عند الضغط على "سجل الآن"
+        document.getElementById("register-btn").addEventListener("click", () => {
+            window.location.href = "Pages/login.html";
+        });
+    </script>
+
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+            --font-main: 'Tajawal', sans-serif;
+        }
+
+        * {
+            font-family: var(--font-main);
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: var(--light-color);
+            text-align: center;
+        }
+
+        #auth-container {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #alert-box h2 {
+            color: var(--dark-color);
+            margin-bottom: 15px;
+        }
+
+        #register-btn {
+            padding: 10px 20px;
+            background-color: var(--accent-color);
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        #register-btn:hover {
+            background-color: #c0392b;
+        }
+
+        #main-content {
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
     
     <!-- تصميم كتاب للصفحة الرئيسية -->
     <div class="intro-container">
