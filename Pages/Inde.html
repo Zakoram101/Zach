@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام تسجيل الدخول</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+            --font-main: 'Tajawal', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--font-main);
+        }
+
+        body {
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .tabs {
+            display: flex;
+            background-color: var(--primary-color);
+        }
+
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 15px 0;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--light-color);
+        }
+
+        .tab.active {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .form-container {
+            padding: 25px;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            color: var(--dark-color);
+            font-weight: 500;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+
+        input:focus {
+            border-color: var(--accent-color);
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #c0392b;
+        }
+
+        .user-info {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: var(--light-color);
+            border-radius: 6px;
+        }
+
+        .user-info h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .user-info p {
+            color: var(--dark-color);
+            margin-bottom: 15px;
+        }
+
+        .alert {
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .form-section {
+            display: none;
+        }
+
+        .form-section.active {
+            display: block;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                max-width: 100%;
+            }
+            
+            .form-container {
+                padding: 20px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="tabs">
+            <div class="tab active" id="login-tab">تسجيل دخول</div>
+            <div class="tab" id="register-tab">تسجيل جديد</div>
+        </div>
+
+        <div class="form-container">
+            <div id="alert-box"></div>
+            
+            <!-- قسم تسجيل الدخول -->
+            <div class="form-section active" id="login-section">
+                <h1>تسجيل الدخول</h1>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-email">البريد الإلكتروني</label>
+                        <input type="email" id="login-email" placeholder="أدخل بريدك الإلكتروني" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">كلمة المرور</label>
+                        <input type="password" id="login-password" placeholder="أدخل كلمة المرور" required>
+                    </div>
+                    <button type="submit">دخول</button>
+                </form>
+            </div>
+
+            <!-- قسم التسجيل الجديد -->
+            <div class="form-section" id="register-section">
+                <h1>إنشاء حساب جديد</h1>
+                <form id="register-form">
+                    <div class="form-group">
+                        <label for="register-email">البريد الإلكتروني</label>
+                        <input type="email" id="register-email" placeholder="أدخل بريدك الإلكتروني" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password">كلمة المرور</label>
+                        <input type="password" id="register-password" placeholder="أدخل كلمة المرور" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password-confirm">تأكيد كلمة المرور</label>
+                        <input type="password" id="register-password-confirm" placeholder="أدخل كلمة المرور مرة أخرى" required>
+                    </div>
+                    <button type="submit">تسجيل</button>
+                </form>
+            </div>
+
+            <!-- قسم معلومات المستخدم (يظهر بعد تسجيل الدخول) -->
+            <div id="user-info-section" style="display: none;">
+                <div class="user-info">
+                    <h3>مرحباً بك</h3>
+                    <p id="user-email"></p>
+                    <button id="logout-btn">تسجيل الخروج</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
+    <script>
+        // تهيئة Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyBxdiEgTVpx7grXqOoFkmnDqQANvoZYGgs",
+            authDomain: "firebase-adminsdk-fbsvc@zakbook-53053.iam.gserviceaccount.com",
+            projectId: "zakbook-53053",
+        };
+
+        // تهيئة Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // العناصر المهمة
+        const loginTab = document.getElementById('login-tab');
+        const registerTab = document.getElementById('register-tab');
+        const loginSection = document.getElementById('login-section');
+        const registerSection = document.getElementById('register-section');
+        const userInfoSection = document.getElementById('user-info-section');
+        const userEmailElement = document.getElementById('user-email');
+        const logoutBtn = document.getElementById('logout-btn');
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        const alertBox = document.getElementById('alert-box');
+
+        // التبديل بين شاشات تسجيل الدخول والتسجيل
+        loginTab.addEventListener('click', () => {
+            loginTab.classList.add('active');
+            registerTab.classList.remove('active');
+            loginSection.classList.add('active');
+            registerSection.classList.remove('active');
+        });
+
+        registerTab.addEventListener('click', () => {
+            registerTab.classList.add('active');
+            loginTab.classList.remove('active');
+            registerSection.classList.add('active');
+            loginSection.classList.remove('active');
+        });
+
+        // تسجيل الدخول
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            auth.signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    showAlert('تم تسجيل الدخول بنجاح!', 'success');
+                    loginForm.reset();
+                })
+                .catch((error) => {
+                    let errorMessage;
+                    switch (error.code) {
+                        case 'auth/user-not-found':
+                            errorMessage = 'البريد الإلكتروني غير مسجل';
+                            break;
+                        case 'auth/wrong-password':
+                            errorMessage = 'كلمة المرور غير صحيحة';
+                            break;
+                        default:
+                            errorMessage = 'حدث خطأ أثناء تسجيل الدخول';
+                    }
+                    showAlert(errorMessage, 'error');
+                });
+        });
+
+        // إنشاء حساب جديد
+        registerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const passwordConfirm = document.getElementById('register-password-confirm').value;
+
+            if (password !== passwordConfirm) {
+                showAlert('كلمتا المرور غير متطابقتين', 'error');
+                return;
+            }
+
+            auth.createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    showAlert('تم إنشاء الحساب بنجاح!', 'success');
+                    registerForm.reset();
+                    // التبديل إلى شاشة تسجيل الدخول
+                    loginTab.click();
+                })
+                .catch((error) => {
+                    let errorMessage;
+                    switch (error.code) {
+                        case 'auth/email-already-in-use':
+                            errorMessage = 'البريد الإلكتروني مستخدم بالفعل';
+                            break;
+                        case 'auth/weak-password':
+                            errorMessage = 'كلمة المرور ضعيفة، يجب أن تكون على الأقل 6 أحرف';
+                            break;
+                        default:
+                            errorMessage = 'حدث خطأ أثناء إنشاء الحساب';
+                    }
+                    showAlert(errorMessage, 'error');
+                });
+        });
+
+        // تسجيل الخروج
+        logoutBtn.addEventListener('click', () => {
+            auth.signOut()
+                .then(() => {
+                    showAlert('تم تسجيل الخروج بنجاح', 'success');
+                })
+                .catch((error) => {
+                    showAlert('حدث خطأ أثناء تسجيل الخروج', 'error');
+                });
+        });
+
+        // مراقبة حالة تسجيل الدخول
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                // المستخدم مسجل الدخول
+                userEmailElement.textContent = user.email;
+                userInfoSection.style.display = 'block';
+                loginSection.style.display = 'none';
+                registerSection.style.display = 'none';
+                loginTab.style.display = 'none';
+                registerTab.style.display = 'none';
+            } else {
+                // المستخدم غير مسجل الدخول
+                userInfoSection.style.display = 'none';
+                loginTab.style.display = 'block';
+                registerTab.style.display = 'block';
+                
+                // عرض شاشة تسجيل الدخول
+                loginTab.click();
+            }
+        });
+
+        // عرض رسائل التنبيه
+        function showAlert(message, type) {
+            alertBox.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+            
+            // إخفاء التنبيه بعد 3 ثوان
+            setTimeout(() => {
+                alertBox.innerHTML = '';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
