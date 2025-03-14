@@ -288,20 +288,35 @@
     }
 })();
 
-// التحقق من تسجيل الدخول
-firebase.auth().onAuthStateChanged((user) => {
-    if (!user) {
-        // المستخدم غير مسجل، إعادة التوجيه إلى صفحة تسجيل الدخول
-        window.location.href = "Pages/inde.html"; 
-    }
-});
+// انتظر تحميل الصفحة ثم تحقق من حالة المستخدم
+    document.addEventListener("DOMContentLoaded", () => {
+        firebase.auth().onAuthStateChanged((user) => {
+            if (!user) {
+                // ❌ إذا لم يكن مسجلًا، إظهار زر "سجل الآن" بدل الموقع
+                document.body.innerHTML = `
+                    <div style="display: flex; justify-content: center; align-items: center; height: 100vh; flex-direction: column; font-family: 'Tajawal', sans-serif;">
+                        <h2 style="color: #2c3e50; margin-bottom: 20px;">يجب تسجيل الدخول للوصول إلى الموقع</h2>
+                        <button id="login-btn" style="padding: 10px 20px; font-size: 18px; color: white; background-color: #e74c3c; border: none; border-radius: 5px; cursor: pointer;">سجل الآن</button>
+                    </div>
+                `;
 
+                // عند الضغط على الزر، الانتقال إلى صفحة login
+                document.getElementById("login-btn").addEventListener("click", () => {
+                    window.location.href = "Pages/inde.html";
+                });
+            }
+        });
 
-document.getElementById("logout-btn").addEventListener("click", () => {
-    firebase.auth().signOut().then(() => {
-        window.location.href = "Pages/inde.html"; // إعادة التوجيه لصفحة تسجيل الدخول بعد الخروج
-    }).catch((error) => {
-        console.error("خطأ أثناء تسجيل الخروج:", error);
+        // عند الضغط على زر تسجيل الخروج
+        const logoutBtn = document.getElementById("logout-btn");
+        if (logoutBtn) {
+            logoutBtn.addEventListener("click", () => {
+                firebase.auth().signOut().then(() => {
+                    // ⬅️ بعد تسجيل الخروج، إعادة التوجيه إلى login.html
+                    window.location.href = "Pages/inde.html";
+                }).catch((error) => {
+                    alert("حدث خطأ أثناء تسجيل الخروج");
+                });
+            });
+        }
     });
-});
-
