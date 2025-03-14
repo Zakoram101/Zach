@@ -287,3 +287,21 @@
         initApp();
     }
 })();
+
+// التحقق من تسجيل الدخول
+firebase.auth().onAuthStateChanged((user) => {
+    if (!user) {
+        // المستخدم غير مسجل، إعادة التوجيه إلى صفحة تسجيل الدخول
+        window.location.href = "Pages/inde.html"; 
+    }
+});
+
+
+document.getElementById("logout-btn").addEventListener("click", () => {
+    firebase.auth().signOut().then(() => {
+        window.location.href = "Pages/inde.html"; // إعادة التوجيه لصفحة تسجيل الدخول بعد الخروج
+    }).catch((error) => {
+        console.error("خطأ أثناء تسجيل الخروج:", error);
+    });
+});
+
