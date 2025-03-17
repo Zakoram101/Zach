@@ -482,82 +482,131 @@
     .password-container input {
         padding-left: 40px;
     }
-
-    /* Modal Dialog */
-    .modal {
+    
+    /* Logout confirmation modal */
+    .modal-overlay {
         display: none;
         position: fixed;
-        z-index: 10000;
         top: 0;
         left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0,0,0,0.5);
-        justify-content: center;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.7);
+        z-index: 1000;
         align-items: center;
+        justify-content: center;
     }
-
-    .modal-content {
+    
+    .modal-container {
         background-color: white;
         padding: 25px;
         border-radius: 10px;
-        width: 90%;
         max-width: 400px;
+        width: 90%;
         box-shadow: var(--shadow-lg);
+        position: relative;
+        animation: fadeIn 0.3s;
+    }
+    
+    .modal-header {
+        margin-bottom: 15px;
         text-align: center;
     }
-
-    .modal-title {
-        font-size: 1.3rem;
+    
+    .modal-header h3 {
         color: var(--primary-color);
-        margin-bottom: 15px;
+        font-size: 1.3rem;
     }
-
+    
     .modal-body {
         margin-bottom: 20px;
+        text-align: center;
     }
-
-    .modal-actions {
+    
+    .modal-footer {
         display: flex;
         justify-content: center;
-        gap: 15px;
+        gap: 10px;
     }
-
-    .btn-modal {
-        padding: 8px 20px;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: var(--transition);
-        font-family: var(--font-main);
-        font-weight: 500;
-        width: auto;
+    
+    .modal-footer button {
         margin: 0;
+        padding: 8px 20px;
     }
-
-    .btn-confirm {
-        background-color: var(--danger-color);
-        color: white;
-        border: none;
+    
+    .btn-secondary {
+        background-color: #95a5a6;
     }
-
-    .btn-cancel {
-        background-color: #ccc;
-        color: #333;
-        border: none;
+    
+    .btn-secondary:hover {
+        background-color: #7f8c8d;
     }
-
-    .btn-confirm:hover {
-        background-color: var(--accent-hover);
+    
+    /* Email verification status checker */
+    .verification-checker {
+        margin-top: 15px;
+        padding: 15px;
+        background-color: rgba(46, 204, 113, 0.1);
+        border-radius: 8px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
-
-    .btn-cancel:hover {
-        background-color: #bbb;
+    
+    .verification-icon {
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+    
+    .verification-message {
+        font-weight: 500;
+        margin-bottom: 10px;
+    }
+    
+    .auto-refresh {
+        display: flex;
+        align-items: center;
+        margin-top: 10px;
+        font-size: 0.9rem;
+    }
+    
+    .dot-pulse {
+        display: inline-block;
+        position: relative;
+        width: 10px;
+        height: 10px;
+        border-radius: 5px;
+        background-color: var(--accent-color);
+        margin-left: 10px;
+        animation: pulse 1.5s infinite;
+    }
+    
+    @keyframes pulse {
+        0% { opacity: 0.3; }
+        50% { opacity: 1; }
+        100% { opacity: 0.3; }
     }
 </style>
 </head>
 <body>
     <div id="loading-spinner">
         <div class="spinner"></div>
+    </div>
+    
+    <div class="modal-overlay" id="logout-confirm-modal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>تأكيد تسجيل الخروج</h3>
+            </div>
+            <div class="modal-body">
+                <p>هل أنت متأكد من رغبتك في تسجيل الخروج؟</p>
+            </div>
+            <div class="modal-footer">
+                <button id="confirm-logout-btn" class="btn-primary">تأكيد</button>
+                <button id="cancel-logout-btn" class="btn-secondary">إلغاء</button>
+            </div>
+        </div>
     </div>
     
     <div class="container">
@@ -622,17 +671,18 @@
                     <button id="logout-btn">تسجيل الخروج</button>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <!-- تأكيد تسجيل الخروج -->
-    <div id="logout-confirm-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-title">تأكيد تسجيل الخروج</div>
-            <div class="modal-body">هل تود المغادرة وتسجيل الخروج من الموقع؟</div>
-            <div class="modal-actions">
-                <button id="confirm-logout-btn" class="btn-modal btn-confirm">نعم، تسجيل الخروج</button>
-                <button id="cancel-logout-btn" class="btn-modal btn-cancel">إلغاء</button>
+            <!-- قسم التحقق من تأكيد البريد الإلكتروني -->
+            <div id="verification-check-section" style="display: none;">
+                <div class="verification-checker">
+                    <div class="verification-icon">✉️</div>
+                    <div class="verification-message">تم إرسال رابط التأكيد إلى بريدك الإلكتروني</div>
+                    <p>يرجى التحقق من بريدك الإلكتروني والنقر على الرابط للتأكيد</p>
+                    <button id="check-verification-btn" class="btn-outline btn-outline-primary">تحقق من حالة التأكيد</button>
+                    <div class="auto-refresh">
+                        جاري التحقق التلقائي <span class="dot-pulse"></span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -677,7 +727,7 @@
         }
       });
 
-    // العناصر المهمة - استخدام querySelector للوصول إلى العناصر
+    // العناصر المهمة
     const elements = {
         loginTab: document.querySelector('#login-tab'),
         registerTab: document.querySelector('#register-tab'),
@@ -698,22 +748,21 @@
         loadingSpinner: document.querySelector('#loading-spinner'),
         logoutConfirmModal: document.querySelector('#logout-confirm-modal'),
         confirmLogoutBtn: document.querySelector('#confirm-logout-btn'),
-        cancelLogoutBtn: document.querySelector('#cancel-logout-btn')
+        cancelLogoutBtn: document.querySelector('#cancel-logout-btn'),
+        verificationCheckSection: document.querySelector('#verification-check-section'),
+        checkVerificationBtn: document.querySelector('#check-verification-btn')
     };
 
     // تحسين أداء التحقق من صحة البيانات
     const validationUtils = {
         isValidGmail: (email) => {
             if (!email || typeof email !== 'string') return false;
-            
-            // التعبير المنتظم المبسط للتحقق من بريد Gmail
-            return /^[a-zA-Z0-9]([a-zA-Z0-9._-]{3,28})[a-zA-Z0-9]@gmail\.com$/i.test(email);
+            return /^[a-zA-Z0-9]([a-zA-Z0-9._-]{0,28})[a-zA-Z0-9]@gmail\.com$/i.test(email);
         },
         
         isStrongPassword: (password) => {
             if (!password || typeof password !== 'string') return false;
             
-            // التحقق من متطلبات كلمة المرور الأساسية
             const hasMinLength = password.length >= 6;
             const hasUpperCase = /[A-Z]/.test(password);
             const hasLowerCase = /[a-z]/.test(password);
@@ -792,9 +841,25 @@
             return `${maskedUsername}@${domain}`;
         },
         
-        // وظيفة مضافة للتحقق من تطابق كلمتي المرور
         passwordsMatch: (password, confirmPassword) => {
             return password === confirmPassword;
+        },
+        
+        // تحقق من وجود رابط الموقع الحالي في قائمة المواقع المسموح بها
+        isAllowedContinueUrl: (url) => {
+            // استخراج النطاق من الرابط
+            const domain = new URL(url).hostname;
+            
+            // قائمة النطاقات المسموح بها (يمكن توسيعها حسب الحاجة)
+            const allowedDomains = [
+                window.location.hostname,
+                'localhost',
+                '127.0.0.1',
+                'zakbook-53053.firebaseapp.com',
+                'zakbook-53053.web.app'
+            ];
+            
+            return allowedDomains.includes(domain);
         }
     };
 
@@ -842,6 +907,7 @@
             elements.registerTab.classList.remove('active');
             elements.loginSection.classList.add('active');
             elements.registerSection.classList.remove('active');
+            elements.verificationCheckSection.style.display = 'none';
             
             // مسح الرسائل السابقة
             elements.alertBox.innerHTML = '';
@@ -855,6 +921,7 @@
             elements.loginTab.classList.remove('active');
             elements.registerSection.classList.add('active');
             elements.loginSection.classList.remove('active');
+            elements.verificationCheckSection.style.display = 'none';
             
             // مسح الرسائل السابقة
             elements.alertBox.innerHTML = '';
@@ -871,16 +938,11 @@
         
         showLoading: (isLoading) => {
             elements.loadingSpinner.style.display = isLoading ? 'flex' : 'none';
-            
-            // منع التمرير أثناء التحميل
             document.body.style.overflow = isLoading ? 'hidden' : '';
         },
         
         updateUIOnLogin: (user) => {
             if (!user) return;
-            
-            // إيقاف مؤشر التحميل مباشرة
-            uiHandlers.showLoading(false);
             
             // تحديث عناصر واجهة المستخدم
             elements.userEmailElement.textContent = user.email || 'مستخدم مجهول';
@@ -889,9 +951,17 @@
             elements.registerSection.style.display = 'none';
             elements.loginTab.style.display = 'none';
             elements.registerTab.style.display = 'none';
+            elements.verificationCheckSection.style.display = 'none';
             
             // التحقق من تأكيد البريد الإلكتروني
             if (!user.emailVerified) {
+                // إظهار قسم التحقق من تأكيد البريد الإلكتروني
+                elements.verificationCheckSection.style.display = 'block';
+                elements.userInfoSection.style.display = 'none';
+                
+                // بدء التحقق التلقائي من حالة التأكيد
+                startAutoVerificationCheck();
+                
                 // إنشاء واجهة تأكيد البريد الإلكتروني
                 let verificationInfo = document.querySelector('.verification-info');
                 
@@ -925,7 +995,6 @@
                 if (refreshBtn) {
                     refreshBtn.addEventListener('click', () => {
                         uiHandlers.showLoading(true);
-                        // إعادة تحميل معلومات المستخدم للتحقق من حالة التأكيد
                         user.reload().then(() => {
                             uiHandlers.showLoading(false);
                             uiHandlers.updateUIOnLogin(auth.currentUser);
@@ -964,18 +1033,8 @@
                 // إظهار معلومات التحقق
                 verificationInfo.style.display = 'block';
                 
-                // عرض رسالة نجاح
-                uiHandlers.showAlert('تم تأكيد البريد الإلكتروني بنجاح! سيتم توجيهك إلى الصفحة الرئيسية...', 'success', 2000);
-                
                 // إعادة توجيه المستخدم إلى الصفحة الرئيسية
-                setTimeout(() => {
-                    try {
-                        window.location.href = window.location.origin + "/index";
-                    } catch (e) {
-                        console.error('خطأ في إعادة التوجيه:', e);
-                        uiHandlers.showAlert('حدث خطأ أثناء إعادة التوجيه. يرجى المحاولة لاحقاً.', 'error');
-                    }
-                }, 2000);
+                handleSuccessfulVerification();
             }
         },
         
@@ -984,6 +1043,7 @@
             elements.userInfoSection.style.display = 'none';
             elements.loginTab.style.display = 'block';
             elements.registerTab.style.display = 'block';
+            elements.verificationCheckSection.style.display = 'none';
             
             // إعادة إظهار شاشة تسجيل الدخول
             uiHandlers.showLoginTab();
@@ -1000,21 +1060,21 @@
             if (strengthIndicator) {
                 strengthIndicator.innerHTML = '';
             }
+            
+            // إيقاف التحقق التلقائي من حالة التأكيد
+            stopAutoVerificationCheck();
         },
         
-        // وظيفة جديدة لإظهار/إخفاء كلمة المرور
         togglePasswordVisibility: (inputElement, toggleButton) => {
             const type = inputElement.getAttribute('type') === 'password' ? 'text' : 'password';
             inputElement.setAttribute('type', type);
-            toggleButton.textContent = type === 'password' ? '👁️' : '🔒';
+            toggleButton.textContent = type === 'password' ? '👁️' : '❌';
         },
         
-        // إظهار مربع تأكيد تسجيل الخروج
         showLogoutConfirmation: () => {
             elements.logoutConfirmModal.style.display = 'flex';
         },
         
-        // إخفاء مربع تأكيد تسجيل الخروج
         hideLogoutConfirmation: () => {
             elements.logoutConfirmModal.style.display = 'none';
         }
@@ -1029,14 +1089,6 @@
                 // التحقق من صحة البريد الإلكتروني
                 if (!email || !password) {
                     uiHandlers.showAlert('الرجاء إدخال البريد الإلكتروني وكلمة المرور', 'error');
-                    uiHandlers.showLoading(false);
-                    return false;
-                }
-                
-                // التحقق من تنسيق البريد الإلكتروني
-                if (!validationUtils.isValidGmail(email)) {
-                    uiHandlers.showAlert('يرجى إدخال عنوان Gmail صالح', 'error');
-                    uiHandlers.showLoading(false);
                     return false;
                 }
                 
@@ -1111,10 +1163,9 @@
                 // تحديث محاولات تسجيل الدخول الفاشلة
                 updateFailedLoginAttempts();
                 
-                // إيقاف مؤشر التحميل
-                uiHandlers.showLoading(false);
-                
                 return false;
+            } finally {
+                uiHandlers.showLoading(false);
             }
         },
         
@@ -1125,21 +1176,18 @@
                 // التحقق من وجود البيانات
                 if (!email || !password || !passwordConfirm) {
                     uiHandlers.showAlert('الرجاء إكمال جميع الحقول', 'error');
-                    uiHandlers.showLoading(false);
                     return false;
                 }
                 
                 // التحقق من صحة البريد الإلكتروني
                 if (!validationUtils.isValidGmail(email)) {
                     uiHandlers.showAlert('يرجى إدخال عنوان Gmail صالح', 'error');
-                    uiHandlers.showLoading(false);
                     return false;
                 }
                 
                 // التحقق من تطابق كلمتي المرور
                 if (!validationUtils.passwordsMatch(password, passwordConfirm)) {
                     uiHandlers.showAlert('كلمتا المرور غير متطابقتين', 'error');
-                    uiHandlers.showLoading(false);
                     return false;
                 }
                 
@@ -1147,62 +1195,45 @@
                 if (!validationUtils.isStrongPassword(password)) {
                     const passwordStrength = validationUtils.getPasswordStrength(password);
                     uiHandlers.showAlert(`كلمة المرور ${passwordStrength.level}: ${passwordStrength.feedback}`, 'error');
-                    uiHandlers.showLoading(false);
                     return false;
                 }
                 
-                try {
-                    // محاولة إنشاء الحساب
-                    const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-                    
-                    // تحديد وقت الإنشاء
-                    const timestamp = firebase.firestore.FieldValue.serverTimestamp();
-                    
-                    // إرسال بريد تأكيد بدون URL للإعادة التوجيه
-                    await userCredential.user.sendEmailVerification();
-                    
-                    // إنشاء وثيقة للمستخدم في Firestore
-                    await db.collection('users').doc(userCredential.user.uid).set({
-                        email: email,
-                        emailVerified: false,
-                        createdAt: timestamp,
-                        lastLogin: timestamp,
-                        registrationDevice: navigator.userAgent,
-                        lastLoginDevice: navigator.userAgent
-                    });
-                    
-                    // عرض رسالة نجاح
-                    uiHandlers.showAlert('تم إنشاء الحساب بنجاح! تم إرسال رابط التحقق إلى بريدك الإلكتروني', 'success');
-                    
-                    return true;
-                } catch (error) {
-                    // في حالة وجود خطأ بخصوص رابط إعادة التوجيه
-                    if (error.code === 'auth/unauthorized-continue-uri' || 
-                        error.message.includes('Domain not allowlisted') || 
-                        error.message.includes('unauthorized-continue-uri')) {
-                        
-                        // إذا كان الخطأ بسبب URL إعادة التوجيه، نتحقق مما إذا تم إنشاء الحساب بالفعل
-                        try {
-                            // محاولة تسجيل الدخول بالبيانات المدخلة للتحقق من إنشاء الحساب
-                            await auth.signInWithEmailAndPassword(email, password);
-                            
-                            // عرض رسالة نجاح إنشاء الحساب
-                            uiHandlers.showAlert('تم إنشاء الحساب بنجاح! قد يكون هناك مشكلة في إرسال بريد التحقق.', 'success');
-                            return true;
-                        } catch (signInError) {
-                            // إذا فشل تسجيل الدخول، نعرض خطأ إنشاء الحساب
-                            throw error;
-                        }
-                    } else {
-                        // رمي الخطأ للمعالجة في كتلة catch
-                        throw error;
-                    }
-                }
+                // إنشاء الحساب
+                const userCredential = await auth.createUserWithEmailAndPassword(email, password);
                 
+                // تحديد وقت الإنشاء
+                const timestamp = firebase.firestore.FieldValue.serverTimestamp();
+                
+                // تحضير رابط التحقق
+                const verificationUrl = getVerificationUrl();
+                
+                // إرسال بريد تأكيد
+                await userCredential.user.sendEmailVerification({
+                    url: verificationUrl
+                });
+                
+                // إنشاء وثيقة للمستخدم في Firestore
+                await db.collection('users').doc(userCredential.user.uid).set({
+                    email: email,
+                    emailVerified: false,
+                    createdAt: timestamp,
+                    lastLogin: timestamp,
+                    registrationDevice: navigator.userAgent,
+                    lastLoginDevice: navigator.userAgent
+                });
+                
+                // عرض رسالة نجاح وإظهار قسم التحقق
+                uiHandlers.showAlert('تم إنشاء الحساب بنجاح! تم إرسال رابط التحقق إلى بريدك الإلكتروني', 'success');
+                
+                // تلقائياً إظهار قسم التحقق من تأكيد البريد
+                elements.registerSection.style.display = 'none';
+                elements.verificationCheckSection.style.display = 'block';
+                
+                // بدء التحقق التلقائي من حالة التأكيد
+                startAutoVerificationCheck();
+                
+                return true;
             } catch (error) {
-                // إيقاف مؤشر التحميل
-                uiHandlers.showLoading(false);
-                
                 // معالجة أخطاء التسجيل
                 let errorMessage;
                 
@@ -1219,24 +1250,31 @@
                     case 'auth/operation-not-allowed':
                         errorMessage = 'تسجيل الحسابات معطل حالياً';
                         break;
-                    case 'auth/unauthorized-continue-uri':
-                        errorMessage = 'تم إنشاء الحساب ولكن حدثت مشكلة في إرسال رابط التأكيد';
-                        break;
                     case 'auth/network-request-failed':
                         errorMessage = 'فشل الاتصال بالشبكة. تحقق من اتصالك بالإنترنت';
                         break;
-                    default:
-                        // التحقق من رسالة الخطأ إذا كانت تتعلق بنطاق غير مسموح به
-                        if (error.message && (error.message.includes('Domain not allowlisted') || 
-                                            error.message.includes('unauthorized-continue-uri'))) {
-                            errorMessage = 'تم إنشاء الحساب ولكن حدثت مشكلة في إرسال رابط التأكيد';
-                        } else {
-                            errorMessage = 'حدث خطأ أثناء إنشاء الحساب: ' + error.message;
+                    case 'auth/unauthorized-continue-uri':
+                        // معالجة خطأ عدم السماح بالنطاق (Domain not allowlisted)
+                        errorMessage = 'حدث خطأ في تكوين النطاق. تم إنشاء الحساب ولكن يجب تأكيد البريد الإلكتروني يدوياً';
+                        // حفظ معلومات التسجيل ليتم استخدامها لاحقاً
+                        localStorage.setItem('registeredEmail', email);
+                        // التحقق من وجود المستخدم
+                        if (auth.currentUser) {
+                            // إظهار قسم التحقق
+                            elements.registerSection.style.display = 'none';
+                            elements.verificationCheckSection.style.display = 'block';
+                            // بدء التحقق التلقائي
+                            startAutoVerificationCheck();
                         }
+                        return true;
+                    default:
+                        errorMessage = 'حدث خطأ أثناء إنشاء الحساب: ' + error.message;
                 }
                 
                 uiHandlers.showAlert(errorMessage, 'error');
                 return false;
+            } finally {
+                uiHandlers.showLoading(false);
             }
         },
         
@@ -1252,6 +1290,9 @@
                 
                 // تحديث واجهة المستخدم
                 uiHandlers.updateUIOnLogout();
+                
+                // إخفاء نافذة تأكيد تسجيل الخروج
+                uiHandlers.hideLogoutConfirmation();
                 
                 return true;
             } catch (error) {
@@ -1271,14 +1312,12 @@
                 const user = auth.currentUser;
                 if (!user) {
                     uiHandlers.showAlert('يجب تسجيل الدخول أولاً', 'error');
-                    uiHandlers.showLoading(false);
                     return false;
                 }
                 
                 // التحقق من حالة التأكيد
                 if (user.emailVerified) {
                     uiHandlers.showAlert('البريد الإلكتروني مؤكد بالفعل', 'info');
-                    uiHandlers.showLoading(false);
                     return true;
                 }
                 
@@ -1306,30 +1345,18 @@
                     }, 1000);
                 }
                 
-                try {
-                    // محاولة إرسال بريد التأكيد بدون URL إعادة التوجيه
-                    await user.sendEmailVerification();
-                    
-                    // عرض رسالة نجاح
-                    uiHandlers.showAlert('تم إعادة إرسال رابط التأكيد إلى بريدك الإلكتروني', 'success');
-                    
-                    uiHandlers.showLoading(false);
-                    return true;
-                } catch (error) {
-                    // إذا كان الخطأ بسبب URL إعادة التوجيه
-                    if (error.code === 'auth/unauthorized-continue-uri' || 
-                        error.message.includes('Domain not allowlisted') ||
-                        error.message.includes('unauthorized-continue-uri')) {
-                        
-                        uiHandlers.showAlert('تم إرسال رابط التأكيد إلى بريدك الإلكتروني', 'success');
-                        uiHandlers.showLoading(false);
-                        return true;
-                    } else {
-                        // رمي الخطأ للمعالجة في كتلة catch
-                        throw error;
-                    }
-                }
+                // تحضير رابط التحقق
+                const verificationUrl = getVerificationUrl();
                 
+                // إرسال بريد التأكيد
+                await user.sendEmailVerification({
+                    url: verificationUrl
+                });
+                
+                // عرض رسالة نجاح
+                uiHandlers.showAlert('تم إعادة إرسال رابط التأكيد إلى بريدك الإلكتروني', 'success');
+                
+                return true;
             } catch (error) {
                 // معالجة أخطاء إرسال بريد التأكيد
                 let errorMessage;
@@ -1341,6 +1368,10 @@
                     case 'auth/network-request-failed':
                         errorMessage = 'فشل الاتصال بالشبكة. تحقق من اتصالك بالإنترنت';
                         break;
+                    case 'auth/unauthorized-continue-uri':
+                        // معالجة خطأ النطاق غير المسموح به
+                        errorMessage = 'تم إرسال رابط التأكيد. يرجى التحقق من بريدك الإلكتروني والنقر على الرابط.';
+                        return true;
                     default:
                         errorMessage = 'حدث خطأ أثناء إرسال بريد التأكيد: ' + error.message;
                 }
@@ -1354,9 +1385,135 @@
                     resendBtn.textContent = 'إعادة إرسال رابط التأكيد';
                 }
                 
-                uiHandlers.showLoading(false);
                 return false;
+            } finally {
+                uiHandlers.showLoading(false);
             }
+        },
+        
+        checkEmailVerification: async () => {
+            try {
+                uiHandlers.showLoading(true);
+                
+                // التحقق من وجود مستخدم حالي
+                const user = auth.currentUser;
+                if (!user) {
+                    uiHandlers.showAlert('يجب تسجيل الدخول أولاً', 'error');
+                    return false;
+                }
+                
+                // إعادة تحميل بيانات المستخدم للتحقق من التأكيد
+                await user.reload();
+                
+                // التحقق من حالة التأكيد
+                if (user.emailVerified) {
+                    // عرض رسالة نجاح
+                    uiHandlers.showAlert('تم تأكيد البريد الإلكتروني بنجاح!', 'success');
+                    
+                    // تحديث واجهة المستخدم
+                    handleSuccessfulVerification();
+                    
+                    return true;
+                } else {
+                    // عرض رسالة انتظار
+                    uiHandlers.showAlert('لم يتم تأكيد البريد الإلكتروني بعد. يرجى التحقق من بريدك الإلكتروني والنقر على الرابط.', 'info');
+                    
+                    return false;
+                }
+            } catch (error) {
+                let errorMessage = 'حدث خطأ أثناء التحقق من حالة التأكيد: ' + error.message;
+                uiHandlers.showAlert(errorMessage, 'error');
+                return false;
+            } finally {
+                uiHandlers.showLoading(false);
+            }
+        }
+    };
+
+    // تحضير رابط التحقق الصحيح
+    const getVerificationUrl = () => {
+        // إنشاء رابط مطلق للموقع الرئيسي
+        let baseUrl = window.location.origin;
+        
+        // إضافة مسار index.html
+        let verificationUrl = baseUrl + '/index.html';
+        
+        // التحقق من صحة الرابط
+        try {
+            new URL(verificationUrl);
+        } catch (e) {
+            // استخدام رابط احتياطي إذا كان هناك خطأ
+            verificationUrl = 'https://zakbook-53053.firebaseapp.com/index.html';
+        }
+        
+        return verificationUrl;
+    };
+    
+    // معالجة حالة تأكيد البريد الإلكتروني بنجاح
+    const handleSuccessfulVerification = () => {
+        // عرض رسالة نجاح
+        uiHandlers.showAlert('تم تأكيد البريد الإلكتروني بنجاح! سيتم توجيهك إلى الصفحة الرئيسية...', 'success', 2000);
+        
+        // إيقاف التحقق التلقائي من حالة التأكيد
+        stopAutoVerificationCheck();
+        
+        // إخفاء قسم التحقق
+        elements.verificationCheckSection.style.display = 'none';
+        
+        // تحديث بيانات المستخدم في Firestore
+        try {
+            const user = auth.currentUser;
+            if (user) {
+                db.collection('users').doc(user.uid).update({
+                    emailVerified: true,
+                    verifiedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+            }
+        } catch (error) {
+            console.warn('لم يتم تحديث حالة التحقق في Firestore:', error);
+        }
+        
+        // إعادة توجيه المستخدم إلى الصفحة الرئيسية
+        setTimeout(() => {
+            try {
+                // تحديد المسار الصحيح للصفحة الرئيسية
+                const indexPath = window.location.pathname.includes('/login') 
+                    ? window.location.pathname.replace('login', 'index') 
+                    : '/index.html';
+                
+                window.location.href = window.location.origin + indexPath;
+            } catch (e) {
+                console.error('خطأ في إعادة التوجيه:', e);
+                uiHandlers.showAlert('حدث خطأ أثناء إعادة التوجيه. يرجى الانتقال يدوياً إلى الصفحة الرئيسية.', 'error');
+            }
+        }, 2000);
+    };
+    
+    // متغير للتحكم في التحقق التلقائي
+    let autoVerificationInterval = null;
+    
+    // بدء التحقق التلقائي من حالة التأكيد
+    const startAutoVerificationCheck = () => {
+        // التحقق الأولي
+        authHandlers.checkEmailVerification();
+        
+        // بدء التحقق الدوري (كل 5 ثوانٍ)
+        autoVerificationInterval = setInterval(() => {
+            // التحقق فقط إذا كان المستخدم مسجلاً الدخول
+            if (auth.currentUser) {
+                authHandlers.checkEmailVerification();
+            } else {
+                // إيقاف التحقق إذا تم تسجيل الخروج
+                stopAutoVerificationCheck();
+            }
+        }, 5000);
+    };
+    
+    // إيقاف التحقق التلقائي من حالة التأكيد
+    const stopAutoVerificationCheck = () => {
+        if (autoVerificationInterval) {
+            clearInterval(autoVerificationInterval);
+            autoVerificationInterval = null;
         }
     };
 
@@ -1470,21 +1627,20 @@
             
             if (success) {
                 elements.registerForm.reset();
-                // إيقاف مؤشر التحميل بعد النجاح
-                uiHandlers.showLoading(false);
             }
         });
         
-        // معالجة فتح نافذة تأكيد تسجيل الخروج
+        // معالجة تسجيل الخروج
         elements.logoutBtn.addEventListener('click', (e) => {
             e.preventDefault();
+            
+            // عرض نافذة تأكيد تسجيل الخروج
             uiHandlers.showLogoutConfirmation();
         });
         
-        // معالجة تسجيل الخروج بعد التأكيد
-        elements.confirmLogoutBtn.addEventListener('click', async () => {
-            uiHandlers.hideLogoutConfirmation();
-            await authHandlers.logout();
+        // معالجة تأكيد تسجيل الخروج
+        elements.confirmLogoutBtn.addEventListener('click', () => {
+            authHandlers.logout();
         });
         
         // معالجة إلغاء تسجيل الخروج
@@ -1492,11 +1648,9 @@
             uiHandlers.hideLogoutConfirmation();
         });
         
-        // إضافة مستمع للنقر خارج مربع التأكيد لإغلاقه
-        elements.logoutConfirmModal.addEventListener('click', (e) => {
-            if (e.target === elements.logoutConfirmModal) {
-                uiHandlers.hideLogoutConfirmation();
-            }
+        // معالجة التحقق من حالة تأكيد البريد الإلكتروني
+        elements.checkVerificationBtn.addEventListener('click', () => {
+            authHandlers.checkEmailVerification();
         });
         
         // إضافة مستمع لحدث إظهار/إخفاء كلمة المرور
@@ -1586,6 +1740,25 @@
                 field.closest('.form-group').classList.add('focused');
             }
         });
+        
+        // إغلاق نافذة تأكيد تسجيل الخروج عند النقر خارجها
+        window.addEventListener('click', (e) => {
+            if (e.target === elements.logoutConfirmModal) {
+                uiHandlers.hideLogoutConfirmation();
+            }
+        });
+        
+        // إضافة مستمع لحدث الخروج من الصفحة
+        window.addEventListener('beforeunload', (e) => {
+            // التحقق من وجود مستخدم حالي وإذا كان في مرحلة التحقق من البريد
+            if (auth.currentUser && !auth.currentUser.emailVerified && 
+                elements.verificationCheckSection.style.display === 'block') {
+                // عرض رسالة تحذير
+                e.preventDefault();
+                e.returnValue = 'هناك عملية تأكيد بريد إلكتروني قيد التنفيذ. هل أنت متأكد من رغبتك في المغادرة؟';
+                return e.returnValue;
+            }
+        });
     });
 
     // مراقبة حالة تسجيل الدخول
@@ -1593,7 +1766,7 @@
         try {
             if (user) {
                 // تحديث معلومات المستخدم
-                await user.reload().catch(err => console.warn('خطأ في إعادة تحميل بيانات المستخدم:', err));
+                await user.reload();
                 
                 // الحصول على المستخدم المحدث
                 const updatedUser = auth.currentUser;
@@ -1607,16 +1780,34 @@
                     });
                 } catch (error) {
                     // إنشاء وثيقة المستخدم إذا لم تكن موجودة
-                    try {
-                        await db.collection('users').doc(updatedUser.uid).set({
-                            email: updatedUser.email,
-                            emailVerified: updatedUser.emailVerified,
-                            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                            lastLogin: firebase.firestore.FieldValue.serverTimestamp(),
-                            lastLoginDevice: navigator.userAgent
-                        }, { merge: true });
-                    } catch (e) {
-                        console.error('خطأ في إنشاء وثيقة المستخدم:', e);
+                    if (error.code === 'not-found') {
+                        try {
+                            await db.collection('users').doc(updatedUser.uid).set({
+                                email: updatedUser.email,
+                                emailVerified: updatedUser.emailVerified,
+                                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                                lastLogin: firebase.firestore.FieldValue.serverTimestamp(),
+                                lastLoginDevice: navigator.userAgent
+                            });
+                        } catch (e) {
+                            console.error('خطأ في إنشاء وثيقة المستخدم:', e);
+                        }
+                    } else {
+                        console.error('خطأ في تحديث بيانات المستخدم:', error);
+                    }
+                }
+                
+                // التحقق مما إذا كانت هذه عملية إعادة توجيه من رابط تأكيد البريد
+                if (window.location.href.includes('mode=verifyEmail')) {
+                    // تحديث حالة المستخدم للتحقق من التأكيد
+                    await updatedUser.reload();
+                    
+                    if (updatedUser.emailVerified) {
+                        // تم تأكيد البريد بنجاح، توجيه المستخدم إلى الصفحة الرئيسية
+                        handleSuccessfulVerification();
+                    } else {
+                        // عرض رسالة خطأ
+                        uiHandlers.showAlert('لم يتم تأكيد البريد الإلكتروني بعد. يرجى المحاولة مرة أخرى.', 'error');
                     }
                 }
                 
@@ -1625,16 +1816,10 @@
             } else {
                 // تحديث واجهة المستخدم عند تسجيل الخروج
                 uiHandlers.updateUIOnLogout();
-                
-                // إيقاف مؤشر التحميل إذا كان نشطًا
-                uiHandlers.showLoading(false);
             }
         } catch (error) {
             console.error('خطأ في مراقبة حالة المستخدم:', error);
             uiHandlers.showAlert('حدث خطأ غير متوقع. يرجى تحديث الصفحة والمحاولة مرة أخرى.', 'error');
-            
-            // إيقاف مؤشر التحميل في حالة الخطأ
-            uiHandlers.showLoading(false);
         }
     });
 </script>
