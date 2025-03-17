@@ -287,3 +287,143 @@
         initApp();
     }
 })();
+
+
+
+
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  // متغيرات لتتبع الحركة
+  let touchPath = [];
+  let tapCount = 0;
+  let lastTapTime = 0;
+  let circleDetected = false;
+  
+  // إعدادات الكشف عن الدائرة
+  const minPoints = 20; // الحد الأدنى لعدد النقاط لاعتبارها دائرة
+  const circleThreshold = 0.8; // قيمة الحد الأدنى للتشابه مع الدائرة (1 = دائرة مثالية)
+  
+  // إضافة مستمع للمس
+  document.addEventListener('touchstart', handleTouchStart);
+  document.addEventListener('touchmove', handleTouchMove);
+  document.addEventListener('touchend', handleTouchEnd);
+  document.addEventListener('click', handleTap);
+  
+  // التعامل مع بداية اللمس
+  function handleTouchStart(e) {
+    // التحقق من وجود إصبعين
+    if (e.touches.length === 2) {
+      touchPath = []; // إعادة تعيين المسار
+      circleDetected = false; // إعادة تعيين حالة الدائرة
+      
+      // تسجيل الموقع الأولي
+      const touch1 = e.touches[0];
+      const touch2 = e.touches[1];
+      
+      // حساب متوسط الموقع للإصبعين
+      const avgX = (touch1.clientX + touch2.clientX) / 2;
+      const avgY = (touch1.clientY + touch2.clientY) / 2;
+      
+      touchPath.push({ x: avgX, y: avgY });
+    }
+  }
+  
+  // التعامل مع حركة اللمس
+  function handleTouchMove(e) {
+    if (e.touches.length === 2) {
+      // حساب متوسط الموقع للإصبعين
+      const touch1 = e.touches[0];
+      const touch2 = e.touches[1];
+      
+      const avgX = (touch1.clientX + touch2.clientX) / 2;
+      const avgY = (touch1.clientY + touch2.clientY) / 2;
+      
+      touchPath.push({ x: avgX, y: avgY });
+    }
+  }
+  
+  // التعامل مع نهاية اللمس
+  function handleTouchEnd(e) {
+    if (touchPath.length >= minPoints) {
+      // التحقق مما إذا كان المسار المرسوم يشبه دائرة
+      if (isCircle(touchPath)) {
+        circleDetected = true;
+        console.log("تم رسم دائرة!");
+      }
+    }
+  }
+  
+  // التعامل مع النقرات
+  function handleTap(e) {
+    const currentTime = new Date().getTime();
+    const tapDelay = 500; // الوقت المسموح به بين النقرات (بالمللي ثانية)
+    
+    // إعادة تعيين عدد النقرات إذا تجاوز الوقت المسموح
+    if (currentTime - lastTapTime > tapDelay) {
+      tapCount = 0;
+    }
+    
+    tapCount++;
+    lastTapTime = currentTime;
+    
+    // التحقق من اكتمال الشرط: رسم دائرة ثم 3 نقرات
+    if (circleDetected && tapCount === 3) {
+      // الانتقال إلى صفحة admin-panel.html
+      window.location.href = 'admin-panel.html';
+      console.log("الانتقال إلى لوحة الإدارة");
+      
+      // إعادة تعيين الحالة
+      circleDetected = false;
+      tapCount = 0;
+    }
+  }
+  
+  // دالة للتحقق من أن المسار يمثل دائرة
+  function isCircle(points) {
+    if (points.length < minPoints) return false;
+    
+    // حساب المركز (متوسط جميع النقاط)
+    let centerX = 0, centerY = 0;
+    for (const p of points) {
+      centerX += p.x;
+      centerY += p.y;
+    }
+    centerX /= points.length;
+    centerY /= points.length;
+    
+    // حساب متوسط المسافة من المركز (نصف القطر)
+    let radius = 0;
+    for (const p of points) {
+      const dx = p.x - centerX;
+      const dy = p.y - centerY;
+      radius += Math.sqrt(dx*dx + dy*dy);
+    }
+    radius /= points.length;
+    
+    // حساب الانحراف المعياري للمسافة
+    let variance = 0;
+    for (const p of points) {
+      const dx = p.x - centerX;
+      const dy = p.y - centerY;
+      const distance = Math.sqrt(dx*dx + dy*dy);
+      const diff = distance - radius;
+      variance += diff * diff;
+    }
+    variance /= points.length;
+    
+    // حساب معامل التباين (أقل قيمة = أكثر تشابهًا مع الدائرة)
+    const circleScore = 1 - Math.sqrt(variance) / radius;
+    
+    // التحقق من أن المسار قريب من نقطة البداية
+    const firstPoint = points[0];
+    const lastPoint = points[points.length - 1];
+    const dx = firstPoint.x - lastPoint.x;
+    const dy = firstPoint.y - lastPoint.y;
+    const closeToStart = Math.sqrt(dx*dx + dy*dy) < radius * 0.3;
+    
+    return circleScore > circleThreshold && closeToStart;
+  }
+});
+
