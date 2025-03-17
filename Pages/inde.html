@@ -482,11 +482,94 @@
     .password-container input {
         padding-left: 40px;
     }
+
+    /* Modal styles */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        max-width: 400px;
+        width: 90%;
+        box-shadow: var(--shadow-lg);
+        text-align: center;
+    }
+
+    .modal-title {
+        margin-bottom: 15px;
+        color: var(--primary-color);
+        font-size: 1.3rem;
+    }
+
+    .modal-message {
+        margin-bottom: 20px;
+        color: var(--dark-color);
+    }
+
+    .modal-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .modal-btn {
+        padding: 8px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: var(--transition);
+        width: auto;
+        margin: 0;
+    }
+
+    .modal-btn-primary {
+        background-color: var(--accent-color);
+        color: white;
+        border: none;
+    }
+
+    .modal-btn-primary:hover {
+        background-color: var(--accent-hover);
+    }
+
+    .modal-btn-secondary {
+        background-color: #f1f1f1;
+        color: var(--dark-color);
+        border: 1px solid #ddd;
+    }
+
+    .modal-btn-secondary:hover {
+        background-color: #e5e5e5;
+    }
 </style>
 </head>
 <body>
     <div id="loading-spinner">
         <div class="spinner"></div>
+    </div>
+    
+    <!-- مودال التأكيد -->
+    <div id="confirm-modal" class="modal">
+        <div class="modal-content">
+            <h3 class="modal-title">تأكيد تسجيل الخروج</h3>
+            <p class="modal-message">هل أنت متأكد من أنك تريد تسجيل الخروج؟</p>
+            <div class="modal-buttons">
+                <button id="confirm-logout" class="modal-btn modal-btn-primary">نعم، تسجيل الخروج</button>
+                <button id="cancel-logout" class="modal-btn modal-btn-secondary">إلغاء</button>
+            </div>
+        </div>
     </div>
     
     <div class="container">
@@ -611,7 +694,11 @@
         registerEmail: document.querySelector('#register-email'),
         registerPassword: document.querySelector('#register-password'),
         registerPasswordConfirm: document.querySelector('#register-password-confirm'),
-        passwordToggles: document.querySelectorAll('.password-toggle')
+        passwordToggles: document.querySelectorAll('.password-toggle'),
+        loadingSpinner: document.querySelector('#loading-spinner'),
+        confirmModal: document.querySelector('#confirm-modal'),
+        confirmLogoutBtn: document.querySelector('#confirm-logout'),
+        cancelLogoutBtn: document.querySelector('#cancel-logout')
     };
 
     // تحسين أداء التحقق من صحة البيانات
@@ -783,12 +870,12 @@
         },
         
         showLoading: (isLoading) => {
-            const loadingSpinner = document.querySelector('#loading-spinner');
-            if (loadingSpinner) {
-                loadingSpinner.style.display = isLoading ? 'flex' : 'none';
-                
-                // منع التمرير أثناء التحميل
-                document.body.style.overflow = isLoading ? 'hidden' : '';
+            if (isLoading) {
+                elements.loadingSpinner.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            } else {
+                elements.loadingSpinner.style.display = 'none';
+                document.body.style.overflow = '';
             }
         },
         
@@ -919,7 +1006,17 @@
         togglePasswordVisibility: (inputElement, toggleButton) => {
             const type = inputElement.getAttribute('type') === 'password' ? 'text' : 'password';
             inputElement.setAttribute('type', type);
-            toggleButton.textContent = type === 'password' ? '𖠂' : 'ꗃ';
+            toggleButton.textContent = type === 'password' ? '👁️' : '👁️‍🗨️';
+        },
+        
+        // وظيفة جديدة لإظهار مودال التأكيد
+        showConfirmModal: () => {
+            elements.confirmModal.style.display = 'flex';
+        },
+        
+        // وظيفة جديدة لإخفاء مودال التأكيد
+        hideConfirmModal: () => {
+            elements.confirmModal.style.display = 'none';
         }
     };
 
@@ -931,12 +1028,14 @@
                 
                 // التحقق من صحة البريد الإلكتروني
                 if (!email || !password) {
+                    uiHandlers.showLoading(false);
                     uiHandlers.showAlert('الرجاء إدخال البريد الإلكتروني وكلمة المرور', 'error');
                     return false;
                 }
                 
                 // التحقق من تنسيق البريد الإلكتروني
                 if (!validationUtils.isValidGmail(email)) {
+                    uiHandlers.showLoading(false);
                     uiHandlers.showAlert('يرجى إدخال عنوان Gmail صالح', 'error');
                     return false;
                 }
@@ -979,6 +1078,7 @@
                 // إعادة تعيين عداد محاولات تسجيل الدخول الفاشلة
                 resetFailedLoginAttempts();
                 
+                uiHandlers.showLoading(false);
                 return true;
             } catch (error) {
                 // معالجة أخطاء تسجيل الدخول
@@ -1007,14 +1107,13 @@
                         errorMessage = 'حدث خطأ أثناء تسجيل الدخول: ' + error.message;
                 }
                 
+                uiHandlers.showLoading(false);
                 uiHandlers.showAlert(errorMessage, 'error');
                 
                 // تحديث محاولات تسجيل الدخول الفاشلة
                 updateFailedLoginAttempts();
                 
                 return false;
-            } finally {
-                uiHandlers.showLoading(false);
             }
         },
         
@@ -1024,18 +1123,21 @@
                 
                 // التحقق من وجود البيانات
                 if (!email || !password || !passwordConfirm) {
+                    uiHandlers.showLoading(false);
                     uiHandlers.showAlert('الرجاء إكمال جميع الحقول', 'error');
                     return false;
                 }
                 
                 // التحقق من صحة البريد الإلكتروني
                 if (!validationUtils.isValidGmail(email)) {
+                    uiHandlers.showLoading(false);
                     uiHandlers.showAlert('يرجى إدخال عنوان Gmail صالح', 'error');
                     return false;
                 }
                 
                 // التحقق من تطابق كلمتي المرور
                 if (!validationUtils.passwordsMatch(password, passwordConfirm)) {
+                    uiHandlers.showLoading(false);
                     uiHandlers.showAlert('كلمتا المرور غير متطابقتين', 'error');
                     return false;
                 }
@@ -1043,6 +1145,7 @@
                 // التحقق من قوة كلمة المرور
                 if (!validationUtils.isStrongPassword(password)) {
                     const passwordStrength = validationUtils.getPasswordStrength(password);
+                    uiHandlers.showLoading(false);
                     uiHandlers.showAlert(`كلمة المرور ${passwordStrength.level}: ${passwordStrength.feedback}`, 'error');
                     return false;
                 }
@@ -1068,8 +1171,11 @@
                     lastLoginDevice: navigator.userAgent
                 });
                 
-                // عرض رسالة نجاح
-                uiHandlers.showAlert('تم إنشاء الحساب بنجاح! تم إرسال رابط التحقق إلى بريدك الإلكتروني', 'success');
+                // عرض رسالة نجاح مع تأخير قصير
+                setTimeout(() => {
+                    uiHandlers.showLoading(false);
+                    uiHandlers.showAlert('تم إنشاء الحساب بنجاح! تم إرسال رابط التحقق إلى بريدك الإلكتروني', 'success');
+                }, 500);
                 
                 return true;
             } catch (error) {
@@ -1096,10 +1202,9 @@
                         errorMessage = 'حدث خطأ أثناء إنشاء الحساب: ' + error.message;
                 }
                 
+                uiHandlers.showLoading(false);
                 uiHandlers.showAlert(errorMessage, 'error');
                 return false;
-            } finally {
-                uiHandlers.showLoading(false);
             }
         },
         
@@ -1116,13 +1221,13 @@
                 // تحديث واجهة المستخدم
                 uiHandlers.updateUIOnLogout();
                 
+                uiHandlers.showLoading(false);
                 return true;
             } catch (error) {
                 let errorMessage = 'حدث خطأ أثناء تسجيل الخروج: ' + error.message;
+                uiHandlers.showLoading(false);
                 uiHandlers.showAlert(errorMessage, 'error');
                 return false;
-            } finally {
-                uiHandlers.showLoading(false);
             }
         },
         
@@ -1133,12 +1238,14 @@
                 // التحقق من وجود مستخدم حالي
                 const user = auth.currentUser;
                 if (!user) {
+                    uiHandlers.showLoading(false);
                     uiHandlers.showAlert('يجب تسجيل الدخول أولاً', 'error');
                     return false;
                 }
                 
                 // التحقق من حالة التأكيد
                 if (user.emailVerified) {
+                    uiHandlers.showLoading(false);
                     uiHandlers.showAlert('البريد الإلكتروني مؤكد بالفعل', 'info');
                     return true;
                 }
@@ -1173,6 +1280,7 @@
                 });
                 
                 // عرض رسالة نجاح
+                uiHandlers.showLoading(false);
                 uiHandlers.showAlert('تم إعادة إرسال رابط التأكيد إلى بريدك الإلكتروني', 'success');
                 
                 return true;
@@ -1191,6 +1299,7 @@
                         errorMessage = 'حدث خطأ أثناء إرسال بريد التأكيد: ' + error.message;
                 }
                 
+                uiHandlers.showLoading(false);
                 uiHandlers.showAlert(errorMessage, 'error');
                 
                 // إعادة تفعيل زر إعادة الإرسال
@@ -1201,8 +1310,6 @@
                 }
                 
                 return false;
-            } finally {
-                uiHandlers.showLoading(false);
             }
         }
     };
@@ -1320,8 +1427,22 @@
             }
         });
         
-        // معالجة تسجيل الخروج
-        elements.logoutBtn.addEventListener('click', authHandlers.logout);
+        // معالجة تسجيل الخروج - إظهار مودال التأكيد
+        elements.logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            uiHandlers.showConfirmModal();
+        });
+        
+        // معالجة تأكيد تسجيل الخروج
+        elements.confirmLogoutBtn.addEventListener('click', async () => {
+            uiHandlers.hideConfirmModal();
+            await authHandlers.logout();
+        });
+        
+        // معالجة إلغاء تسجيل الخروج
+        elements.cancelLogoutBtn.addEventListener('click', () => {
+            uiHandlers.hideConfirmModal();
+        });
         
         // إضافة مستمع لحدث إظهار/إخفاء كلمة المرور
         elements.passwordToggles.forEach(toggle => {
@@ -1410,6 +1531,13 @@
                 field.closest('.form-group').classList.add('focused');
             }
         });
+        
+        // إغلاق مودال التأكيد عند النقر خارج المحتوى
+        window.addEventListener('click', (e) => {
+            if (e.target === elements.confirmModal) {
+                uiHandlers.hideConfirmModal();
+            }
+        });
     });
 
     // مراقبة حالة تسجيل الدخول
@@ -1457,6 +1585,9 @@
         } catch (error) {
             console.error('خطأ في مراقبة حالة المستخدم:', error);
             uiHandlers.showAlert('حدث خطأ غير متوقع. يرجى تحديث الصفحة والمحاولة مرة أخرى.', 'error');
+        } finally {
+            // تأكد من إخفاء مؤشر التحميل
+            uiHandlers.showLoading(false);
         }
     });
 </script>
