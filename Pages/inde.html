@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>نظام تسجيل الدخول</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary-color: #2c3e50;
@@ -50,7 +51,7 @@
             padding: 15px 0;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.5s ease;
             color: var(--light-color);
         }
 
@@ -72,6 +73,18 @@
 
         .form-group {
             margin-bottom: 20px;
+        }
+
+        .password-field {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            left: 12px;
+            top: 47px;
+            cursor: pointer;
+            color: #666;
         }
 
         label {
@@ -154,10 +167,15 @@
 
         .form-section {
             display: none;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
         }
 
         .form-section.active {
             display: block;
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* قسم التحقق من البريد الإلكتروني */
@@ -196,6 +214,14 @@
             align-items: center;
             justify-content: center;
             z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
         }
 
         .modal {
@@ -206,6 +232,12 @@
             width: 90%;
             text-align: center;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transform: translateY(-20px);
+            transition: transform 0.4s ease;
+        }
+
+        .modal-overlay.show .modal {
+            transform: translateY(0);
         }
 
         .modal h3 {
@@ -266,9 +298,10 @@
                         <label for="login-email">البريد الإلكتروني</label>
                         <input type="email" id="login-email" placeholder="أدخل بريدك الإلكتروني" required>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group password-field">
                         <label for="login-password">كلمة المرور</label>
                         <input type="password" id="login-password" placeholder="أدخل كلمة المرور" required>
+                        <i class="toggle-password fas fa-eye-slash" data-target="login-password"></i>
                     </div>
                     <button type="submit">دخول</button>
                 </form>
@@ -282,13 +315,15 @@
                         <label for="register-email">البريد الإلكتروني</label>
                         <input type="email" id="register-email" placeholder="أدخل بريدك الإلكتروني" required>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group password-field">
                         <label for="register-password">كلمة المرور</label>
                         <input type="password" id="register-password" placeholder="أدخل كلمة المرور" required>
+                        <i class="toggle-password fas fa-eye-slash" data-target="register-password"></i>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group password-field">
                         <label for="register-password-confirm">تأكيد كلمة المرور</label>
                         <input type="password" id="register-password-confirm" placeholder="أدخل كلمة المرور مرة أخرى" required>
+                        <i class="toggle-password fas fa-eye-slash" data-target="register-password-confirm"></i>
                     </div>
                     <button type="submit">تسجيل</button>
                 </form>
@@ -320,7 +355,7 @@
     </div>
 
     <!-- مودال تأكيد تسجيل الخروج -->
-    <div id="logout-modal" class="modal-overlay" style="display: none;">
+    <div id="logout-modal" class="modal-overlay">
         <div class="modal">
             <h3>هل تود المغادرة حقاً؟</h3>
             <p>سيتم تسجيل خروجك من الحساب.</p>
@@ -366,68 +401,63 @@
         const logoutModal = document.getElementById('logout-modal');
         const confirmLogoutBtn = document.getElementById('confirm-logout');
         const cancelLogoutBtn = document.getElementById('cancel-logout');
+        const togglePasswordBtns = document.querySelectorAll('.toggle-password');
 
-        // إظهار القسم النشط فقط
+        // تبديل حالة رؤية كلمة المرور
+        togglePasswordBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target');
+                const passwordInput = document.getElementById(targetId);
+                
+                // تبديل نوع الحقل
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    this.classList.remove('fa-eye-slash');
+                    this.classList.add('fa-eye');
+                } else {
+                    passwordInput.type = 'password';
+                    this.classList.remove('fa-eye');
+                    this.classList.add('fa-eye-slash');
+                }
+            });
+        });
+
+        // إظهار القسم النشط فقط مع تأثير انتقالي
         function showActiveSection(activeSection) {
             const sections = [loginSection, registerSection, userInfoSection, verificationWaitingSection];
+            
             sections.forEach(section => {
-                section.classList.remove('active');
+                if (section === activeSection) {
+                    // إظهار القسم المطلوب
+                    section.style.display = 'block';
+                    // استخدام setTimeout للسماح بتطبيق الانتقال
+                    setTimeout(() => {
+                        section.classList.add('active');
+                    }, 50);
+                } else {
+                    // إخفاء الأقسام الأخرى
+                    section.classList.remove('active');
+                    // انتظار انتهاء الانتقال قبل إخفاء العنصر تماماً
+                    setTimeout(() => {
+                        if (!section.classList.contains('active')) {
+                            section.style.display = 'none';
+                        }
+                    }, 400); // مدة الانتقال
+                }
             });
-            activeSection.classList.add('active');
         }
 
-        // التحقق من صحة بريد Gmail
+        // التحقق من صحة بريد Gmail (تم تخفيف الشروط)
         function isValidGmail(email) {
             // التحقق من بنية البريد الإلكتروني بشكل عام
             const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-            if (!emailRegex.test(email)) {
-                return false;
-            }
-
-            // التحقق من أن النطاق هو gmail.com
-            const domain = email.split('@')[1].toLowerCase();
-            if (domain !== 'gmail.com') {
-                return false;
-            }
-
-            // التحقق من قواعد اسم المستخدم في Gmail
-            const username = email.split('@')[0];
-            
-            // طول اسم المستخدم يجب أن يكون بين 6-30 حرفًا
-            if (username.length < 6 || username.length > 30) {
-                return false;
-            }
-            
-            // التحقق من الأحرف المسموح بها في اسم المستخدم
-            const validUsernameRegex = /^[a-zA-Z0-9]([a-zA-Z0-9._-]{4,28})[a-zA-Z0-9]$/;
-            if (!validUsernameRegex.test(username)) {
-                return false;
-            }
-            
-            // التحقق من عدم وجود نقاط متتالية في اسم المستخدم
-            if (username.includes('..')) {
-                return false;
-            }
-            
-            // التحقق من عدم بدء أو انتهاء اسم المستخدم بنقطة
-            if (username.startsWith('.') || username.endsWith('.')) {
-                return false;
-            }
-            
-            // التحقق من عدم وجود أحرف خاصة غير مسموح بها
-            const invalidCharsRegex = /[!#$%^&*()+={}\[\]|\\:;"'<>,?/]/;
-            if (invalidCharsRegex.test(username)) {
-                return false;
-            }
-
-            return true;
+            return emailRegex.test(email);
         }
 
-        // التحقق من قوة كلمة المرور
+        // التحقق من قوة كلمة المرور (تم تخفيف الشروط)
         function isStrongPassword(password) {
-            // على الأقل 8 أحرف، وتحتوي على حرف كبير، وحرف صغير، ورقم، ورمز خاص
-            const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-            return strongPasswordRegex.test(password);
+            // على الأقل 6 أحرف
+            return password.length >= 6;
         }
 
         // التحقق من حالة التحقق من البريد الإلكتروني
@@ -492,7 +522,7 @@
 
             // التحقق من صحة البريد الإلكتروني
             if (!isValidGmail(email)) {
-                showAlert('يرجى إدخال عنوان Gmail صالح', 'error');
+                showAlert('يرجى إدخال عنوان بريد إلكتروني صالح', 'error');
                 return;
             }
 
@@ -544,7 +574,7 @@
 
             // التحقق من صحة البريد الإلكتروني
             if (!isValidGmail(email)) {
-                showAlert('يرجى إدخال عنوان Gmail صالح', 'error');
+                showAlert('يرجى إدخال عنوان بريد إلكتروني صالح', 'error');
                 return;
             }
 
@@ -556,7 +586,7 @@
 
             // التحقق من قوة كلمة المرور
             if (!isStrongPassword(password)) {
-                showAlert('كلمة المرور ضعيفة. يجب أن تحتوي على الأقل 8 أحرف، وحرف كبير، وحرف صغير، ورقم، ورمز خاص', 'error');
+                showAlert('كلمة المرور قصيرة جداً. يجب أن تحتوي على الأقل 6 أحرف', 'error');
                 return;
             }
 
@@ -607,7 +637,7 @@
 
         // فتح مودال تأكيد تسجيل الخروج
         logoutBtn.addEventListener('click', () => {
-            logoutModal.style.display = 'flex';
+            logoutModal.classList.add('show');
         });
 
         // تأكيد تسجيل الخروج
@@ -615,7 +645,7 @@
             auth.signOut()
                 .then(() => {
                     showAlert('تم تسجيل الخروج بنجاح', 'success');
-                    logoutModal.style.display = 'none';
+                    logoutModal.classList.remove('show');
                     
                     // توجيه المستخدم إلى صفحة تسجيل الدخول
                     setTimeout(() => {
@@ -624,13 +654,13 @@
                 })
                 .catch((error) => {
                     showAlert('حدث خطأ أثناء تسجيل الخروج: ' + error.message, 'error');
-                    logoutModal.style.display = 'none';
+                    logoutModal.classList.remove('show');
                 });
         });
 
         // إلغاء تسجيل الخروج
         cancelLogoutBtn.addEventListener('click', () => {
-            logoutModal.style.display = 'none';
+            logoutModal.classList.remove('show');
         });
 
         // مراقبة حالة تسجيل الدخول
