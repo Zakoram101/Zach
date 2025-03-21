@@ -411,9 +411,10 @@
             };
 
             // استخدام EmailJS لإرسال البريد
-            return emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY);
+            return emailjs.send("service_lxtkw1u","template_jjkigdg, 95d1rImOBoEFqgAL2);
         }
 
+        
         // معالجة رسالة المستخدم
         function handleUserMessage() {
             const message = userInput.value.trim();
@@ -562,7 +563,7 @@
         // عند تحميل الصفحة
         window.addEventListener('load', () => {
             // تهيئة EmailJS
-            emailjs.init(PUBLIC_KEY);
+            emailjs.init(95d1rImOBoEFqgAL2);
             userInput.focus();
         });
     </script>
