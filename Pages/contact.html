@@ -14,6 +14,8 @@
             --light-color: #ecf0f1;
             --dark-color: #34495e;
             --font-main: 'Tajawal', sans-serif;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
         }
 
         * {
@@ -51,6 +53,19 @@
             text-align: center;
             font-weight: bold;
             font-size: 1.2rem;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .chat-header .status {
+            width: 10px;
+            height: 10px;
+            background-color: var(--success-color);
+            border-radius: 50%;
+            position: absolute;
+            left: 15px;
         }
 
         .chat-messages {
@@ -60,6 +75,7 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
+            scroll-behavior: smooth;
         }
 
         .message {
@@ -68,6 +84,53 @@
             border-radius: 18px;
             margin-bottom: 5px;
             word-wrap: break-word;
+            position: relative;
+            user-select: none;
+            transition: all 0.2s ease;
+        }
+
+        .message:active {
+            transform: scale(0.98);
+        }
+
+        .message.selected {
+            box-shadow: 0 0 0 2px var(--accent-color);
+        }
+
+        .message-time {
+            font-size: 0.7rem;
+            opacity: 0.7;
+            margin-top: 5px;
+            display: block;
+            text-align: left;
+        }
+
+        .message-options {
+            position: absolute;
+            bottom: -40px;
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            display: none;
+            z-index: 10;
+            padding: 5px;
+            flex-direction: row;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .message-options button {
+            background: none;
+            border: none;
+            color: var(--dark-color);
+            font-size: 0.9rem;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 15px;
+        }
+
+        .message-options button:hover {
+            background-color: var(--light-color);
         }
 
         .system-message {
@@ -91,6 +154,10 @@
             border-top-left-radius: 4px;
         }
 
+        .user-message .message-options {
+            left: 0;
+        }
+
         .bot-message {
             align-self: flex-end;
             background-color: var(--primary-color);
@@ -99,6 +166,10 @@
             border-bottom-left-radius: 18px;
             border-bottom-right-radius: 18px;
             border-top-right-radius: 4px;
+        }
+
+        .bot-message .message-options {
+            right: 0;
         }
 
         .hint {
@@ -212,10 +283,84 @@
             background-color: #ccc;
         }
 
+        .toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 12px 20px;
+            background-color: var(--dark-color);
+            color: white;
+            border-radius: 5px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+            text-align: center;
+        }
+
+        .toast.success {
+            background-color: var(--success-color);
+        }
+
+        .toast.error {
+            background-color: var(--accent-color);
+        }
+
+        .toast.warning {
+            background-color: var(--warning-color);
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            margin-top: 8px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            margin-left: 4px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            animation: typing-bounce 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing-bounce {
+            0%, 80%, 100% {
+                transform: scale(0.6);
+                opacity: 0.6;
+            }
+            40% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
         @media (max-width: 768px) {
             .chat-container {
                 height: 90vh;
                 width: 95%;
+            }
+            
+            .message-options {
+                bottom: -35px;
             }
         }
     </style>
@@ -223,11 +368,18 @@
 <body>
     <div class="chat-container">
         <div class="chat-header">
+            <span class="status"></span>
             خدمة الدعم
         </div>
         <div class="chat-messages" id="chatMessages">
-            <div class="message bot-message">
+            <div class="message bot-message" data-message-id="welcome">
                 مرحباً بك في خدمة الدعم! كيف يمكنني مساعدتك اليوم؟
+                <span class="message-time">الآن</span>
+                <div class="message-options">
+                    <button class="copy-btn">نسخ</button>
+                    <button class="resend-btn">إعادة</button>
+                    <button class="delete-btn">حذف</button>
+                </div>
             </div>
         </div>
         <div class="chat-input">
@@ -252,6 +404,8 @@
         </div>
     </div>
 
+    <div class="toast" id="toast"></div>
+
     <script>
         // العناصر
         const chatMessages = document.getElementById('chatMessages');
@@ -260,25 +414,132 @@
         const confirmModal = document.getElementById('confirmModal');
         const yesBtn = document.getElementById('yesBtn');
         const noBtn = document.getElementById('noBtn');
+        const toast = document.getElementById('toast');
 
         // حالة المحادثة
         let askingForEmail = false;
-        let hiddenEmail = 'jaafardarim@gmail.com';
+        let supportEmail = 'support@example.com'; // البريد الإلكتروني للدعم (يمكن تغييره)
+        let clickCount = 0;
+        let clickTimer = null;
+        let lastClickedMessageId = null;
+        let typingIndicator = null;
+        let messageCounter = 1;
         
+        // دالة لإظهار رسالة توست
+        function showToast(message, type = 'default', duration = 2000) {
+            toast.textContent = message;
+            toast.className = 'toast ' + type;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, duration);
+        }
+        
+        // إضافة مؤشر الكتابة
+        function showTypingIndicator() {
+            if (typingIndicator) return;
+            
+            typingIndicator = document.createElement('div');
+            typingIndicator.className = 'typing-indicator';
+            
+            for (let i = 0; i < 3; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'typing-dot';
+                typingIndicator.appendChild(dot);
+            }
+            
+            const indicatorWrapper = document.createElement('div');
+            indicatorWrapper.className = 'message bot-message';
+            indicatorWrapper.style.padding = '10px';
+            indicatorWrapper.style.minWidth = '50px';
+            indicatorWrapper.appendChild(typingIndicator);
+            
+            chatMessages.appendChild(indicatorWrapper);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            return indicatorWrapper;
+        }
+        
+        // إزالة مؤشر الكتابة
+        function hideTypingIndicator() {
+            if (typingIndicator && typingIndicator.parentElement) {
+                chatMessages.removeChild(typingIndicator.parentElement);
+                typingIndicator = null;
+            }
+        }
+        
+        // إنشاء معرف فريد للرسائل
+        function generateMessageId() {
+            return 'msg-' + Date.now() + '-' + messageCounter++;
+        }
+        
+        // الحصول على الوقت الحالي بتنسيق جميل
+        function getCurrentTime() {
+            const now = new Date();
+            return now.getHours() + ':' + (now.getMinutes() < 10 ? '0' : '') + now.getMinutes();
+        }
+
         // إضافة رسالة المستخدم إلى المحادثة
         function addUserMessage(text) {
+            const messageId = generateMessageId();
             const messageDiv = document.createElement('div');
             messageDiv.className = 'message user-message';
-            messageDiv.textContent = text;
+            messageDiv.dataset.messageId = messageId;
+            messageDiv.dataset.messageType = 'user';
+            messageDiv.innerHTML = text + '<span class="message-time">' + getCurrentTime() + '</span>';
+            
+            // إضافة خيارات الرسالة
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'message-options';
+            
+            const copyBtn = document.createElement('button');
+            copyBtn.className = 'copy-btn';
+            copyBtn.textContent = 'نسخ';
+            copyBtn.onclick = (e) => {
+                e.stopPropagation();
+                copyMessageText(messageId);
+            };
+            
+            const resendBtn = document.createElement('button');
+            resendBtn.className = 'resend-btn';
+            resendBtn.textContent = 'إعادة';
+            resendBtn.onclick = (e) => {
+                e.stopPropagation();
+                resendMessage(messageId);
+            };
+            
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'delete-btn';
+            deleteBtn.textContent = 'حذف';
+            deleteBtn.onclick = (e) => {
+                e.stopPropagation();
+                deleteMessage(messageId);
+            };
+            
+            optionsDiv.appendChild(copyBtn);
+            optionsDiv.appendChild(resendBtn);
+            optionsDiv.appendChild(deleteBtn);
+            messageDiv.appendChild(optionsDiv);
+            
+            // إضافة مستمعات الأحداث للرسالة
+            addMessageEventListeners(messageDiv);
+            
             chatMessages.appendChild(messageDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            return messageId;
         }
 
         // إضافة رسالة النظام إلى المحادثة
         function addSystemMessage(text) {
+            const messageId = generateMessageId();
             const messageDiv = document.createElement('div');
             messageDiv.className = 'system-message';
+            messageDiv.dataset.messageId = messageId;
+            messageDiv.dataset.messageType = 'system';
             messageDiv.textContent = text;
+            
             chatMessages.appendChild(messageDiv);
             
             // إضافة تلميح إذا لم يكن طلب البريد الإلكتروني
@@ -290,45 +551,269 @@
             }
             
             chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            return messageId;
         }
 
         // إضافة رسالة البوت إلى المحادثة
         function addBotMessage(text) {
+            hideTypingIndicator();
+            
+            const messageId = generateMessageId();
             const messageDiv = document.createElement('div');
             messageDiv.className = 'message bot-message';
-            messageDiv.textContent = text;
+            messageDiv.dataset.messageId = messageId;
+            messageDiv.dataset.messageType = 'bot';
+            messageDiv.innerHTML = text + '<span class="message-time">' + getCurrentTime() + '</span>';
+            
+            // إضافة خيارات الرسالة
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'message-options';
+            
+            const copyBtn = document.createElement('button');
+            copyBtn.className = 'copy-btn';
+            copyBtn.textContent = 'نسخ';
+            copyBtn.onclick = (e) => {
+                e.stopPropagation();
+                copyMessageText(messageId);
+            };
+            
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'delete-btn';
+            deleteBtn.textContent = 'حذف';
+            deleteBtn.onclick = (e) => {
+                e.stopPropagation();
+                deleteMessage(messageId);
+            };
+            
+            optionsDiv.appendChild(copyBtn);
+            optionsDiv.appendChild(deleteBtn);
+            messageDiv.appendChild(optionsDiv);
+            
+            // إضافة مستمعات الأحداث للرسالة
+            addMessageEventListeners(messageDiv);
+            
             chatMessages.appendChild(messageDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            return messageId;
+        }
+        
+        // إضافة مستمعات الأحداث للرسالة
+        function addMessageEventListeners(messageDiv) {
+            const messageId = messageDiv.dataset.messageId;
+            
+            // النقر المضاعف لإعادة الإرسال
+            messageDiv.addEventListener('click', function(e) {
+                // التحقق إذا كان النقر على زر من أزرار الخيارات
+                if (e.target.tagName === 'BUTTON') return;
+                
+                // إذا كان النقر على نفس الرسالة آخر مرة
+                if (messageId === lastClickedMessageId) {
+                    clickCount++;
+                    
+                    // إذا كانت 3 نقرات متتالية
+                    if (clickCount === 3) {
+                        deleteMessage(messageId);
+                        resetClickDetection();
+                    }
+                    // إذا كانت نقرتين متتاليتين
+                    else if (clickCount === 2) {
+                        resendMessage(messageId);
+                        resetClickDetection();
+                    }
+                } else {
+                    // إذا كان النقر على رسالة مختلفة، نعيد تعيين العداد
+                    lastClickedMessageId = messageId;
+                    clickCount = 1;
+                    
+                    // نعيد ضبط العداد بعد فترة زمنية
+                    clearTimeout(clickTimer);
+                    clickTimer = setTimeout(resetClickDetection, 500);
+                    
+                    // إظهار خيارات الرسالة
+                    hideAllMessageOptions();
+                    const options = messageDiv.querySelector('.message-options');
+                    if (options) {
+                        options.style.display = 'flex';
+                    }
+                }
+            });
+            
+            // الضغط المطول لنسخ النص
+            let pressTimer;
+            let isCopying = false;
+            
+            messageDiv.addEventListener('mousedown', function(e) {
+                // التحقق إذا كان الضغط على زر من أزرار الخيارات
+                if (e.target.tagName === 'BUTTON') return;
+                
+                pressTimer = setTimeout(() => {
+                    isCopying = true;
+                    copyMessageText(messageId);
+                }, 600);
+            });
+            
+            messageDiv.addEventListener('mouseup', function() {
+                clearTimeout(pressTimer);
+            });
+            
+            messageDiv.addEventListener('mouseleave', function() {
+                clearTimeout(pressTimer);
+            });
+            
+            // منع النقر والسحب الافتراضي عند الضغط المطول
+            messageDiv.addEventListener('contextmenu', function(e) {
+                if (isCopying) {
+                    e.preventDefault();
+                    isCopying = false;
+                }
+            });
+        }
+        
+        // إعادة ضبط عملية اكتشاف النقر المتعدد
+        function resetClickDetection() {
+            clickCount = 0;
+            clearTimeout(clickTimer);
+            clickTimer = null;
+        }
+        
+        // إخفاء جميع خيارات الرسائل
+        function hideAllMessageOptions() {
+            document.querySelectorAll('.message-options').forEach(options => {
+                options.style.display = 'none';
+            });
+        }
+        
+        // حذف الرسالة
+        function deleteMessage(messageId) {
+            const message = document.querySelector(`[data-message-id="${messageId}"]`);
+            if (message) {
+                message.style.opacity = '0';
+                message.style.height = '0';
+                message.style.padding = '0';
+                message.style.margin = '0';
+                message.style.overflow = 'hidden';
+                
+                setTimeout(() => {
+                    message.remove();
+                }, 300);
+                
+                showToast('تم حذف الرسالة', 'warning');
+            }
+        }
+        
+        // نسخ نص الرسالة
+        function copyMessageText(messageId) {
+            const message = document.querySelector(`[data-message-id="${messageId}"]`);
+            if (message) {
+                // استخراج النص من الرسالة بدون span الوقت
+                let text = message.textContent.replace(/\d+:\d+/, '').trim();
+                text = text.replace('نسخإعادةحذف', '').replace('نسخحذف', '').trim();
+                
+                navigator.clipboard.writeText(text).then(() => {
+                    showToast('تم نسخ النص', 'success');
+                }).catch(err => {
+                    showToast('فشل نسخ النص', 'error');
+                    console.error('حدث خطأ أثناء نسخ النص:', err);
+                });
+            }
+        }
+        
+        // إعادة إرسال الرسالة
+        function resendMessage(messageId) {
+            const message = document.querySelector(`[data-message-id="${messageId}"]`);
+            if (message && message.dataset.messageType === 'user') {
+                // استخراج النص من الرسالة بدون span الوقت
+                let text = message.textContent.replace(/\d+:\d+/, '').trim();
+                text = text.replace('نسخإعادةحذف', '').trim();
+                
+                // إرسال الرسالة مرة أخرى
+                messageInput.value = text;
+                sendMessage();
+                
+                showToast('تم إعادة إرسال الرسالة', 'success');
+            }
         }
 
-        // إرسال الرسالة إلى البريد الإلكتروني (محاكاة)
-        function sendEmailToSupport(message) {
-            console.log(`رسالة للدعم: ${message} (سترسل إلى: ${hiddenEmail})`);
-            setTimeout(() => {
+        // محاكاة إرسال رسالة إلى API
+        function sendMessageToAPI(messageText, userEmail = null) {
+            return new Promise((resolve, reject) => {
+                // محاكاة طلب API
+                setTimeout(() => {
+                    // محاكاة نجاح الإرسال
+                    if (Math.random() > 0.05) { // 95% فرصة للنجاح
+                        resolve({
+                            success: true,
+                            messageId: 'api-' + Date.now(),
+                            timestamp: new Date().toISOString()
+                        });
+                    } else {
+                        // محاكاة فشل الإرسال
+                        reject(new Error('فشل في الاتصال بالخادم'));
+                    }
+                }, 700);
+            });
+        }
+
+        // إرسال الرسالة إلى الدعم (فعلي باستخدام API محاكاة)
+        async function sendEmailToSupport(message, userEmail = null) {
+            const indicatorWrapper = showTypingIndicator();
+            
+            try {
+                const response = await sendMessageToAPI(message, userEmail);
+                hideTypingIndicator();
+                
                 addSystemMessage('تم إرسال رسالتك');
                 confirmModal.style.display = 'flex';
-            }, 500);
+                
+                return response;
+            } catch (error) {
+                hideTypingIndicator();
+                addSystemMessage('حدث خطأ أثناء إرسال الرسالة. يرجى المحاولة مرة أخرى.');
+                console.error('خطأ في إرسال الرسالة:', error);
+                
+                return null;
+            }
+        }
+
+        // التحقق من صحة البريد الإلكتروني
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
         }
 
         // التحقق من الرسالة وإرسالها
-        function sendMessage() {
+        async function sendMessage() {
             const message = messageInput.value.trim();
             if (!message) return;
             
-            addUserMessage(message);
+            // إضافة رسالة المستخدم إلى المحادثة
+            const messageId = addUserMessage(message);
             messageInput.value = '';
+            
+            // إخفاء خيارات الرسائل
+            hideAllMessageOptions();
             
             if (askingForEmail) {
                 // التحقق من صحة البريد الإلكتروني
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (emailRegex.test(message)) {
-                    // إرسال البريد الإلكتروني وإغلاق المحادثة
-                    addSystemMessage(`تم استلام بريدك الإلكتروني: ${message}`);
-                    addBotMessage('شكراً لك! سنتواصل معك قريباً.');
+                if (isValidEmail(message)) {
+                    // محاكاة إرسال البريد الإلكتروني
+                    const indicatorWrapper = showTypingIndicator();
                     
                     setTimeout(() => {
-                        window.location.href = 'index.html';
-                    }, 2000);
+                        hideTypingIndicator();
+                        // إرسال البريد الإلكتروني وإغلاق المحادثة
+                        addSystemMessage(`تم استلام بريدك الإلكتروني: ${message}`);
+                        addBotMessage('شكراً لك! سنتواصل معك قريباً على البريد الإلكتروني المُدخل.');
+                        
+                        showToast('تم الإرسال بنجاح!', 'success');
+                        
+                        // محاكاة الانتقال إلى الصفحة الرئيسية
+                        setTimeout(() => {
+                            addSystemMessage('جاري تحويلك إلى الصفحة الرئيسية...');
+                        }, 2000);
+                    }, 1000);
                 } else {
                     addBotMessage('يرجى إدخال بريد إلكتروني صحيح.');
                 }
@@ -337,7 +822,11 @@
                 confirmModal.style.display = 'flex';
             } else {
                 // إرسال الرسالة إلى الدعم
-                sendEmailToSupport(message);
+                const response = await sendEmailToSupport(message);
+                
+                if (response) {
+                    console.log('تم إرسال الرسالة بنجاح:', response);
+                }
             }
         }
 
@@ -359,7 +848,31 @@
 
         noBtn.addEventListener('click', () => {
             confirmModal.style.display = 'none';
-            addBotMessage('كيف يمكنني مساعدتك أكثر؟');
+            addBotMessage('شكراً لك! هل يمكنني مساعدتك بشيء آخر؟');
+        });
+        
+        // إضافة مستمعات الأحداث للرسائل الموجودة بالفعل
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.message').forEach(message => {
+                const messageId = message.dataset.messageId;
+                if (messageId) {
+                    addMessageEventListeners(message);
+                }
+            });
+            
+            // إضافة مستمع للنقر على أي مكان في المستند لإخفاء خيارات الرسائل
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.message') && !e.target.closest('.message-options')) {
+                    hideAllMessageOptions();
+                }
+            });
+        });
+        
+        // منع السحب الافتراضي للنص
+        document.addEventListener('dragstart', (e) => {
+            if (e.target.closest('.message')) {
+                e.preventDefault();
+            }
         });
     </script>
 </body>
