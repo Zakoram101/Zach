@@ -3,17 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>خدمة الدعم | ZakBook</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <title>خدمة الدعم</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-color: #2c3e50;
             --accent-color: #e74c3c;
             --light-color: #ecf0f1;
             --dark-color: #34495e;
-            --success-color: #27ae60;
-            --warning-color: #f39c12;
             --font-main: 'Tajawal', sans-serif;
         }
 
@@ -25,168 +24,130 @@
 
         body {
             font-family: var(--font-main);
-            background-color: #f5f7fa;
-            direction: rtl;
+            background-color: #f5f5f5;
             height: 100vh;
             display: flex;
             flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
         .chat-container {
-            max-width: 600px;
             width: 100%;
-            margin: 20px auto;
+            max-width: 500px;
             background-color: white;
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             display: flex;
             flex-direction: column;
-            height: calc(100vh - 40px);
-            overflow: hidden;
-            position: relative;
+            height: 80vh;
         }
 
         .chat-header {
             background-color: var(--primary-color);
             color: white;
-            padding: 15px 20px;
-            border-top-left-radius: 12px;
-            border-top-right-radius: 12px;
+            padding: 15px;
             text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .chat-header h2 {
-            margin: 0;
-            font-size: 1.5rem;
-        }
-
-        .logo {
-            height: 28px;
-            margin-left: 10px;
+            font-weight: bold;
+            font-size: 1.2rem;
         }
 
         .chat-messages {
             flex: 1;
-            padding: 20px;
             overflow-y: auto;
+            padding: 15px;
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            background-color: rgba(236, 240, 241, 0.5);
-            scroll-behavior: smooth;
+            gap: 10px;
         }
 
         .message {
             max-width: 80%;
-            padding: 12px 16px;
-            border-radius: 12px;
-            line-height: 1.5;
-            position: relative;
-            animation: fadeIn 0.3s ease;
+            padding: 10px 15px;
+            border-radius: 18px;
+            margin-bottom: 5px;
             word-wrap: break-word;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .system-message {
+            align-self: center;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            border-radius: 10px;
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            margin: 10px 0;
+            text-align: center;
         }
 
         .user-message {
-            align-self: flex-end;
-            background-color: var(--accent-color);
-            color: white;
-            border-bottom-right-radius: 2px;
-        }
-
-        .system-message {
             align-self: flex-start;
-            background-color: white;
+            background-color: var(--light-color);
             color: var(--dark-color);
-            border-bottom-left-radius: 2px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-top-right-radius: 18px;
+            border-bottom-right-radius: 18px;
+            border-bottom-left-radius: 18px;
+            border-top-left-radius: 4px;
         }
 
-        .notification {
-            align-self: center;
-            background-color: rgba(255, 255, 255, 0.9);
-            color: var(--dark-color);
-            font-size: 0.9rem;
-            padding: 8px 15px;
-            border-radius: 20px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            margin: 5px 0;
-        }
-
-        .success-notification {
-            background-color: rgba(39, 174, 96, 0.1);
-            color: var(--success-color);
-            border: 1px solid rgba(39, 174, 96, 0.2);
+        .bot-message {
+            align-self: flex-end;
+            background-color: var(--primary-color);
+            color: white;
+            border-top-left-radius: 18px;
+            border-bottom-left-radius: 18px;
+            border-bottom-right-radius: 18px;
+            border-top-right-radius: 4px;
         }
 
         .hint {
-            align-self: center;
-            color: rgba(52, 73, 94, 0.6);
-            font-size: 0.85rem;
-            margin-top: -5px;
-            background-color: rgba(255, 255, 255, 0.5);
-            padding: 5px 12px;
-            border-radius: 15px;
+            font-size: 0.7rem;
+            color: rgba(0, 0, 0, 0.3);
+            text-align: center;
+            margin-top: 5px;
         }
 
         .chat-input {
             display: flex;
-            padding: 15px;
-            background-color: white;
+            padding: 10px;
+            background-color: #f9f9f9;
             border-top: 1px solid #eee;
         }
 
         .chat-input input {
             flex: 1;
             padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 25px;
+            border: none;
+            border-radius: 20px;
             font-family: var(--font-main);
-            font-size: 1rem;
-            outline: none;
-            transition: all 0.2s ease;
+            font-size: 0.95rem;
+            background-color: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
 
         .chat-input input:focus {
-            border-color: var(--accent-color);
-            box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.2);
+            outline: none;
+            box-shadow: 0 0 0 2px var(--accent-color);
         }
 
-        .chat-input button {
+        .send-btn {
+            border: none;
             background-color: var(--accent-color);
             color: white;
-            border: none;
-            border-radius: 25px;
-            padding: 0 20px;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
             margin-right: 10px;
             cursor: pointer;
-            font-family: var(--font-main);
-            font-weight: bold;
-            transition: all 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: background-color 0.2s;
         }
 
-        .chat-input button i {
-            margin-left: 8px;
-        }
-
-        .chat-input button:hover {
+        .send-btn:hover {
             background-color: #c0392b;
-            transform: translateY(-1px);
-        }
-
-        .chat-input button:active {
-            transform: translateY(1px);
         }
 
         .modal {
@@ -196,209 +157,65 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
             justify-content: center;
             align-items: center;
-            z-index: 100;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            backdrop-filter: blur(3px);
-        }
-
-        .modal.show {
-            display: flex;
-            opacity: 1;
         }
 
         .modal-content {
             background-color: white;
-            padding: 30px;
-            border-radius: 12px;
+            padding: 25px;
+            border-radius: 10px;
             width: 90%;
             max-width: 400px;
             text-align: center;
-            transform: scale(0.9);
-            transition: transform 0.3s ease;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         }
 
-        .modal.show .modal-content {
-            transform: scale(1);
-        }
-
-        .modal-title {
+        .modal h3 {
             margin-bottom: 15px;
             color: var(--dark-color);
-            font-size: 1.4rem;
         }
 
         .modal-buttons {
             display: flex;
             justify-content: center;
             gap: 15px;
-            margin-top: 25px;
+            margin-top: 20px;
         }
 
-        .modal-button {
-            padding: 10px 25px;
+        .modal-btn {
+            padding: 8px 20px;
             border: none;
-            border-radius: 6px;
-            font-family: var(--font-main);
-            font-weight: bold;
+            border-radius: 5px;
             cursor: pointer;
-            transition: all 0.2s;
+            font-family: var(--font-main);
+            font-weight: 500;
+            transition: background-color 0.2s;
         }
 
-        .yes-button {
+        .yes-btn {
             background-color: var(--accent-color);
             color: white;
         }
 
-        .yes-button:hover {
+        .yes-btn:hover {
             background-color: #c0392b;
-            transform: translateY(-2px);
         }
 
-        .no-button {
+        .no-btn {
             background-color: #ddd;
-            color: var(--dark-color);
+            color: #333;
         }
 
-        .no-button:hover {
+        .no-btn:hover {
             background-color: #ccc;
-            transform: translateY(-2px);
-        }
-
-        .email-input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-family: var(--font-main);
-            font-size: 1rem;
-            margin-top: 20px;
-            outline: none;
-            direction: ltr;
-            transition: all 0.2s ease;
-        }
-
-        .email-input:focus {
-            border-color: var(--accent-color);
-            box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.2);
-        }
-
-        .loading-spinner {
-            display: none;
-            align-items: center;
-            justify-content: center;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(255, 255, 255, 0.8);
-            z-index: 10;
-            border-radius: 12px;
-        }
-
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid rgba(231, 76, 60, 0.2);
-            border-radius: 50%;
-            border-top-color: var(--accent-color);
-            animation: spin 1s ease-in-out infinite;
-        }
-
-        .loading-text {
-            margin-top: 15px;
-            color: var(--dark-color);
-            font-weight: 500;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .send-icon {
-            margin-left: 8px;
-            font-size: 0.9rem;
-        }
-
-        .shortcut-hint {
-            position: absolute;
-            bottom: 5px;
-            right: 20px;
-            font-size: 0.7rem;
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .timestamp {
-            font-size: 0.7rem;
-            margin-top: 5px;
-            opacity: 0.7;
-            align-self: flex-end;
-        }
-
-        .typing-indicator {
-            display: none;
-            align-self: flex-start;
-            background-color: white;
-            color: var(--dark-color);
-            padding: 8px 15px;
-            border-radius: 10px;
-            margin-bottom: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            animation: pulse 1.5s infinite;
-        }
-
-        .typing-indicator span {
-            height: 4px;
-            width: 4px;
-            background-color: var(--dark-color);
-            display: inline-block;
-            border-radius: 50%;
-            margin: 0 1px;
-            opacity: 0.7;
-        }
-
-        .typing-indicator span:nth-child(1) {
-            animation: bounce 1s infinite;
-        }
-
-        .typing-indicator span:nth-child(2) {
-            animation: bounce 1s 0.2s infinite;
-        }
-
-        .typing-indicator span:nth-child(3) {
-            animation: bounce 1s 0.4s infinite;
-        }
-
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.8; }
-            100% { opacity: 1; }
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-2px); }
         }
 
         @media (max-width: 768px) {
             .chat-container {
-                margin: 0;
-                height: 100vh;
-                border-radius: 0;
-            }
-            
-            .chat-header {
-                border-radius: 0;
-            }
-
-            .modal-content {
+                height: 90vh;
                 width: 95%;
-                padding: 20px;
             }
         }
     </style>
@@ -406,327 +223,143 @@
 <body>
     <div class="chat-container">
         <div class="chat-header">
-            <span class="logo">ZakBook</span>
-            <h2>خدمة الدعم</h2>
-            <span class="shortcut-hint">اكتب @ للإتصال بنا</span>
+            خدمة الدعم
         </div>
         <div class="chat-messages" id="chatMessages">
-            <div class="message system-message">
+            <div class="message bot-message">
                 مرحباً بك في خدمة الدعم! كيف يمكنني مساعدتك اليوم؟
-            </div>
-            <div class="hint">
-                يمكنك الكتابة هنا وسيتم إرسال رسالتك إلى فريق الدعم
             </div>
         </div>
         <div class="chat-input">
-            <button id="sendButton"><i class="fas fa-paper-plane send-icon"></i> إرسال</button>
-            <input type="text" id="userInput" placeholder="اكتب رسالتك هنا..." />
-        </div>
-        <div class="loading-spinner" id="loadingSpinner">
-            <div>
-                <div class="spinner"></div>
-                <div class="loading-text">جاري الإرسال...</div>
-            </div>
+            <button class="send-btn" id="sendBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+            </button>
+            <input type="text" id="messageInput" placeholder="اكتب رسالتك هنا..." autocomplete="off">
         </div>
     </div>
 
-    <div class="modal" id="emailModal">
+    <div class="modal" id="confirmModal">
         <div class="modal-content">
-            <h3 class="modal-title">تم إرسال رسالتك بنجاح</h3>
-            <p>هل تريد إرسال بريدك الإلكتروني لنتمكن من التواصل معك؟</p>
+            <h3>لقد تم إرسال رسالتك</h3>
+            <p>هل تريد إرسال بريدك الإلكتروني؟</p>
             <div class="modal-buttons">
-                <button class="modal-button yes-button" id="yesButton"><i class="fas fa-check"></i> نعم</button>
-                <button class="modal-button no-button" id="noButton"><i class="fas fa-times"></i> لا</button>
+                <button class="modal-btn yes-btn" id="yesBtn">نعم</button>
+                <button class="modal-btn no-btn" id="noBtn">لا</button>
             </div>
         </div>
-    </div>
-
-    <div class="modal" id="emailInputModal">
-        <div class="modal-content">
-            <h3 class="modal-title">أدخل بريدك الإلكتروني</h3>
-            <p>سنقوم بالتواصل معك في أقرب وقت ممكن</p>
-            <input type="email" class="email-input" id="emailInput" placeholder="example@email.com" />
-            <div class="modal-buttons">
-                <button class="modal-button yes-button" id="sendEmailButton"><i class="fas fa-envelope"></i> إرسال</button>
-                <button class="modal-button no-button" id="cancelEmailButton"><i class="fas fa-times"></i> إلغاء</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="typing-indicator" id="typingIndicator">
-        <span></span>
-        <span></span>
-        <span></span>
     </div>
 
     <script>
-        // العناصر الرئيسية
+        // العناصر
         const chatMessages = document.getElementById('chatMessages');
-        const userInput = document.getElementById('userInput');
-        const sendButton = document.getElementById('sendButton');
-        const emailModal = document.getElementById('emailModal');
-        const yesButton = document.getElementById('yesButton');
-        const noButton = document.getElementById('noButton');
-        const emailInputModal = document.getElementById('emailInputModal');
-        const emailInput = document.getElementById('emailInput');
-        const sendEmailButton = document.getElementById('sendEmailButton');
-        const cancelEmailButton = document.getElementById('cancelEmailButton');
-        const loadingSpinner = document.getElementById('loadingSpinner');
-        const typingIndicator = document.getElementById('typingIndicator');
+        const messageInput = document.getElementById('messageInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const confirmModal = document.getElementById('confirmModal');
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
 
-        let askForEmail = false;
-        let messageHistory = [];
-
-        // إضافة رسالة للمحادثة
-        function addMessage(text, isUser = false) {
+        // حالة المحادثة
+        let askingForEmail = false;
+        let hiddenEmail = 'jaafardarim@gmail.com';
+        
+        // إضافة رسالة المستخدم إلى المحادثة
+        function addUserMessage(text) {
             const messageDiv = document.createElement('div');
-            messageDiv.classList.add('message');
-            messageDiv.classList.add(isUser ? 'user-message' : 'system-message');
+            messageDiv.className = 'message user-message';
             messageDiv.textContent = text;
-            
-            // إضافة الطابع الزمني
-            const now = new Date();
-            const timeString = now.toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' });
-            
-            const timestampDiv = document.createElement('div');
-            timestampDiv.classList.add('timestamp');
-            timestampDiv.textContent = timeString;
-            
-            messageDiv.appendChild(timestampDiv);
             chatMessages.appendChild(messageDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // إضافة رسالة النظام إلى المحادثة
+        function addSystemMessage(text) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'system-message';
+            messageDiv.textContent = text;
+            chatMessages.appendChild(messageDiv);
             
-            // إضافة الرسالة إلى المحفوظات
-            if (isUser) {
-                messageHistory.push({ text, isUser, time: now });
+            // إضافة تلميح إذا لم يكن طلب البريد الإلكتروني
+            if (!askingForEmail) {
+                const hintDiv = document.createElement('div');
+                hintDiv.className = 'hint';
+                hintDiv.textContent = 'إذا كنت تريد إرسال بريدك الإلكتروني اكتب "@"';
+                chatMessages.appendChild(hintDiv);
             }
-        }
-
-        // إضافة إشعار للمحادثة
-        function addNotification(text, isSuccess = false) {
-            const notificationDiv = document.createElement('div');
-            notificationDiv.classList.add('notification');
-            if (isSuccess) {
-                notificationDiv.classList.add('success-notification');
-            }
-            notificationDiv.textContent = text;
-            chatMessages.appendChild(notificationDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
-        // إضافة تلميح للمحادثة
-        function addHint(text) {
-            const hintDiv = document.createElement('div');
-            hintDiv.classList.add('hint');
-            hintDiv.textContent = text;
-            chatMessages.appendChild(hintDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
-        // إظهار مؤشر الكتابة
-        function showTyping() {
-            typingIndicator.style.display = 'block';
-            chatMessages.appendChild(typingIndicator);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
-        // إخفاء مؤشر الكتابة
-        function hideTyping() {
-            typingIndicator.style.display = 'none';
-        }
-
-        // محاكاة إرسال الرسالة إلى البريد الإلكتروني (بدون EmailJS)
-        function sendToEmail(message, userEmail = null) {
-            showLoading();
             
-            // محاكاة تأخير الإرسال
-            return new Promise((resolve) => {
-                setTimeout(() => {
-                    hideLoading();
-                    // دائماً يعود بنجاح في هذه النسخة المحاكية
-                    resolve(true);
-                }, 1500);
-            });
+            chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
-        // إظهار شاشة التحميل
-        function showLoading() {
-            loadingSpinner.style.display = 'flex';
+        // إضافة رسالة البوت إلى المحادثة
+        function addBotMessage(text) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message bot-message';
+            messageDiv.textContent = text;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
-        // إخفاء شاشة التحميل
-        function hideLoading() {
-            loadingSpinner.style.display = 'none';
-        }
-
-        // معالجة رسالة المستخدم
-        function handleUserMessage() {
-            const message = userInput.value.trim();
-            if (message === '') return;
-
-            addMessage(message, true);
-            userInput.value = '';
-
-            // إذا كتب المستخدم "@"
-            if (message === '@') {
-                setTimeout(() => {
-                    showEmailModal();
-                }, 500);
-                return;
-            }
-
-            showTyping();
-
-            // تأخير لمحاكاة معالجة الرسالة
+        // إرسال الرسالة إلى البريد الإلكتروني (محاكاة)
+        function sendEmailToSupport(message) {
+            console.log(`رسالة للدعم: ${message} (سترسل إلى: ${hiddenEmail})`);
             setTimeout(() => {
-                hideTyping();
-                
-                // محاكاة إرسال الرسالة وضمان النجاح
-                sendToEmail(message)
-                    .then(success => {
-                        if (success) {
-                            // إظهار إشعار الإرسال
-                            addNotification('تم إرسال رسالتك بنجاح', true);
-                            addHint('إذا كنت تريد إرسال بريدك الإلكتروني للتواصل معك اكتب "@"');
-                            
-                            // عرض النافذة المنبثقة بشكل عشوائي
-                            if (!askForEmail && Math.random() > 0.7) {
-                                setTimeout(() => {
-                                    showEmailModal();
-                                }, 1500);
-                            }
-                        } else {
-                            addNotification('حدث خطأ أثناء إرسال رسالتك، يرجى المحاولة مرة أخرى');
-                        }
-                    });
-            }, 1000);
-        }
-
-        // إظهار نافذة طلب البريد الإلكتروني
-        function showEmailModal() {
-            emailModal.classList.add('show');
-        }
-
-        // إخفاء نافذة طلب البريد الإلكتروني
-        function hideEmailModal() {
-            emailModal.classList.remove('show');
-        }
-
-        // إظهار نافذة إدخال البريد الإلكتروني
-        function showEmailInputModal() {
-            emailInputModal.classList.add('show');
-        }
-
-        // إخفاء نافذة إدخال البريد الإلكتروني
-        function hideEmailInputModal() {
-            emailInputModal.classList.remove('show');
-        }
-
-        // إرسال البريد الإلكتروني للمستخدم
-        function sendUserEmail() {
-            const email = emailInput.value.trim();
-            if (!email || !email.includes('@') || !validateEmail(email)) {
-                alert('يرجى إدخال بريد إلكتروني صحيح');
-                return;
-            }
-
-            showLoading();
-            
-            // إرسال البريد الإلكتروني مع سجل المحادثة
-            const messageLog = messageHistory.map(msg => 
-                `${msg.isUser ? 'المستخدم' : 'النظام'}: ${msg.text} (${msg.time.toLocaleString('ar-SA')})`
-            ).join('\n\n');
-            
-            const fullMessage = `
-            بريد المستخدم: ${email}
-            
-            سجل المحادثة:
-            ${messageLog}
-            `;
-            
-            // محاكاة الإرسال وضمان النجاح
-            sendToEmail(fullMessage, email)
-                .then(success => {
-                    hideEmailInputModal();
-                    hideLoading();
-                    
-                    if (success) {
-                        addNotification(`تم إرسال بريدك الإلكتروني (${email}) بنجاح، سنتواصل معك قريباً`, true);
-                        
-                        // إضافة رسالة النظام
-                        setTimeout(() => {
-                            addMessage("شكراً لتواصلك معنا! سيقوم فريق الدعم بالرد عليك في أقرب وقت ممكن.");
-                        }, 1000);
-                        
-                        // تم إزالة إعادة التوجيه إلى صفحة أخرى للعرض التوضيحي
-                        // setTimeout(() => {
-                        //     window.location.href = 'index.html';
-                        // }, 5000);
-                    } else {
-                        addNotification('حدث خطأ أثناء إرسال بريدك الإلكتروني، يرجى المحاولة مرة أخرى');
-                    }
-                });
-        }
-
-        // التحقق من صحة البريد الإلكتروني
-        function validateEmail(email) {
-            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return re.test(email);
-        }
-
-        // أحداث النقر والإدخال
-        sendButton.addEventListener('click', handleUserMessage);
-        userInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') handleUserMessage();
-        });
-
-        yesButton.addEventListener('click', () => {
-            hideEmailModal();
-            showEmailInputModal();
-            askForEmail = true;
-        });
-
-        noButton.addEventListener('click', () => {
-            hideEmailModal();
-            setTimeout(() => {
-                addMessage("شكراً لتواصلك معنا! سنقوم بالرد عليك في أقرب وقت ممكن على استفسارك.");
+                addSystemMessage('تم إرسال رسالتك');
+                confirmModal.style.display = 'flex';
             }, 500);
-        });
+        }
 
-        sendEmailButton.addEventListener('click', sendUserEmail);
-        
-        cancelEmailButton.addEventListener('click', () => {
-            hideEmailInputModal();
-        });
-
-        // منع إرسال النموذج عند الضغط على Enter في حقل البريد الإلكتروني
-        emailInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                sendUserEmail();
-            }
-        });
-
-        // عند تحميل الصفحة
-        window.addEventListener('load', () => {
-            userInput.focus();
+        // التحقق من الرسالة وإرسالها
+        function sendMessage() {
+            const message = messageInput.value.trim();
+            if (!message) return;
             
-            // إظهار مؤشر الكتابة لبضع ثوانٍ عند بدء المحادثة
-            showTyping();
-            setTimeout(() => {
-                hideTyping();
-                addMessage("هل يمكنني مساعدتك في أي شيء اليوم؟");
-            }, 1500);
+            addUserMessage(message);
+            messageInput.value = '';
+            
+            if (askingForEmail) {
+                // التحقق من صحة البريد الإلكتروني
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (emailRegex.test(message)) {
+                    // إرسال البريد الإلكتروني وإغلاق المحادثة
+                    addSystemMessage(`تم استلام بريدك الإلكتروني: ${message}`);
+                    addBotMessage('شكراً لك! سنتواصل معك قريباً.');
+                    
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 2000);
+                } else {
+                    addBotMessage('يرجى إدخال بريد إلكتروني صحيح.');
+                }
+            } else if (message === '@') {
+                // فتح النافذة المنبثقة مباشرة
+                confirmModal.style.display = 'flex';
+            } else {
+                // إرسال الرسالة إلى الدعم
+                sendEmailToSupport(message);
+            }
+        }
+
+        // أحداث النقر والضغط على المفاتيح
+        sendBtn.addEventListener('click', sendMessage);
+        
+        messageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
         });
 
-        // إغلاق النوافذ المنبثقة عند النقر خارجها
-        window.addEventListener('click', (e) => {
-            if (e.target === emailModal) {
-                hideEmailModal();
-            }
-            if (e.target === emailInputModal) {
-                hideEmailInputModal();
-            }
+        // التعامل مع النافذة المنبثقة
+        yesBtn.addEventListener('click', () => {
+            confirmModal.style.display = 'none';
+            askingForEmail = true;
+            addBotMessage('الرجاء إدخال بريدك الإلكتروني:');
+        });
+
+        noBtn.addEventListener('click', () => {
+            confirmModal.style.display = 'none';
+            addBotMessage('كيف يمكنني مساعدتك أكثر؟');
         });
     </script>
 </body>
