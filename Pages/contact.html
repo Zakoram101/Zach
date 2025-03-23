@@ -7,6 +7,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- إضافة مكتبة EmailJS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
         :root {
             --primary-color: #2c3e50;
@@ -16,6 +18,7 @@
             --font-main: 'Tajawal', sans-serif;
             --success-color: #27ae60;
             --warning-color: #f39c12;
+            --error-color: #c0392b;
         }
 
         * {
@@ -221,6 +224,11 @@
             background-color: #c0392b;
         }
 
+        .send-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
         .modal {
             display: none;
             position: fixed;
@@ -304,7 +312,7 @@
         }
 
         .toast.error {
-            background-color: var(--accent-color);
+            background-color: var(--error-color);
         }
 
         .toast.warning {
@@ -342,6 +350,24 @@
             animation-delay: 0.4s;
         }
 
+        /* إضافة تنسيق للرسائل المرسلة */
+        .message.sending {
+            opacity: 0.7;
+        }
+
+        .message.sent {
+            animation: flash 1s;
+        }
+
+        .message.error {
+            border: 1px solid var(--error-color);
+        }
+
+        @keyframes flash {
+            0% { background-color: var(--success-color); }
+            100% { background-color: inherit; }
+        }
+
         @keyframes typing-bounce {
             0%, 80%, 100% {
                 transform: scale(0.6);
@@ -353,6 +379,37 @@
             }
         }
 
+        /* إضافة نمط لصندوق الموضوع المنبثق */
+        .subject-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .subject-modal .modal-content {
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .subject-input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: var(--font-main);
+            font-size: 14px;
+        }
+
+        /* تحسينات للهواتف المحمولة */
         @media (max-width: 768px) {
             .chat-container {
                 height: 90vh;
@@ -393,10 +450,11 @@
         </div>
     </div>
 
+    <!-- تعديل النافذة المنبثقة لتأكيد الإرسال -->
     <div class="modal" id="confirmModal">
         <div class="modal-content">
-            <h3>لقد تم إرسال رسالتك</h3>
-            <p>هل تريد إرسال بريدك الإلكتروني؟</p>
+            <h3>هل تريد إرسال رسالتك؟</h3>
+            <p>سيتم إرسال رسالتك مباشرة إلى فريق الدعم</p>
             <div class="modal-buttons">
                 <button class="modal-btn yes-btn" id="yesBtn">نعم</button>
                 <button class="modal-btn no-btn" id="noBtn">لا</button>
@@ -404,9 +462,26 @@
         </div>
     </div>
 
+    <!-- إضافة نافذة منبثقة للموضوع -->
+    <div class="subject-modal" id="subjectModal">
+        <div class="modal-content">
+            <h3>أدخل عنوان الرسالة</h3>
+            <input type="text" id="subjectInput" class="subject-input" placeholder="موضوع الرسالة">
+            <div class="modal-buttons">
+                <button class="modal-btn yes-btn" id="submitSubjectBtn">إرسال</button>
+                <button class="modal-btn no-btn" id="cancelSubjectBtn">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
     <div class="toast" id="toast"></div>
 
     <script>
+        // تهيئة خدمة EmailJS
+        (function() {
+            emailjs.init("95d1rImOBoEFqgAL2");
+        })();
+
         // العناصر
         const chatMessages = document.getElementById('chatMessages');
         const messageInput = document.getElementById('messageInput');
@@ -415,18 +490,24 @@
         const yesBtn = document.getElementById('yesBtn');
         const noBtn = document.getElementById('noBtn');
         const toast = document.getElementById('toast');
+        const subjectModal = document.getElementById('subjectModal');
+        const subjectInput = document.getElementById('subjectInput');
+        const submitSubjectBtn = document.getElementById('submitSubjectBtn');
+        const cancelSubjectBtn = document.getElementById('cancelSubjectBtn');
 
         // حالة المحادثة
-        let askingForEmail = false;
-        let supportEmail = 'support@example.com'; // البريد الإلكتروني للدعم (يمكن تغييره)
+        let isMessagePending = false;
+        let pendingMessage = '';
+        let supportEmail = 'jaafardarim@gmail.com'; // البريد الإلكتروني المستهدف
         let clickCount = 0;
         let clickTimer = null;
         let lastClickedMessageId = null;
         let typingIndicator = null;
         let messageCounter = 1;
+        let allMessages = []; // سجل جميع الرسائل للإرسال
         
         // دالة لإظهار رسالة توست
-        function showToast(message, type = 'default', duration = 2000) {
+        function showToast(message, type = 'default', duration = 3000) {
             toast.textContent = message;
             toast.className = 'toast ' + type;
             toast.classList.add('show');
@@ -477,14 +558,24 @@
         // الحصول على الوقت الحالي بتنسيق جميل
         function getCurrentTime() {
             const now = new Date();
-            return now.getHours() + ':' + (now.getMinutes() < 10 ? '0' : '') + now.getMinutes();
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            
+            // تنسيق الوقت بشكل أفضل
+            hours = hours < 10 ? '0' + hours : hours;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            
+            return hours + ':' + minutes;
         }
 
         // إضافة رسالة المستخدم إلى المحادثة
-        function addUserMessage(text) {
+        function addUserMessage(text, isSending = false) {
             const messageId = generateMessageId();
             const messageDiv = document.createElement('div');
             messageDiv.className = 'message user-message';
+            if (isSending) {
+                messageDiv.classList.add('sending');
+            }
             messageDiv.dataset.messageId = messageId;
             messageDiv.dataset.messageType = 'user';
             messageDiv.innerHTML = text + '<span class="message-time">' + getCurrentTime() + '</span>';
@@ -528,6 +619,14 @@
             chatMessages.appendChild(messageDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
             
+            // حفظ الرسالة في سجل الرسائل
+            allMessages.push({
+                type: 'user',
+                text: text,
+                time: getCurrentTime(),
+                id: messageId
+            });
+            
             return messageId;
         }
 
@@ -541,16 +640,15 @@
             messageDiv.textContent = text;
             
             chatMessages.appendChild(messageDiv);
-            
-            // إضافة تلميح إذا لم يكن طلب البريد الإلكتروني
-            if (!askingForEmail) {
-                const hintDiv = document.createElement('div');
-                hintDiv.className = 'hint';
-                hintDiv.textContent = 'إذا كنت تريد إرسال بريدك الإلكتروني اكتب "@"';
-                chatMessages.appendChild(hintDiv);
-            }
-            
             chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            // حفظ الرسالة في سجل الرسائل
+            allMessages.push({
+                type: 'system',
+                text: text,
+                time: getCurrentTime(),
+                id: messageId
+            });
             
             return messageId;
         }
@@ -596,6 +694,14 @@
             chatMessages.appendChild(messageDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
             
+            // حفظ الرسالة في سجل الرسائل
+            allMessages.push({
+                type: 'bot',
+                text: text,
+                time: getCurrentTime(),
+                id: messageId
+            });
+            
             return messageId;
         }
         
@@ -619,7 +725,12 @@
                     }
                     // إذا كانت نقرتين متتاليتين
                     else if (clickCount === 2) {
-                        resendMessage(messageId);
+                        // الإعادة فقط للرسائل من المستخدم
+                        if (messageDiv.dataset.messageType === 'user') {
+                            resendMessage(messageId);
+                        } else {
+                            copyMessageText(messageId);
+                        }
                         resetClickDetection();
                     }
                 } else {
@@ -697,6 +808,12 @@
                 
                 setTimeout(() => {
                     message.remove();
+                    
+                    // حذف الرسالة من السجل
+                    const index = allMessages.findIndex(msg => msg.id === messageId);
+                    if (index !== -1) {
+                        allMessages.splice(index, 1);
+                    }
                 }, 300);
                 
                 showToast('تم حذف الرسالة', 'warning');
@@ -730,129 +847,156 @@
                 
                 // إرسال الرسالة مرة أخرى
                 messageInput.value = text;
-                sendMessage();
+                handleMessageSending();
                 
-                showToast('تم إعادة إرسال الرسالة', 'success');
+                showToast('جاري إعادة إرسال الرسالة', 'warning');
             }
         }
 
-        // محاكاة إرسال رسالة إلى API
-        function sendMessageToAPI(messageText, userEmail = null) {
-            return new Promise((resolve, reject) => {
-                // محاكاة طلب API
-                setTimeout(() => {
-                    // محاكاة نجاح الإرسال
-                    if (Math.random() > 0.05) { // 95% فرصة للنجاح
-                        resolve({
-                            success: true,
-                            messageId: 'api-' + Date.now(),
-                            timestamp: new Date().toISOString()
-                        });
-                    } else {
-                        // محاكاة فشل الإرسال
-                        reject(new Error('فشل في الاتصال بالخادم'));
-                    }
-                }, 700);
+        // جمع جميع الرسائل لإرسالها
+        function collectMessages() {
+            let messageContent = '';
+            
+            allMessages.forEach((msg, index) => {
+                if (msg.type === 'user') {
+                    messageContent += `المستخدم: ${msg.text}\n`;
+                } else if (msg.type === 'bot') {
+                    messageContent += `الدعم: ${msg.text}\n`;
+                }
+                
+                if (index < allMessages.length - 1) {
+                    messageContent += '-------------------\n';
+                }
             });
+            
+            return messageContent;
         }
 
-        // إرسال الرسالة إلى الدعم (فعلي باستخدام API محاكاة)
-        async function sendEmailToSupport(message, userEmail = null) {
-            const indicatorWrapper = showTypingIndicator();
+        // إرسال رسالة باستخدام EmailJS
+        async function sendEmailWithEmailJS(subject, message) {
+            showTypingIndicator();
+            sendBtn.disabled = true;
+            
+            // تجميع كل الرسائل السابقة في المحادثة
+            const allMessageContent = collectMessages();
             
             try {
-                const response = await sendMessageToAPI(message, userEmail);
+                // إعداد البيانات للإرسال
+                const templateParams = {
+                    name: 'مستخدم خدمة الدعم',
+                    email: 'Zakbooks@opnoi.nion', // البريد الإلكتروني الافتراضي
+                    title: subject || 'رسالة من خدمة الدعم',
+                    message: allMessageContent
+                };
+                
+                // إرسال البريد الإلكتروني
+                const response = await emailjs.send('service_lxtkw1u', 'template_e7katyf', templateParams);
+                
                 hideTypingIndicator();
+                sendBtn.disabled = false;
                 
-                addSystemMessage('تم إرسال رسالتك');
-                confirmModal.style.display = 'flex';
-                
-                return response;
+                if (response.status === 200) {
+                    // تمييز الرسالة الأخيرة كمرسلة بنجاح
+                    const lastUserMessage = document.querySelector('.message.user-message.sending');
+                    if (lastUserMessage) {
+                        lastUserMessage.classList.remove('sending');
+                        lastUserMessage.classList.add('sent');
+                    }
+                    
+                    addSystemMessage('تم إرسال رسالتك بنجاح');
+                    addBotMessage('شكراً لك! سنقوم بالرد عليك في أقرب وقت ممكن.');
+                    showToast('تم إرسال الرسالة بنجاح!', 'success');
+                    
+                    return true;
+                } else {
+                    throw new Error('حدث خطأ أثناء إرسال الرسالة');
+                }
             } catch (error) {
                 hideTypingIndicator();
-                addSystemMessage('حدث خطأ أثناء إرسال الرسالة. يرجى المحاولة مرة أخرى.');
-                console.error('خطأ في إرسال الرسالة:', error);
+                sendBtn.disabled = false;
                 
-                return null;
+                // تمييز الرسالة كخاطئة
+                const lastUserMessage = document.querySelector('.message.user-message.sending');
+                if (lastUserMessage) {
+                    lastUserMessage.classList.remove('sending');
+                    lastUserMessage.classList.add('error');
+                }
+                
+                addSystemMessage('فشل في إرسال الرسالة، يرجى المحاولة مرة أخرى');
+                showToast('فشل في إرسال الرسالة!', 'error');
+                console.error('خطأ في EmailJS:', error);
+                
+                return false;
             }
         }
 
-        // التحقق من صحة البريد الإلكتروني
-        function isValidEmail(email) {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return emailRegex.test(email);
-        }
-
-        // التحقق من الرسالة وإرسالها
-        async function sendMessage() {
+        // معالجة عملية إرسال الرسالة
+        async function handleMessageSending() {
             const message = messageInput.value.trim();
             if (!message) return;
             
-            // إضافة رسالة المستخدم إلى المحادثة
-            const messageId = addUserMessage(message);
+            // إضافة رسالة المستخدم إلى المحادثة مع علامة "جاري الإرسال"
+            addUserMessage(message, true);
             messageInput.value = '';
             
             // إخفاء خيارات الرسائل
             hideAllMessageOptions();
             
-            if (askingForEmail) {
-                // التحقق من صحة البريد الإلكتروني
-                if (isValidEmail(message)) {
-                    // محاكاة إرسال البريد الإلكتروني
-                    const indicatorWrapper = showTypingIndicator();
-                    
-                    setTimeout(() => {
-                        hideTypingIndicator();
-                        // إرسال البريد الإلكتروني وإغلاق المحادثة
-                        addSystemMessage(`تم استلام بريدك الإلكتروني: ${message}`);
-                        addBotMessage('شكراً لك! سنتواصل معك قريباً على البريد الإلكتروني المُدخل.');
-                        
-                        showToast('تم الإرسال بنجاح!', 'success');
-                        
-                        // محاكاة الانتقال إلى الصفحة الرئيسية
-                        setTimeout(() => {
-                            addSystemMessage('جاري تحويلك إلى الصفحة الرئيسية...');
-                        }, 2000);
-                    }, 1000);
-                } else {
-                    addBotMessage('يرجى إدخال بريد إلكتروني صحيح.');
-                }
-            } else if (message === '@') {
-                // فتح النافذة المنبثقة مباشرة
-                confirmModal.style.display = 'flex';
-            } else {
-                // إرسال الرسالة إلى الدعم
-                const response = await sendEmailToSupport(message);
+            // عرض نافذة الموضوع إذا كانت الرسالة طويلة أو هي الرسالة الأولى من المستخدم
+            const userMessages = allMessages.filter(msg => msg.type === 'user');
+            
+            if (userMessages.length === 1 || message.length > 50) {
+                // حفظ الرسالة في حالة معلقة
+                pendingMessage = message;
+                isMessagePending = true;
                 
-                if (response) {
-                    console.log('تم إرسال الرسالة بنجاح:', response);
-                }
+                // فتح نافذة الموضوع
+                subjectModal.style.display = 'flex';
+                subjectInput.focus();
+            } else {
+                // إرسال الرسالة مباشرة مع موضوع افتراضي
+                sendEmailWithEmailJS('رسالة من خدمة الدعم', message);
             }
         }
 
         // أحداث النقر والضغط على المفاتيح
-        sendBtn.addEventListener('click', sendMessage);
+        sendBtn.addEventListener('click', handleMessageSending);
         
         messageInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
-                sendMessage();
+                handleMessageSending();
             }
         });
 
-        // التعامل مع النافذة المنبثقة
-        yesBtn.addEventListener('click', () => {
-            confirmModal.style.display = 'none';
-            askingForEmail = true;
-            addBotMessage('الرجاء إدخال بريدك الإلكتروني:');
+        // التعامل مع نافذة الموضوع
+        submitSubjectBtn.addEventListener('click', async () => {
+            const subject = subjectInput.value.trim() || 'رسالة من خدمة الدعم';
+            subjectModal.style.display = 'none';
+            
+            if (isMessagePending) {
+                await sendEmailWithEmailJS(subject, pendingMessage);
+                isMessagePending = false;
+                pendingMessage = '';
+                subjectInput.value = '';
+            }
         });
 
-        noBtn.addEventListener('click', () => {
-            confirmModal.style.display = 'none';
-            addBotMessage('شكراً لك! هل يمكنني مساعدتك بشيء آخر؟');
+        cancelSubjectBtn.addEventListener('click', () => {
+            subjectModal.style.display = 'none';
+            
+            // إلغاء الرسالة المعلقة والحفاظ على الرسالة المضافة للمحادثة
+            isMessagePending = false;
+            pendingMessage = '';
+            subjectInput.value = '';
+            
+            showToast('تم إلغاء الإرسال', 'warning');
         });
-        
+
         // إضافة مستمعات الأحداث للرسائل الموجودة بالفعل
         document.addEventListener('DOMContentLoaded', () => {
+            // تهيئة EmailJS
+            emailjs.init("95d1rImOBoEFqgAL2");
+            
             document.querySelectorAll('.message').forEach(message => {
                 const messageId = message.dataset.messageId;
                 if (messageId) {
@@ -866,6 +1010,17 @@
                     hideAllMessageOptions();
                 }
             });
+            
+            // إضافة أول رسالة إلى سجل الرسائل
+            const welcomeMessage = document.querySelector('.message.bot-message[data-message-id="welcome"]');
+            if (welcomeMessage) {
+                allMessages.push({
+                    type: 'bot',
+                    text: 'مرحباً بك في خدمة الدعم! كيف يمكنني مساعدتك اليوم؟',
+                    time: getCurrentTime(),
+                    id: 'welcome'
+                });
+            }
         });
         
         // منع السحب الافتراضي للنص
