@@ -1,1 +1,797 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام تسجيل الدخول</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+            --font-main: 'Tajawal', sans-serif;
+            --transition-speed: 0.3s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--font-main);
+        }
+
+        body {
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .tabs {
+            display: flex;
+            background-color: var(--primary-color);
+            position: relative;
+            z-index: 10;
+        }
+
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 15px 0;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all var(--transition-speed) ease;
+            color: var(--light-color);
+            position: relative;
+        }
+
+        .tab.active {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .form-container {
+            padding: 25px;
+            position: relative;
+            overflow: hidden;
+            min-height: 400px;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .password-field {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            left: 12px;
+            top: 47px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            color: var(--dark-color);
+            font-weight: 500;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border var(--transition-speed);
+        }
+
+        input:focus {
+            border-color: var(--accent-color);
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color var(--transition-speed);
+        }
+
+        button:hover {
+            background-color: #c0392b;
+        }
+
+        .user-info {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: var(--light-color);
+            border-radius: 6px;
+        }
+
+        .user-info h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .user-info p {
+            color: var(--dark-color);
+            margin-bottom: 15px;
+        }
+
+        .alert {
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .alert-warning {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        /* تحسين تأثيرات الانتقال بين الأقسام */
+        .form-section {
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 25px;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: transform var(--transition-speed) ease, opacity var(--transition-speed) ease;
+            visibility: hidden;
+        }
+
+        .form-section.active {
+            opacity: 1;
+            transform: translateX(0);
+            visibility: visible;
+            z-index: 5;
+        }
+
+        .form-section.inactive-left {
+            transform: translateX(-100%);
+        }
+
+        .form-section.inactive-right {
+            transform: translateX(100%);
+        }
+
+        /* قسم التحقق من البريد الإلكتروني */
+        .email-verification-section {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: var(--light-color);
+            border-radius: 6px;
+        }
+
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--accent-color);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 2s linear infinite;
+            margin: 10px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* قسم تأكيد تسجيل الخروج */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity var(--transition-speed) ease, visibility var(--transition-speed) ease;
+        }
+
+        .modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transform: translateY(-20px);
+            transition: transform var(--transition-speed) ease;
+        }
+
+        .modal-overlay.show .modal {
+            transform: translateY(0);
+        }
+
+        .modal h3 {
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .modal-buttons button {
+            flex: 1;
+            max-width: 120px;
+        }
+
+        .btn-cancel {
+            background-color: #95a5a6;
+        }
+
+        .btn-cancel:hover {
+            background-color: #7f8c8d;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                max-width: 100%;
+            }
+            
+            .form-container {
+                padding: 20px 15px;
+            }
+            
+            .modal {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="tabs">
+            <div class="tab active" id="login-tab">تسجيل دخول</div>
+            <div class="tab" id="register-tab">تسجيل جديد</div>
+        </div>
+
+        <div class="form-container">
+            <div id="alert-box"></div>
+            
+            <!-- قسم تسجيل الدخول -->
+            <div class="form-section active" id="login-section">
+                <h1>تسجيل الدخول</h1>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-email">البريد الإلكتروني</label>
+                        <input type="email" id="login-email" placeholder="أدخل بريدك الإلكتروني" required>
+                    </div>
+                    <div class="form-group password-field">
+                        <label for="login-password">كلمة المرور</label>
+                        <input type="password" id="login-password" placeholder="أدخل كلمة المرور" required>
+                        <i class="toggle-password fas fa-eye-slash" data-target="login-password"></i>
+                    </div>
+                    <button type="submit">دخول</button>
+                </form>
+            </div>
+
+            <!-- قسم التسجيل الجديد -->
+            <div class="form-section inactive-right" id="register-section">
+                <h1>إنشاء حساب جديد</h1>
+                <form id="register-form">
+                    <div class="form-group">
+                        <label for="register-email">البريد الإلكتروني</label>
+                        <input type="email" id="register-email" placeholder="أدخل بريدك الإلكتروني" required>
+                    </div>
+                    <div class="form-group password-field">
+                        <label for="register-password">كلمة المرور</label>
+                        <input type="password" id="register-password" placeholder="أدخل كلمة المرور" required>
+                        <i class="toggle-password fas fa-eye-slash" data-target="register-password"></i>
+                    </div>
+                    <div class="form-group password-field">
+                        <label for="register-password-confirm">تأكيد كلمة المرور</label>
+                        <input type="password" id="register-password-confirm" placeholder="أدخل كلمة المرور مرة أخرى" required>
+                        <i class="toggle-password fas fa-eye-slash" data-target="register-password-confirm"></i>
+                    </div>
+                    <button type="submit">تسجيل</button>
+                </form>
+            </div>
+
+            <!-- قسم إنتظار تأكيد البريد الإلكتروني -->
+            <div class="form-section inactive-right" id="verification-waiting-section">
+                <div class="email-verification-section">
+                    <h3>تأكيد البريد الإلكتروني</h3>
+                    <p>تم إرسال رابط تحقق إلى بريدك الإلكتروني. يرجى فتح البريد والنقر على الرابط للتحقق.</p>
+                    <div class="loading-spinner"></div>
+                    <p>في انتظار التحقق من البريد الإلكتروني...</p>
+                    <button id="resend-verification">إعادة إرسال رابط التحقق</button>
+                    <button id="check-verification-status">التحقق من حالة التأكيد</button>
+                    <button id="back-to-login">العودة لتسجيل الدخول</button>
+                </div>
+            </div>
+
+            <!-- قسم معلومات المستخدم (يظهر بعد تسجيل الدخول) -->
+            <div class="form-section inactive-right" id="user-info-section">
+                <div class="user-info">
+                    <h3>مرحباً بك</h3>
+                    <p id="user-email"></p>
+                    <p id="verification-status"></p>
+                    <button id="logout-btn">تسجيل الخروج</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- مودال تأكيد تسجيل الخروج -->
+    <div id="logout-modal" class="modal-overlay">
+        <div class="modal">
+            <h3>هل تود المغادرة حقاً؟</h3>
+            <p>سيتم تسجيل خروجك من الحساب.</p>
+            <div class="modal-buttons">
+                <button id="confirm-logout" class="btn-confirm">تأكيد</button>
+                <button id="cancel-logout" class="btn-cancel">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
+    <script>
+        // تهيئة Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyBxdiEgTVpx7grXqOoFkmnDqQANvoZYGgs",
+            authDomain: "zakbook-53053.firebaseapp.com",
+            projectId: "zakbook-53053",
+        };
+
+        // تهيئة Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // العناصر المهمة
+        const loginTab = document.getElementById('login-tab');
+        const registerTab = document.getElementById('register-tab');
+        const loginSection = document.getElementById('login-section');
+        const registerSection = document.getElementById('register-section');
+        const userInfoSection = document.getElementById('user-info-section');
+        const verificationWaitingSection = document.getElementById('verification-waiting-section');
+        const userEmailElement = document.getElementById('user-email');
+        const verificationStatusElement = document.getElementById('verification-status');
+        const logoutBtn = document.getElementById('logout-btn');
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        const alertBox = document.getElementById('alert-box');
+        const resendVerificationBtn = document.getElementById('resend-verification');
+        const checkVerificationStatusBtn = document.getElementById('check-verification-status');
+        const backToLoginBtn = document.getElementById('back-to-login');
+        const logoutModal = document.getElementById('logout-modal');
+        const confirmLogoutBtn = document.getElementById('confirm-logout');
+        const cancelLogoutBtn = document.getElementById('cancel-logout');
+        const togglePasswordBtns = document.querySelectorAll('.toggle-password');
+
+        // تبديل حالة رؤية كلمة المرور
+        togglePasswordBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target');
+                const passwordInput = document.getElementById(targetId);
+                
+                // تبديل نوع الحقل
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    this.classList.remove('fa-eye-slash');
+                    this.classList.add('fa-eye');
+                } else {
+                    passwordInput.type = 'password';
+                    this.classList.remove('fa-eye');
+                    this.classList.add('fa-eye-slash');
+                }
+            });
+        });
+
+        // تحسين وظيفة إظهار القسم النشط مع تأثير انتقالي أكثر سلاسة
+        function showActiveSection(activeSection, direction = 'right') {
+            const sections = [loginSection, registerSection, userInfoSection, verificationWaitingSection];
+            
+            sections.forEach(section => {
+                if (section === activeSection) {
+                    // تحديد اتجاه الانتقال للقسم النشط
+                    section.classList.remove('inactive-left', 'inactive-right');
+                    section.classList.add('active');
+                } else {
+                    // إذا كان القسم نشطًا سابقًا، حدد اتجاه خروجه
+                    if (section.classList.contains('active')) {
+                        section.classList.remove('active');
+                        section.classList.add(direction === 'right' ? 'inactive-left' : 'inactive-right');
+                    } else {
+                        // بالنسبة للأقسام الأخرى، حدد موقعها الافتراضي
+                        if (!section.classList.contains('inactive-left') && !section.classList.contains('inactive-right')) {
+                            section.classList.add(direction === 'right' ? 'inactive-right' : 'inactive-left');
+                        }
+                    }
+                }
+            });
+        }
+
+        // التحقق من صحة بريد Gmail (تم تخفيف الشروط)
+        function isValidGmail(email) {
+            // التحقق من بنية البريد الإلكتروني بشكل عام
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            return emailRegex.test(email);
+        }
+
+        // التحقق من قوة كلمة المرور (تم تخفيف الشروط)
+        function isStrongPassword(password) {
+            // على الأقل 6 أحرف
+            return password.length >= 6;
+        }
+
+        // التحقق من حالة التحقق من البريد الإلكتروني
+        function checkEmailVerificationStatus() {
+            const user = auth.currentUser;
+            if (user) {
+                // تحديث المستخدم للحصول على آخر حالة
+                user.reload().then(() => {
+                    if (user.emailVerified) {
+                        showAlert('تم التحقق من بريدك الإلكتروني بنجاح!', 'success');
+                        // توجيه المستخدم إلى الصفحة الرئيسية
+                        setTimeout(() => {
+                            window.location.href = "../index.html";
+                        }, 1500);
+                    } else {
+                        showAlert('لم يتم التحقق من بريدك الإلكتروني بعد. يرجى التحقق من بريدك والنقر على رابط التأكيد.', 'warning');
+                    }
+                }).catch((error) => {
+                    showAlert('حدث خطأ أثناء التحقق من حالة البريد الإلكتروني: ' + error.message, 'error');
+                });
+            }
+        }
+
+        // إعادة إرسال رابط التحقق من البريد الإلكتروني
+        function resendVerificationEmail() {
+            const user = auth.currentUser;
+            if (user) {
+                user.sendEmailVerification().then(() => {
+                    showAlert('تم إعادة إرسال رابط التحقق إلى بريدك الإلكتروني', 'success');
+                }).catch((error) => {
+                    let errorMessage;
+                    switch (error.code) {
+                        case 'auth/too-many-requests':
+                            errorMessage = 'لقد أرسلت العديد من الطلبات. يرجى المحاولة لاحقاً.';
+                            break;
+                        default:
+                            errorMessage = 'حدث خطأ أثناء إرسال رابط التحقق: ' + error.message;
+                    }
+                    showAlert(errorMessage, 'error');
+                });
+            }
+        }
+
+        // التبديل بين شاشات تسجيل الدخول والتسجيل
+        loginTab.addEventListener('click', () => {
+            loginTab.classList.add('active');
+            registerTab.classList.remove('active');
+            showActiveSection(loginSection, 'left');
+        });
+
+        registerTab.addEventListener('click', () => {
+            registerTab.classList.add('active');
+            loginTab.classList.remove('active');
+            showActiveSection(registerSection, 'right');
+        });
+
+        // تسجيل الدخول
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value.trim();
+            const password = document.getElementById('login-password').value;
+
+            // التحقق من صحة البريد الإلكتروني
+            if (!isValidGmail(email)) {
+                showAlert('يرجى إدخال عنوان بريد إلكتروني صالح', 'error');
+                return;
+            }
+
+            auth.signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    
+                    if (user.emailVerified) {
+                        showAlert('تم تسجيل الدخول بنجاح!', 'success');
+                        loginForm.reset();
+                        // توجيه المستخدم إلى الصفحة الرئيسية
+                        setTimeout(() => {
+                            window.location.href = "../index.html";
+                        }, 1500);
+                    } else {
+                        // إظهار قسم انتظار التحقق من البريد الإلكتروني
+                        showActiveSection(verificationWaitingSection, 'right');
+                        showAlert('يرجى التحقق من بريدك الإلكتروني قبل المتابعة', 'warning');
+                    }
+                })
+                .catch((error) => {
+                    let errorMessage;
+                    switch (error.code) {
+                        case 'auth/user-not-found':
+                            errorMessage = 'البريد الإلكتروني غير مسجل';
+                            break;
+                        case 'auth/wrong-password':
+                            errorMessage = 'كلمة المرور غير صحيحة';
+                            break;
+                        case 'auth/too-many-requests':
+                            errorMessage = 'تم تقييد الوصول بسبب محاولات متكررة. يرجى المحاولة لاحقاً';
+                            break;
+                        case 'auth/user-disabled':
+                            errorMessage = 'هذا الحساب معطل. يرجى التواصل مع المسؤول';
+                            break;
+                        default:
+                            errorMessage = 'حدث خطأ أثناء تسجيل الدخول: ' + error.message;
+                    }
+                    showAlert(errorMessage, 'error');
+                });
+        });
+
+        // إنشاء حساب جديد
+        registerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('register-email').value.trim();
+            const password = document.getElementById('register-password').value;
+            const passwordConfirm = document.getElementById('register-password-confirm').value;
+
+            // التحقق من صحة البريد الإلكتروني
+            if (!isValidGmail(email)) {
+                showAlert('يرجى إدخال عنوان بريد إلكتروني صالح', 'error');
+                return;
+            }
+
+            // التحقق من تطابق كلمتي المرور
+            if (password !== passwordConfirm) {
+                showAlert('كلمتا المرور غير متطابقتين', 'error');
+                return;
+            }
+
+            // التحقق من قوة كلمة المرور
+            if (!isStrongPassword(password)) {
+                showAlert('كلمة المرور قصيرة جداً. يجب أن تحتوي على الأقل 6 أحرف', 'error');
+                return;
+            }
+
+            auth.createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    // إرسال بريد تأكيد
+                    userCredential.user.sendEmailVerification().then(() => {
+                        showAlert('تم إنشاء الحساب بنجاح! تم إرسال رابط التحقق إلى بريدك الإلكتروني', 'success');
+                        registerForm.reset();
+                        
+                        // إظهار قسم انتظار التحقق من البريد الإلكتروني
+                        showActiveSection(verificationWaitingSection, 'right');
+                    });
+                })
+                .catch((error) => {
+                    let errorMessage;
+                    switch (error.code) {
+                        case 'auth/email-already-in-use':
+                            errorMessage = 'البريد الإلكتروني مستخدم بالفعل';
+                            break;
+                        case 'auth/weak-password':
+                            errorMessage = 'كلمة المرور ضعيفة، يجب أن تكون على الأقل 6 أحرف';
+                            break;
+                        case 'auth/invalid-email':
+                            errorMessage = 'صيغة البريد الإلكتروني غير صحيحة';
+                            break;
+                        case 'auth/operation-not-allowed':
+                            errorMessage = 'تسجيل الحسابات معطل حالياً';
+                            break;
+                        case 'auth/unauthorized-continue-uri':
+                            errorMessage = 'المجال غير مسموح به في مشروع Firebase. يرجى التواصل مع المسؤول.';
+                            break;
+                        default:
+                            errorMessage = 'حدث خطأ أثناء إنشاء الحساب: ' + error.message;
+                    }
+                    showAlert(errorMessage, 'error');
+                });
+        });
+
+        // أزرار قسم التحقق من البريد الإلكتروني
+        resendVerificationBtn.addEventListener('click', resendVerificationEmail);
+        
+        checkVerificationStatusBtn.addEventListener('click', checkEmailVerificationStatus);
+        
+        backToLoginBtn.addEventListener('click', () => {
+            loginTab.click();
+        });
+
+        // فتح مودال تأكيد تسجيل الخروج
+        logoutBtn.addEventListener('click', () => {
+            logoutModal.classList.add('show');
+        });
+
+        // تأكيد تسجيل الخروج
+        confirmLogoutBtn.addEventListener('click', () => {
+            auth.signOut()
+                .then(() => {
+                    showAlert('تم تسجيل الخروج بنجاح', 'success');
+                    logoutModal.classList.remove('show');
+                    
+                    // توجيه المستخدم إلى صفحة تسجيل الدخول
+                    setTimeout(() => {
+                        window.location.href = "inde.html";
+                    }, 1500);
+                })
+                .catch((error) => {
+                    showAlert('حدث خطأ أثناء تسجيل الخروج: ' + error.message, 'error');
+                    logoutModal.classList.remove('show');
+                });
+        });
+
+        // إلغاء تسجيل الخروج
+        cancelLogoutBtn.addEventListener('click', () => {
+            logoutModal.classList.remove('show');
+        });
+
+        // مراقبة حالة تسجيل الدخول
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                // المستخدم مسجل الدخول
+                userEmailElement.textContent = user.email;
+                
+                // التحقق من تأكيد البريد الإلكتروني
+                if (user.emailVerified) {
+                    verificationStatusElement.textContent = 'تم التحقق من البريد الإلكتروني';
+                    verificationStatusElement.style.color = '#155724';
+                    
+                    // في حالة كان المستخدم في قسم انتظار التحقق، نقوم بتوجيهه إلى الصفحة الرئيسية
+                    if (verificationWaitingSection.classList.contains('active')) {
+                        showAlert('تم التحقق من بريدك الإلكتروني بنجاح!', 'success');
+                        setTimeout(() => {
+                            window.location.href = "../index.html";
+                        }, 1500);
+                    } else {
+                        showActiveSection(userInfoSection, 'right');
+                    }
+                } else {
+                    verificationStatusElement.textContent = 'لم يتم التحقق من البريد الإلكتروني بعد';
+                    verificationStatusElement.style.color = '#856404';
+                    
+                    // إذا كان المستخدم قد سجل للتو، نعرض قسم انتظار التحقق
+                    if (!verificationWaitingSection.classList.contains('active') && !userInfoSection.classList.contains('active')) {
+                        showActiveSection(verificationWaitingSection, 'right');
+                    }
+                }
+                
+                // إخفاء علامات التبويب
+                loginTab.style.display = 'none';
+                registerTab.style.display = 'none';
+            } else {
+                // المستخدم غير مسجل الدخول
+                loginTab.style.display = 'block';
+                registerTab.style.display = 'block';
+                
+                // عرض شاشة تسجيل الدخول
+                loginTab.click();
+            }
+        });
+
+        // إظهار قسم معلومات المستخدم أو انتظار التحقق بناءً على حالة التحقق
+        function updateUIBasedOnVerificationStatus(user) {
+            if (user.emailVerified) {
+                showActiveSection(userInfoSection, 'right');
+            } else {
+                showActiveSection(verificationWaitingSection, 'right');
+            }
+        }
+
+        // عرض رسائل التنبيه
+        function showAlert(message, type) {
+            alertBox.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+            
+            // إخفاء التنبيه بعد 5 ثوان
+            setTimeout(() => {
+                alertBox.innerHTML = '';
+            }, 5000);
+        }
+
+        // استدعاء وظيفة للتحقق من حالة البريد الإلكتروني كل 5 ثوانٍ عندما يكون المستخدم في قسم انتظار التحقق
+        let verificationInterval;
+
+        function startVerificationCheck() {
+            // إيقاف أي فترات سابقة
+            if (verificationInterval) {
+                clearInterval(verificationInterval);
+            }
+            
+            // بدء فترة جديدة
+            verificationInterval = setInterval(() => {
+                const user = auth.currentUser;
+                if (user && verificationWaitingSection.classList.contains('active')) {
+                    user.reload().then(() => {
+                        if (user.emailVerified) {
+                            clearInterval(verificationInterval);
+                            showAlert('تم التحقق من بريدك الإلكتروني بنجاح!', 'success');
+                            setTimeout(() => {
+                                window.location.href = "../index.html";
+                            }, 1500);
+                        }
+                    }).catch((error) => {
+                        console.error("Error reloading user:", error);
+                    });
+                } else if (!verificationWaitingSection.classList.contains('active')) {
+                    // إيقاف الفترة إذا لم يعد المستخدم في قسم الانتظار
+                    clearInterval(verificationInterval);
+                }
+            }, 5000); // التحقق كل 5 ثوانٍ
+        }
+
+        // استمع إلى تغييرات الأقسام النشطة
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                    if (verificationWaitingSection.classList.contains('active')) {
+                        startVerificationCheck();
+                    }
+                }
+            });
+        });
+
+        observer.observe(verificationWaitingSection, { attributes: true });
+    </script>
+</body>
+</html>
 
