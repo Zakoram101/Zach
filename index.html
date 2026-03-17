@@ -27,9 +27,9 @@
         </div>
         <div class="book-pages">
             <div class="nav-bookmark">
-                <div class="bookmark" data-link="Pages/books.html">الكتب</div>
-                <div class="bookmark" data-link="Pages/categories.html">التصنيفات</div>
-                <div class="bookmark" data-link="Pages/contact.html">تواصل معنا</div>
+                <div class="bookmark btn" data-link="Pages/books.html">الكتب</div>
+                <div class="bookmark btn" data-link="Pages/categories.html">التصنيفات</div>
+                <div class="bookmark btn" data-link="Pages/contact.html">تواصل معنا</div>
             </div>
 
             <div class="featured-book">
@@ -42,14 +42,14 @@
                     <p class="featured-description">
                         كتاب التوحيد للإمام محمد بن عبد الوهاب (1703-1792م) هو أحد أبرز الكتب في العقيدة الإسلامية، حيث يعالج بأسلوب دقيق مسألة إفراد الله بالعبادة ونبذ الشرك بجميع صوره. يتكون الكتاب من 66 بابًا، يستند فيها المؤلف إلى القرآن الكريم، والأحاديث النبوية، وأقوال السلف الصالح، ويعرض المسائل بأسلوب واضح مدعوم بالأدلة، مما يجعله مرجعًا أساسيًا لفهم التوحيد الخالص.
                     </p>
-                    <button class="featured-btn" onclick="window.location.href='Moon/moon1.html'">اقرأ الآن</button>
+                    <button class="featured-btn btn" onclick="window.location.href='Moon/moon1.html'">اقرأ الآن</button>
                 </div>
             </div>
 
             <section class="categories-section">
                 <h2 class="section-title">تفقه حسب التصنيف</h2>
                 <div class="categories-container">
-                    <a href="Moon/moon2.html" class="category-item">
+                    <a href="Moon/moon2.html" class="category-item btn">
                         <div class="category-icon">
                             <img src="https://i.pinimg.com/originals/b9/1e/11/b91e1131ca20f6369aa68d21cb3a8960.gif" alt="تنمية ذاتية">
                         </div>
@@ -57,7 +57,7 @@
                         <div class="category-count">50</div>
                     </a>
 
-                    <a href="Moon/moon3.html" class="category-item">
+                    <a href="Moon/moon3.html" class="category-item btn">
                         <div class="category-icon">
                             <img src="https://i.pinimg.com/originals/25/7c/a5/257ca595dd14fb0f43ee592134af200f.gif" alt="علم نفس">
                         </div>
@@ -65,7 +65,7 @@
                         <div class="category-count">0</div>
                     </a>
 
-                    <a href="Moon/moon4.html" class="category-item">
+                    <a href="Moon/moon4.html" class="category-item btn">
                         <div class="category-icon">
                             <img src="https://i.pinimg.com/originals/54/37/de/5437ded68e0d3d23df07a7e01db37426.gif" alt="أعجبني">
                         </div>
@@ -73,7 +73,7 @@
                         <div class="category-count">0</div>
                     </a>
 
-                    <a href="Moon/moon5.html" class="category-item">
+                    <a href="Moon/moon5.html" class="category-item btn">
                         <div class="category-icon">
                             <img src="https://i.pinimg.com/originals/68/49/58/684958aab526a221805b0036275937b4.gif" alt="توضيح">
                         </div>
@@ -91,8 +91,8 @@
                 <div class="close-search" onclick="toggleSearch()">×</div>
                 <form class="search-form" onsubmit="return searchBooks()">
                     <input type="text" id="search-input" class="search-input" placeholder="ابحث عن كتاب، مؤلف، تصنيف..." oninput="searchBooks()">
-                    <button type="button" class="reset-btn" onclick="resetSearch()">عودة</button>
-                    <button type="submit" class="search-btn">
+                    <button type="button" class="reset-btn btn" onclick="resetSearch()">عودة</button>
+                    <button type="submit" class="search-btn btn">
                         <img src="https://www.emojiall.com/images/240/telegram/telemoji-november-2023/1f50e.gif" alt="Search" style="width: 25px; height: 25px;">
                     </button>
                 </form>
@@ -157,7 +157,7 @@
 
             <div class="custom-alert" id="customAlert" style="display: none;">
                 <p>يرجى إدخال كلمة للبحث!</p>
-                <button onclick="closeAlert()">حسناً</button>
+                <button class="btn" onclick="closeAlert()">حسناً</button>
             </div>
 
             <section class="categories-section">
@@ -176,8 +176,8 @@
                                         كتاب -الداء والدواء-، المعروف أيضًا بـ -الجواب الكافي لمن سأل عن الدواء الشافي-، هو أحد مؤلفات الإمام ابن القيم الجوزية (691هـ - 751هـ)، حيث يغوص في أعماق النفس البشرية، محللًا المعاصي وأسبابها وآثارها، وموضحًا سبل الخلاص منها بتوجيهات مستقاة من القرآن الكريم والسنة النبوية. فهو مرجع نفيس في تزكية النفوس والإصلاح الروحي، يكشف آفات النفس الأمارة بالسوء، ويفضح سلطة الشهوات ومكائد الشيطان، محذرًا من الانجراف وراء الدنيا وزخرفها. ببلاغة وحكمة، يقدّم الكتاب دليلًا عمليًا للسالكين درب التوبة، مستنيرًا بالهدي الإلهي ليكون نبراسًا لكل من يبتغي صفاء القلب وقرب المولى.
                                     </p>
                                     <div class="book-actions">
-                                        <button class="featured-btn" data-page="Pages/page1.html">اقرأ الآن</button>
-                                        <button class="book-btn" onclick="openCategoryMenu('page1')">أضف للمفضلة</button>
+                                        <button class="featured-btn btn" data-page="Pages/page1.html">اقرأ الآن</button>
+                                        <button class="book-btn btn" onclick="openCategoryMenu('page1')">أضف للمفضلة</button>
                                     </div>
                                 </div>
                             </div>
@@ -195,8 +195,8 @@
                                         كتاب -رياض الصالحين-، من تأليف الإمام يحيى بن شرف النووي الدمشقي (631هـ - 676هـ)، هو مؤلَّف يجمع بين دفتيه ما يقرب من ألفي حديث شريف، تغطي مختلف جوانب العقيدة والحياة. يُعتبر هذا الكتاب مرجعًا مهمًا في مجال التزكية والإصلاح النفسي والروحي، حيث يعرض الأحاديث مرتبة في أبواب وفصول، مما يسهل على القارئ الوصول إليها والاستفادة منها. نال الكتاب قبولًا واسعًا بين المسلمين، ويُستخدم في المساجد والمجالس للتعليم والتذكير، مما يعكس نية المؤلف الصالحة وقصده النبيل في نفع الأمة. يُعد -رياض الصالحين- دليلًا عمليًا لكل من يسعى إلى التوبة والقرب من الله، حيث يقدم نصائح عملية مستمدة من القرآن الكريم والسنة النبوية لإصلاح النفوس والمجتمع.
                                     </p>
                                     <div class="book-actions">
-                                        <button class="featured-btn" data-page="Pages/page2.html">اقرأ الآن</button>
-                                        <button class="book-btn" onclick="openCategoryMenu('page2')">أضف للمفضلة</button>
+                                        <button class="featured-btn btn" data-page="Pages/page2.html">اقرأ الآن</button>
+                                        <button class="book-btn btn" onclick="openCategoryMenu('page2')">أضف للمفضلة</button>
                                     </div>
                                 </div>
                             </div>
@@ -214,8 +214,8 @@
                                         يُعَدُّ كتاب -إحياء علوم الدين- للإمام أبي حامد الغزالي (450هـ - 505هـ) من أعظم المؤلفات في الفكر الإسلامي، حيث يسعى إلى إحياء العلوم الدينية واستجلاء مناهج الأئمة المتقدمين، مع التركيز على العلوم النافعة في الدين والتربية الروحية والأخلاق. فهو مرجع شامل يجمع بين الأخلاق والتربية والتصوف والعقيدة والفقه، مما جعله منبعًا للنفع والبركة بين العلماء والمشايخ وطلاب العلم. حظي الكتاب بقبول واسع بين المسلمين، واتخذوه في المساجد والمجالس نبراسًا للتعليم والتذكير، مما يعكس إخلاص مؤلفه وعمق أثره في الأمة. ومع ذلك، أشار بعض العلماء إلى وجود أحاديث ضعيفة وأخطاء محتملة، مما يستدعي قراءته بتمييز وتدقيق، لا سيما للمتخصصين. ورغم ذلك، يظل -إحياء علوم الدين- دليلًا عمليًا للساعين إلى التوبة والقرب من الله، حيث يفيض بنصائح مستمدة من القرآن والسنة لإصلاح النفوس والمجتمع.
                                     </p>
                                     <div class="book-actions">
-                                        <button class="featured-btn" data-page="Pages/page3.html">اقرأ الآن</button>
-                                        <button class="book-btn" onclick="openCategoryMenu('page3')">أضف للمفضلة</button>
+                                        <button class="featured-btn btn" data-page="Pages/page3.html">اقرأ الآن</button>
+                                        <button class="book-btn btn" onclick="openCategoryMenu('page3')">أضف للمفضلة</button>
                                     </div>
                                 </div>
                             </div>
@@ -233,8 +233,8 @@
                                         يُعَدُّ كتاب -البرهان في علوم القرآن- للإمام بدر الدين الزركشي (ت. 794هـ) من أعظم المراجع في علوم القرآن، حيث جمع فيه سبعة وأربعين نوعًا من مباحثه، مستوعبًا دقائقها بأسلوب دقيق ومنهج محكم. وقد أُجمِع على نسبته إليه، وأشاد به الحافظ ابن حجر العسقلاني واصفًا إياه بأنه من أعجب الكتب وأبدعها، إذ أحاط بما نيف على أربعين علمًا من علوم القرآن، مما جعله مرجعًا موسوعيًا للباحثين وطلاب العلم، ومصدرًا لا غنى عنه في الدراسات القرآنية، حيث يُجلِّي أسرار التنزيل، ويكشف كنوز البيان، فيفيض علمًا ويزخر فقهًا، جامعًا بين دقة التأصيل وسعة الاستيعاب.
                                     </p>
                                     <div class="book-actions">
-                                        <button class="featured-btn" data-page="Pages/page4.html">اقرأ الآن</button>
-                                        <button class="book-btn" onclick="openCategoryMenu('page4')">أضف للمفضلة</button>
+                                        <button class="featured-btn btn" data-page="Pages/page4.html">اقرأ الآن</button>
+                                        <button class="book-btn btn" onclick="openCategoryMenu('page4')">أضف للمفضلة</button>
                                     </div>
                                 </div>
                             </div>
@@ -249,18 +249,18 @@
                     <p>كتب العرب منارةٌ للعلم، تجمع نفائس المصنفات، وتمد القارئ بعيون الأدب وروائع الفكر. هو دارٌ للمعرفة، لا يخبو سناها، ومجلسٌ للبيان، تُصاغ فيه الحروف دررًا.</p>
                     <div class="footer">
                         <nav class="footer-nav">
-                            <a href="index.html" class="glow-btn">الرئيسية</a>
-                            <a href="Pages/books.html" class="glow-btn">الكتب</a>
-                            <a href="Pages/categories.html" class="glow-btn">التصنيفات</a>
-                            <a href="Pages/colod.html" class="glow-btn">عن الموقع</a>
-                            <a href="Pages/contact.html" class="glow-btn">تواصل معنا</a>
+                            <a href="index.html" class="glow-btn btn">الرئيسية</a>
+                            <a href="Pages/books.html" class="glow-btn btn">الكتب</a>
+                            <a href="Pages/categories.html" class="glow-btn btn">التصنيفات</a>
+                            <a href="Pages/colod.html" class="glow-btn btn">عن الموقع</a>
+                            <a href="Pages/contact.html" class="glow-btn btn">تواصل معنا</a>
                         </nav>
 
                         <div class="social-icons">
-                            <a href="https://www.facebook.com/akhi.almuslim.all" class="glow-btn facebook" target="_blank" rel="noopener noreferrer">F</a>
-                            <a href="https://twitter.com" class="glow-btn twitter" target="_blank" rel="noopener noreferrer">T</a>
-                            <a href="https://www.linkedin.com" class="glow-btn linkedin" target="_blank" rel="noopener noreferrer">in</a>
-                            <a href="https://www.instagram.com" class="glow-btn instagram" target="_blank" rel="noopener noreferrer">IG</a>
+                            <a href="https://www.facebook.com/akhi.almuslim.all" class="glow-btn facebook btn" target="_blank" rel="noopener noreferrer">F</a>
+                            <a href="https://twitter.com" class="glow-btn twitter btn" target="_blank" rel="noopener noreferrer">T</a>
+                            <a href="https://www.linkedin.com" class="glow-btn linkedin btn" target="_blank" rel="noopener noreferrer">in</a>
+                            <a href="https://www.instagram.com" class="glow-btn instagram btn" target="_blank" rel="noopener noreferrer">IG</a>
                         </div>
                     </div>
                     <p class="copyright">جميع الحقوق محفوظة &copy; 2025 ZakBook</p>
