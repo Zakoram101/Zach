@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="referrer" content="no-referrer-when-downgrade">
     <title>ZakBook - كتب زاك</title>
-    <link rel="stylesheet" href="css/style.css"> 
+    <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    
+
     <div class="page-loader">
         <div class="book-loader">
             <div class="book-page" style="--i:0;"></div>
@@ -31,8 +33,8 @@
             </div>
 
             <div class="featured-book">
-                <img src="https://www.mazribookstore.com/storage/uploads/products/images/5f5b63f457f463.15581031.jpg" 
-                   alt="كتاب معلم" class="featured-cover">
+                <img src="https://www.mazribookstore.com/storage/uploads/products/images/5f5b63f457f463.15581031.jpg"
+                     alt="كتاب معلم" class="featured-cover">
                 <div class="featured-info">
                     <span class="featured-label">كتاب معلم</span>
                     <h2 class="featured-title">كتاب التوحيد</h2>
@@ -95,7 +97,7 @@
                     </button>
                 </form>
 
-                <section class="books-showcase">
+                <section class="books-showcase search-results">
                     <a href="books/book1.html" class="book-card">
                         <img src="https://m.media-amazon.com/images/I/81IeD7RL-BL._UF1000,1000_QL80_FMwebp_.jpg" alt="غلاف الكتاب" class="book-cover">
                         <h3 class="book-title">الداء ودواء</h3>
@@ -154,14 +156,14 @@
             </div>
 
             <div class="custom-alert" id="customAlert" style="display: none;">
-                <p>يرجى إدخال كلمة للبحث!</p>    
+                <p>يرجى إدخال كلمة للبحث!</p>
                 <button onclick="closeAlert()">حسناً</button>
             </div>
-           
+
             <section class="categories-section">
                 <h2 class="section-title">فواصل الكتب</h2>
                 <div class="categories-container">
-                    <section class="books-showcase">
+                    <section class="books-showcase main-showcase">
                         <div class="book-card">
                             <div class="book-inner">
                                 <div class="book-front">
@@ -180,7 +182,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="book-card">
                             <div class="book-inner">
                                 <div class="book-front">
@@ -194,12 +196,12 @@
                                     </p>
                                     <div class="book-actions">
                                         <button class="featured-btn" data-page="Pages/page2.html">اقرأ الآن</button>
-                                        <button class="book-btn">أضف للمفضلة</button>
+                                        <button class="book-btn" onclick="openCategoryMenu('page2')">أضف للمفضلة</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="book-card">
                             <div class="book-inner">
                                 <div class="book-front">
@@ -213,12 +215,12 @@
                                     </p>
                                     <div class="book-actions">
                                         <button class="featured-btn" data-page="Pages/page3.html">اقرأ الآن</button>
-                                        <button class="book-btn">أضف للمفضلة</button>
+                                        <button class="book-btn" onclick="openCategoryMenu('page3')">أضف للمفضلة</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="book-card">
                             <div class="book-inner">
                                 <div class="book-front">
@@ -232,20 +234,20 @@
                                     </p>
                                     <div class="book-actions">
                                         <button class="featured-btn" data-page="Pages/page4.html">اقرأ الآن</button>
-                                        <button class="book-btn">أضف للمفضلة</button>
-                                    </div>                          
+                                        <button class="book-btn" onclick="openCategoryMenu('page4')">أضف للمفضلة</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </section>
                 </div>
             </section>
-            
+
             <footer>
                 <div class="footer-content">
                     <div class="logo-footer">ZakBook</div>
                     <p>كتب العرب منارةٌ للعلم، تجمع نفائس المصنفات، وتمد القارئ بعيون الأدب وروائع الفكر. هو دارٌ للمعرفة، لا يخبو سناها، ومجلسٌ للبيان، تُصاغ فيه الحروف دررًا.</p>
-                    <footer class="footer">
+                    <div class="footer">
                         <nav class="footer-nav">
                             <a href="index.html" class="glow-btn">الرئيسية</a>
                             <a href="Pages/books.html" class="glow-btn">الكتب</a>
@@ -255,17 +257,19 @@
                         </nav>
 
                         <div class="social-icons">
-                            <a href="https://www.facebook.com/akhi.almuslim.all" class="glow-btn facebook" target="_blank">F</a>
-                            <a href="https://twitter.com" class="glow-btn twitter" target="_blank">T</a>
-                            <a href="https://www.linkedin.com" class="glow-btn linkedin" target="_blank">in</a>
-                            <a href="https://www.instagram.com" class="glow-btn instagram" target="_blank">IG</a>
+                            <a href="https://www.facebook.com/akhi.almuslim.all" class="glow-btn facebook" target="_blank" rel="noopener noreferrer">F</a>
+                            <a href="https://twitter.com" class="glow-btn twitter" target="_blank" rel="noopener noreferrer">T</a>
+                            <a href="https://www.linkedin.com" class="glow-btn linkedin" target="_blank" rel="noopener noreferrer">in</a>
+                            <a href="https://www.instagram.com" class="glow-btn instagram" target="_blank" rel="noopener noreferrer">IG</a>
                         </div>
-                    </footer>
+                    </div>
                     <p class="copyright">جميع الحقوق محفوظة &copy; 2025 ZakBook</p>
                 </div>
             </footer>
         </div>
     </div>
+
+    <div class="fav-toast" id="favToast"></div>
 
     <script src="script.js"></script>
 </body>
