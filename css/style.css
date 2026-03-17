@@ -1,44 +1,30 @@
-@font-face {
-  font-family: 'Tajawal';
-  font-style: normal;
-  font-weight: 300;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/tajawal/v12/Iurf6YBj_oCad4k1l5qjLrY.ttf) format('truetype');
-}
-
-@font-face {
-  font-family: 'Tajawal';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/tajawal/v12/Iura6YBj_oCad4k1rzY.ttf) format('truetype');
-}
-
-@font-face {
-  font-family: 'Tajawal';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/tajawal/v12/Iurf6YBj_oCad4k1l8KiLrY.ttf) format('truetype');
-}
-
-@font-face {
-  font-family: 'Tajawal';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/tajawal/v12/Iurf6YBj_oCad4k1l4qkLrY.ttf) format('truetype');
-}
+/* ============================================================
+   1. VARIABLES
+   ============================================================ */
 :root {
     --primary-color: #2c3e50;
-    --accent-color: #e74c3c;
-    --light-color: #ecf0f1;
-    --dark-color: #34495e;
-    --font-main: 'Tajawal', sans-serif;
+    --accent-color:  #e74c3c;
+    --light-color:   #ecf0f1;
+    --dark-color:    #34495e;
+    --font-main:     'Tajawal', sans-serif;
+
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.10);
+    --shadow-md: 0 5px 15px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.20);
+
+    --radius-sm: 5px;
+    --radius-md: 10px;
+    --radius-lg: 20px;
+
+    --transition: all 0.3s ease;
 }
 
-/* ===== إعادة التهيئة العامة ===== */
-* {
+/* ============================================================
+   2. RESET & BASE
+   ============================================================ */
+*,
+*::before,
+*::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -51,12 +37,155 @@ body {
     position: relative;
 }
 
-/* ===== أدوات مساعدة ===== */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    background: #eee;
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    transition: background 0.2s ease;
+}
+
+li:hover {
+    background: #ddd;
+}
+
+/* ============================================================
+   3. UTILITIES
+   ============================================================ */
 .visually-hidden {
     display: none !important;
 }
 
-/* ===== حاوية المقدمة ===== */
+/* ============================================================
+   4. PAGE LOADER
+   ============================================================ */
+.page-loader {
+    position: fixed;
+    inset: 0;
+    background: var(--primary-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    animation: fadeOut 0.7s ease 1.7s forwards;
+}
+
+/* ============================================================
+   5. BOOK LOADER
+   ============================================================ */
+.book-loader {
+    width: 75px;
+    height: 90px;
+    position: relative;
+    perspective: 600px;
+    animation: introZoom 0.8s ease-out;
+}
+
+/* --- Base styles shared by all pages --- */
+.book-page {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    transform-origin: right center;
+    border-radius: 2px 0 0 2px;
+    will-change: transform;
+    animation: flip 1.5s ease-in-out infinite;
+    animation-delay: calc(var(--i) * 0.22s);
+    background: linear-gradient(
+        135deg,
+        hsl(9, 72%, calc(62% - var(--i, 0) * 5%)),
+        hsl(9, 65%, calc(55% - var(--i, 0) * 5%))
+    );
+    box-shadow:
+        inset 0 0 0 0.5px rgba(255, 255, 255, 0.55),
+        inset 0 0 0 3px rgba(0, 0, 0, 0.18),
+        2px 3px 8px rgba(0, 0, 0, 0.18);
+}
+
+/* --- Inner pages only (excludes cover) --- */
+.book-page:not([style*="--i:0"])::before {
+    content:
+        "ــــــــــــــــــــ\A"
+        "ــــــــــــــــــــ\A"
+        "ــــــــــــــــــــ\A"
+        "ــــــــــــــــــــ\A"
+        "ــــــــــــــــــــ\A"
+        "ــــــــــــــــــــ\A"
+        "ــــــــــــــــــــ\A"
+        "ــــــــــــــــــــ\A"
+        "ــــــــــــــــــــ\A"
+        "ــــــــــــــــــــ";
+    white-space: pre;
+    position: absolute;
+    top: 8%;
+    right: 8%;
+    width: 84%;
+    height: 84%;
+    font-size: 6px;
+    line-height: 1.65;
+    color: rgba(44, 62, 80, 0.38);
+    text-shadow: 0 0 1px rgba(44, 62, 80, 0.28);
+    pointer-events: none;
+}
+
+/* ============================================================
+   6. ANIMATIONS
+   ============================================================ */
+@keyframes flip {
+    0%   { transform: translateX(-10px) rotateY(-25deg); }
+    45%  { transform: translateX(-2px)  rotateY(0deg);   }
+    55%  { transform: translateX(-2px)  rotateY(0deg);   }
+    100% { transform: translateX(0px)   rotateY(195deg); }
+}
+
+@keyframes introZoom {
+    0%   { transform: scale(0.6);  opacity: 0; }
+    60%  { transform: scale(1.05); opacity: 1; }
+    100% { transform: scale(1);    opacity: 1; }
+}
+
+@keyframes fadeOut {
+    0%   { opacity: 1; visibility: visible;  pointer-events: auto; }
+    100% { opacity: 0; visibility: hidden;   pointer-events: none; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to   { opacity: 1; transform: scale(1);    }
+}
+
+@keyframes fadeInFixed {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -55%) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(0);
+        opacity: 0.6;
+    }
+    100% {
+        transform: scale(1.6);
+        opacity: 0;
+    }
+}
+/* ============================================================
+   7. LAYOUT — INTRO CONTAINER
+   ============================================================ */
 .intro-container {
     height: 100vh;
     display: flex;
@@ -64,7 +193,9 @@ body {
     overflow: hidden;
 }
 
-/* ===== عمود الكتاب ===== */
+/* ============================================================
+   8. COMPONENT — BOOK SPINE
+   ============================================================ */
 .book-spine {
     width: 15%;
     height: 100%;
@@ -95,7 +226,9 @@ body {
     white-space: nowrap;
 }
 
-/* ===== صفحات الكتاب ===== */
+/* ============================================================
+   9. COMPONENT — BOOK PAGES AREA
+   ============================================================ */
 .book-pages {
     flex: 1;
     height: 100%;
@@ -105,7 +238,9 @@ body {
     scroll-behavior: smooth;
 }
 
-/* ===== العلامات المرجعية للتنقل ===== */
+/* ============================================================
+   10. COMPONENT — NAV BOOKMARKS
+   ============================================================ */
 .nav-bookmark {
     position: absolute;
     top: 30px;
@@ -120,11 +255,11 @@ body {
     background: var(--primary-color);
     color: white;
     padding: 10px 25px;
-    border-radius: 0 10px 10px 0;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
     transform: translateX(20px);
     transition: transform 0.3s ease;
     cursor: pointer;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-sm);
     font-size: 0.95rem;
     white-space: nowrap;
 }
@@ -133,7 +268,9 @@ body {
     transform: translateX(0);
 }
 
-/* ===== معرض الكتب (عام) ===== */
+/* ============================================================
+   11. COMPONENT — BOOKS SHOWCASE GRID
+   ============================================================ */
 .books-showcase {
     padding: 50px;
     display: grid;
@@ -153,7 +290,9 @@ body {
     color: inherit;
 }
 
-/* ===== بطاقة الكتاب (بتأثير القلب) ===== */
+/* ============================================================
+   12. COMPONENT — BOOK CARD (FLIP)
+   ============================================================ */
 .book-card {
     height: 350px;
     perspective: 1500px;
@@ -164,7 +303,7 @@ body {
     width: 100%;
     height: 100%;
     transform-style: preserve-3d;
-    transition: transform 1.6s;
+    transition: transform 1.6s ease-in-out;
     position: relative;
 }
 
@@ -178,8 +317,8 @@ body {
     width: 100%;
     height: 100%;
     backface-visibility: hidden;
-    border-radius: 10px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
 }
 
 .book-front {
@@ -195,7 +334,7 @@ body {
     height: 200px;
     width: 150px;
     object-fit: cover;
-    border-radius: 5px;
+    border-radius: var(--radius-sm);
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease;
 }
@@ -247,23 +386,52 @@ body {
 }
 
 .book-btn {
+    position: relative;
+    overflow: hidden;
+
     background: var(--accent-color);
     color: white;
     border: none;
     padding: 8px 15px;
-    border-radius: 20px;
+    border-radius: var(--radius-lg);
     cursor: pointer;
     font-size: 0.8rem;
     font-family: var(--font-main);
-    transition: all 0.3s ease;
+
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
 }
 
 .book-btn:hover {
     background: white;
     color: var(--accent-color);
+    box-shadow: 0 6px 15px rgba(231, 76, 60, 0.25);
 }
 
-/* ===== الكتاب المميز ===== */
+.book-btn:active {
+    transform: scale(0.94);
+}
+
+.book-btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.25);
+    border-radius: inherit;
+
+    transform: scale(0);
+    opacity: 0;
+}
+
+.book-btn:active::after {
+    animation: ripple 0.4s ease;
+}
+
+/* ============================================================
+   13. COMPONENT — FEATURED BOOK
+   ============================================================ */
 .featured-book {
     padding: 100px 50px;
     background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
@@ -285,6 +453,7 @@ body {
     background: var(--accent-color);
     border-radius: 50%;
     opacity: 0.3;
+    pointer-events: none;
 }
 
 .featured-book::after {
@@ -297,14 +466,15 @@ body {
     background: var(--accent-color);
     border-radius: 50%;
     opacity: 0.2;
+    pointer-events: none;
 }
 
 .featured-cover {
     width: 300px;
     height: 450px;
     object-fit: cover;
-    border-radius: 10px;
-    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.3);
+    border-radius: var(--radius-md);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
     transform: rotate(-5deg);
     transition: transform 0.5s ease;
     flex-shrink: 0;
@@ -326,7 +496,7 @@ body {
     background: var(--accent-color);
     color: white;
     padding: 5px 15px;
-    border-radius: 20px;
+    border-radius: var(--radius-lg);
     display: inline-block;
     margin-bottom: 20px;
     font-size: 0.9rem;
@@ -359,7 +529,7 @@ body {
     font-family: var(--font-main);
     cursor: pointer;
     width: fit-content;
-    transition: all 0.3s ease;
+    transition: var(--transition);
 }
 
 .featured-btn:hover {
@@ -369,7 +539,9 @@ body {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* ===== قسم التصنيفات ===== */
+/* ============================================================
+   14. COMPONENT — CATEGORIES SECTION
+   ============================================================ */
 .categories-section {
     padding: 50px;
 }
@@ -407,7 +579,7 @@ body {
     width: 150px;
     height: 200px;
     background: white;
-    border-radius: 10px;
+    border-radius: var(--radius-md);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -415,15 +587,15 @@ body {
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
+    box-shadow: var(--shadow-md);
+    transition: var(--transition);
     text-decoration: none;
     color: inherit;
 }
 
 .category-item:hover {
     transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--shadow-lg);
     text-decoration: none;
 }
 
@@ -477,7 +649,9 @@ body {
     font-weight: bold;
 }
 
-/* ===== التذييل (Footer) ===== */
+/* ============================================================
+   15. COMPONENT — FOOTER
+   ============================================================ */
 footer {
     background: var(--primary-color);
     color: white;
@@ -517,12 +691,11 @@ footer {
     margin: 30px 0;
 }
 
-/* === أنماط glow-btn لروابط التذييل === */
 .glow-btn {
     color: rgba(255, 255, 255, 0.85);
     text-decoration: none;
     padding: 8px 18px;
-    border-radius: 20px;
+    border-radius: var(--radius-lg);
     font-size: 0.95rem;
     font-family: var(--font-main);
     font-weight: 600;
@@ -531,7 +704,7 @@ footer {
     justify-content: center;
     border: 1px solid rgba(255, 255, 255, 0.15);
     background: rgba(255, 255, 255, 0.05);
-    transition: all 0.3s ease;
+    transition: var(--transition);
     white-space: nowrap;
 }
 
@@ -553,7 +726,6 @@ footer {
     color: white;
 }
 
-/* === أنماط الأيقونات الاجتماعية === */
 .social-icons {
     display: flex;
     justify-content: center;
@@ -567,7 +739,6 @@ footer {
     height: 42px;
     border-radius: 50%;
     padding: 0;
-    font-weight: bold;
     font-size: 0.9rem;
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -601,7 +772,6 @@ footer {
     box-shadow: 0 5px 15px rgba(228, 64, 95, 0.4);
 }
 
-/* === أنماط إضافية للتذييل (توافقية) === */
 .footer-link {
     color: white;
     text-decoration: none;
@@ -622,7 +792,7 @@ footer {
     justify-content: center;
     color: white;
     font-size: 1.2rem;
-    transition: all 0.3s ease;
+    transition: var(--transition);
 }
 
 .social-icon:hover {
@@ -636,51 +806,9 @@ footer {
     font-size: 0.9rem;
 }
 
-/* ===== محمّل الصفحة ===== */
-.page-loader {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: var(--primary-color);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    animation: fadeOut 0.7s ease 1.7s forwards;
-}
-
-.book-loader {
-    width: 75px;
-    height: 90px;
-    position: relative;
-    perspective: 500px;
-}
-
-.book-page {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    right: 0;
-    background: var(--accent-color);
-    transform-origin: right;
-    animation: flip 1.5s infinite linear;
-    animation-delay: calc(var(--i) * 0.22s);
-}
-
-@keyframes flip {
-    0%   { transform: translateX(-12px) rotateY(-30deg); }
-    100% { transform: translateX(0px) rotateY(200deg); }
-}
-
-@keyframes fadeOut {
-    0%   { opacity: 1; visibility: visible; }
-    100% { opacity: 0; visibility: hidden; }
-}
-
-/* ===== زر البحث العائم ===== */
+/* ============================================================
+   16. COMPONENT — SEARCH FLOAT BUTTON
+   ============================================================ */
 .search-float {
     position: fixed;
     bottom: 30px;
@@ -695,23 +823,47 @@ footer {
     color: white;
     font-size: 1.5rem;
     cursor: pointer;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--shadow-md);
     z-index: 100;
-    transition: all 0.3s ease;
+
+    overflow: hidden;
+
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
 }
 
 .search-float:hover {
-    transform: scale(1.1);
-    background: var(--primary-color);
+    transform: scale(1.08);
+    box-shadow: 0 8px 20px rgba(231, 76, 60, 0.4);
 }
 
-/* ===== لوحة البحث ===== */
-.search-panel {
-    position: fixed;
-    top: 0;
-    left: 0;
+.search-float:active {
+    transform: scale(0.92);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.search-float::after {
+    content: "";
+    position: absolute;
     width: 100%;
     height: 100%;
+    background: rgba(255,255,255,0.25);
+    border-radius: 50%;
+    transform: scale(0);
+    opacity: 0;
+}
+
+.search-float:active::after {
+    animation: ripple 0.4s ease;
+}
+/* ============================================================
+   17. COMPONENT — SEARCH PANEL
+   ============================================================ */
+.search-panel {
+    position: fixed;
+    inset: 0;
     background: rgba(44, 62, 80, 0.95);
     display: flex;
     flex-direction: column;
@@ -721,7 +873,7 @@ footer {
     z-index: 200;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.5s ease;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
     overflow-y: auto;
 }
 
@@ -783,7 +935,37 @@ footer {
     color: var(--accent-color);
 }
 
-/* === نتائج البحث داخل لوحة البحث === */
+.close-search {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    z-index: 201;
+
+    border-radius: 50%;
+    overflow: hidden;
+
+    transition: transform 0.3s ease;
+
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+}
+
+.close-search:hover {
+    transform: rotate(90deg) scale(1.1);
+    color: var(--accent-color);
+}
+
 .search-panel .books-showcase.search-results {
     width: 90%;
     max-width: 800px;
@@ -868,11 +1050,6 @@ footer {
     animation: fadeIn 0.5s ease-in-out;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.95); }
-    to   { opacity: 1; transform: scale(1); }
-}
-
 .reset-btn {
     background: #ff4444;
     color: white;
@@ -893,15 +1070,14 @@ footer {
     transform: scale(1.05);
 }
 
-/* ===== النوافذ المنبثقة ===== */
+/* ============================================================
+   18. COMPONENT — MODAL
+   ============================================================ */
 .modal {
     display: none;
     position: fixed;
+    inset: 0;
     z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
 }
 
@@ -909,7 +1085,7 @@ footer {
     background-color: white;
     margin: 15% auto;
     padding: 20px;
-    border-radius: 10px;
+    border-radius: var(--radius-md);
     width: 50%;
     text-align: center;
 }
@@ -921,24 +1097,9 @@ footer {
     cursor: pointer;
 }
 
-ul {
-    list-style: none;
-    padding: 0;
-}
-
-li {
-    background: #eee;
-    padding: 10px;
-    margin: 5px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background 0.2s ease;
-}
-
-li:hover {
-    background: #ddd;
-}
-
+/* ============================================================
+   19. COMPONENT — ELEGANT LINK
+   ============================================================ */
 .elegant-link {
     color: var(--accent-color);
     font-weight: 600;
@@ -967,22 +1128,27 @@ li:hover {
     width: 100%;
 }
 
-/* ===== التنبيه المخصص ===== */
+/* ============================================================
+   20. COMPONENT — CUSTOM ALERT
+   ============================================================ */
 .custom-alert {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 350;
-    background-color: #ffffff;
-    border: 2px solid #ff6b6b;
-    border-radius: 12px;
-    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.4), 0 8px 25px rgba(0, 0, 0, 0.2);
+    background: var(--light-color);
+
+border: 1.5px solid rgba(231, 76, 60, 0.4);
+
+box-shadow:
+    0 0 0 9999px rgba(44, 62, 80, 0.55),
+    0 15px 40px rgba(0, 0, 0, 0.25);
     padding: 25px 30px;
     text-align: center;
     max-width: 320px;
     width: 90%;
-    animation: fadeIn 0.3s ease;
+    animation: fadeInFixed 0.3s ease;
 }
 
 .custom-alert p {
@@ -993,24 +1159,34 @@ li:hover {
 }
 
 .custom-alert button {
-    background-color: #4CAF50;
-    color: white;
+    background: var(--light-color);
+    color: var(--primary-color);
+
     border: none;
-    padding: 10px 25px;
+    padding: 12px 28px;
     border-radius: 25px;
-    cursor: pointer;
+
+    font-weight: bold;
     font-family: var(--font-main);
     font-size: 0.95rem;
-    font-weight: bold;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
 }
 
 .custom-alert button:hover {
-    background-color: #45a049;
-    transform: scale(1.05);
+    background: var(--accent-color);
+    color: white;
+
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(231, 76, 60, 0.35);
 }
 
-/* ===== إشعار المفضلة ===== */
+/* ============================================================
+   21. COMPONENT — FAV TOAST
+   ============================================================ */
 .fav-toast {
     position: fixed;
     bottom: 90px;
@@ -1022,10 +1198,10 @@ li:hover {
     border-radius: 25px;
     font-size: 0.9rem;
     font-family: var(--font-main);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+    box-shadow: var(--shadow-md);
     opacity: 0;
     visibility: hidden;
-    transition: all 0.4s ease;
+    transition: var(--transition);
     z-index: 500;
     white-space: nowrap;
 }
@@ -1036,7 +1212,26 @@ li:hover {
     transform: translateX(-50%) translateY(0);
 }
 
-/* ===== الاستجابة: أجهزة كبيرة (تابلت عرضي وحاسوب صغير) ===== */
+/* ============================================================
+   22. RESPONSIVE — LARGE DESKTOPS (≥ 1400px)
+   ============================================================ */
+@media (min-width: 1400px) {
+    .featured-book {
+        padding: 120px 80px;
+    }
+
+    .books-showcase {
+        padding: 60px 80px;
+    }
+
+    .categories-section {
+        padding: 60px 80px;
+    }
+}
+
+/* ============================================================
+   23. RESPONSIVE — TABLETS LANDSCAPE / SMALL DESKTOPS (≤ 1024px)
+   ============================================================ */
 @media (max-width: 1024px) {
     .featured-book {
         padding: 70px 35px;
@@ -1059,7 +1254,9 @@ li:hover {
     }
 }
 
-/* ===== الاستجابة: تابلت وأجهزة متوسطة ===== */
+/* ============================================================
+   24. RESPONSIVE — TABLETS (≤ 768px)
+   ============================================================ */
 @media (max-width: 768px) {
     .book-spine {
         width: 50px;
@@ -1179,7 +1376,9 @@ li:hover {
     }
 }
 
-/* ===== الاستجابة: هواتف صغيرة ===== */
+/* ============================================================
+   25. RESPONSIVE — SMALL PHONES (≤ 480px)
+   ============================================================ */
 @media (max-width: 480px) {
     .book-spine {
         width: 40px;
@@ -1352,17 +1551,40 @@ li:hover {
     }
 }
 
-/* ===== الاستجابة: شاشات كبيرة جدًا ===== */
-@media (min-width: 1400px) {
-    .featured-book {
-        padding: 120px 80px;
-    }
+/* ============================================================
+   GLOBAL BUTTON SYSTEM
+   ============================================================ */
+.btn {
+    position: relative;
+    overflow: hidden;
 
-    .books-showcase {
-        padding: 60px 80px;
-    }
+    cursor: pointer;
 
-    .categories-section {
-        padding: 60px 80px;
-    }
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+}
+
+.btn:hover {
+    transform: scale(1.06);
+}
+
+.btn:active {
+    transform: scale(0.92);
+}
+
+.btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.25);
+    border-radius: inherit;
+
+    transform: scale(0);
+    opacity: 0;
+}
+
+.btn:active::after {
+    animation: ripple 0.4s ease;
 }
