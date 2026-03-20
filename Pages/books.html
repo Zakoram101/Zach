@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>مكتبتك للكتب الدينية - اقرأ كتابك</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap');
 
+        /* ===== Variables ===== */
         :root {
             --primary-color: #2c3e50;
             --accent-color: #e74c3c;
@@ -14,446 +15,377 @@
             --dark-color: #34495e;
             --gold-color: #f1c40f;
             --font-main: 'Tajawal', sans-serif;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+            --shadow-md: 0 5px 20px rgba(0,0,0,0.12);
+            --shadow-lg: 0 10px 40px rgba(0,0,0,0.18);
+            --shadow-card: 0 4px 15px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.06);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 15px;
+            --transition-fast: 0.3s ease;
+            --transition-flip: 0.7s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: var(--font-main);
-        }
+        /* ===== Base ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-main); }
+        html { scroll-behavior: smooth; }
 
         body {
             background-color: var(--light-color);
+            background-image:
+                radial-gradient(ellipse at 15% 50%, rgba(231,76,60,0.04) 0%, transparent 50%),
+                radial-gradient(ellipse at 85% 20%, rgba(44,62,80,0.04) 0%, transparent 50%);
             overflow-x: hidden;
-            position: relative;
-            padding: 20px;
             direction: rtl;
+            padding: 20px;
+            min-height: 100vh;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
+        /* ===== Layout ===== */
+        .container { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
 
-        /* العناصر التزيينية */
-        .decoration {
-            position: fixed;
-            opacity: 0.05;
-            z-index: 0;
-        }
-
-        .deco1 {
-            top: 10%;
-            right: 5%;
-            width: 300px;
-            height: 300px;
-            background: var(--accent-color);
-            border-radius: 50%;
-        }
-
-        .deco2 {
-            bottom: 10%;
-            left: 5%;
-            width: 200px;
-            height: 200px;
-            background: var(--primary-color);
-            border-radius: 50%;
-        }
-
-        .deco3 {
-            top: 40%;
-            left: 10%;
-            width: 150px;
-            height: 150px;
-            background: var(--gold-color);
-            border-radius: 50%;
-        }
-
-        .islamic-pattern {
-            position: fixed;
-            z-index: 0;
-            opacity: 0.03;
-            background-size: cover;
-            background-repeat: no-repeat;
-        }
-
-        .pattern1 {
-            top: 0;
-            right: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M0,0 L100,0 L100,100 L0,100 Z" fill="none" stroke="%232c3e50" stroke-width="1"/><path d="M50,0 L50,100 M0,50 L100,50" stroke="%232c3e50" stroke-width="0.5"/><circle cx="50" cy="50" r="40" fill="none" stroke="%232c3e50" stroke-width="0.5"/></svg>');
-        }
+        /* ===== Decorations ===== */
+        .decoration { position: fixed; opacity: 0.04; z-index: 0; border-radius: 50%; pointer-events: none; }
+        .deco1 { top: 8%; right: 5%; width: 300px; height: 300px; background: var(--accent-color); }
+        .deco2 { bottom: 10%; left: 5%; width: 200px; height: 200px; background: var(--primary-color); }
+        .deco3 { top: 45%; left: 8%; width: 150px; height: 150px; background: var(--gold-color); }
 
         .light-effect {
-            position: fixed;
-            width: 700px;
-            height: 700px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%);
-            pointer-events: none;
-            z-index: 0;
-            transform: translate(-50%, -50%);
+            position: fixed; width: 600px; height: 600px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+            pointer-events: none; z-index: 0; transform: translate(-50%, -50%);
         }
 
-        /* الهيدر */
+        /* ===== Header ===== */
         header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding: 40px 20px;
-            color: white;
-            border-radius: 15px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.2);
-            position: relative;
-            overflow: hidden;
+            text-align: center; margin-bottom: 30px; padding: 50px 20px 45px;
+            color: white; border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg); position: relative; overflow: hidden;
+            animation: fadeInDown 0.6s ease forwards;
         }
-
         .header-bg {
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
+            position: absolute; inset: 0;
             background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
             z-index: -1;
         }
-
+        .header-bg::before {
+            content: ''; position: absolute; inset: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80"><circle cx="40" cy="40" r="28" fill="none" stroke="rgba(255,255,255,0.025)" stroke-width="0.5"/><path d="M40,12 L40,68 M12,40 L68,40" stroke="rgba(255,255,255,0.015)" stroke-width="0.5"/></svg>');
+        }
         header h1 {
-            font-size: 2.8rem;
-            margin-bottom: 15px;
-            color: white;
-            position: relative;
+            font-size: 2.8rem; font-weight: 700; margin-bottom: 20px;
+            position: relative; display: inline-block;
         }
-
         header h1::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            right: 50%;
-            transform: translateX(50%);
-            width: 100px;
-            height: 3px;
-            background-color: var(--accent-color);
+            content: ''; position: absolute; bottom: -8px; right: 50%;
+            transform: translateX(50%); width: 80px; height: 3px;
+            background: var(--accent-color); border-radius: 2px;
+        }
+        .subtitle { font-size: 1.15rem; font-weight: 300; opacity: 0.85; }
+
+        /* ===== Navigation ===== */
+        .navigation {
+            position: sticky; top: 10px; z-index: 100;
+            background: white; border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md); padding: 15px 20px;
+            margin-bottom: 35px; animation: fadeIn 0.5s 0.15s ease both;
+        }
+        .nav-title {
+            font-size: 1.1rem; font-weight: 700; color: var(--dark-color);
+            margin-bottom: 12px; text-align: center;
+        }
+        .category-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+        .category-btn {
+            background: var(--light-color); color: var(--dark-color);
+            border: none; border-radius: 25px; padding: 8px 18px;
+            font-size: 0.9rem; font-family: var(--font-main);
+            cursor: pointer; transition: all var(--transition-fast);
+            position: relative; overflow: hidden;
+        }
+        .category-btn:hover, .category-btn.active {
+            background: var(--accent-color); color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(231,76,60,0.3);
         }
 
-        .subtitle {
-            font-size: 1.2rem;
-            font-weight: 400;
-            color: var(--light-color);
-            opacity: 0.8;
+        /* ===== Category Section ===== */
+        .category-section {
+            margin-bottom: 50px; opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
         }
-
-        /* قائمة الكتب العمودية */
-        .category-container {
-            margin-bottom: 60px;
-            animation: fadeIn 0.5s ease forwards;
-            background-color: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
+        .category-section:nth-child(1) { animation-delay: 0.1s; }
+        .category-section:nth-child(2) { animation-delay: 0.2s; }
+        .category-section:nth-child(3) { animation-delay: 0.3s; }
+        .category-section:nth-child(4) { animation-delay: 0.4s; }
 
         .category-header {
             background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
-            color: white;
-            padding: 20px;
-            text-align: right;
+            color: white; padding: 20px 25px;
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
             position: relative;
         }
-
-        .category-header h2 {
-            font-size: 1.6rem;
-            margin: 0;
-        }
-
+        .category-header h2 { font-size: 1.5rem; font-weight: 700; }
         .category-header::after {
-            content: '';
-            position: absolute;
-            right: 20px;
-            bottom: 0;
-            width: 60px;
-            height: 3px;
-            background-color: var(--accent-color);
+            content: ''; position: absolute; right: 25px; bottom: 0;
+            width: 50px; height: 3px; background: var(--accent-color); border-radius: 2px;
         }
 
-        .book-list {
-            padding: 0;
-            list-style: none;
+        /* ===== Books Grid ===== */
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px; padding: 25px;
+            background: white;
+            border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+            box-shadow: var(--shadow-sm);
         }
 
-        .book-item {
-            padding: 20px;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
+        /* ===== 3D Book Card ===== */
+        .book-card { perspective: 1200px; height: 400px; }
+        .book-inner {
+            position: relative; width: 100%; height: 100%;
+            transition: transform var(--transition-flip);
+            transform-style: preserve-3d;
+        }
+    /* للكمبيوتر فقط */
+@media (hover: hover) and (pointer: fine) {
+    .book-card:hover .book-inner {
+        transform: rotateY(180deg);
+    }
+}
+
+/* للجوال (JS فقط يتحكم) */
+.book-card.flipped .book-inner {
+    transform: rotateY(180deg);
+}
+
+        .book-front, .book-back {
+            position: absolute; inset: 0;
+            backface-visibility: hidden; -webkit-backface-visibility: hidden;
+            border-radius: var(--radius-md); overflow: hidden;
+        }
+
+        /* --- Front --- */
+        .book-front {
+            background: white; box-shadow: var(--shadow-card);
+            display: flex; flex-direction: column;
+            transition: box-shadow var(--transition-fast);
+        }
+        .book-card:hover .book-front { box-shadow: var(--shadow-lg); }
+
+        .book-cover-wrapper {
+            flex: 1; display: flex; align-items: center; justify-content: center;
+            padding: 25px 20px 15px;
+            background: linear-gradient(160deg, #f8f9fa, #eaecee);
             position: relative;
         }
-
-        .book-item:last-child {
-            border-bottom: none;
+        .book-cover-wrapper::after {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(circle at 30% 40%, rgba(231,76,60,0.025) 0%, transparent 60%);
+            pointer-events: none;
         }
 
-        .book-item:hover {
-            background-color: rgba(0,0,0,0.02);
-        }
-
-        .book-number {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--accent-color);
-            margin-left: 15px;
-            width: 30px;
+        .book-cover-3d {
+            width: 135px; height: 190px;
+            border-radius: 3px 10px 10px 3px;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            padding: 18px 12px; position: relative;
             text-align: center;
+            box-shadow:
+                6px 6px 20px rgba(0,0,0,0.22),
+                -2px 0 6px rgba(0,0,0,0.08),
+                inset -4px 0 10px rgba(0,0,0,0.12);
+            transition: transform var(--transition-fast);
+        }
+        .book-card:hover .book-cover-3d { transform: scale(1.05) translateY(-3px); }
+
+        .book-cover-3d::before {
+            content: ''; position: absolute; right: 0; top: 0; bottom: 0;
+            width: 5px;
+            background: linear-gradient(to left, rgba(0,0,0,0.25), rgba(0,0,0,0.05));
+            border-radius: 0 3px 3px 0;
+        }
+        .book-cover-3d::after {
+            content: ''; position: absolute;
+            top: 10px; left: 10px; right: 10px; bottom: 10px;
+            border: 1px solid rgba(241,196,15,0.35);
+            border-radius: 2px; pointer-events: none;
         }
 
-        .book-cover {
-            width: 60px;
-            height: 80px;
-            background: linear-gradient(135deg, var(--dark-color), var(--primary-color));
-            border-radius: 5px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-left: 20px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-            flex-shrink: 0;
+        /* Cover Color Variants */
+        .cover-emerald { background: linear-gradient(160deg, #1a3c2a, #2d5a4f); }
+        .cover-navy    { background: linear-gradient(160deg, #1a2a3c, #2c3e50); }
+        .cover-wine    { background: linear-gradient(160deg, #3c1a2a, #5a2d3e); }
+        .cover-earth   { background: linear-gradient(160deg, #3c2a1a, #5a4a2d); }
+
+        .book-cover-icon { font-size: 1.6rem; margin-bottom: 8px; opacity: 0.5; }
+        .book-cover-title {
+            color: var(--gold-color); font-size: 0.8rem; font-weight: 700;
+            line-height: 1.6; text-shadow: 0 1px 4px rgba(0,0,0,0.4);
         }
 
-        .book-icon {
-            font-size: 1.5rem;
-            color: white;
+        .book-card-info { padding: 12px 15px 18px; text-align: center; }
+        .book-card-title {
+            font-size: 1.05rem; font-weight: 700; color: var(--dark-color);
+            margin-bottom: 4px; line-height: 1.4;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .book-card-author { font-size: 0.85rem; color: var(--accent-color); font-weight: 500; }
+
+        /* --- Back --- */
+        .book-back {
+            background: linear-gradient(160deg, var(--primary-color), var(--dark-color));
+            transform: rotateY(180deg); color: white;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            padding: 25px 20px; text-align: center;
+            box-shadow: var(--shadow-lg);
+        }
+        .book-back::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(231,76,60,0.08) 0%, transparent 55%);
+            pointer-events: none; border-radius: var(--radius-md);
+        }
+        .book-back-title {
+            font-size: 1.15rem; font-weight: 700;
+            margin-bottom: 12px; color: var(--gold-color);
+            position: relative;
+        }
+        .book-back-title::after {
+            content: ''; display: block; width: 40px; height: 2px;
+            background: var(--accent-color); margin: 8px auto 0; border-radius: 2px;
+        }
+        .book-back-desc {
+            font-size: 0.88rem; line-height: 1.85; opacity: 0.9;
+            margin-bottom: 22px; font-weight: 300; position: relative;
+        }
+        .book-back-actions {
+            display: flex; flex-direction: column; gap: 10px;
+            width: 100%; max-width: 190px; position: relative;
         }
 
-        .book-info {
-            flex-grow: 1;
+        /* ===== Buttons ===== */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: 10px 22px; border-radius: 25px;
+            font-size: 0.88rem; font-family: var(--font-main); font-weight: 500;
+            text-decoration: none; cursor: pointer; border: none;
+            transition: all var(--transition-fast);
+            position: relative; overflow: hidden;
         }
-
-        .book-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--dark-color);
-            margin-bottom: 5px;
-            display: block;
-            text-decoration: none;
+        .btn-primary {
+            background: var(--accent-color); color: white;
+            box-shadow: 0 3px 12px rgba(231,76,60,0.35);
         }
-
-        .book-title:hover {
-            color: var(--accent-color);
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 6px 20px rgba(231,76,60,0.45);
         }
+        .btn-primary:active { transform: translateY(-1px) scale(0.97); }
 
-        .book-author {
-            font-size: 0.9rem;
-            color: var(--accent-color);
+        .btn-outline {
+            background: transparent; color: white;
+            border: 2px solid rgba(255,255,255,0.35);
         }
-
-        .book-action {
-            display: flex;
-            align-items: center;
+        .btn-outline:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.7);
+            transform: translateY(-2px);
         }
+        .btn-outline:active { transform: translateY(0) scale(0.97); }
 
-        .book-details-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background-color: var(--primary-color);
-            color: white;
-            text-decoration: none;
-            padding: 8px 20px;
-            border-radius: 25px;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
+        .btn .ripple {
+            position: absolute; border-radius: 50%;
+            background: rgba(255,255,255,0.35);
+            transform: scale(0); animation: rippleAnim 0.6s ease-out;
+            pointer-events: none;
         }
+        @keyframes rippleAnim { to { transform: scale(4); opacity: 0; } }
 
-        .book-details-btn:hover {
-            background-color: var(--accent-color);
-            transform: translateY(-3px);
-        }
-
-        .arrow-icon {
-            margin-right: 8px;
-            font-size: 1rem;
-        }
-
-        /* شريط التنقل بين القوائم */
-        .navigation {
-            position: sticky;
-            top: 20px;
-            z-index: 10;
-            background-color: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            padding: 15px;
-            margin-bottom: 30px;
-        }
-
-        .nav-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--dark-color);
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        .category-nav {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .category-btn {
-            background-color: var(--light-color);
-            color: var(--dark-color);
-            border: none;
-            border-radius: 25px;
-            padding: 8px 15px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .category-btn:hover, .category-btn.active {
-            background-color: var(--accent-color);
-            color: white;
-        }
-
-        /* زر العودة للأعلى */
+        /* ===== Back to Top ===== */
         .back-to-top {
-            position: fixed;
-            bottom: 30px;
-            left: 30px;
-            width: 50px;
-            height: 50px;
-            background-color: var(--primary-color);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.5rem;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
-            z-index: 99;
-            opacity: 0;
-            visibility: hidden;
+            position: fixed; bottom: 30px; left: 30px;
+            width: 50px; height: 50px;
+            background: var(--primary-color); color: white;
+            border-radius: 50%; display: flex;
+            justify-content: center; align-items: center;
+            cursor: pointer; box-shadow: var(--shadow-md);
+            transition: all var(--transition-fast);
+            z-index: 99; opacity: 0; visibility: hidden; border: none;
         }
-
-        .back-to-top.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-
+        .back-to-top.visible { opacity: 1; visibility: visible; }
         .back-to-top:hover {
-            background-color: var(--accent-color);
+            background: var(--accent-color);
             transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
         }
 
-        /* تجاوب الموقع مع أحجام الشاشات المختلفة */
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 2rem;
-            }
+        /* ===== Animations ===== */
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
 
-            .subtitle {
-                font-size: 1rem;
+        /* ===== Responsive ===== */
+        @media (max-width: 768px) {
+            header h1 { font-size: 2rem; }
+            .subtitle { font-size: 1rem; }
+            .books-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+                gap: 20px; padding: 20px;
             }
-            
-            .category-header h2 {
-                font-size: 1.4rem;
-            }
-            
-            .book-title {
-                font-size: 1rem;
-            }
-            
-            .book-number {
-                font-size: 1rem;
-                width: 25px;
-            }
-            
-            .book-cover {
-                width: 50px;
-                height: 70px;
-                margin-left: 15px;
-            }
-            
-            .book-details-btn {
-                padding: 6px 15px;
-                font-size: 0.8rem;
-            }
+            .book-card { height: 380px; }
+            .category-header h2 { font-size: 1.3rem; }
         }
 
         @media (max-width: 580px) {
-            .book-item {
-                flex-wrap: wrap;
-            }
-            
-            .book-action {
-                width: 100%;
-                margin-top: 15px;
-                justify-content: flex-end;
-            }
-            
+            body { padding: 10px; }
+            header { padding: 35px 15px 30px; margin-bottom: 20px; }
+            header h1 { font-size: 1.55rem; }
+            .navigation { padding: 12px 15px; margin-bottom: 25px; }
             .category-nav {
-                justify-content: flex-start;
-                overflow-x: auto;
-                padding-bottom: 10px;
-                flex-wrap: nowrap;
+                flex-wrap: nowrap; overflow-x: auto;
+                justify-content: flex-start; padding-bottom: 8px;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
             }
-            
-            .category-btn {
-                flex-shrink: 0;
+            .category-nav::-webkit-scrollbar { display: none; }
+            .category-btn { flex-shrink: 0; padding: 7px 14px; font-size: 0.82rem; }
+            .books-grid {
+                grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+                gap: 12px; padding: 12px;
             }
-            
-            .book-number {
-                width: 20px;
-                margin-left: 10px;
-            }
-        }
-
-        /* تأثيرات إضافية لتحسين تجربة المستخدم */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* تأخير ظهور القوائم بشكل متتابع */
-        .category-container:nth-child(1) { animation-delay: 0.05s; }
-        .category-container:nth-child(2) { animation-delay: 0.1s; }
-        .category-container:nth-child(3) { animation-delay: 0.15s; }
-        .category-container:nth-child(4) { animation-delay: 0.2s; }
-        .category-container:nth-child(5) { animation-delay: 0.25s; }
-
-        /* سكرول سلس عند التنقل بين الأقسام */
-        html {
-            scroll-behavior: smooth;
+            .book-card { height: 340px; }
+            .book-cover-3d { width: 105px; height: 150px; padding: 12px 8px; }
+            .book-cover-title { font-size: 0.7rem; }
+            .book-cover-icon { font-size: 1.3rem; }
+            .book-card-title { font-size: 0.88rem; }
+            .book-card-author { font-size: 0.78rem; }
+            .book-back { padding: 15px 12px; }
+            .book-back-title { font-size: 1rem; }
+            .book-back-desc { font-size: 0.78rem; line-height: 1.7; margin-bottom: 15px; }
+            .btn { padding: 8px 16px; font-size: 0.8rem; }
+            .category-header { padding: 15px 18px; }
+            .category-header h2 { font-size: 1.2rem; }
+            .category-section { margin-bottom: 35px; }
         }
     </style>
 </head>
 <body>
-    <!-- العناصر التزيينية -->
+
     <div class="decoration deco1"></div>
     <div class="decoration deco2"></div>
     <div class="decoration deco3"></div>
-    <div class="islamic-pattern pattern1"></div>
-    <div class="light-effect"></div>
+    <div class="light-effect" id="lightEffect"></div>
 
     <div class="container">
-        <!-- الهيدر -->
+
         <header>
             <div class="header-bg"></div>
             <h1>مكتبتك للكتب الدينية - اقرأ كتابك</h1>
-            <p class="subtitle">أهم الكتب الإسلامية وتراث الديني القيم</p>
+            <p class="subtitle">أهم الكتب الإسلامية والتراث الديني القيم</p>
         </header>
 
-        <!-- شريط التنقل -->
         <div class="navigation">
             <h3 class="nav-title">القوائم المتوفرة</h3>
             <div class="category-nav">
@@ -471,553 +403,853 @@
             </div>
         </div>
 
-      <!-- قائمة الكتب 1 -->
-<div id="category1" class="category-container">
-    <div class="category-header">
-        <h2>القائمة الأولى</h2>
-    </div>
-    <ul class="book-list">
-        <li class="book-item">
-            <div class="book-number">1</div>
-            <div class="book-cover">
-                <img src="https://example.com/images/islamic-book.jpg" alt="صحيح البخاري" class="book-image">
-            </div>
-            <div class="book-info">
-                <a href="book-details.html?id=1" class="book-title">صحيح البخاري</a>
-                <div class="book-author">الإمام محمد بن إسماعيل البخاري</div>
-            </div>
-            <div class="book-action">
-                <a href="book-details.html?id=1" class="book-details-btn">
-                    تفاصيل الكتاب <span class="arrow-icon">←</span>
-                </a>
-            </div>
-        </li>
-        <li class="book-item">
-            <div class="book-number">2</div>
-            <div class="book-cover">
-                <img src="https://example.com/images/islamic-book.jpg" alt="صحيح مسلم" class="book-image">
-            </div>
-            <div class="book-info">
-                <a href="book-details.html?id=2" class="book-title">صحيح مسلم</a>
-                <div class="book-author">الإمام مسلم بن الحجاج النيسابوري</div>
-            </div>
-            <div class="book-action">
-                <a href="book-details.html?id=2" class="book-details-btn">
-                    تفاصيل الكتاب <span class="arrow-icon">←</span>
-                </a>
-            </div>
-        </li>
-        <li class="book-item">
-            <div class="book-number">3</div>
-            <div class="book-cover">
-                <img src="https://example.com/images/islamic-book.jpg" alt="سنن أبي داود" class="book-image">
-            </div>
-            <div class="book-info">
-                <a href="book-details.html?id=3" class="book-title">سنن أبي داود</a>
-                <div class="book-author">أبو داود سليمان بن الأشعث</div>
-            </div>
-            <div class="book-action">
-                <a href="book-details.html?id=3" class="book-details-btn">
-                    تفاصيل الكتاب <span class="arrow-icon">←</span>
-                </a>
-            </div>
-        </li>
-        <li class="book-item">
-            <div class="book-number">4</div>
-            <div class="book-cover">
-                <img src="https://example.com/images/islamic-book.jpg" alt="جامع الترمذي" class="book-image">
-            </div>
-            <div class="book-info">
-                <a href="book-details.html?id=4" class="book-title">جامع الترمذي</a>
-                <div class="book-author">محمد بن عيسى الترمذي</div>
-            </div>
-            <div class="book-action">
-                <a href="book-details.html?id=4" class="book-details-btn">
-                    تفاصيل الكتاب <span class="arrow-icon">←</span>
-                </a>
-            </div>
-        </li>
-        <li class="book-item">
-            <div class="book-number">5</div>
-            <div class="book-cover">
-                <img src="https://example.com/images/islamic-book.jpg" alt="سنن النسائي" class="book-image">
-            </div>
-            <div class="book-info">
-                <a href="book-details.html?id=5" class="book-title">سنن النسائي</a>
-                <div class="book-author">أحمد بن شعيب النسائي</div>
-            </div>
-            <div class="book-action">
-                <a href="book-details.html?id=5" class="book-details-btn">
-                    تفاصيل الكتاب <span class="arrow-icon">←</span>
-                </a>
-            </div>
-        </li>
-        <li class="book-item">
-            <div class="book-number">6</div>
-            <div class="book-cover">
-                <img src="https://example.com/images/islamic-book.jpg" alt="سنن ابن ماجه" class="book-image">
-            </div>
-            <div class="book-info">
-                <a href="book-details.html?id=6" class="book-title">سنن ابن ماجه</a>
-                <div class="book-author">محمد بن يزيد ابن ماجه</div>
-            </div>
-            <div class="book-action">
-                <a href="book-details.html?id=6" class="book-details-btn">
-                    تفاصيل الكتاب <span class="arrow-icon">←</span>
-                </a>
-            </div>
-        </li>
-        <li class="book-item">
-            <div class="book-number">7</div>
-            <div class="book-cover">
-                <img src="https://example.com/images/islamic-book.jpg" alt="الموطأ" class="book-image">
-            </div>
-            <div class="book-info">
-                <a href="book-details.html?id=7" class="book-title">الموطأ</a>
-                <div class="book-author">الإمام مالك بن أنس</div>
-            </div>
-            <div class="book-action">
-                <a href="book-details.html?id=7" class="book-details-btn">
-                    تفاصيل الكتاب <span class="arrow-icon">←</span>
-                </a>
-            </div>
-        </li>
-        <li class="book-item">
-            <div class="book-number">8</div>
-            <div class="book-cover">
-                <img src="https://example.com/images/islamic-book.jpg" alt="مسند الإمام أحمد" class="book-image">
-            </div>
-            <div class="book-info">
-                <a href="book-details.html?id=8" class="book-title">مسند الإمام أحمد</a>
-                <div class="book-author">الإمام أحمد بن حنبل</div>
-            </div>
-            <div class="book-action">
-                <a href="book-details.html?id=8" class="book-details-btn">
-                    تفاصيل الكتاب <span class="arrow-icon">←</span>
-                </a>
-            </div>
-        </li>
-        <li class="book-item">
-            <div class="book-number">9</div>
-            <div class="book-cover">
-                <img src="https://example.com/images/islamic-book.jpg" alt="تفسير الطبري" class="book-image">
-            </div>
-            <div class="book-info">
-                <a href="book-details.html?id=9" class="book-title">تفسير الطبري</a>
-                <div class="book-author">محمد بن جرير الطبري</div>
-            </div>
-            <div class="book-action">
-                <a href="book-details.html?id=9" class="book-details-btn">
-                    تفاصيل الكتاب <span class="arrow-icon">←</span>
-                </a>
-            </div>
-        </li>
-        <li class="book-item">
-            <div class="book-number">10</div>
-            <div class="book-cover">
-                <img src="https://example.com/images/islamic-book.jpg" alt="تفسير ابن كثير" class="book-image">
-            </div>
-            <div class="book-info">
-                <a href="book-details.html?id=10" class="book-title">تفسير ابن كثير</a>
-                <div class="book-author">إسماعيل بن عمر بن كثير</div>
-            </div>
-            <div class="book-action">
-                <a href="book-details.html?id=10" class="book-details-btn">
-                    تفاصيل الكتاب <span class="arrow-icon">←</span>
-                </a>
-            </div>
-        </li>
-    </ul>
-</div>
+        <!-- ===== القائمة الأولى ===== -->
+        <div id="category1" class="category-section">
+            <div class="category-header"><h2>القائمة الأولى</h2></div>
+            <div class="books-grid">
 
-<!-- قائمة الكتب 2 -->
-<div id="category2" class="category-container">
-    <div class="category-header">
-        <h2>القائمة الثانية</h2>
-    </div>
-    <ul class="book-list">
-        <li class="book-item">
-            <div class="book-number">1</div>
-            <div class="book-cover">
-                <img src="https://example.com/images/islamic-book.jpg" alt="إحياء علوم الدين" class="book-image">
-            </div>
-            <div class="book-info">
-                <a href="book-details.html?id=11" class="book-title">إحياء علوم الدين</a>
-                <div class="book-author">أبو حامد الغزالي</div>
-            </div>
-            <div class="book-action">
-                <a href="book-details.html?id=11" class="book-details-btn">
-                    تفاصيل الكتاب <span class="arrow-icon">←</span>
-                </a>
-            </div>
-        </li>
-        <li class="book-item">
-            <div class="book-number">2</div>
-            <div class="book-cover">
-                <img src="https://example.com/images/islamic-book.jpg" alt="مدارج السالكين" class="book-image">
-            </div>
-            <div class="book-info">
-                <a href="book-details.html?id=12" class="book-title">مدارج السالكين</a>
-                <div class="book-author">ابن قيم الجوزية</div>
-            </div>
-            <div class="book-action">
-                <a href="book-details.html?id=12" class="book-details-btn">
-                    تفاصيل الكتاب <span class="arrow-icon">←</span>
-                </a>
-            </div>
-        </li>
-        <li class="book-item">
-            <div class="book-number">3</div>
-            <div class="book-cover">
-                <img src="https://example.com/images/islamic-book.jpg" alt="زاد المعاد" class="book-image">
-            </div>
-            <div class="book-info">
-                <a href="book-details.html?id=13" class="book-title">زاد المعاد</a>
-                <div class="book-author">ابن قيم الجوزية</div>
-            </div>
-            <div class="book-action">
-                <a href="book-details.html?id=13" class="book-details-btn">
-                    تفاصيل الكتاب <span class="arrow-icon">←</span>
-                </a>
-            </div>
-        </li>
-        <li class="book-item">
-            <div class="book-number">4</div>
-            <div class="book-cover">
-                <img src="https://example.com/images/islamic-book.jpg" alt="الرحيق المختوم" class="book-image">
-            </div>
-            <div class="book-info">
-                <a href="book-details.html?id=14" class="book-title">الرحيق المختوم</a>
-                <div class="book-author">صفي الرحمن المباركفوري</div>
-            </div>
-            <div class="book-action">
-                <a href="book-details.html?id=14" class="book-details-btn">
-                    تفاصيل الكتاب <span class="arrow-icon">←</span>
-                </a>
-            </div>
-        </li>
-        <li class="book-item">
-            <div class="book-number">5</div>
-            <div class="book-cover">
-                <img src="https://example.com/images/islamic-book.jpg" alt="فقه السنة" class="book-image">
-            </div>
-            <div class="book-info">
-                <a href="book-details.html?id=15" class="book-title">فقه السنة</a>
-                <div class="book-author">السيد سابق</div>
-            </div>
-            <div class="book-action">
-                <a href="book-details.html?id=15" class="book-details-btn">
-                    تفاصيل الكتاب <span class="arrow-icon">←</span>
-                </a>
-            </div>
-        </li>
-        <li class="book-item">
-            <div class="book-number">6</div>
-            <div class="book-cover">
-                <img src="https://example.com/images/islamic-book.jpg" alt="رياض الصالحين" class="book-image">
-            </div>
-            <div class="book-info">
-                <a href="book-details.html?id=16" class="book-title">رياض الصالحين</a>
-                <div class="book-author">الإمام النووي</div>
-            </div>
-            <div class="book-action">
-                <a href="book-details.html?id=16" class="book-details-btn">
-                    تفاصيل الكتاب <span class="arrow-icon">←</span>
-                </a>
-            </div>
-        </li>
-        <li class="book-item">
-            <div class="book-number">7</div>
-            <div class="book-cover">
-                <img src="https://example.com/images/islamic-book.jpg" alt="الأدب المفرد" class="book-image">
-            </div>
-            <div class="book-info">
-                <a href="book-details.html?id=17" class="book-title">الأدب المفرد</a>
-                <div class="book-author">الإمام البخاري</div>
-            </div>
-            <div class="book-action">
-                <a href="book-details.html?id=17" class="book-details-btn">
-                    تفاصيل الكتاب <span class="arrow-icon">←</span>
-                </a>
-            </div>
-        </li>
-        <li class="book-item">
-            <div class="book-number">8</div>
-            <div class="book-cover">
-                <img src="https://example.com/images/islamic-book.jpg" alt="تفسير السعدي" class="book-image">
-            </div>
-            <div class="book-info">
-                <a href="book-details.html?id=18" class="book-title">تفسير السعدي</a>
-                <div class="book-author">عبد الرحمن بن ناصر السعدي</div>
-            </div>
-            <div class="book-action">
-                <a href="book-details.html?id=18" class="book-details-btn">
-                    تفاصيل الكتاب <span class="arrow-icon">←</span>
-                </a>
-            </div>
-        </li>
-    </ul>
-</div>
+                <div class="book-card">
+                    <div class="book-inner">
+                        <div class="book-front">
+                            <div class="book-cover-wrapper">
+                                <div class="book-cover-3d cover-emerald">
+                                    <img src="images/bukhari.jpg" class="book-cover-img" alt="صحيح البخاري">
+                                </div>
+                            </div>
+                            <div class="book-card-info">
+                                <h3 class="book-card-title">صحيح البخاري</h3>
+                                <p class="book-card-author">الإمام محمد بن إسماعيل البخاري</p>
+                            </div>
+                        </div>
+                        <div class="book-back">
+                            <h3 class="book-back-title">صحيح البخاري</h3>
+                            <p class="book-back-desc">أصح كتب الحديث النبوي الشريف، جمع فيه الإمام البخاري الأحاديث الصحيحة المسندة إلى النبي ﷺ بأعلى درجات التحقيق.</p>
+                            <div class="book-back-actions">
+                                <a href="book-details.html?id=1" class="btn btn-primary">اقرأ الآن</a>
+                                <button class="btn btn-outline" onclick="addToFav(event,'صحيح البخاري')">♡ أضف للمفضلة</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-<!-- قائمة الكتب 3 -->
-<div id="category3" class="category-container">
-    <div class="category-header">
-        <h2>القائمة الثالثة</h2>
-    </div>
-    <ul class="book-list">
-        <li class="book-item">
-            <div class="book-number">1</div>
-            <div class="book-cover">
-                <img src="https://example.com/images/islamic-book.jpg" alt="الأم" class="book-image">
-            </div>
-            <div class="book-info">
-                <a href="book-details.html?id=19" class="book-title">الأم</a>
-                <div class="book-author">الإمام الشافعي</div>
-            </div>
-            <div class="book-action">
-                <a href="book-details.html?id=19" class="book-details-btn">
-                    تفاصيل الكتاب <span class="arrow-icon">←</span>
-                </a>
-            </div>
-        </li>
-        <li class="book-item">
-            <div class="book-number">2</div>
-            <div class="book-cover">
-                <img src="https://example.com/images/islamic-book.jpg" alt="المغني" class="book-image">
-            </div>
-            <div class="book-info">
-                <a href="book-details.html?id=20" class="book-title">المغني</a>
-                <div class="book-author">ابن قدامة المقدسي</div>
-            </div>
-            <div class="book-action">
-                <a href="book-details.html?id=20" class="book-details-btn">
-                    تفاصيل الكتاب <span class="arrow-icon">←</span>
-                </a>
-            </div>
-        </li>
-        <li class="book-item">
-            <div class="book-number">3</div>
-            <div class="book-cover">
-                <img src="https://example.com/images/islamic-book.jpg" alt="المحلى" class="book-image">
-            </div>
-            <div class="book-info">
-                <a href="book-details.html?id=21" class="book-title">المحلى</a>
-                <div class="book-author">ابن حزم الظاهري</div>
-            </div>
-            <div class="book-action">
-                <a href="book-details.html?id=21" class="book-details-btn">
-                    تفاصيل الكتاب <span class="arrow-icon">←</span>
-                </a>
-            </div>
-        </li>
-        <li class="book-item">
-            <div class="book-number">4</div>
-            <div class="book-cover">
-                <img src="https://example.com/images/islamic-book.jpg" alt="بداية المجتهد ونهاية المقتصد" class="book-image">
-            </div>
-            <div class="book-info">
-                <a href="book-details.html?id=22" class="book-title">بداية المجتهد ونهاية المقتصد</a>
-                <div class="book-author">ابن رشد</div>
-            </div>
-            <div class="book-action">
-                <a href="book-details.html?id=22" class="book-details-btn">
-                    تفاصيل الكتاب <span class="arrow-icon">←</span>
-                </a>
-            </div>
-        </li>
-        <li class="book-item">
-            <div class="book-number">5</div>
-            <div class="book-cover">
-                <img src="https://example.com/images/islamic-book.jpg" alt="الفتاوى الكبرى" class="book-image">
-            </div>
-            <div class="book-info">
-                <a href="book-details.html?id=23" class="book-title">الفتاوى الكبرى</a>
-                <div class="book-author">ابن تيمية</div>
-            </div>
-            <div class="book-action">
-                <a href="book-details.html?id=23" class="book-details-btn">
-                    تفاصيل الكتاب <span class="arrow-icon">←</span>
-                </a>
-            </div>
-        </li>
-    </ul>
-</div>
+                <div class="book-card">
+                    <div class="book-inner">
+                        <div class="book-front">
+                            <div class="book-cover-wrapper">
+                                <div class="book-cover-3d cover-navy">
+                                    <img src="images/muslim.jpg" class="book-cover-img" alt="صحيح مسلم">
+                                </div>
+                            </div>
+                            <div class="book-card-info">
+                                <h3 class="book-card-title">صحيح مسلم</h3>
+                                <p class="book-card-author">الإمام مسلم بن الحجاج النيسابوري</p>
+                            </div>
+                        </div>
+                        <div class="book-back">
+                            <h3 class="book-back-title">صحيح مسلم</h3>
+                            <p class="book-back-desc">ثاني أصح كتب الحديث بعد صحيح البخاري، يتميز بحسن الترتيب والتبويب وجمع طرق الحديث في مكان واحد.</p>
+                            <div class="book-back-actions">
+                                <a href="book-details.html?id=2" class="btn btn-primary">اقرأ الآن</a>
+                                <button class="btn btn-outline" onclick="addToFav(event,'صحيح مسلم')">♡ أضف للمفضلة</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-<!-- قائمة الكتب 4 -->
-<div id="category4" class="category-container">
-    <div class="category-header">
-        <h2>القائمة الرابعة</h2>
-    </div>
-    <ul class="book-list">
-        <li class="book-item">
-            <div class="book-number">1</div>
-            <div class="book-cover">
-                <img src="https://example.com/images/islamic-book.jpg" alt="إعلام الموقعين عن رب العالمين" class="book-image">
+                <div class="book-card">
+                    <div class="book-inner">
+                        <div class="book-front">
+                            <div class="book-cover-wrapper">
+                                <div class="book-cover-3d cover-wine">
+                                    <img src="images/abu-dawood.jpg" class="book-cover-img" alt="سنن أبي داود">
+                                </div>
+                            </div>
+                            <div class="book-card-info">
+                                <h3 class="book-card-title">سنن أبي داود</h3>
+                                <p class="book-card-author">أبو داود سليمان بن الأشعث</p>
+                            </div>
+                        </div>
+                        <div class="book-back">
+                            <h3 class="book-back-title">سنن أبي داود</h3>
+                            <p class="book-back-desc">من أمهات كتب الحديث الستة، يركز على أحاديث الأحكام الفقهية ويعد مرجعًا أساسيًا للفقهاء.</p>
+                            <div class="book-back-actions">
+                                <a href="book-details.html?id=3" class="btn btn-primary">اقرأ الآن</a>
+                                <button class="btn btn-outline" onclick="addToFav(event,'سنن أبي داود')">♡ أضف للمفضلة</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="book-card">
+                    <div class="book-inner">
+                        <div class="book-front">
+                            <div class="book-cover-wrapper">
+                                <div class="book-cover-3d cover-earth">
+                                    <img src="images/tirmidhi.jpg" class="book-cover-img" alt="جامع الترمذي">
+                                </div>
+                            </div>
+                            <div class="book-card-info">
+                                <h3 class="book-card-title">جامع الترمذي</h3>
+                                <p class="book-card-author">محمد بن عيسى الترمذي</p>
+                            </div>
+                        </div>
+                        <div class="book-back">
+                            <h3 class="book-back-title">جامع الترمذي</h3>
+                            <p class="book-back-desc">يتميز ببيان درجة الأحاديث من صحة وضعف وذكر مذاهب الفقهاء واختلافهم في المسائل.</p>
+                            <div class="book-back-actions">
+                                <a href="book-details.html?id=4" class="btn btn-primary">اقرأ الآن</a>
+                                <button class="btn btn-outline" onclick="addToFav(event,'جامع الترمذي')">♡ أضف للمفضلة</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="book-card">
+                    <div class="book-inner">
+                        <div class="book-front">
+                            <div class="book-cover-wrapper">
+                                <div class="book-cover-3d cover-emerald">
+                                    <img src="images/nasai.jpg" class="book-cover-img" alt="سنن النسائي">
+                                </div>
+                            </div>
+                            <div class="book-card-info">
+                                <h3 class="book-card-title">سنن النسائي</h3>
+                                <p class="book-card-author">أحمد بن شعيب النسائي</p>
+                            </div>
+                        </div>
+                        <div class="book-back">
+                            <h3 class="book-back-title">سنن النسائي</h3>
+                            <p class="book-back-desc">من أقل كتب السنن أحاديث ضعيفة بعد الصحيحين، يتميز بدقة الترتيب وحسن التبويب.</p>
+                            <div class="book-back-actions">
+                                <a href="book-details.html?id=5" class="btn btn-primary">اقرأ الآن</a>
+                                <button class="btn btn-outline" onclick="addToFav(event,'سنن النسائي')">♡ أضف للمفضلة</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="book-card">
+                    <div class="book-inner">
+                        <div class="book-front">
+                            <div class="book-cover-wrapper">
+                                <div class="book-cover-3d cover-navy">
+                                    <img src="images/ibn-majah.jpg" class="book-cover-img" alt="سنن ابن ماجه">
+                                </div>
+                            </div>
+                            <div class="book-card-info">
+                                <h3 class="book-card-title">سنن ابن ماجه</h3>
+                                <p class="book-card-author">محمد بن يزيد ابن ماجه</p>
+                            </div>
+                        </div>
+                        <div class="book-back">
+                            <h3 class="book-back-title">سنن ابن ماجه</h3>
+                            <p class="book-back-desc">أحد الكتب الستة في الحديث النبوي الشريف، يضم أبوابًا مهمة في الفقه والعبادات والمعاملات.</p>
+                            <div class="book-back-actions">
+                                <a href="book-details.html?id=6" class="btn btn-primary">اقرأ الآن</a>
+                                <button class="btn btn-outline" onclick="addToFav(event,'سنن ابن ماجه')">♡ أضف للمفضلة</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="book-card">
+                    <div class="book-inner">
+                        <div class="book-front">
+                            <div class="book-cover-wrapper">
+                                <div class="book-cover-3d cover-wine">
+                                    <img src="images/muwatta.jpg" class="book-cover-img" alt="الموطأ">
+                                </div>
+                            </div>
+                            <div class="book-card-info">
+                                <h3 class="book-card-title">الموطأ</h3>
+                                <p class="book-card-author">الإمام مالك بن أنس</p>
+                            </div>
+                        </div>
+                        <div class="book-back">
+                            <h3 class="book-back-title">الموطأ</h3>
+                            <p class="book-back-desc">أول كتاب حديث مرتب على أبواب الفقه، يجمع بين الحديث والفقه وعمل أهل المدينة.</p>
+                            <div class="book-back-actions">
+                                <a href="book-details.html?id=7" class="btn btn-primary">اقرأ الآن</a>
+                                <button class="btn btn-outline" onclick="addToFav(event,'الموطأ')">♡ أضف للمفضلة</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="book-card">
+                    <div class="book-inner">
+                        <div class="book-front">
+                            <div class="book-cover-wrapper">
+                                <div class="book-cover-3d cover-earth">
+                                    <img src="images/musnad-ahmad.jpg" class="book-cover-img" alt="مسند الإمام أحمد">
+                                </div>
+                            </div>
+                            <div class="book-card-info">
+                                <h3 class="book-card-title">مسند الإمام أحمد</h3>
+                                <p class="book-card-author">الإمام أحمد بن حنبل</p>
+                            </div>
+                        </div>
+                        <div class="book-back">
+                            <h3 class="book-back-title">مسند الإمام أحمد</h3>
+                            <p class="book-back-desc">من أوسع كتب الحديث النبوي، يضم أكثر من سبعة وعشرين ألف حديث مرتبة على مسانيد الصحابة.</p>
+                            <div class="book-back-actions">
+                                <a href="book-details.html?id=8" class="btn btn-primary">اقرأ الآن</a>
+                                <button class="btn btn-outline" onclick="addToFav(event,'مسند الإمام أحمد')">♡ أضف للمفضلة</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="book-card">
+                    <div class="book-inner">
+                        <div class="book-front">
+                            <div class="book-cover-wrapper">
+                                <div class="book-cover-3d cover-emerald">
+                                    <img src="images/tafsir-tabari.jpg" class="book-cover-img" alt="تفسير الطبري">
+                                </div>
+                            </div>
+                            <div class="book-card-info">
+                                <h3 class="book-card-title">تفسير الطبري</h3>
+                                <p class="book-card-author">محمد بن جرير الطبري</p>
+                            </div>
+                        </div>
+                        <div class="book-back">
+                            <h3 class="book-back-title">تفسير الطبري</h3>
+                            <p class="book-back-desc">أعظم كتب التفسير بالمأثور وأشملها، يعتمد على الآثار والروايات في بيان معاني القرآن الكريم.</p>
+                            <div class="book-back-actions">
+                                <a href="book-details.html?id=9" class="btn btn-primary">اقرأ الآن</a>
+                                <button class="btn btn-outline" onclick="addToFav(event,'تفسير الطبري')">♡ أضف للمفضلة</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="book-card">
+                    <div class="book-inner">
+                        <div class="book-front">
+                            <div class="book-cover-wrapper">
+                                <div class="book-cover-3d cover-navy">
+                                    <img src="images/tafsir-ibn-kathir.jpg" class="book-cover-img" alt="تفسير ابن كثير">
+                                </div>
+                            </div>
+                            <div class="book-card-info">
+                                <h3 class="book-card-title">تفسير ابن كثير</h3>
+                                <p class="book-card-author">إسماعيل بن عمر بن كثير</p>
+                            </div>
+                        </div>
+                        <div class="book-back">
+                            <h3 class="book-back-title">تفسير ابن كثير</h3>
+                            <p class="book-back-desc">من أشهر كتب التفسير بالمأثور وأيسرها، يفسر القرآن بالقرآن ثم بالسنة ثم بأقوال الصحابة.</p>
+                            <div class="book-back-actions">
+                                <a href="book-details.html?id=10" class="btn btn-primary">اقرأ الآن</a>
+                                <button class="btn btn-outline" onclick="addToFav(event,'تفسير ابن كثير')">♡ أضف للمفضلة</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-            <div class="book-info">
-                <a href="book-details.html?id=24" class="book-title">إعلام الموقعين عن رب العالمين</a>
-                <div class="book-author">ابن القيم الجوزية</div>
-            </div>
-            <div class="book-action">
-                <a href="book-details.html?id=24" class="book-details-btn">
-                    تفاصيل الكتاب <span class="arrow-icon">←</span>
-                </a>
-            </div>
-        </li>
-        <li class="book-item">
-            <div class="book-number">2</div>
-            <div class="book-cover">
-                <img src="https://example.com/images/islamic-book.jpg" alt="الرسالة" class="book-image">
-            </div>
-            <div class="book-info">
-                <a href="book-details.html?id=25" class="book-title">الرسالة</a>
-                <div class="book-author">الإمام الشافعي</div>
-            </div>
-            <div class="book-action">
-                <a href="book-details.html?id=25" class="book-details-btn">
-                    تفاصيل الكتاب <span class="arrow-icon">←</span>
-                </a>
-            </div>
-        </li>
-        <li class="book-item">
-            <div class="book-number">3</div>
-            <div class="book-cover">
-                <img src="https://example.com/images/islamic-book.jpg" alt="التمهيد لما في الموطأ من المعاني والأسانيد" class="book-image">
-            </div>
-            <div class="book-info">
-                <a href="book-details.html?id=26" class="book-title">التمهيد لما في الموطأ من المعاني والأسانيد</a>
-                <div class="book-author">ابن عبد البر</div>
-            </div>
-            <div class="book-action">
-                <a href="book-details.html?id=26" class="book-details-btn">
-                    تفاصيل الكتاب <span class="arrow-icon">←</span>
-                </a>
-            </div>
-        </li>
-        <li class="book-item">
-            <div class="book-number">4</div>
-            <div class="book-cover">
-                <img src="https://example.com/images/islamic-book.jpg" alt="المدونة الكبرى" class="book-image">
-            </div>
-            <div class="book-info">
-                <a href="book-details.html?id=27" class="book-title">المدونة الكبرى</a>
-                <div class="book-author">سحنون</div>
-            </div>
-            <div class="book-action">
-                <a href="book-details.html?id=27" class="book-details-btn">
-                    تفاصيل الكتاب <span class="arrow-icon">←</span>
-                </a>
-            </div>
-        </li>
-        <li class="book-item">
-            <div class="book-number">5</div>
-            <div class="book-cover">
-                <img src="https://example.com/images/islamic-book.jpg" alt="الموافقات" class="book-image">
-            </div>
-            <div class="book-info">
-                <a href="book-details.html?id=28" class="book-title">الموافقات</a>
-                <div class="book-author">الشاطبي</div>
-            </div>
-            <div class="book-action">
-                <a href="book-details.html?id=28" class="book-details-btn">
-                    تفاصيل الكتاب <span class="arrow-icon">←</span>
-                </a>
-            </div>
-        </li>
-    </ul>
-</div>
-        <!-- زر العودة للأعلى -->
-        <div class="back-to-top" id="backToTop">
-    <img src="https://em-content.zobj.net/source/telegram/386/top-arrow_1f51d.webp" alt="Back to Top" width="50">
-</div>
         </div>
+
+        <!-- ===== القائمة الثانية ===== -->
+        <div id="category2" class="category-section">
+            <div class="category-header"><h2>القائمة الثانية</h2></div>
+            <div class="books-grid">
+
+                <div class="book-card">
+                    <div class="book-inner">
+                        <div class="book-front">
+                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-wine"><img src="images/ihya-ulum-al-din.jpg" class="book-cover-img" alt="إحياء علوم الدين"></div></div>
+                            <div class="book-card-info"><h3 class="book-card-title">إحياء علوم الدين</h3><p class="book-card-author">أبو حامد الغزالي</p></div>
+                        </div>
+                        <div class="book-back">
+                            <h3 class="book-back-title">إحياء علوم الدين</h3>
+                            <p class="book-back-desc">موسوعة شاملة في التزكية والأخلاق والعبادات، يربط بين العلم والعمل وأحوال القلوب.</p>
+                            <div class="book-back-actions"><a href="book-details.html?id=11" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'إحياء علوم الدين')">♡ أضف للمفضلة</button></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="book-card">
+                    <div class="book-inner">
+                        <div class="book-front">
+                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-earth"><img src="images/madarij-al-salikeen.jpg" class="book-cover-img" alt="مدارج السالكين"></div></div>
+                            <div class="book-card-info"><h3 class="book-card-title">مدارج السالكين</h3><p class="book-card-author">ابن قيم الجوزية</p></div>
+                        </div>
+                        <div class="book-back">
+                            <h3 class="book-back-title">مدارج السالكين</h3>
+                            <p class="book-back-desc">شرح منازل السائرين في طريق العبودية لله تعالى، من أعمق كتب السلوك والتربية الإيمانية.</p>
+                            <div class="book-back-actions"><a href="book-details.html?id=12" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'مدارج السالكين')">♡ أضف للمفضلة</button></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="book-card">
+                    <div class="book-inner">
+                        <div class="book-front">
+                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-emerald"><img src="images/zad-al-maad.jpg" class="book-cover-img" alt="زاد المعاد"></div></div>
+                            <div class="book-card-info"><h3 class="book-card-title">زاد المعاد</h3><p class="book-card-author">ابن قيم الجوزية</p></div>
+                        </div>
+                        <div class="book-back">
+                            <h3 class="book-back-title">زاد المعاد</h3>
+                            <p class="book-back-desc">في هدي خير العباد، يجمع بين السيرة النبوية والفقه العملي المستنبط من حياة النبي ﷺ.</p>
+                            <div class="book-back-actions"><a href="book-details.html?id=13" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'زاد المعاد')">♡ أضف للمفضلة</button></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="book-card">
+                    <div class="book-inner">
+                        <div class="book-front">
+                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-navy"><img src="images/rahiq-makhtum.jpg" class="book-cover-img" alt="الرحيق المختوم"></div></div>
+                            <div class="book-card-info"><h3 class="book-card-title">الرحيق المختوم</h3><p class="book-card-author">صفي الرحمن المباركفوري</p></div>
+                        </div>
+                        <div class="book-back">
+                            <h3 class="book-back-title">الرحيق المختوم</h3>
+                            <p class="book-back-desc">سيرة نبوية مختصرة شاملة حازت على المركز الأول في مسابقة رابطة العالم الإسلامي.</p>
+                            <div class="book-back-actions"><a href="book-details.html?id=14" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'الرحيق المختوم')">♡ أضف للمفضلة</button></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="book-card">
+                    <div class="book-inner">
+                        <div class="book-front">
+                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-wine"><img src="images/fiqh-al-sunna.jpg" class="book-cover-img" alt="فقه السنة"></div></div>
+                            <div class="book-card-info"><h3 class="book-card-title">فقه السنة</h3><p class="book-card-author">السيد سابق</p></div>
+                        </div>
+                        <div class="book-back">
+                            <h3 class="book-back-title">فقه السنة</h3>
+                            <p class="book-back-desc">كتاب فقهي معاصر ميسر يجمع أدلة الأحكام الشرعية من الكتاب والسنة بأسلوب واضح.</p>
+                            <div class="book-back-actions"><a href="book-details.html?id=15" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'فقه السنة')">♡ أضف للمفضلة</button></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="book-card">
+                    <div class="book-inner">
+                        <div class="book-front">
+                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-earth"><img src="images/riyadh-al-saliheen.jpg" class="book-cover-img" alt="رياض الصالحين"></div></div>
+                            <div class="book-card-info"><h3 class="book-card-title">رياض الصالحين</h3><p class="book-card-author">الإمام النووي</p></div>
+                        </div>
+                        <div class="book-back">
+                            <h3 class="book-back-title">رياض الصالحين</h3>
+                            <p class="book-back-desc">مختصر جامع في الأحاديث الصحيحة مرتب على الأبواب، من أكثر الكتب انتشارًا ونفعًا.</p>
+                            <div class="book-back-actions"><a href="book-details.html?id=16" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'رياض الصالحين')">♡ أضف للمفضلة</button></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="book-card">
+                    <div class="book-inner">
+                        <div class="book-front">
+                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-emerald"><img src="images/adab-al-mufrad.jpg" class="book-cover-img" alt="الأدب المفرد"></div></div>
+                            <div class="book-card-info"><h3 class="book-card-title">الأدب المفرد</h3><p class="book-card-author">الإمام البخاري</p></div>
+                        </div>
+                        <div class="book-back">
+                            <h3 class="book-back-title">الأدب المفرد</h3>
+                            <p class="book-back-desc">كتاب جامع في آداب الإسلام وأخلاقه، يضم أحاديث نبوية في حسن الخلق والمعاملة.</p>
+                            <div class="book-back-actions"><a href="book-details.html?id=17" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'الأدب المفرد')">♡ أضف للمفضلة</button></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="book-card">
+                    <div class="book-inner">
+                        <div class="book-front">
+                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-navy"><img src="images/tafsir-al-saadi.jpg" class="book-cover-img" alt="تفسير السعدي"></div></div>
+                            <div class="book-card-info"><h3 class="book-card-title">تفسير السعدي</h3><p class="book-card-author">عبد الرحمن بن ناصر السعدي</p></div>
+                        </div>
+                        <div class="book-back">
+                            <h3 class="book-back-title">تفسير السعدي</h3>
+                            <p class="book-back-desc">تفسير ميسر واضح العبارة سهل الفهم، يعتمد على استنباط الفوائد والهدايات القرآنية.</p>
+                            <div class="book-back-actions"><a href="book-details.html?id=18" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'تفسير السعدي')">♡ أضف للمفضلة</button></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ===== القائمة الثالثة ===== -->
+        <div id="category3" class="category-section">
+            <div class="category-header"><h2>القائمة الثالثة</h2></div>
+            <div class="books-grid">
+
+                <div class="book-card">
+                    <div class="book-inner">
+                        <div class="book-front">
+                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-wine"><img src="images/al-umm.jpg" class="book-cover-img" alt="الأم"></div></div>
+                            <div class="book-card-info"><h3 class="book-card-title">الأم</h3><p class="book-card-author">الإمام الشافعي</p></div>
+                        </div>
+                        <div class="book-back">
+                            <h3 class="book-back-title">الأم</h3>
+                            <p class="book-back-desc">أهم كتب الفقه الشافعي ومرجع أساسي في الاجتهاد والاستدلال بالكتاب والسنة.</p>
+                            <div class="book-back-actions"><a href="book-details.html?id=19" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'الأم')">♡ أضف للمفضلة</button></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="book-card">
+                    <div class="book-inner">
+                        <div class="book-front">
+                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-earth"><img src="images/al-mughni.jpg" class="book-cover-img" alt="المغني"></div></div>
+                            <div class="book-card-info"><h3 class="book-card-title">المغني</h3><p class="book-card-author">ابن قدامة المقدسي</p></div>
+                        </div>
+                        <div class="book-back">
+                            <h3 class="book-back-title">المغني</h3>
+                            <p class="book-back-desc">موسوعة فقهية مقارنة شاملة في الفقه الحنبلي مع عرض أقوال المذاهب الأخرى وأدلتها.</p>
+                            <div class="book-back-actions"><a href="book-details.html?id=20" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'المغني')">♡ أضف للمفضلة</button></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="book-card">
+                    <div class="book-inner">
+                        <div class="book-front">
+                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-emerald"><img src="images/al-muhalla.jpg" class="book-cover-img" alt="المحلى"></div></div>
+                            <div class="book-card-info"><h3 class="book-card-title">المحلى</h3><p class="book-card-author">ابن حزم الظاهري</p></div>
+                        </div>
+                        <div class="book-back">
+                            <h3 class="book-back-title">المحلى</h3>
+                            <p class="book-back-desc">كتاب فقهي فريد على منهج الظاهرية، يعتمد على النصوص الشرعية مباشرة مع المناقشة العلمية.</p>
+                            <div class="book-back-actions"><a href="book-details.html?id=21" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'المحلى')">♡ أضف للمفضلة</button></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="book-card">
+                    <div class="book-inner">
+                        <div class="book-front">
+                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-navy"><img src="images/bidayat-al-mujtahid.jpg" class="book-cover-img" alt="بداية المجتهد"></div></div>
+                            <div class="book-card-info"><h3 class="book-card-title">بداية المجتهد ونهاية المقتصد</h3><p class="book-card-author">ابن رشد</p></div>
+                        </div>
+                        <div class="book-back">
+                            <h3 class="book-back-title">بداية المجتهد</h3>
+                            <p class="book-back-desc">كتاب فقه مقارن فريد يعرض أسباب اختلاف الفقهاء ومآخذ استدلالهم بأسلوب علمي رصين.</p>
+                            <div class="book-back-actions"><a href="book-details.html?id=22" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'بداية المجتهد')">♡ أضف للمفضلة</button></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="book-card">
+                    <div class="book-inner">
+                        <div class="book-front">
+                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-wine"><img src="images/fatawa-kubra.jpg" class="book-cover-img" alt="الفتاوى الكبرى"></div></div>
+                            <div class="book-card-info"><h3 class="book-card-title">الفتاوى الكبرى</h3><p class="book-card-author">ابن تيمية</p></div>
+                        </div>
+                        <div class="book-back">
+                            <h3 class="book-back-title">الفتاوى الكبرى</h3>
+                            <p class="book-back-desc">مجموع فتاوى شيخ الإسلام ابن تيمية في مسائل العقيدة والفقه والتفسير وعلوم متنوعة.</p>
+                            <div class="book-back-actions"><a href="book-details.html?id=23" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'الفتاوى الكبرى')">♡ أضف للمفضلة</button></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ===== القائمة الرابعة ===== -->
+        <div id="category4" class="category-section">
+            <div class="category-header"><h2>القائمة الرابعة</h2></div>
+            <div class="books-grid">
+
+                <div class="book-card">
+                    <div class="book-inner">
+                        <div class="book-front">
+                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-earth"><img src="images/ilam-al-muwaqqiin.jpg" class="book-cover-img" alt="إعلام الموقعين"></div></div>
+                            <div class="book-card-info"><h3 class="book-card-title">إعلام الموقعين عن رب العالمين</h3><p class="book-card-author">ابن القيم الجوزية</p></div>
+                        </div>
+                        <div class="book-back">
+                            <h3 class="book-back-title">إعلام الموقعين</h3>
+                            <p class="book-back-desc">كتاب عظيم في أصول الفقه والفتوى وآدابها، يبين منهج الاستنباط من الكتاب والسنة.</p>
+                            <div class="book-back-actions"><a href="book-details.html?id=24" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'إعلام الموقعين')">♡ أضف للمفضلة</button></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="book-card">
+                    <div class="book-inner">
+                        <div class="book-front">
+                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-emerald"><img src="images/al-risala.jpg" class="book-cover-img" alt="الرسالة"></div></div>
+                            <div class="book-card-info"><h3 class="book-card-title">الرسالة</h3><p class="book-card-author">الإمام الشافعي</p></div>
+                        </div>
+                        <div class="book-back">
+                            <h3 class="book-back-title">الرسالة</h3>
+                            <p class="book-back-desc">أول كتاب وُضع في أصول الفقه الإسلامي، أسس فيه الشافعي قواعد الاستدلال والاجتهاد.</p>
+                            <div class="book-back-actions"><a href="book-details.html?id=25" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'الرسالة')">♡ أضف للمفضلة</button></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="book-card">
+                    <div class="book-inner">
+                        <div class="book-front">
+                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-navy"><img src="images/al-tamhid.jpg" class="book-cover-img" alt="التمهيد"></div></div>
+                            <div class="book-card-info"><h3 class="book-card-title">التمهيد لما في الموطأ من المعاني والأسانيد</h3><p class="book-card-author">ابن عبد البر</p></div>
+                        </div>
+                        <div class="book-back">
+                            <h3 class="book-back-title">التمهيد</h3>
+                            <p class="book-back-desc">شرح موسوعي لأحاديث الموطأ مرتبة على الأسانيد، يجمع بين الحديث والفقه والرجال.</p>
+                            <div class="book-back-actions"><a href="book-details.html?id=26" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'التمهيد')">♡ أضف للمفضلة</button></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="book-card">
+                    <div class="book-inner">
+                        <div class="book-front">
+                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-wine"><img src="images/al-mudawwana.jpg" class="book-cover-img" alt="المدونة الكبرى"></div></div>
+                            <div class="book-card-info"><h3 class="book-card-title">المدونة الكبرى</h3><p class="book-card-author">سحنون</p></div>
+                        </div>
+                        <div class="book-back">
+                            <h3 class="book-back-title">المدونة الكبرى</h3>
+                            <p class="book-back-desc">أهم مراجع الفقه المالكي، تضم مسائل الإمام مالك برواية ابن القاسم وتدوين سحنون.</p>
+                            <div class="book-back-actions"><a href="book-details.html?id=27" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'المدونة الكبرى')">♡ أضف للمفضلة</button></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="book-card">
+                    <div class="book-inner">
+                        <div class="book-front">
+                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-earth"><img src="images/al-muwafaqat.jpg" class="book-cover-img" alt="الموافقات"></div></div>
+                            <div class="book-card-info"><h3 class="book-card-title">الموافقات</h3><p class="book-card-author">الشاطبي</p></div>
+                        </div>
+                        <div class="book-back">
+                            <h3 class="book-back-title">الموافقات</h3>
+                            <p class="book-back-desc">كتاب رائد في مقاصد الشريعة وأصولها، يؤسس لفهم عميق لحكم التشريع ومقاصده.</p>
+                            <div class="book-back-actions"><a href="book-details.html?id=28" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'الموافقات')">♡ أضف للمفضلة</button></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
     </div>
 
-    <!-- الجافا سكريبت -->
-    <script>
-        // التنقل بين الأقسام
-        function scrollToCategory(categoryId) {
-            document.querySelectorAll('.category-btn').forEach(btn => {
-                btn.classList.remove('active');
+    <div class="back-to-top" id="backToTop">
+        <img src="https://em-content.zobj.net/source/telegram/386/top-arrow_1f51d.webp" alt="⬆" width="30">
+    </div>
+  <script>
+
+(function () {
+    'use strict';
+
+    /* ===== أداة مساعدة: debounce لتأخير التنفيذ وتقليل الاستدعاءات ===== */
+    function debounce(fn, delay) {
+        var timer;
+        return function () {
+            var ctx = this, args = arguments;
+            clearTimeout(timer);
+            timer = setTimeout(function () { fn.apply(ctx, args); }, delay);
+        };
+    }
+
+    /* ===== تخزين العناصر مرة واحدة لتحسين الأداء ===== */
+    var backBtn    = document.getElementById('backToTop');
+    var light      = document.getElementById('lightEffect');
+    var nav        = document.querySelector('.navigation');
+    var sections   = document.querySelectorAll('.category-section');
+    var catBtns    = document.querySelectorAll('.category-btn');
+    /* تخزين بطاقات الكتب وعنصر المستند لتجنب الاستدعاء المتكرر */
+    var bookCards  = document.querySelectorAll('.book-card');
+    var docEl      = document.documentElement;
+
+    /* ===== تخزين مؤقت لارتفاع شريط التنقل مع تحديث عند تغيير حجم النافذة ===== */
+    var _cachedNavH = 0;
+    function _recalcNavH() { _cachedNavH = nav ? nav.offsetHeight : 0; }
+    _recalcNavH();
+    window.addEventListener('resize', debounce(_recalcNavH, 250), { passive: true });
+
+    /* ===== دالة مساعدة: ارتفاع شريط التنقل ===== */
+    function getNavHeight() {
+        return _cachedNavH || (nav ? nav.offsetHeight : 0);
+    }
+
+    /* ===== إشعار مخصص بدلاً من alert المحظور ===== */
+    function showToast(message, duration) {
+        try {
+            duration = duration || 3000;
+            /* التحقق من صحة المدخلات لمنع الأخطاء */
+            if (typeof message !== 'string') message = String(message || '');
+
+            var old = document.getElementById('customToast');
+            if (old) old.remove();
+
+            var toast = document.createElement('div');
+            toast.id = 'customToast';
+            toast.textContent = message;
+            Object.assign(toast.style, {
+                position:       'fixed',
+                bottom:         '30px',
+                left:           '50%',
+                transform:      'translateX(-50%) translateY(20px)',
+                background:     'rgba(0,0,0,0.88)',
+                color:          '#fff',
+                padding:        '12px 28px',
+                borderRadius:   '12px',
+                zIndex:         '10000',
+                fontSize:       '14px',
+                fontFamily:     'inherit',
+                transition:     'transform 0.35s ease, opacity 0.35s ease',
+                opacity:        '0',
+                pointerEvents:  'none',
+                textAlign:      'center',
+                backdropFilter: 'blur(10px)',
+                whiteSpace:     'nowrap',
+                direction:      'rtl',
+                willChange:     'transform, opacity'
             });
-            
-            document.querySelector(`button[onclick="scrollToCategory('${categoryId}')"]`).classList.add('active');
-            
-            const element = document.getElementById(categoryId);
-            const navHeight = document.querySelector('.navigation').offsetHeight;
-            const offset = element.offsetTop - navHeight - 20;
-            
-            window.scrollTo({
-                top: offset,
-                behavior: 'smooth'
-            });
-        }
-        
-        // فتح قائمة الأقسام الإضافية
-        function openCategoryMenu() {
-            // يمكن إضافة كود لفتح قائمة منسدلة تحتوي على المزيد من الأقسام
-            alert('سيتم إضافة المزيد من القوائم قريباً');
-        }
-        
-        // زر العودة للأعلى
-        const backToTopButton = document.getElementById('backToTop');
-        
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                backToTopButton.classList.add('visible');
-            } else {
-                backToTopButton.classList.remove('visible');
-            }
-        });
-        
-        backToTopButton.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-        
-        // تحريك تأثير الضوء مع مؤشر الماوس
-        const lightEffect = document.querySelector('.light-effect');
-        
-        document.addEventListener('mousemove', (e) => {
-            lightEffect.style.left = e.clientX + 'px';
-            lightEffect.style.top = e.clientY + 'px';
-        });
-        
-        // تفعيل القائمة النشطة عند التمرير
-        window.addEventListener('scroll', () => {
-            const categories = document.querySelectorAll('.category-container');
-            const navHeight = document.querySelector('.navigation').offsetHeight;
-            
-            let currentCategory = '';
-            
-            categories.forEach(category => {
-                const sectionTop = category.offsetTop - navHeight - 50;
-                const sectionHeight = category.offsetHeight;
-                
-                if (window.pageYOffset >= sectionTop && window.pageYOffset < sectionTop + sectionHeight) {
-                    currentCategory = category.getAttribute('id');
-                }
-            });
-            
-            if (currentCategory !== '') {
-                document.querySelectorAll('.category-btn').forEach(btn => {
-                    btn.classList.remove('active');
+            document.body.appendChild(toast);
+
+            /* إجبار إعادة الرسم ثم الإظهار — rAF مزدوج أكثر موثوقية */
+            requestAnimationFrame(function () {
+                requestAnimationFrame(function () {
+                    toast.style.transform = 'translateX(-50%) translateY(0)';
+                    toast.style.opacity   = '1';
                 });
-                
-                document.querySelector(`button[onclick="scrollToCategory('${currentCategory}')"]`).classList.add('active');
+            });
+
+            setTimeout(function () {
+                toast.style.willChange = 'auto';
+                toast.style.transform = 'translateX(-50%) translateY(20px)';
+                toast.style.opacity   = '0';
+                var onEnd = function () {
+                    if (toast.parentNode) toast.remove();
+                };
+                toast.addEventListener('transitionend', onEnd, { once: true });
+                /* احتياطي في حال لم يعمل الحدث */
+                setTimeout(onEnd, 400);
+            }, duration);
+        } catch (err) {
+            /* حماية من الأخطاء غير المتوقعة */
+        }
+    }
+
+    /* ===== بناء محدد الزر حسب القسم (مع تخزين مؤقت وحماية من الحقن) ===== */
+    var _selectorCache = Object.create(null);
+    function btnSelectorFor(id) {
+        if (!_selectorCache[id]) {
+            /* حماية من حقن محددات CSS عبر إزالة الأحرف الخطرة */
+            var safeId = String(id).replace(/['"\\\]]/g, '');
+            _selectorCache[id] = 'button[onclick="scrollToCategory(\'' + safeId + '\')"]';
+        }
+        return _selectorCache[id];
+    }
+
+    /* ===== التمرير إلى القسم ===== */
+    window.scrollToCategory = function (categoryId) {
+        try {
+            /* التحقق من صحة المدخل */
+            if (typeof categoryId !== 'string' || !categoryId) return;
+
+            catBtns.forEach(function (b) { b.classList.remove('active'); });
+
+            var btn = document.querySelector(btnSelectorFor(categoryId));
+            if (btn) btn.classList.add('active');
+
+            var el = document.getElementById(categoryId);
+            if (!el) return;
+
+            /* استخدام getBoundingClientRect أدق من offsetTop */
+            var targetTop = el.getBoundingClientRect().top + window.scrollY - getNavHeight() - 25;
+            window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
+        } catch (err) {
+            /* حماية من الأخطاء */
+        }
+    };
+
+    window.openCategoryMenu = function () {
+        showToast('سيتم إضافة المزيد من القوائم قريباً');
+    };
+
+    /* ===== زر العودة للأعلى ===== */
+    var scrollTicking = false;
+
+    window.addEventListener('scroll', function () {
+        if (!scrollTicking) {
+            requestAnimationFrame(function () {
+                onScroll();
+                scrollTicking = false;
+            });
+            scrollTicking = true;
+        }
+    }, { passive: true });   /* passive لتحسين أداء التمرير */
+
+    function onScroll() {
+        if (backBtn) {
+            /* scrollY بدلاً من pageYOffset المهمل */
+            backBtn.classList.toggle('visible', window.scrollY > 300);
+        }
+        updateActiveNav();
+    }
+
+    if (backBtn) {
+        backBtn.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+
+    /* ===== تحديث القسم النشط عند التمرير ===== */
+    var _lastActiveId = '';
+    function updateActiveNav() {
+        if (!sections.length) return;
+
+        var navH       = getNavHeight();
+        var threshold  = navH + 60;
+        var current    = '';
+        var scrollPos  = window.scrollY;
+        var docHeight  = docEl.scrollHeight;
+        var winBottom  = window.innerHeight + scrollPos;
+
+        /* إذا وصلنا قرب نهاية الصفحة نختار آخر قسم */
+        if (winBottom >= docHeight - 50) {
+            current = sections[sections.length - 1].id;
+        } else {
+            /* البحث من الأسفل للأعلى: أول قسم قمته فوق الحد */
+            for (var i = sections.length - 1; i >= 0; i--) {
+                if (sections[i].getBoundingClientRect().top <= threshold) {
+                    current = sections[i].id;
+                    break;
+                }
             }
+        }
+
+        /* تحديث DOM فقط عند تغيّر القسم النشط لتقليل العمليات */
+        if (current && current !== _lastActiveId) {
+            _lastActiveId = current;
+            catBtns.forEach(function (b) { b.classList.remove('active'); });
+            var activeBtn = document.querySelector(btnSelectorFor(current));
+            if (activeBtn) activeBtn.classList.add('active');
+        }
+    }
+
+    /* ===== تأثير الضوء (مع خنق بـ rAF) ===== */
+    if (light) {
+        var lx = 0, ly = 0, lightTicking = false;
+        /* تلميح للمتصفح لتحسين أداء الرسم */
+        light.style.willChange = 'left, top';
+
+        document.addEventListener('mousemove', function (e) {
+            lx = e.clientX;
+            ly = e.clientY;
+            if (!lightTicking) {
+                requestAnimationFrame(function () {
+                    light.style.left = lx + 'px';
+                    light.style.top  = ly + 'px';
+                    lightTicking = false;
+                });
+                lightTicking = true;
+            }
+        }, { passive: true });
+    }
+
+    /* ===== قلب البطاقة على الأجهزة اللمسية ===== */
+    var isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+    if (isTouch) {
+        /* منع تأخير النقر المزدوج (300ms) على البطاقات */
+        bookCards.forEach(function (c) { c.style.touchAction = 'manipulation'; });
+
+        /* قفل مؤقت لمنع مشاكل الضغط المزدوج السريع */
+        var _flipLocked = false;
+
+        /* تفويض الحدث بدلاً من ربطه بكل بطاقة */
+        document.addEventListener('click', function (e) {
+            var card = e.target.closest('.book-card');
+            if (!card) return;
+            if (e.target.closest('.btn')) return;
+
+            /* حماية من النقر المزدوج السريع */
+            if (_flipLocked) return;
+            _flipLocked = true;
+            setTimeout(function () { _flipLocked = false; }, 350);
+
+            /* استخدام bookCards المخزنة بدلاً من querySelectorAll المتكرر */
+            bookCards.forEach(function (c) {
+                if (c !== card) c.classList.remove('flipped');
+            });
+
+            card.classList.toggle('flipped');
         });
-        
-        // تحميل الصفحة بتأثير سلس
-        document.addEventListener('DOMContentLoaded', () => {
-            document.body.style.opacity = '0';
-            setTimeout(() => {
-                document.body.style.transition = 'opacity 0.5s ease';
-                document.body.style.opacity = '1';
-            }, 100);
+    }
+
+    /* ===== تأثير الموجة (تفويض الحدث) ===== */
+    document.addEventListener('click', function (e) {
+        var btn = e.target.closest('.btn');
+        if (!btn) return;
+
+        /* إزالة أي موجة سابقة لم تُنظَّف لمنع التراكم */
+        var prev = btn.querySelector('.ripple');
+        if (prev) prev.remove();
+
+        var ripple = document.createElement('span');
+        ripple.className = 'ripple';
+        var rect = btn.getBoundingClientRect();
+        var size = Math.max(rect.width, rect.height);
+        var posX = (e.clientX - rect.left - size / 2);
+        var posY = (e.clientY - rect.top  - size / 2);
+
+        /* تعيين الأنماط دفعة واحدة لتقليل عمليات إعادة الرسم */
+        ripple.style.cssText = 'width:' + size + 'px;height:' + size + 'px;left:' + posX + 'px;top:' + posY + 'px';
+        btn.appendChild(ripple);
+
+        /* تنظيف مزدوج: حدث + مهلة احتياطية */
+        var removed = false;
+        function cleanup() {
+            if (!removed) {
+                removed = true;
+                if (ripple.parentNode) ripple.remove();
+            }
+        }
+        ripple.addEventListener('animationend', cleanup, { once: true });
+        setTimeout(cleanup, 1200);
+    });
+
+    /* ===== الإضافة إلى المفضلة ===== */
+    window.addToFav = function (e, name) {
+        try {
+            e.preventDefault();
+            e.stopPropagation();
+
+            var btn   = e.currentTarget;
+            if (!btn) return;
+            var isFav = btn.dataset.fav === '1';
+
+            btn.dataset.fav    = isFav ? '0' : '1';
+            /* textContent أأمن من innerHTML */
+            btn.textContent    = isFav ? '♡ أضف للمفضلة' : '❤ تمت الإضافة';
+            btn.style.borderColor = isFav
+                ? 'rgba(255,255,255,0.35)'
+                : 'var(--accent-color)';
+
+            showToast(
+                isFav ? 'تمت الإزالة من المفضلة' : 'تمت الإضافة إلى المفضلة ❤',
+                2000
+            );
+        } catch (err) {
+            /* حماية من الأخطاء */
+        }
+    };
+
+    /* ===== تحميل سلس للصفحة ===== */
+    document.body.style.opacity = '0';
+    /* rAF مزدوج: يضمن أن المتصفح رسم الحالة الشفافة أولاً */
+    requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+            document.body.style.transition = 'opacity 0.5s ease';
+            document.body.style.opacity    = '1';
         });
-    </script>
+    });
+
+    /* ===== فحص أولي ===== */
+    onScroll();
+
+})();
+
+</script>
+
 </body>
 </html>
