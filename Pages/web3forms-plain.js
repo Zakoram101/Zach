@@ -5,6 +5,8 @@
         if (!userEmail) return Promise.resolve(false);
 
         chatState.isSending = true;
+        chatState.isMessagePending = false;
+        chatState.pendingMessage = '';
         const typingIndicator = showTypingIndicator();
         sendBtn.disabled = true;
 
@@ -113,5 +115,38 @@
             });
     }
 
+    function handleMessageSending() {
+        if (chatState.isSending) return;
+        if (!requireUserEmail()) return;
+        const message = messageInput.value.trim();
+        if (!message) {
+            showToast('يرجى كتابة الرسالة', 'error');
+            messageInput.focus();
+            return;
+        }
+        addUserMessage(message, true);
+        messageInput.value = '';
+        hideAllMessageOptions();
+        chatState.isMessagePending = false;
+        chatState.pendingMessage = '';
+        sendSupportEmail('رسالة دعم جديدة من موقع Zach', message);
+    }
+
     window.sendSupportEmail = sendSupportEmail;
+    window.handleMessageSending = handleMessageSending;
+
+    var subjectModal = document.getElementById('subjectModal');
+    if (subjectModal && subjectModal.parentNode) {
+        subjectModal.parentNode.removeChild(subjectModal);
+    }
+
+    if (sendBtn) {
+        sendBtn.onclick = null;
+        sendBtn.addEventListener('click', handleMessageSending);
+    }
+    if (messageInput) {
+        messageInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') handleMessageSending();
+        });
+    }
 })();
