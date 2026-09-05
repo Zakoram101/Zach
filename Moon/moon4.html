@@ -580,6 +580,7 @@
         </div>
     </div>
     
+    <script src="../js/book-assets.js"></script>
     <script>
         // تخزين روابط الكتب
         const bookLinks = {
@@ -590,6 +591,58 @@
             'إحياء_علوم_الدين_جزء1.pdf': '../Book/' + encodeURIComponent('إحياء_علوم_الدين_جزء1.pdf'),
             'إحياء_علوم_الدين_جزء2.pdf': '../Book/' + encodeURIComponent('إحياء_علوم_الدين_جزء2.pdf')
         };
+
+        function linkedFileNames() {
+            const names = {};
+            Object.keys(bookLinks).forEach(function (key) {
+                names[key] = true;
+                const url = bookLinks[key] || "";
+                const seg = url.split("/").pop();
+                try {
+                    names[decodeURIComponent(seg)] = true;
+                } catch (error) {
+                    names[seg] = true;
+                }
+            });
+            return names;
+        }
+
+        function titleFromFileName(fileName) {
+            return String(fileName || "")
+                .replace(/\.(pdf|zip|epub)$/i, "")
+                .replace(/_/g, " ")
+                .trim();
+        }
+
+        function attachNewBookFile(fileName) {
+            if (!fileName || bookLinks[fileName]) return false;
+            const placeholder = document.querySelector('.download-btn[data-file="nun"]');
+            if (!placeholder) return false;
+
+            bookLinks[fileName] = "../Book/" + encodeURIComponent(fileName);
+            placeholder.setAttribute("data-book", titleFromFileName(fileName));
+            placeholder.setAttribute("data-author", "");
+            placeholder.setAttribute("data-file", fileName);
+
+            const item = placeholder.closest(".book-item");
+            if (item) {
+                const titleEl = item.querySelector(".book-title");
+                const authorEl = item.querySelector(".book-author");
+                if (titleEl) titleEl.textContent = titleFromFileName(fileName);
+                if (authorEl) authorEl.textContent = "\u00a0";
+            }
+            return true;
+        }
+
+        if (window.MishkatBooks) {
+            window.MishkatBooks.listBookFiles().then(function (files) {
+                const linked = linkedFileNames();
+                files.forEach(function (file) {
+                    if (!file || !file.name || linked[file.name]) return;
+                    if (attachNewBookFile(file.name)) linked[file.name] = true;
+                });
+            }).catch(function () {});
+        }
         
         // تفعيل نافذة التحميل المنبثقة
         document.addEventListener('DOMContentLoaded', function() {

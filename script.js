@@ -198,6 +198,12 @@
             });
         }
 
+        updateDownloadCategoryCount() {
+            const countEl = document.querySelector("[data-download-count]");
+            if (!countEl || !window.MishkatBooks) return;
+            window.MishkatBooks.updateDownloadCount(countEl);
+        }
+
         setupEventListeners() {
             utils.safeAddEventListener(document, 'keydown', (e) => {
                 const { searchPanel } = this.elements;
@@ -249,6 +255,7 @@
             this.setupEventListeners();
             this.setupBookmarks();
             this.setupFeaturedButtons();
+            this.updateDownloadCategoryCount();
         }
     }
 

@@ -1,0 +1,47 @@
+name: Refresh book list
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "Book/**"
+      - ".github/workflows/refresh-book-list.yml"
+  workflow_dispatch:
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build book list from Book folder
+        run: |
+          python3 << 'PY'
+          from pathlib import Path
+          import json
+          book = Path("Book")
+          exts = {".pdf", ".zip", ".epub"}
+          files = []
+          if book.is_dir():
+              for path in sorted(book.iterdir(), key=lambda item: item.name):
+                  if path.is_file() and path.suffix.lower() in exts:
+                      files.append({"name": path.name})
+          Path("js").mkdir(exist_ok=True)
+          Path("js/book-list.json").write_text(
+              json.dumps(files, ensure_ascii=False, indent=2) + "\n",
+              encoding="utf-8",
+          )
+          print("counted", len(files), "downloadable files")
+          PY
+      - name: Commit updated list
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add js/book-list.json
+          if git diff --cached --quiet; then
+            echo "book list unchanged"
+            exit 0
+          fi
+          git commit -m "Refresh downloadable book list from Book folder"
+          git push
