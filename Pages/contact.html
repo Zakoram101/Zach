@@ -253,12 +253,27 @@
 
         .chat-input {
             display: flex;
+            flex-direction: column;
+            gap: 10px;
             padding: 15px;
             background-color: rgba(249, 249, 249, 0.8);
             border-top: 1px solid rgba(0,0,0,0.05);
             position: relative;
             z-index: 10;
             backdrop-filter: blur(5px);
+        }
+
+        .chat-input-row {
+            display: flex;
+            align-items: center;
+        }
+
+        .email-field-label {
+            display: block;
+            text-align: right;
+            font-size: 0.85rem;
+            color: var(--dark-color);
+            margin: 0 8px 2px 0;
         }
 
         .chat-input input {
@@ -277,6 +292,10 @@
             outline: none;
             box-shadow: 0 0 0 2px var(--accent-color), 0 5px 15px rgba(0, 0, 0, 0.1);
             transform: translateY(-2px);
+        }
+
+        .chat-input input.invalid {
+            box-shadow: 0 0 0 2px var(--error-color);
         }
 
         .send-btn {
@@ -672,13 +691,17 @@
             </div>
         </div>
         <div class="chat-input">
-            <button class="send-btn" id="sendBtn" type="button" aria-label="إرسال الرسالة">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="22" y1="2" x2="11" y2="13"></line>
-                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                </svg>
-            </button>
-            <input type="text" id="messageInput" placeholder="عنوان رسالتك فقط...(استخدم @ لإضافة بريدك)" autocomplete="off" aria-label="نص الرسالة">
+            <label class="email-field-label" for="userEmailInput">البريد الإلكتروني *</label>
+            <input type="email" id="userEmailInput" placeholder="example@example.com" dir="ltr" autocomplete="email" required aria-required="true" aria-label="البريد الإلكتروني">
+            <div class="chat-input-row">
+                <button class="send-btn" id="sendBtn" type="button" aria-label="إرسال الرسالة">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                </button>
+                <input type="text" id="messageInput" placeholder="اكتب رسالتك..." autocomplete="off" aria-label="نص الرسالة">
+            </div>
         </div>
     </div>
 
@@ -725,6 +748,7 @@
         // تهيئة العناصر
         const chatMessages = document.getElementById('chatMessages');
         const messageInput = document.getElementById('messageInput');
+        const userEmailInput = document.getElementById('userEmailInput');
         const sendBtn = document.getElementById('sendBtn');
         const confirmModal = document.getElementById('confirmModal');
         const yesBtn = document.getElementById('yesBtn');
@@ -864,14 +888,6 @@
             timeSpan.className = 'message-time';
             timeSpan.textContent = getCurrentTime();
             messageDiv.appendChild(timeSpan);
-            
-            // إضافة تلميح البريد الإلكتروني إذا لم يكن هناك بريد إلكتروني مسجل
-            if (!chatState.userEmail) {
-                const hintSpan = document.createElement('span');
-                hintSpan.className = 'message-hint';
-                hintSpan.textContent = 'اكتب @ لإضافة بريدك الإلكتروني';
-                messageDiv.appendChild(hintSpan);
-            }
             
             // إضافة خيارات الرسالة
             const optionsDiv = createMessageOptions(messageId);
@@ -1199,25 +1215,52 @@
             return messageContent;
         }
 
+        function requireUserEmail() {
+            const email = (userEmailInput && userEmailInput.value ? userEmailInput.value : '').trim();
+            if (userEmailInput) userEmailInput.classList.remove('invalid');
+
+            if (!email) {
+                if (userEmailInput) {
+                    userEmailInput.classList.add('invalid');
+                    userEmailInput.focus();
+                }
+                showToast('البريد الإلكتروني مطلوب', 'error');
+                return '';
+            }
+
+            if (!validateEmail(email)) {
+                if (userEmailInput) {
+                    userEmailInput.classList.add('invalid');
+                    userEmailInput.focus();
+                }
+                showToast('يرجى إدخال بريد إلكتروني صحيح', 'error');
+                return '';
+            }
+
+            chatState.userEmail = email;
+            return email;
+        }
+
         function sendSupportEmail(subject, message) {
             if (chatState.isSending) return Promise.resolve(false);
+            const userEmail = requireUserEmail();
+            if (!userEmail) return Promise.resolve(false);
 
             chatState.isSending = true;
             const typingIndicator = showTypingIndicator();
             sendBtn.disabled = true;
 
             const allMessageContent = collectMessages();
-            const userEmail = chatState.userEmail || '';
             const fields = {
                 access_key: chatState.accessKey,
                 subject: subject || 'رسالة من خدمة الدعم',
                 name: 'مستخدم خدمة الدعم',
                 from_name: 'MishKat Support',
-                email: userEmail || 'unspecified@example.com',
-                message: (userEmail ? ('بريد المرسل: ' + userEmail + '\n\n') : 'بريد المرسل: غير متوفر\n\n') + allMessageContent,
+                email: userEmail,
+                replyto: userEmail,
+                message: 'بريد المرسل: ' + userEmail + '\n\n' + allMessageContent,
                 redirect: new URL('form-ok.html', window.location.href).href
             };
-            if (userEmail) fields.replyto = userEmail;
 
             return new Promise(function (resolve, reject) {
                 const iframe = document.createElement('iframe');
@@ -1287,10 +1330,6 @@
                     addSystemMessage('تم إرسال رسالتك بنجاح');
                     addBotMessage('شكراً لك! سنقوم بالرد عليك في أقرب وقت ممكن.');
 
-                    if (!chatState.userEmail) {
-                        addBotMessage('ملاحظة: يمكنك إضافة بريدك الإلكتروني باستخدام @ في رسالتك القادمة للتواصل معك بشكل أفضل');
-                    }
-
                     showToast('تم إرسال الرسالة بنجاح!', 'success');
                     return true;
                 })
@@ -1334,6 +1373,10 @@
             }
             
             chatState.userEmail = email;
+            if (userEmailInput) {
+                userEmailInput.value = email;
+                userEmailInput.classList.remove('invalid');
+            }
             addSystemMessage(`تم حفظ بريدك الإلكتروني: ${email}`);
             showToast('تم حفظ البريد الإلكتروني', 'success');
             
@@ -1359,13 +1402,12 @@
         // معالجة عملية إرسال الرسالة
         async function handleMessageSending() {
             if (chatState.isSending || chatState.isMessagePending) return;
+            if (!requireUserEmail()) return;
             const message = messageInput.value.trim();
-            if (!message) return;
-            
-            // التحقق من وجود علامة @ للبريد الإلكتروني
-            if (checkForEmailCommand(message)) {
-                messageInput.value = message.replace(/@/g, ''); // إزالة @ من النص
-                return; // توقف وانتظر إدخال البريد الإلكتروني
+            if (!message) {
+                showToast('يرجى كتابة الرسالة', 'error');
+                messageInput.focus();
+                return;
             }
             
             // إضافة رسالة المستخدم إلى المحادثة مع علامة "جاري الإرسال"
@@ -1392,17 +1434,10 @@
             }
         }
 
-        // معالجة المدخلات وكشف البريد الإلكتروني
-        messageInput.addEventListener('input', function(e) {
-            const text = e.target.value;
-            
-            // إذا كتب المستخدم @ وليس لديه بريد إلكتروني بعد
-            if (text.includes('@') && !chatState.userEmail) {
-                showModal(emailModal);
-                emailInput.focus();
-                e.target.value = text.replace(/@/g, ''); // إزالة @ من النص
-                chatState.atDetected = true;
-            }
+        userEmailInput.addEventListener('input', function () {
+            userEmailInput.classList.remove('invalid');
+            const email = userEmailInput.value.trim();
+            if (validateEmail(email)) chatState.userEmail = email;
         });
 
         // أحداث النقر والضغط على المفاتيح
