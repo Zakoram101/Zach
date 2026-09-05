@@ -1,1 +1,31 @@
-PLACEHOLDER
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خدمة الدعم</title>
+</head>
+<body>
+<script>
+(function () {
+    var source = 'https://raw.githubusercontent.com/Zakoram101/Zach/9cdb46a5ceeb8a9af7e4661efc0d4fe0658619ee/Pages/contact.html';
+    fetch(source, { cache: 'no-store' })
+        .then(function (res) {
+            if (!res.ok) throw new Error(res.status);
+            return res.text();
+        })
+        .then(function (html) {
+            var patch = '<script src="./web3forms-plain.js"><\/script>\n</body>';
+            if (html.indexOf('</body>') !== -1) html = html.replace('</body>', patch);
+            else html += patch;
+            document.open();
+            document.write(html);
+            document.close();
+        })
+        .catch(function () {
+            document.body.textContent = 'تعذر تحميل صفحة الدعم';
+        });
+})();
+</script>
+</body>
+</html>
