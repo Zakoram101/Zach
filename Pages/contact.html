@@ -1215,6 +1215,91 @@
             return messageContent;
         }
 
+        function escapeEmailHtml(value) {
+            return String(value == null ? '' : value)
+                .replace(/&/g, '&' + 'amp;')
+                .replace(/</g, '&' + 'lt;')
+                .replace(/>/g, '&' + 'gt;')
+                .replace(/"/g, '&' + 'quot;');
+        }
+
+        function emailNl2br(value) {
+            return escapeEmailHtml(value).replace(/\r\n|\r|\n/g, '<br>');
+        }
+
+        function supportSiteUrl() {
+            try {
+                return window.location.href.replace(/Pages\/[^/?#]*([?#].*)?$/, '');
+            } catch (e) {
+                return 'https://zakoram101.github.io/Zach/';
+            }
+        }
+
+        function formatSupportDate() {
+            try {
+                return new Date().toLocaleString('ar-EG', {
+                    timeZone: 'Asia/Riyadh',
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            } catch (e) {
+                return new Date().toISOString();
+            }
+        }
+
+        function buildSupportEmailHtml(data) {
+            const title = escapeEmailHtml(data.title);
+            const sender = escapeEmailHtml(data.sender);
+            const email = escapeEmailHtml(data.email);
+            const date = escapeEmailHtml(data.date);
+            const site = escapeEmailHtml(data.siteUrl);
+            const body = emailNl2br(data.body);
+
+            return '<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"></head>' +
+                '<body style="margin:0;padding:0;background-color:#ecf0f1;">' +
+                '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color:#ecf0f1;">' +
+                '<tr><td align="center" style="padding:24px 12px;">' +
+                '<table role="presentation" width="600" cellspacing="0" cellpadding="0" style="width:600px;max-width:100%;background-color:#ffffff;border-radius:12px;overflow:hidden;border:1px solid #dbe3e8;">' +
+                '<tr><td style="background-color:#2c3e50;padding:22px 28px;">' +
+                '<p style="margin:0;font-family:Tahoma,Arial,sans-serif;font-size:22px;font-weight:700;color:#ffffff;letter-spacing:1px;">MishKat</p>' +
+                '<p style="margin:8px 0 0;font-family:Tahoma,Arial,sans-serif;font-size:14px;color:#ecf0f1;">رسالة دعم جديدة من الموقع</p>' +
+                '</td></tr>' +
+                '<tr><td style="height:4px;background-color:#e74c3c;font-size:0;line-height:0;">&nbsp;</td></tr>' +
+                '<tr><td style="padding:28px;">' +
+                '<p style="margin:0 0 6px;font-family:Tahoma,Arial,sans-serif;font-size:12px;color:#7f8c8d;">عنوان رسالة الدعم</p>' +
+                '<p style="margin:0 0 22px;font-family:Tahoma,Arial,sans-serif;font-size:20px;font-weight:700;color:#2c3e50;">' + title + '</p>' +
+                '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">' +
+                '<tr>' +
+                '<td style="padding:12px 14px;background-color:#f8fafb;border-bottom:1px solid #ecf0f1;width:38%;font-family:Tahoma,Arial,sans-serif;font-size:13px;color:#7f8c8d;">اسم المرسل</td>' +
+                '<td style="padding:12px 14px;background-color:#f8fafb;border-bottom:1px solid #ecf0f1;font-family:Tahoma,Arial,sans-serif;font-size:14px;color:#2c3e50;font-weight:700;">' + sender + '</td>' +
+                '</tr><tr>' +
+                '<td style="padding:12px 14px;border-bottom:1px solid #ecf0f1;font-family:Tahoma,Arial,sans-serif;font-size:13px;color:#7f8c8d;">البريد الإلكتروني</td>' +
+                '<td style="padding:12px 14px;border-bottom:1px solid #ecf0f1;font-family:Tahoma,Arial,sans-serif;font-size:14px;color:#2c3e50;"><a href="mailto:' + email + '" style="color:#e74c3c;text-decoration:none;">' + email + '</a></td>' +
+                '</tr><tr>' +
+                '<td style="padding:12px 14px;background-color:#f8fafb;border-bottom:1px solid #ecf0f1;font-family:Tahoma,Arial,sans-serif;font-size:13px;color:#7f8c8d;">تاريخ الإرسال</td>' +
+                '<td style="padding:12px 14px;background-color:#f8fafb;border-bottom:1px solid #ecf0f1;font-family:Tahoma,Arial,sans-serif;font-size:14px;color:#2c3e50;">' + date + '</td>' +
+                '</tr><tr>' +
+                '<td style="padding:12px 14px;font-family:Tahoma,Arial,sans-serif;font-size:13px;color:#7f8c8d;">رابط الموقع</td>' +
+                '<td style="padding:12px 14px;font-family:Tahoma,Arial,sans-serif;font-size:14px;"><a href="' + site + '" style="color:#e74c3c;text-decoration:none;">' + site + '</a></td>' +
+                '</tr></table>' +
+                '<p style="margin:26px 0 10px;font-family:Tahoma,Arial,sans-serif;font-size:12px;color:#7f8c8d;">نص الرسالة</p>' +
+                '<table role="presentation" width="100%" cellspacing="0" cellpadding="0"><tr>' +
+                '<td style="padding:18px;background-color:#f8fafb;border-right:4px solid #e74c3c;border-radius:8px;font-family:Tahoma,Arial,sans-serif;font-size:15px;line-height:1.9;color:#34495e;">' + body + '</td>' +
+                '</tr></table>' +
+                '<table role="presentation" cellspacing="0" cellpadding="0" style="margin-top:26px;"><tr>' +
+                '<td style="background-color:#e74c3c;border-radius:25px;">' +
+                '<a href="' + site + '" style="display:inline-block;padding:12px 22px;font-family:Tahoma,Arial,sans-serif;font-size:14px;font-weight:700;color:#ffffff;text-decoration:none;">فتح الموقع</a>' +
+                '</td></tr></table>' +
+                '</td></tr>' +
+                '<tr><td style="background-color:#34495e;padding:16px 28px;font-family:Tahoma,Arial,sans-serif;font-size:12px;color:#ecf0f1;text-align:center;">MishKat — كتب العرب منارة للعلم</td></tr>' +
+                '</table></td></tr></table></' + 'body></' + 'html>';
+        }
+
+
         function requireUserEmail() {
             const email = (userEmailInput && userEmailInput.value ? userEmailInput.value : '').trim();
             if (userEmailInput) userEmailInput.classList.remove('invalid');
@@ -1251,14 +1336,30 @@
             sendBtn.disabled = true;
 
             const allMessageContent = collectMessages();
+            const title = subject || 'رسالة من خدمة الدعم';
+            const senderName = (userEmail.split('@')[0] || 'مستخدم خدمة الدعم').trim();
+            const sentAt = formatSupportDate();
+            const siteUrl = supportSiteUrl();
             const fields = {
                 access_key: chatState.accessKey,
-                subject: subject || 'رسالة من خدمة الدعم',
-                name: 'مستخدم خدمة الدعم',
-                from_name: 'MishKat Support',
+                subject: 'MishKat | ' + title,
+                name: senderName,
+                from_name: 'MishKat',
                 email: userEmail,
                 replyto: userEmail,
-                message: 'بريد المرسل: ' + userEmail + '\n\n' + allMessageContent,
+                'عنوان رسالة الدعم': title,
+                'اسم المرسل': senderName,
+                'البريد الإلكتروني': userEmail,
+                'تاريخ الإرسال': sentAt,
+                'رابط الموقع': siteUrl,
+                message: buildSupportEmailHtml({
+                    title: title,
+                    sender: senderName,
+                    email: userEmail,
+                    date: sentAt,
+                    siteUrl: siteUrl,
+                    body: allMessageContent || message || ''
+                }),
                 redirect: new URL('form-ok.html', window.location.href).href
             };
 
@@ -1277,8 +1378,10 @@
                 form.style.display = 'none';
 
                 Object.keys(fields).forEach(function (key) {
-                    const input = document.createElement('input');
-                    input.type = 'hidden';
+                    const isLong = key === 'message';
+                    const input = document.createElement(isLong ? 'textarea' : 'input');
+                    if (!isLong) input.type = 'hidden';
+                    else input.style.display = 'none';
                     input.name = key;
                     input.value = fields[key];
                     form.appendChild(input);
