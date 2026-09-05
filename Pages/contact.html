@@ -8,8 +8,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- إضافة مكتبة EmailJS -->
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
         :root {
             --primary-color: #2c3e50;
@@ -760,10 +758,7 @@
             atDetected: false,
             emailSent: false,
             isSending: false,
-            emailJsReady: false,
-            serviceId: 'service_lxtkw1u',
-            templateId: 'template_e7katyf',
-            publicKey: '95d1rImOBoEFqgAL2'
+            accessKey: 'e17a46bf-20e3-4da7-998e-c38ff1e675dc'
         };
 
         // دالة لإظهار رسالة توست
@@ -1204,94 +1199,80 @@
             return messageContent;
         }
 
-        function ensureEmailJs() {
-            if (typeof emailjs === 'undefined') return false;
-            if (!chatState.emailJsReady) {
-                try {
-                    emailjs.init(chatState.publicKey);
-                    chatState.emailJsReady = true;
-                } catch (err) {
-                    console.error('EmailJS init failed:', err);
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        // إرسال رسالة باستخدام EmailJS
-        async function sendEmailWithEmailJS(subject, message) {
-            if (chatState.isSending) return false;
-            if (!ensureEmailJs()) {
-                showToast('تعذر تحميل خدمة الإرسال، حاول لاحقاً', 'error');
-                return false;
-            }
+        function sendSupportEmail(subject, message) {
+            if (chatState.isSending) return Promise.resolve(false);
 
             chatState.isSending = true;
             const typingIndicator = showTypingIndicator();
             sendBtn.disabled = true;
-            
+
             const allMessageContent = collectMessages();
-            
-            try {
-                const templateParams = {
-                    name: 'مستخدم خدمة الدعم',
-                    email: chatState.userEmail || 'مستخدم بدون بريد إلكتروني',
-                    title: subject || 'رسالة من خدمة الدعم',
-                    message: allMessageContent
-                };
-                
-                const response = await emailjs.send(
-                    chatState.serviceId, 
-                    chatState.templateId, 
-                    templateParams, 
-                    chatState.publicKey
-                );
-                
-                hideTypingIndicator();
-                
-                if (response.status === 200) {
+            const userEmail = chatState.userEmail || '';
+            const formData = new FormData();
+            formData.append('access_key', chatState.accessKey);
+            formData.append('subject', subject || 'رسالة من خدمة الدعم');
+            formData.append('name', 'مستخدم خدمة الدعم');
+            formData.append('from_name', 'MishKat Support');
+            formData.append('email', userEmail || 'unspecified@example.com');
+            formData.append('message', (userEmail ? ('بريد المرسل: ' + userEmail + '\n\n') : 'بريد المرسل: غير متوفر\n\n') + allMessageContent);
+            if (userEmail) formData.append('replyto', userEmail);
+
+            return fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                body: formData
+            })
+                .then(function (res) {
+                    return res.text().then(function (text) {
+                        var data = {};
+                        try { data = JSON.parse(text); } catch (e) {}
+                        if (!res.ok || !data || data.success !== true) {
+                            throw new Error((data && data.message) || 'حدث خطأ أثناء إرسال الرسالة');
+                        }
+                        return data;
+                    });
+                })
+                .then(function () {
+                    hideTypingIndicator();
+
                     const lastUserMessage = document.querySelector('.message.user-message.sending');
                     if (lastUserMessage) {
                         lastUserMessage.classList.remove('sending');
                         lastUserMessage.classList.add('sent');
-                        
-                        setTimeout(() => {
+                        setTimeout(function () {
                             lastUserMessage.classList.remove('sent');
                         }, 1000);
                     }
-                    
+
                     chatState.emailSent = true;
                     addSystemMessage('تم إرسال رسالتك بنجاح');
                     addBotMessage('شكراً لك! سنقوم بالرد عليك في أقرب وقت ممكن.');
-                    
+
                     if (!chatState.userEmail) {
                         addBotMessage('ملاحظة: يمكنك إضافة بريدك الإلكتروني باستخدام @ في رسالتك القادمة للتواصل معك بشكل أفضل');
                     }
-                    
+
                     showToast('تم إرسال الرسالة بنجاح!', 'success');
-                    
                     return true;
-                } else {
-                    throw new Error('حدث خطأ أثناء إرسال الرسالة');
-                }
-            } catch (error) {
-                hideTypingIndicator();
-                
-                const lastUserMessage = document.querySelector('.message.user-message.sending');
-                if (lastUserMessage) {
-                    lastUserMessage.classList.remove('sending');
-                    lastUserMessage.classList.add('error');
-                }
-                
-                addSystemMessage('فشل في إرسال الرسالة، يرجى المحاولة مرة أخرى');
-                showToast('فشل في إرسال الرسالة!', 'error');
-                console.error('خطأ في EmailJS:', error);
-                
-                return false;
-            } finally {
-                chatState.isSending = false;
-                sendBtn.disabled = false;
-            }
+                })
+                .catch(function (error) {
+                    hideTypingIndicator();
+
+                    const lastUserMessage = document.querySelector('.message.user-message.sending');
+                    if (lastUserMessage) {
+                        lastUserMessage.classList.remove('sending');
+                        lastUserMessage.classList.add('error');
+                    }
+
+                    addSystemMessage('فشل في إرسال الرسالة، يرجى المحاولة مرة أخرى');
+                    showToast('فشل في إرسال الرسالة!', 'error');
+                    console.error('خطأ في إرسال النموذج:', error);
+                    return false;
+                })
+                .then(function (result) {
+                    chatState.isSending = false;
+                    sendBtn.disabled = false;
+                    return result;
+                });
         }
 
         // التحقق من وجود @ في النص
@@ -1367,7 +1348,7 @@
                 subjectInput.focus();
             } else {
                 // إرسال الرسالة مباشرة مع موضوع افتراضي
-                sendEmailWithEmailJS('رسالة من خدمة الدعم', message);
+                sendSupportEmail('رسالة من خدمة الدعم', message);
             }
         }
 
@@ -1399,7 +1380,7 @@
             hideModal(subjectModal);
             
             if (chatState.isMessagePending) {
-                await sendEmailWithEmailJS(subject, chatState.pendingMessage);
+                await sendSupportEmail(subject, chatState.pendingMessage);
                 chatState.isMessagePending = false;
                 chatState.pendingMessage = '';
                 subjectInput.value = '';
@@ -1441,10 +1422,7 @@
             messageInput.focus();
         });
 
-        // تهيئة EmailJS والمستمعات الأولية
         document.addEventListener('DOMContentLoaded', () => {
-            ensureEmailJs();
-            
             // إضافة مستمعات الأحداث للرسائل الموجودة بالفعل
             document.querySelectorAll('.message').forEach(message => {
                 const messageId = message.dataset.messageId;
