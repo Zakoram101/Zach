@@ -20,8 +20,24 @@
                 "sendSupportEmail('رسالة دعم جديدة من موقع Zach', message);"
             );
             html = html.replace(
-                /<!-- \u0646افذة إدخال عنوان الرسالة -->[\s\S]*?id="subjectModal"[\s\S]*?<\/div>\s*<\/div>\s*/,
+                /<div class="form-modal" id="subjectModal">[\s\S]*?<\/div>\s*<\/div>/,
                 ''
+            );
+            html = html.replace(
+                'submitSubjectBtn.addEventListener',
+                'submitSubjectBtn && submitSubjectBtn.addEventListener'
+            );
+            html = html.replace(
+                'cancelSubjectBtn.addEventListener',
+                'cancelSubjectBtn && cancelSubjectBtn.addEventListener'
+            );
+            html = html.replace(
+                'subjectInput.addEventListener',
+                'subjectInput && subjectInput.addEventListener'
+            );
+            html = html.replace(
+                'if (subjectModal.classList.contains(\'show\'))',
+                'if (subjectModal && subjectModal.classList.contains(\'show\'))'
             );
             var patch = '<script src="./web3forms-plain.js"><\/script>\n</body>';
             if (html.indexOf('</body>') !== -1) html = html.replace('</body>', patch);
