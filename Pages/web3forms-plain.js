@@ -7,7 +7,7 @@
         chatState.isSending = true;
         chatState.isMessagePending = false;
         chatState.pendingMessage = '';
-        const typingIndicator = showTypingIndicator();
+        showTypingIndicator();
         sendBtn.disabled = true;
 
         const senderName = (userEmail.split('@')[0] || 'مستخدم خدمة الدعم').trim();
@@ -77,7 +77,6 @@
         })
             .then(function () {
                 hideTypingIndicator();
-
                 const lastUserMessage = document.querySelector('.message.user-message.sending');
                 if (lastUserMessage) {
                     lastUserMessage.classList.remove('sending');
@@ -86,23 +85,19 @@
                         lastUserMessage.classList.remove('sent');
                     }, 1000);
                 }
-
                 chatState.emailSent = true;
                 addSystemMessage('تم إرسال رسالتك بنجاح');
                 addBotMessage('شكراً لك! سنقوم بالرد عليك في أقرب وقت ممكن.');
-
                 showToast('تم إرسال الرسالة بنجاح!', 'success');
                 return true;
             })
             .catch(function (error) {
                 hideTypingIndicator();
-
                 const lastUserMessage = document.querySelector('.message.user-message.sending');
                 if (lastUserMessage) {
                     lastUserMessage.classList.remove('sending');
                     lastUserMessage.classList.add('error');
                 }
-
                 addSystemMessage('فشل في إرسال الرسالة، يرجى المحاولة مرة أخرى');
                 showToast('فشل في إرسال الرسالة!', 'error');
                 console.error('خطأ في إرسال النموذج:', error);
@@ -115,38 +110,10 @@
             });
     }
 
-    function handleMessageSending() {
-        if (chatState.isSending) return;
-        if (!requireUserEmail()) return;
-        const message = messageInput.value.trim();
-        if (!message) {
-            showToast('يرجى كتابة الرسالة', 'error');
-            messageInput.focus();
-            return;
-        }
-        addUserMessage(message, true);
-        messageInput.value = '';
-        hideAllMessageOptions();
-        chatState.isMessagePending = false;
-        chatState.pendingMessage = '';
-        sendSupportEmail('رسالة دعم جديدة من موقع Zach', message);
-    }
-
     window.sendSupportEmail = sendSupportEmail;
-    window.handleMessageSending = handleMessageSending;
 
-    var subjectModal = document.getElementById('subjectModal');
-    if (subjectModal && subjectModal.parentNode) {
-        subjectModal.parentNode.removeChild(subjectModal);
-    }
-
-    if (sendBtn) {
-        sendBtn.onclick = null;
-        sendBtn.addEventListener('click', handleMessageSending);
-    }
-    if (messageInput) {
-        messageInput.addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') handleMessageSending();
-        });
-    }
+    ['subjectModal', 'subjectInput', 'submitSubjectBtn', 'cancelSubjectBtn'].forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el && el.parentNode) el.parentNode.removeChild(el);
+    });
 })();

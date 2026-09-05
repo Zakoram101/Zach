@@ -16,20 +16,13 @@
         })
         .then(function (html) {
             html = html.replace(
-                /<!-- \u0646افذة إدخال عنوان الرسالة -->[\s\S]*?<div class="form-modal" id="subjectModal">[\s\S]*?<\/div>\s*<\/div>\s*/, 
-                ''
-            );
-
-            html = html.replace(
-                /\/\/ عرض نافذة الموضوع[\s\S]*?sendSupportEmail\('رسالة من خدمة الدعم', message\);\s*\}/,
-                'sendSupportEmail(\u2018PLACE\u2019, message);'.replace('\u2018PLACE\u2019', "'رسالة دعم جديدة من موقع Zach'")
-            );
-
-            html = html.replace(
                 /if \(userMessages\.length === 1 \|\| message\.length > 50\) \{[\s\S]*?sendSupportEmail\('رسالة من خدمة الدعم', message\);\s*\}/,
                 "sendSupportEmail('رسالة دعم جديدة من موقع Zach', message);"
             );
-
+            html = html.replace(
+                /<!-- \u0646افذة إدخال عنوان الرسالة -->[\s\S]*?id="subjectModal"[\s\S]*?<\/div>\s*<\/div>\s*/,
+                ''
+            );
             var patch = '<script src="./web3forms-plain.js"><\/script>\n</body>';
             if (html.indexOf('</body>') !== -1) html = html.replace('</body>', patch);
             else html += patch;
