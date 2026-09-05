@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مكتبتك للكتب الدينية - اقرأ كتابك</title>
+    <meta name="description" content="تصفح أهم الكتب الإسلامية والتراث الديني: الحديث، التفسير، الفقه، والسلوك.">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap');
 
@@ -929,7 +930,7 @@
 
     </div>
 
-    <div class="back-to-top" id="backToTop">
+    <div class="back-to-top" id="backToTop" role="button" tabindex="0" aria-label="العودة للأعلى">
         <img src="https://em-content.zobj.net/source/telegram/386/top-arrow_1f51d.webp" alt="⬆" width="30">
     </div>
   <script>
@@ -1090,6 +1091,12 @@
         backBtn.addEventListener('click', function () {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
+        backBtn.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
     }
 
     /* ===== تحديث القسم النشط عند التمرير ===== */
@@ -1246,6 +1253,14 @@
 
     /* ===== فحص أولي ===== */
     onScroll();
+
+    document.querySelectorAll('.book-cover-img').forEach(function (img) {
+        function hideBroken() {
+            img.style.display = 'none';
+        }
+        img.addEventListener('error', hideBroken);
+        if (img.complete && img.naturalWidth === 0) hideBroken();
+    });
 
 })();
 

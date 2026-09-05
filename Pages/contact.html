@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>خدمة الدعم</title>
+    <meta name="description" content="تواصل مع دعم zakbook عبر خدمة الرسائل.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
     <!-- إضافة مكتبة EmailJS -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
         :root {
             --primary-color: #2c3e50;
@@ -673,13 +674,13 @@
             </div>
         </div>
         <div class="chat-input">
-            <button class="send-btn" id="sendBtn">
+            <button class="send-btn" id="sendBtn" type="button" aria-label="إرسال الرسالة">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="22" y1="2" x2="11" y2="13"></line>
                     <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
                 </svg>
             </button>
-            <input type="text" id="messageInput" placeholder="عنوان رسالتك فقط...(استخدم @ لإضافة بريدك)" autocomplete="off">
+            <input type="text" id="messageInput" placeholder="عنوان رسالتك فقط...(استخدم @ لإضافة بريدك)" autocomplete="off" aria-label="نص الرسالة">
         </div>
     </div>
 
@@ -758,6 +759,8 @@
             allMessages: [],
             atDetected: false,
             emailSent: false,
+            isSending: false,
+            emailJsReady: false,
             serviceId: 'service_lxtkw1u',
             templateId: 'template_e7katyf',
             publicKey: '95d1rImOBoEFqgAL2'
@@ -1201,16 +1204,35 @@
             return messageContent;
         }
 
+        function ensureEmailJs() {
+            if (typeof emailjs === 'undefined') return false;
+            if (!chatState.emailJsReady) {
+                try {
+                    emailjs.init(chatState.publicKey);
+                    chatState.emailJsReady = true;
+                } catch (err) {
+                    console.error('EmailJS init failed:', err);
+                    return false;
+                }
+            }
+            return true;
+        }
+
         // إرسال رسالة باستخدام EmailJS
         async function sendEmailWithEmailJS(subject, message) {
+            if (chatState.isSending) return false;
+            if (!ensureEmailJs()) {
+                showToast('تعذر تحميل خدمة الإرسال، حاول لاحقاً', 'error');
+                return false;
+            }
+
+            chatState.isSending = true;
             const typingIndicator = showTypingIndicator();
             sendBtn.disabled = true;
             
-            // تجميع كل الرسائل السابقة في المحادثة
             const allMessageContent = collectMessages();
             
             try {
-                // إعداد البيانات للإرسال
                 const templateParams = {
                     name: 'مستخدم خدمة الدعم',
                     email: chatState.userEmail || 'مستخدم بدون بريد إلكتروني',
@@ -1218,7 +1240,6 @@
                     message: allMessageContent
                 };
                 
-                // إرسال البريد الإلكتروني
                 const response = await emailjs.send(
                     chatState.serviceId, 
                     chatState.templateId, 
@@ -1227,16 +1248,13 @@
                 );
                 
                 hideTypingIndicator();
-                sendBtn.disabled = false;
                 
                 if (response.status === 200) {
-                    // تمييز الرسالة الأخيرة كمرسلة بنجاح
                     const lastUserMessage = document.querySelector('.message.user-message.sending');
                     if (lastUserMessage) {
                         lastUserMessage.classList.remove('sending');
                         lastUserMessage.classList.add('sent');
                         
-                        // تأثير وميض لفترة قصيرة ثم إزالته
                         setTimeout(() => {
                             lastUserMessage.classList.remove('sent');
                         }, 1000);
@@ -1258,9 +1276,7 @@
                 }
             } catch (error) {
                 hideTypingIndicator();
-                sendBtn.disabled = false;
                 
-                // تمييز الرسالة كخاطئة
                 const lastUserMessage = document.querySelector('.message.user-message.sending');
                 if (lastUserMessage) {
                     lastUserMessage.classList.remove('sending');
@@ -1272,6 +1288,9 @@
                 console.error('خطأ في EmailJS:', error);
                 
                 return false;
+            } finally {
+                chatState.isSending = false;
+                sendBtn.disabled = false;
             }
         }
 
@@ -1318,6 +1337,7 @@
 
         // معالجة عملية إرسال الرسالة
         async function handleMessageSending() {
+            if (chatState.isSending || chatState.isMessagePending) return;
             const message = messageInput.value.trim();
             if (!message) return;
             
@@ -1389,10 +1409,14 @@
         cancelSubjectBtn.addEventListener('click', () => {
             hideModal(subjectModal);
             
-            // إلغاء الرسالة المعلقة والحفاظ على الرسالة المضافة للمحادثة
             chatState.isMessagePending = false;
             chatState.pendingMessage = '';
             subjectInput.value = '';
+
+            const lastUserMessage = document.querySelector('.message.user-message.sending');
+            if (lastUserMessage) {
+                lastUserMessage.classList.remove('sending');
+            }
             
             showToast('تم إلغاء الإرسال', 'warning');
         });
@@ -1419,8 +1443,7 @@
 
         // تهيئة EmailJS والمستمعات الأولية
         document.addEventListener('DOMContentLoaded', () => {
-            // تهيئة EmailJS
-            emailjs.init(chatState.publicKey);
+            ensureEmailJs();
             
             // إضافة مستمعات الأحداث للرسائل الموجودة بالفعل
             document.querySelectorAll('.message').forEach(message => {
@@ -1455,36 +1478,29 @@
                 });
             }
             
-            // إعطاء التركيز لحقل الإدخال عند التحميل
             messageInput.focus();
         });
-        
-        // تحسينات أداء على الأجهزة المحمولة
-        document.addEventListener('touchstart', function() {
-            // تشغيل فقط عند اللمس الأول
-        }, {passive: true});
-        
-        // منع السحب الافتراضي للنص
-        document.addEventListener('dragstart', (e) => {
-            if (e.target.closest('.message')) {
-                e.preventDefault();
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key !== 'Escape') return;
+            if (subjectModal.classList.contains('show')) {
+                cancelSubjectBtn.click();
+            } else if (emailModal.classList.contains('show')) {
+                cancelEmailBtn.click();
+            } else if (confirmModal.classList.contains('show')) {
+                hideModal(confirmModal);
             }
         });
-        
-        // تحسين التمرير على الأجهزة المحمولة
-        chatMessages.addEventListener('touchstart', function() {
-            // تمكين التمرير السلس
-        }, {passive: true});
-        
-        // معالجة حجم النافذة
+
         window.addEventListener('resize', function() {
-            // إعادة حساب التمرير بشكل مؤجل
             setTimeout(scrollToBottom, 100);
         });
-        
-        // تحسين تجربة لوحة المفاتيح على الأجهزة المحمولة
-        window.addEventListener('beforeunload', function() {
-            // تنظيف الموارد وحفظ البيانات مؤقتًا إذا كان ضروريا
+
+        subjectInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') submitSubjectBtn.click();
+        });
+        emailInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') submitEmailBtn.click();
         });
     </script>
 </body>

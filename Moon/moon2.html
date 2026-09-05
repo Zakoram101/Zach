@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>المواعظ | أقوال العلماء الأجلاء</title>
+    <meta name="description" content="مواعظ وأقوال علماء أهل السنة والجماعة.">
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap');
 
@@ -214,7 +215,7 @@ footer {
     
     <div class="container">
         <div class="search-container">
-            <input type="text" class="search-box" placeholder="ابحث في أقوال العلماء..." id="searchInput">
+            <input type="text" class="search-box" placeholder="ابحث في أقوال العلماء..." id="searchInput" aria-label="ابحث في أقوال العلماء">
         </div>
         
         <div class="quotes-container" id="quotesContainer">
@@ -879,7 +880,8 @@ footer {
         totalQuotes: quotes.length,
         filteredQuotes: [...quotes],
         searchTimeout: null,
-        isSearching: false
+        isSearching: false,
+        displayGeneration: 0
     };
 
     // مُسبقاً إنشاء مؤشرات DOM الأساسية
@@ -905,6 +907,8 @@ footer {
         btn.id = 'clearSearchBtn';
         btn.textContent = '×';
         btn.className = 'clear-search-btn';
+        btn.type = 'button';
+        btn.setAttribute('aria-label', 'مسح البحث');
         btn.style.display = 'none';
         
         // إضافة زر المسح إلى حقل البحث
@@ -965,20 +969,20 @@ footer {
 
     // تحسين عرض الاقتباسات باستخدام فواصل زمنية
     function displayQuotes(startIndex, count, quoteArray) {
-        // التحقق من عدم وجود اقتباسات للعرض
         if (quoteArray.length === 0) {
             updateLoadMoreButton(false);
             updateStatusDisplay();
             return;
         }
         
+        const generation = state.displayGeneration;
         const fragment = document.createDocumentFragment();
         const endIndex = Math.min(startIndex + count, quoteArray.length);
         let addedQuotes = 0;
         
-        // استخدام الوظيفة المتقطعة لمنع تجميد المتصفح عند عرض الكثير من الاقتباسات
         function processQuoteBatch(index) {
-            // معالجة دفعة من الاقتباسات (5 في كل مرة)
+            if (generation !== state.displayGeneration) return;
+
             const batchSize = 5;
             const batchEndIndex = Math.min(index + batchSize, endIndex);
             
@@ -988,22 +992,18 @@ footer {
                 addedQuotes++;
             }
             
-            // إذا كانت هناك المزيد من الاقتباسات للمعالجة
             if (batchEndIndex < endIndex) {
-                // جدولة الدفعة التالية
                 setTimeout(() => processQuoteBatch(batchEndIndex), 0);
             } else {
-                // الانتهاء من معالجة جميع الاقتباسات
+                if (generation !== state.displayGeneration) return;
                 DOM.container.appendChild(fragment);
                 state.currentQuotesDisplayed += addedQuotes;
                 
-                // تحديث واجهة المستخدم
                 updateLoadMoreButton(state.currentQuotesDisplayed < quoteArray.length);
                 updateStatusDisplay();
             }
         }
         
-        // بدء معالجة الدفعة الأولى
         processQuoteBatch(startIndex);
     }
     
@@ -1020,7 +1020,7 @@ footer {
 
     // مسح جميع الاقتباسات المعروضة
     function clearQuotes() {
-        // استخدام innerHTML = '' لأداء أفضل من إزالة العناصر واحدًا تلو الآخر
+        state.displayGeneration += 1;
         DOM.container.innerHTML = '';
         state.currentQuotesDisplayed = 0;
         
@@ -1040,10 +1040,6 @@ footer {
         // تحسين تجزئة الكلمات باستخدام تعبير منتظم أكثر دقة
         const searchTerms = searchTerm.trim().toLowerCase().split(/\s+/).filter(term => term.length > 0);
         
-        // استخدام Map للتخزين المؤقت لنتائج البحث لتحسين الأداء
-        const resultsMap = new Map();
-        
-        // إنشاء نسخة من البيانات باستخدام مؤشر ترابط الكلمات
         const results = [];
         
         quotes.forEach((quote, index) => {
@@ -1163,6 +1159,7 @@ footer {
         
         // إعداد معالج الحدث لزر "عرض المزيد"
         DOM.loadMoreBtn.addEventListener('click', function() {
+            if (state.currentQuotesDisplayed >= state.filteredQuotes.length) return;
             displayQuotes(state.currentQuotesDisplayed, state.quotesPerLoad, state.filteredQuotes);
         });
         
@@ -1200,31 +1197,30 @@ footer {
         let observer;
         
         function setupScrollObserver() {
-            // إنشاء عنصر مراقبة للتمرير
+            if (document.getElementById('scroll-sentinel')) return;
             const sentinel = document.createElement('div');
             sentinel.id = 'scroll-sentinel';
             sentinel.style.height = '10px';
             
-            // إضافة العنصر بعد زر "عرض المزيد"
-            DOM.loadMoreBtn.parentNode.insertBefore(sentinel, DOM.loadMoreBtn);
+            DOM.loadMoreBtn.parentNode.insertBefore(sentinel, DOM.loadMoreBtn.nextSibling);
             
-            // إنشاء مراقب التقاطع
             observer = new IntersectionObserver((entries) => {
                 if (entries[0].isIntersecting && 
                     state.currentQuotesDisplayed < state.filteredQuotes.length) {
-                    // تحميل المزيد من الاقتباسات عند التمرير
                     displayQuotes(state.currentQuotesDisplayed, state.quotesPerLoad, state.filteredQuotes);
                 }
             }, { 
                 rootMargin: '100px' 
             });
             
-            // بدء مراقبة العنصر
             observer.observe(sentinel);
         }
         
-        // إعداد مراقب التمرير بعد التهيئة
-        document.addEventListener('DOMContentLoaded', setupScrollObserver);
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', setupScrollObserver);
+        } else {
+            setupScrollObserver();
+        }
     }
     
     // تصدير API للاستخدام الخارجي إذا لزم الأمر

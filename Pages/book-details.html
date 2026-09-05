@@ -3,7 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عد قريبا</title>
+    <title>عرض الكتاب</title>
+    <script>
+        (function () {
+            var map = {
+                "1": "../books/book5.html",
+                "2": "../books/book6.html",
+                "11": "../books/book3.html",
+                "13": "../books/book7.html",
+                "16": "../books/book2.html"
+            };
+            var id = new URLSearchParams(window.location.search).get("id");
+            if (id && map[id]) {
+                window.location.replace(map[id]);
+            }
+        })();
+    </script>
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
         

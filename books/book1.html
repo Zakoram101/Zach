@@ -195,7 +195,7 @@
 <div class="watermark">للقراءة فقط</div>
      
     <div class="pdf-container">
-            <iframe 
+            <iframe title="عرض الكتاب" 
                 src="https://drive.google.com/file/d/1-xE3Ye9PvvtDpU2GbDRHg1HZ5fuDWo-y/preview"
                 class="pdf-viewer"
                 sandbox="allow-scripts allow-same-origin"
@@ -214,17 +214,25 @@
 
     <script>
         function showAlert() {
-            document.getElementById("alertBox").style.display = "block";
-            document.getElementById("overlayBg").style.display = "block";
+            var box = document.getElementById("alertBox");
+            var overlay = document.getElementById("overlayBg");
+            if (box) box.style.display = "block";
+            if (overlay) overlay.style.display = "block";
         }
 
         function closeAlert() {
-            document.getElementById("alertBox").style.display = "none";
-            document.getElementById("overlayBg").style.display = "none";
+            var box = document.getElementById("alertBox");
+            var overlay = document.getElementById("overlayBg");
+            if (box) box.style.display = "none";
+            if (overlay) overlay.style.display = "none";
         }
 
         function goBack() {
-            window.history.back();
+            if (document.referrer) {
+                window.history.back();
+            } else {
+                window.location.href = "../index.html";
+            }
         }
 
      

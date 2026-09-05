@@ -583,20 +583,12 @@
     <script>
         // تخزين روابط الكتب
         const bookLinks = {
-            'الداء والدواء.pdf': 'https://zakoram101.github.io/Zach/Book/الداء والدواء.pdf',
-            'التوحيد.pdf': 'https://zakoram101.github.io/Zach/Book/التوحيد.pdf',
-            'رياض الصالحين.pdf': 'https://zakoram101.github.io/Zach/Book/رياض الصالحين.pdf',
-            'البرهان في علوم القرآن.pdf': 'https://zakoram101.github.io/Zach/Book/البرهان في علوم القرآن.pdf',
-            'إحياء_علوم_الدين_جزء1.pdf': 'https://zakoram101.github.io/Zach/Book/إحياء_علوم_الدين_جزء1.pdf',
-            'إحياء_علوم_الدين_جزء2.pdf': 'https://zakoram101.github.io/Zach/Book/إحياء_علوم_الدين_جزء2.pdf',
-            'حي بن يقظان.pdf': 'https://zakoram101.github.io/Zach/Book/حي بن يقظان.pdf',
-            'المقدمة.pdf': 'https://zakoram101.github.io/Zach/Book/المقدمة.pdf',
-            'تاريخ ابن خلدون.pdf': 'https://zakoram101.github.io/Zach/Book/تاريخ ابن خلدون.pdf',
-            'المستطرف في كل فن مستظرف.pdf': 'https://zakoram101.github.io/Zach/Book/المستطرف في كل فن مستظرف.pdf',
-            'ألف ليلة وليلة.pdf': 'https://zakoram101.github.io/Zach/Book/ألف ليلة وليلة.pdf',
-            'صبح الأعشى.pdf': 'https://zakoram101.github.io/Zach/Book/صبح الأعشى.pdf',
-            'نفح الطيب.pdf': 'https://zakoram101.github.io/Zach/Book/نفح الطيب.pdf',
-            'تهذيب الأخلاق.pdf': 'https://zakoram101.github.io/Zach/Book/تهذيب الأخلاق.pdf'
+            'الداء والدواء.pdf': '../Book/' + encodeURIComponent('الداء والدواء.pdf'),
+            'التوحيد.pdf': '../Book/' + encodeURIComponent('التوحيد.pdf'),
+            'رياض الصالحين.pdf': '../Book/' + encodeURIComponent(' رياض الصالحين.pdf'),
+            'البرهان في علوم القرآن.pdf': '../Book/' + encodeURIComponent('البرهان في علوم القرآن.zip'),
+            'إحياء_علوم_الدين_جزء1.pdf': '../Book/' + encodeURIComponent('إحياء_علوم_الدين_جزء1.pdf'),
+            'إحياء_علوم_الدين_جزء2.pdf': '../Book/' + encodeURIComponent('إحياء_علوم_الدين_جزء2.pdf')
         };
         
         // تفعيل نافذة التحميل المنبثقة
@@ -611,8 +603,20 @@
             const progressBar = document.getElementById('progressBar');
             
             let currentBookFile = '';
-            
-            // فتح النافذة عند النقر على زر التحميل
+            let downloadTimer = null;
+            let downloadBusy = false;
+
+            function closeDownloadPopup() {
+                downloadPopup.style.display = 'none';
+                if (downloadTimer) {
+                    clearInterval(downloadTimer);
+                    downloadTimer = null;
+                }
+                downloadBusy = false;
+                startDownloadBtn.disabled = false;
+                startDownloadBtn.style.display = 'block';
+            }
+
             downloadButtons.forEach(button => {
                 button.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -622,48 +626,72 @@
                     
                     popupBookTitle.textContent = bookTitle + ' - ' + bookAuthor;
                     downloadPopup.style.display = 'flex';
+                    downloadPopup.setAttribute('role', 'dialog');
+                    downloadPopup.setAttribute('aria-modal', 'true');
                     
-                    // إخفاء شريط التقدم في البداية
                     progressContainer.style.display = 'block';
                     progressBar.style.width = '0%';
-                    downloadMessage.textContent = 'قم بتحضير ملفك لتحميله...';
+                    startDownloadBtn.disabled = false;
                     startDownloadBtn.style.display = 'block';
+
+                    if (!currentBookFile || currentBookFile === 'nun' || !bookLinks[currentBookFile]) {
+                        downloadMessage.textContent = 'هذا الكتاب غير متوفر حالياً';
+                        startDownloadBtn.style.display = 'none';
+                    } else {
+                        downloadMessage.textContent = 'قم بتحضير ملفك لتحميله...';
+                    }
                 });
             });
             
-            // إغلاق النافذة عند النقر على زر الإغلاق
-            closePopup.addEventListener('click', function() {
-                downloadPopup.style.display = 'none';
+            closePopup.addEventListener('click', closeDownloadPopup);
+
+            closePopup.setAttribute('role', 'button');
+            closePopup.setAttribute('tabindex', '0');
+            closePopup.setAttribute('aria-label', 'إغلاق');
+            closePopup.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    closeDownloadPopup();
+                }
+            });
+
+            downloadPopup.addEventListener('click', function(e) {
+                if (e.target === downloadPopup) closeDownloadPopup();
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && downloadPopup.style.display === 'flex') {
+                    closeDownloadPopup();
+                }
             });
             
-            // تفعيل زر التحميل المباشر
             startDownloadBtn.addEventListener('click', function() {
-                // التحقق من وجود الملف
+                if (downloadBusy) return;
                 const fileUrl = bookLinks[currentBookFile];
                 if (!currentBookFile || !fileUrl) {
                     downloadMessage.textContent = 'حدث خطأ في التحميل، يرجى المحاولة مرة أخرى';
                     return;
                 }
-                
-                // إخفاء زر التحميل وإظهار شريط التقدم
+
+                downloadBusy = true;
+                startDownloadBtn.disabled = true;
                 startDownloadBtn.style.display = 'none';
                 progressContainer.style.display = 'block';
                 downloadMessage.textContent = 'جاري تحميل الكتاب...';
                 
-                // محاكاة عملية التحميل مع تقدم واقعي
                 let progress = 0;
-                const interval = setInterval(() => {
+                if (downloadTimer) clearInterval(downloadTimer);
+                downloadTimer = setInterval(() => {
                     progress += Math.random() * 10;
                     if (progress >= 100) {
                         progress = 100;
-                        clearInterval(interval);
+                        clearInterval(downloadTimer);
+                        downloadTimer = null;
                         
-                        // بعد اكتمال التحميل
                         setTimeout(() => {
                             downloadMessage.textContent = 'تم التحميل بنجاح!';
                             setTimeout(() => {
-                                downloadPopup.style.display = 'none';
-                                // بدء التحميل الفعلي
+                                closeDownloadPopup();
                                 startActualDownload(currentBookFile);
                             }, 1000);
                         }, 500);
@@ -672,27 +700,24 @@
                 }, 200);
             });
             
-            // وظيفة بدء التحميل الفعلي
             function startActualDownload(fileName) {
                 const url = bookLinks[fileName];
                 
                 if (!url) {
-                    console.error('رابط الملف غير موجود: ' + fileName);
-                    alert('الملف غير متوفر حالياً، يرجى المحاولة لاحقاً.');
+                    downloadMessage.textContent = 'الملف غير متوفر حالياً، يرجى المحاولة لاحقاً.';
                     return;
                 }
                 
-                // إنشاء رابط مؤقت للتحميل
                 const a = document.createElement('a');
                 a.style.display = 'none';
                 a.href = url;
-                a.download = fileName;
+                a.setAttribute('download', fileName);
+                a.rel = 'noopener';
                 document.body.appendChild(a);
                 a.click();
                 
-                // تنظيف بعد التحميل
                 setTimeout(() => {
-                    document.body.removeChild(a);
+                    if (a.parentNode) a.parentNode.removeChild(a);
                 }, 100);
             }
         });

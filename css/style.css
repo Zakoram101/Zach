@@ -374,6 +374,7 @@ li:hover {
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 8;
+    line-clamp: 8;
     -webkit-box-orient: vertical;
 }
 
@@ -923,39 +924,18 @@ footer {
     position: fixed;
     top: 30px;
     right: 30px;
-    color: white;
-    font-size: 2rem;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-    z-index: 201;
-}
-
-.close-search:hover {
-    transform: rotate(90deg);
-    color: var(--accent-color);
-}
-
-.close-search {
-    position: fixed;
-    top: 30px;
-    right: 30px;
     width: 45px;
     height: 45px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     color: white;
     font-size: 2rem;
     cursor: pointer;
     z-index: 201;
-
     border-radius: 50%;
     overflow: hidden;
-
     transition: transform 0.3s ease;
-
     outline: none;
     -webkit-tap-highlight-color: transparent;
     user-select: none;

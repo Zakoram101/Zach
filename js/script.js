@@ -1,35 +1,6 @@
+/* Legacy unused router. Homepage navigation is handled by /script.js via data-page.
+   This file is not referenced by any page. Left in place to avoid breaking old bookmarks. */
 (function () {
-    document.addEventListener("DOMContentLoaded", () => {
-        // 🔹 جلب جميع الأزرار التي تحتوي على `featured-btn`
-        const buttons = document.querySelectorAll(".featured-btn");
-
-        // 🔹 إضافة حدث النقر لكل زر
-        buttons.forEach((button, index) => {
-            button.addEventListener("click", () => {
-                const pageNumber = index + 1; // 🔹 تحديد رقم الصفحة بناءً على ترتيب الزر
-                const page = `Pages/page${pageNumber}.html`; // 🔹 توليد رابط الصفحة
-
-                window.location.href = page; // 🔹 توجيه المستخدم إلى الصفحة المطلوبة
-            });
-        });
-    });
+    "use strict";
+    return;
 })();
-
-(function () {
-    document.addEventListener("DOMContentLoaded", () => {
-        // 🔹 جلب جميع الأزرار التي تحتوي على `featured-btn`
-        const buttons = document.querySelectorAll(".featured-btn");
-
-        // 🔹 إضافة حدث النقر لكل زر
-        buttons.forEach((button, index) => {
-            button.addEventListener("click", () => {
-                const pageNumber = index + 1; // 🔹 تحديد رقم الصفحة بناءً على ترتيب الزر
-                const page = `Moon/moon${pageNumber}.html`; // 🔹 توليد رابط الصفحة
-
-                window.location.href = page; // 🔹 توجيه المستخدم إلى الصفحة المطلوبة
-            });
-        });
-    });
-})();
-
-
