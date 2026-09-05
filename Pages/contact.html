@@ -1208,29 +1208,69 @@
 
             const allMessageContent = collectMessages();
             const userEmail = chatState.userEmail || '';
-            const formData = new FormData();
-            formData.append('access_key', chatState.accessKey);
-            formData.append('subject', subject || 'رسالة من خدمة الدعم');
-            formData.append('name', 'مستخدم خدمة الدعم');
-            formData.append('from_name', 'MishKat Support');
-            formData.append('email', userEmail || 'unspecified@example.com');
-            formData.append('message', (userEmail ? ('بريد المرسل: ' + userEmail + '\n\n') : 'بريد المرسل: غير متوفر\n\n') + allMessageContent);
-            if (userEmail) formData.append('replyto', userEmail);
+            const fields = {
+                access_key: chatState.accessKey,
+                subject: subject || 'رسالة من خدمة الدعم',
+                name: 'مستخدم خدمة الدعم',
+                from_name: 'MishKat Support',
+                email: userEmail || 'unspecified@example.com',
+                message: (userEmail ? ('بريد المرسل: ' + userEmail + '\n\n') : 'بريد المرسل: غير متوفر\n\n') + allMessageContent,
+                redirect: new URL('form-ok.html', window.location.href).href
+            };
+            if (userEmail) fields.replyto = userEmail;
 
-            return fetch('https://api.web3forms.com/submit', {
-                method: 'POST',
-                body: formData
+            return new Promise(function (resolve, reject) {
+                const iframe = document.createElement('iframe');
+                const frameName = 'w3f_frame_' + Date.now();
+                iframe.name = frameName;
+                iframe.title = 'web3forms';
+                iframe.style.display = 'none';
+
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = 'https://api.web3forms.com/submit';
+                form.target = frameName;
+                form.acceptCharset = 'UTF-8';
+                form.style.display = 'none';
+
+                Object.keys(fields).forEach(function (key) {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = key;
+                    input.value = fields[key];
+                    form.appendChild(input);
+                });
+
+                let settled = false;
+                function finish(ok, err) {
+                    if (settled) return;
+                    settled = true;
+                    window.clearTimeout(timer);
+                    if (iframe.parentNode) iframe.parentNode.removeChild(iframe);
+                    if (form.parentNode) form.parentNode.removeChild(form);
+                    if (ok) resolve(true);
+                    else reject(err || new Error('حدث خطأ أثناء إرسال الرسالة'));
+                }
+
+                iframe.onload = function () {
+                    try {
+                        const href = iframe.contentWindow.location.href || '';
+                        if (!href || href === 'about:blank') return;
+                        if (href.indexOf('form-ok.html') !== -1) finish(true);
+                        else finish(false);
+                    } catch (e) {
+                        finish(false);
+                    }
+                };
+
+                const timer = window.setTimeout(function () {
+                    finish(false, new Error('انتهت مهلة الإرسال'));
+                }, 15000);
+
+                document.body.appendChild(iframe);
+                document.body.appendChild(form);
+                form.submit();
             })
-                .then(function (res) {
-                    return res.text().then(function (text) {
-                        var data = {};
-                        try { data = JSON.parse(text); } catch (e) {}
-                        if (!res.ok || !data || data.success !== true) {
-                            throw new Error((data && data.message) || 'حدث خطأ أثناء إرسال الرسالة');
-                        }
-                        return data;
-                    });
-                })
                 .then(function () {
                     hideTypingIndicator();
 
