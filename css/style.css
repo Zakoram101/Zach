@@ -1192,6 +1192,52 @@ box-shadow:
     transform: translateX(-50%) translateY(0);
 }
 
+.favorites-showcase.books-showcase {
+    padding-top: 0;
+}
+
+.favorites-showcase .book-card {
+    height: auto;
+    perspective: none;
+    background: white;
+    padding: 20px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.favorites-showcase .book-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+}
+
+.favorites-showcase .book-card:hover .book-cover {
+    transform: none;
+}
+
+.favorites-showcase .featured-btn {
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.favorites-showcase .book-actions {
+    width: 100%;
+    margin-top: 12px;
+}
+
+.favorites-empty {
+    display: none;
+    text-align: center;
+    color: var(--dark-color);
+    font-size: 1.05rem;
+    margin: 10px 0 40px;
+}
+
 /* ============================================================
    22. RESPONSIVE — LARGE DESKTOPS (≥ 1400px)
    ============================================================ */

@@ -32,6 +32,7 @@
         <div class="book-pages">
             <div class="nav-bookmark">
                 <div class="bookmark btn" role="button" tabindex="0" data-link="Pages/books.html">الكتب</div>
+                <div class="bookmark btn" role="button" tabindex="0" data-link="Pages/favorites.html">المفضلة</div>
                 <div class="bookmark btn" role="button" tabindex="0" data-link="Pages/categories.html">التصنيفات</div>
                 <div class="bookmark btn" role="button" tabindex="0" data-link="Pages/contact.html">تواصل معنا</div>
             </div>
@@ -181,7 +182,7 @@
                                     </p>
                                     <div class="book-actions">
                                         <button class="featured-btn btn" data-page="Pages/page1.html">اقرأ الآن</button>
-                                        <button class="book-btn btn" onclick="openCategoryMenu('page1')">أضف للمفضلة</button>
+                                        <button class="book-btn btn" onclick="openCategoryMenu('page1')" data-fav-id="page1">أضف للمفضلة</button>
                                     </div>
                                 </div>
                             </div>
@@ -200,7 +201,7 @@
                                     </p>
                                     <div class="book-actions">
                                         <button class="featured-btn btn" data-page="Pages/page2.html">اقرأ الآن</button>
-                                        <button class="book-btn btn" onclick="openCategoryMenu('page2')">أضف للمفضلة</button>
+                                        <button class="book-btn btn" onclick="openCategoryMenu('page2')" data-fav-id="page2">أضف للمفضلة</button>
                                     </div>
                                 </div>
                             </div>
@@ -219,7 +220,7 @@
                                     </p>
                                     <div class="book-actions">
                                         <button class="featured-btn btn" data-page="Pages/page3.html">اقرأ الآن</button>
-                                        <button class="book-btn btn" onclick="openCategoryMenu('page3')">أضف للمفضلة</button>
+                                        <button class="book-btn btn" onclick="openCategoryMenu('page3')" data-fav-id="page3">أضف للمفضلة</button>
                                     </div>
                                 </div>
                             </div>
@@ -238,7 +239,7 @@
                                     </p>
                                     <div class="book-actions">
                                         <button class="featured-btn btn" data-page="Pages/page4.html">اقرأ الآن</button>
-                                        <button class="book-btn btn" onclick="openCategoryMenu('page4')">أضف للمفضلة</button>
+                                        <button class="book-btn btn" onclick="openCategoryMenu('page4')" data-fav-id="page4">أضف للمفضلة</button>
                                     </div>
                                 </div>
                             </div>
@@ -255,6 +256,7 @@
                         <nav class="footer-nav">
                             <a href="index.html" class="glow-btn btn">الرئيسية</a>
                             <a href="Pages/books.html" class="glow-btn btn">الكتب</a>
+                            <a href="Pages/favorites.html" class="glow-btn btn">المفضلة</a>
                             <a href="Pages/categories.html" class="glow-btn btn">التصنيفات</a>
                             <a href="Pages/colod.html" class="glow-btn btn">عن الموقع</a>
                             <a href="Pages/contact.html" class="glow-btn btn">تواصل معنا</a>
@@ -275,6 +277,7 @@
 
     <div class="fav-toast" id="favToast"></div>
 
+    <script src="js/favorites-data.js"></script>
     <script src="js/book-assets.js"></script>
     <script src="script.js"></script>
 </body>

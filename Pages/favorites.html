@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>المفضلة - MishKat</title>
+    <meta name="description" content="الكتب المحفوظة في المفضلة.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="intro-container">
+        <div class="book-spine">
+            <h1>MishKat</h1>
+        </div>
+        <div class="book-pages">
+            <div class="nav-bookmark">
+                <div class="bookmark btn" role="button" tabindex="0" data-link="../index.html">الرئيسية</div>
+                <div class="bookmark btn" role="button" tabindex="0" data-link="books.html">الكتب</div>
+                <div class="bookmark btn" role="button" tabindex="0" data-link="categories.html">التصنيفات</div>
+                <div class="bookmark btn" role="button" tabindex="0" data-link="favorites.html">المفضلة</div>
+                <div class="bookmark btn" role="button" tabindex="0" data-link="contact.html">تواصل معنا</div>
+            </div>
+
+            <section class="categories-section">
+                <h2 class="section-title">المفضلة</h2>
+                <p id="favorites-empty" class="favorites-empty">لا توجد كتب في المفضلة بعد</p>
+                <section class="books-showcase favorites-showcase" id="favorites-list"></section>
+            </section>
+
+            <footer>
+                <div class="footer-content">
+                    <div class="logo-footer">MishKat</div>
+                    <p>كتب العرب منارةٌ للعلم، تجمع نفائس المصنفات، وتمد القارئ بعيون الأدب وروائع الفكر.</p>
+                    <div class="footer">
+                        <nav class="footer-nav">
+                            <a href="../index.html" class="glow-btn btn">الرئيسية</a>
+                            <a href="books.html" class="glow-btn btn">الكتب</a>
+                            <a href="categories.html" class="glow-btn btn">التصنيفات</a>
+                            <a href="favorites.html" class="glow-btn btn">المفضلة</a>
+                            <a href="contact.html" class="glow-btn btn">تواصل معنا</a>
+                        </nav>
+                    </div>
+                    <p class="copyright">جميع الحقوق محفوظة &copy; 2025 MishKat</p>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <div class="fav-toast" id="favToast"></div>
+    <script src="../js/favorites-data.js"></script>
+    <script src="../script.js"></script>
+    <script>
+        (function () {
+            var listEl = document.getElementById("favorites-list");
+            var emptyEl = document.getElementById("favorites-empty");
+            var toastEl = document.getElementById("favToast");
+            var toastTimer = null;
+
+            function showToast(message) {
+                if (!toastEl) return;
+                toastEl.textContent = message;
+                toastEl.classList.add("show");
+                if (toastTimer) clearTimeout(toastTimer);
+                toastTimer = setTimeout(function () {
+                    toastEl.classList.remove("show");
+                }, 2000);
+            }
+
+            function render() {
+                if (!listEl || !window.MishkatFavorites) return;
+                var books = window.MishkatFavorites.listResolved();
+                listEl.innerHTML = "";
+                if (emptyEl) emptyEl.style.display = books.length ? "none" : "block";
+
+                books.forEach(function (book) {
+                    var card = document.createElement("article");
+                    card.className = "book-card";
+                    card.setAttribute("data-fav-id", book.id);
+
+                    var cover = document.createElement("img");
+                    cover.className = "book-cover";
+                    cover.alt = book.title || "غلاف الكتاب";
+                    cover.loading = "lazy";
+                    if (book.cover) {
+                        cover.src = window.MishkatFavorites.resolvePath(book.cover);
+                        cover.addEventListener("error", function () {
+                            cover.style.display = "none";
+                        });
+                    }
+
+                    var title = document.createElement("h3");
+                    title.className = "book-title";
+                    title.textContent = book.title || book.id;
+
+                    var author = document.createElement("p");
+                    author.className = "book-author";
+                    author.textContent = book.author || "";
+
+                    var actions = document.createElement("div");
+                    actions.className = "book-actions";
+
+                    var openBtn = document.createElement("a");
+                    openBtn.className = "featured-btn btn";
+                    openBtn.href = window.MishkatFavorites.resolvePath(book.href);
+                    openBtn.textContent = "اقرأ الآن";
+
+                    var removeBtn = document.createElement("button");
+                    removeBtn.type = "button";
+                    removeBtn.className = "book-btn btn";
+                    removeBtn.textContent = "إزالة من المفضلة";
+                    removeBtn.addEventListener("click", function () {
+                        window.MishkatFavorites.remove(book.id);
+                        showToast("تمت الإزالة من المفضلة");
+                        render();
+                    });
+
+                    actions.appendChild(openBtn);
+                    actions.appendChild(removeBtn);
+                    card.appendChild(cover);
+                    card.appendChild(title);
+                    card.appendChild(author);
+                    card.appendChild(actions);
+                    listEl.appendChild(card);
+                });
+            }
+
+            if (document.readyState === "loading") {
+                document.addEventListener("DOMContentLoaded", render);
+            } else {
+                render();
+            }
+        })();
+    </script>
+</body>
+</html>

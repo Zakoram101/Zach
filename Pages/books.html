@@ -400,6 +400,7 @@
                 <button class="category-btn" onclick="scrollToCategory('category8')">القائمة 8</button>
                 <button class="category-btn" onclick="scrollToCategory('category9')">القائمة 9</button>
                 <button class="category-btn" onclick="scrollToCategory('category10')">القائمة 10</button>
+                <button class="category-btn" onclick="window.location.href='favorites.html'">المفضلة</button>
                 <button class="category-btn" onclick="openCategoryMenu()">المزيد...</button>
             </div>
         </div>
@@ -933,7 +934,8 @@
     <div class="back-to-top" id="backToTop" role="button" tabindex="0" aria-label="العودة للأعلى">
         <img src="https://em-content.zobj.net/source/telegram/386/top-arrow_1f51d.webp" alt="⬆" width="30">
     </div>
-  <script>
+  <script src="../js/favorites-data.js"></script>
+<script>
 
 (function () {
     'use strict';
@@ -1223,23 +1225,47 @@
 
             var btn   = e.currentTarget;
             if (!btn) return;
-            var isFav = btn.dataset.fav === '1';
+            var id = String(name || '').trim();
+            var isFav = false;
+            if (window.MishkatFavorites && id) {
+                isFav = window.MishkatFavorites.isFav(id);
+                window.MishkatFavorites.toggle(id);
+                isFav = window.MishkatFavorites.isFav(id);
+            } else {
+                isFav = btn.dataset.fav === '1';
+                isFav = !isFav;
+            }
 
-            btn.dataset.fav    = isFav ? '0' : '1';
-            /* textContent أأمن من innerHTML */
-            btn.textContent    = isFav ? '♡ أضف للمفضلة' : '❤ تمت الإضافة';
+            btn.dataset.fav    = isFav ? '1' : '0';
+            btn.textContent    = isFav ? '❤ تمت الإضافة' : '♡ أضف للمفضلة';
             btn.style.borderColor = isFav
-                ? 'rgba(255,255,255,0.35)'
-                : 'var(--accent-color)';
+                ? 'var(--accent-color)'
+                : 'rgba(255,255,255,0.35)';
 
             showToast(
-                isFav ? 'تمت الإزالة من المفضلة' : 'تمت الإضافة إلى المفضلة ❤',
+                isFav ? 'تمت الإضافة إلى المفضلة ❤' : 'تمت الإزالة من المفضلة',
                 2000
             );
         } catch (err) {
             /* حماية من الأخطاء */
         }
     };
+
+    function syncBooksFavoriteButtons() {
+        if (!window.MishkatFavorites) return;
+        document.querySelectorAll('.book-back-actions .btn-outline').forEach(function (btn) {
+            var onclick = btn.getAttribute('onclick') || '';
+            var match = onclick.match(/addToFav\(event,'([^']+)'\)/);
+            if (!match) return;
+            var isFav = window.MishkatFavorites.isFav(match[1]);
+            btn.dataset.fav = isFav ? '1' : '0';
+            btn.textContent = isFav ? '❤ تمت الإضافة' : '♡ أضف للمفضلة';
+            btn.style.borderColor = isFav
+                ? 'var(--accent-color)'
+                : 'rgba(255,255,255,0.35)';
+        });
+    }
+    syncBooksFavoriteButtons();
 
     /* ===== تحميل سلس للصفحة ===== */
     document.body.style.opacity = '0';

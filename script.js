@@ -230,18 +230,36 @@
                 this.showFavToast('تمت الإضافة إلى المفضلة');
                 return;
             }
-            let favs = utils.getLocalStorage("zakbook-favorites", []);
-            if (!Array.isArray(favs)) favs = [];
-            const idx = favs.indexOf(id);
-            if (idx >= 0) {
-                favs.splice(idx, 1);
-                utils.setLocalStorage("zakbook-favorites", favs);
-                this.showFavToast('تمت الإزالة من المفضلة');
+            let added = true;
+            if (window.MishkatFavorites) {
+                added = window.MishkatFavorites.toggle(id);
             } else {
-                favs.push(id);
+                let favs = utils.getLocalStorage("zakbook-favorites", []);
+                if (!Array.isArray(favs)) favs = [];
+                const idx = favs.indexOf(id);
+                if (idx >= 0) {
+                    favs.splice(idx, 1);
+                    added = false;
+                } else {
+                    favs.push(id);
+                }
                 utils.setLocalStorage("zakbook-favorites", favs);
-                this.showFavToast('تمت الإضافة إلى المفضلة');
             }
+            this.syncFavoriteButtons();
+            this.showFavToast(added ? 'تمت الإضافة إلى المفضلة' : 'تمت الإزالة من المفضلة');
+        }
+
+        syncFavoriteButtons() {
+            const buttons = utils.safeSelect("[data-fav-id]", true);
+            if (!buttons || !buttons.length) return;
+            buttons.forEach(button => {
+                const id = button.getAttribute("data-fav-id");
+                if (!id) return;
+                const isFav = window.MishkatFavorites
+                    ? window.MishkatFavorites.isFav(id)
+                    : (utils.getLocalStorage("zakbook-favorites", []) || []).indexOf(id) >= 0;
+                button.textContent = isFav ? "إزالة من المفضلة" : "أضف للمفضلة";
+            });
         }
 
         initialize() {
@@ -256,6 +274,7 @@
             this.setupBookmarks();
             this.setupFeaturedButtons();
             this.updateDownloadCategoryCount();
+            this.syncFavoriteButtons();
         }
     }
 
