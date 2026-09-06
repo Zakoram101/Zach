@@ -61,6 +61,12 @@
         holder.style.height = "100%";
         holder.style.border = "none";
         holder.style.background = "#ffffff";
+
+        var loading = document.createElement("p");
+        loading.textContent = "جاري فتح الكتاب…";
+        loading.style.cssText = "text-align:center;padding:24px;margin:0;color:#333;font-family:Tajawal,sans-serif;";
+        holder.appendChild(loading);
+
         iframe.style.display = "none";
         container.insertBefore(holder, iframe);
 
@@ -70,11 +76,14 @@
                 url: proxyUrl(id),
                 withCredentials: false,
                 disableRange: false,
-                disableStream: false
+                disableStream: false,
+                disableAutoFetch: true,
+                rangeChunkSize: 65536
             }).promise;
         }).then(function (pdf) {
+            if (loading.parentNode) loading.parentNode.removeChild(loading);
             var next = 1;
-            var loading = false;
+            var loadingMore = false;
 
             function renderPage(number) {
                 return pdf.getPage(number).then(function (page) {
@@ -96,8 +105,8 @@
             }
 
             function loadMore() {
-                if (loading || next > pdf.numPages) return;
-                loading = true;
+                if (loadingMore || next > pdf.numPages) return;
+                loadingMore = true;
                 var batch = [];
                 var i;
                 for (i = 0; i < 2 && next <= pdf.numPages; i += 1, next += 1) {
@@ -107,7 +116,7 @@
                 batch.forEach(function (number) {
                     chain = chain.then(function () { return renderPage(number); });
                 });
-                chain.then(function () { loading = false; }).catch(function () { loading = false; });
+                chain.then(function () { loadingMore = false; }).catch(function () { loadingMore = false; });
             }
 
             loadMore();
