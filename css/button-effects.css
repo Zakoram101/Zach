@@ -1,0 +1,75 @@
+/* Unified Mishkat button interaction layer. Visual only: no click behavior or layout ownership. */
+:where(button, a.btn, .btn, [role="button"], .download-btn) {
+    --button-shadow: 0 8px 18px rgba(44, 62, 80, 0.16);
+    --button-hover-shadow: 0 12px 24px rgba(44, 62, 80, 0.24);
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    transition:
+        transform 180ms ease,
+        box-shadow 180ms ease,
+        filter 180ms ease,
+        border-color 180ms ease,
+        background-color 180ms ease,
+        color 180ms ease;
+    box-shadow: var(--button-shadow);
+    -webkit-tap-highlight-color: transparent;
+}
+
+:where(button, a.btn, .btn, [role="button"], .download-btn)::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(115deg, transparent 18%, rgba(255, 255, 255, 0.22) 48%, transparent 78%);
+    transform: translateX(-125%);
+    transition: transform 420ms ease;
+    pointer-events: none;
+}
+
+:where(button, a.btn, .btn, [role="button"], .download-btn):hover {
+    transform: translateY(-2px);
+    box-shadow: var(--button-hover-shadow);
+    filter: brightness(1.035) saturate(1.04);
+}
+
+:where(button, a.btn, .btn, [role="button"], .download-btn):hover::before {
+    transform: translateX(125%);
+}
+
+:where(button, a.btn, .btn, [role="button"], .download-btn):active {
+    transform: translateY(0) scale(0.975);
+    box-shadow: 0 4px 10px rgba(44, 62, 80, 0.16);
+    filter: brightness(0.98);
+}
+
+:where(button, a.btn, .btn, [role="button"], .download-btn):focus-visible {
+    outline: 3px solid rgba(231, 76, 60, 0.38);
+    outline-offset: 3px;
+    box-shadow: 0 0 0 5px rgba(231, 76, 60, 0.12), var(--button-hover-shadow);
+}
+
+:where(button, a.btn, .btn, [role="button"], .download-btn):disabled,
+:where(button, a.btn, .btn, [role="button"], .download-btn)[aria-disabled="true"] {
+    cursor: not-allowed;
+    opacity: 0.62;
+    transform: none;
+    filter: grayscale(0.15);
+    box-shadow: none;
+}
+
+:where(button, a.btn, .btn, [role="button"], .download-btn):disabled::before,
+:where(button, a.btn, .btn, [role="button"], .download-btn)[aria-disabled="true"]::before {
+    display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :where(button, a.btn, .btn, [role="button"], .download-btn),
+    :where(button, a.btn, .btn, [role="button"], .download-btn)::before {
+        transition-duration: 0.01ms;
+    }
+
+    :where(button, a.btn, .btn, [role="button"], .download-btn):hover {
+        transform: none;
+    }
+}
