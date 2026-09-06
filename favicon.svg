@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Mishkat">
+  <rect width="64" height="64" rx="14" fill="#2c3e50"/>
+  <g fill="none" transform="translate(32 35.4)">
+    <circle cx="0" cy="-31" r="3.2" stroke="#f1c40f" stroke-width="2"/>
+    <rect x="-1" y="-31" width="2" height="6" fill="#f1c40f"/>
+    <path d="M0 -26 L14 -17.5 L11.2 -15.8 H-11.2 L-14 -17.5 Z" fill="#f1c40f"/>
+    <path d="M0 -26 L8.2 -19.2 H-8.2 Z" fill="#fce474"/>
+    <rect x="-11.2" y="-15.8" width="22.4" height="28.2" rx="2" fill="#d4a00c"/>
+    <rect x="-8.1" y="-12.6" width="16.2" height="21.2" rx="1.6" fill="#2c3e50"/>
+    <rect x="-6" y="-9.6" width="12" height="16" rx="1.2" fill="#5a461e"/>
+    <path d="M0 -8.6 L3.8 0.8 L1.8 4.6 0 6.1 -1.8 4.6 -3.8 0.8 Z" fill="#e74c3c"/>
+    <path d="M0 -4.6 L1.7 1.4 0 4.1 -1.7 1.4 Z" fill="#ffb236"/>
+    <rect x="-12.8" y="12.2" width="25.6" height="3.8" rx="1.2" fill="#f1c40f"/>
+    <rect x="-8.8" y="15.6" width="17.6" height="2.2" fill="#d4a00c"/>
+  </g>
+</svg>
