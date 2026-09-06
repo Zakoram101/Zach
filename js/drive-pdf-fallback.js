@@ -1,6 +1,11 @@
 (function () {
     "use strict";
 
+    var hideStyle = document.createElement("style");
+    hideStyle.setAttribute("data-hide-drive", "1");
+    hideStyle.textContent = "iframe.pdf-viewer{display:none!important;visibility:hidden!important;width:0!important;height:0!important;position:absolute!important;left:-9999px!important;}";
+    (document.head || document.documentElement).appendChild(hideStyle);
+
     var PROXY = "https://mishkat-drive-proxy.netlify.app/drive-pdf";
     var PDFJS_CDN = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js";
     var PDFJS_WORKER = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
@@ -9,10 +14,21 @@
     var CSS_PAD = 16;
 
     function fileIdFromIframe(iframe) {
-        var src = iframe && iframe.getAttribute("src");
-        if (!src) return "";
+        if (!iframe) return "";
+        var dataId = iframe.getAttribute("data-drive-id") || iframe.getAttribute("data-file-id");
+        if (dataId) return dataId;
+        var src = iframe.getAttribute("src") || iframe.getAttribute("data-src") || "";
         var match = src.match(/\/d\/([a-zA-Z0-9_-]{10,})/);
         return match ? match[1] : "";
+    }
+
+    function hideDriveIframe(iframe) {
+        if (!iframe) return;
+        iframe.style.display = "none";
+        iframe.setAttribute("hidden", "hidden");
+        iframe.setAttribute("aria-hidden", "true");
+        iframe.removeAttribute("src");
+        try { iframe.src = "about:blank"; } catch (e) {}
     }
 
     function proxyUrl(id) {
@@ -47,24 +63,6 @@
         });
     }
 
-    async function canOpenWithPdfJs(id) {
-        try {
-            var response = await fetch(proxyUrl(id), {
-                method: "GET",
-                headers: { Range: "bytes=0-7" }
-            });
-            if (!response.ok && response.status !== 206) return false;
-            var bytes = new Uint8Array(await response.arrayBuffer());
-            return bytes.length >= 4 &&
-                bytes[0] === 0x25 &&
-                bytes[1] === 0x50 &&
-                bytes[2] === 0x44 &&
-                bytes[3] === 0x46;
-        } catch (error) {
-            return false;
-        }
-    }
-
     function mountPdfJs(iframe, id) {
         var container = iframe.parentElement;
         if (!container || container.getAttribute("data-pdfjs") === "1") return;
@@ -96,7 +94,7 @@
         holder.appendChild(pagesWrap);
         holder.appendChild(loading);
 
-        iframe.style.display = "none";
+        hideDriveIframe(iframe);
         container.insertBefore(holder, iframe);
 
         loadScript(PDFJS_CDN).then(function (pdfjsLib) {
@@ -344,9 +342,9 @@
                 window.visualViewport.addEventListener("resize", onResize);
             }
         }).catch(function () {
-            iframe.style.display = "";
-            if (holder.parentNode) holder.parentNode.removeChild(holder);
-            container.removeAttribute("data-pdfjs");
+            hideDriveIframe(iframe);
+            loading.textContent = "تعذر فتح الكتاب";
+            if (!loading.parentNode) holder.appendChild(loading);
         });
     }
 
@@ -354,13 +352,9 @@
         var iframe = document.querySelector("iframe.pdf-viewer");
         if (!iframe) return;
         var id = fileIdFromIframe(iframe);
+        hideDriveIframe(iframe);
         if (!id) return;
-        canOpenWithPdfJs(id).then(function (canOpen) {
-            if (canOpen) mountPdfJs(iframe, id);
-        });
-        iframe.addEventListener("error", function () {
-            mountPdfJs(iframe, id);
-        });
+        mountPdfJs(iframe, id);
     }
 
     if (document.readyState === "loading") {
