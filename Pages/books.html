@@ -196,8 +196,9 @@
             border-radius: 3px 10px 10px 3px;
             display: flex; flex-direction: column;
             align-items: center; justify-content: center;
-            padding: 18px 12px; position: relative;
+            padding: 0; position: relative;
             text-align: center;
+            overflow: hidden;
             box-shadow:
                 6px 6px 20px rgba(0,0,0,0.22),
                 -2px 0 6px rgba(0,0,0,0.08),
@@ -206,17 +207,31 @@
         }
         .book-card:hover .book-cover-3d { transform: scale(1.05) translateY(-3px); }
 
+        .book-cover-img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center center;
+            display: block;
+            z-index: 1;
+            border-radius: inherit;
+        }
+
         .book-cover-3d::before {
             content: ''; position: absolute; right: 0; top: 0; bottom: 0;
             width: 5px;
             background: linear-gradient(to left, rgba(0,0,0,0.25), rgba(0,0,0,0.05));
             border-radius: 0 3px 3px 0;
+            z-index: 2;
         }
         .book-cover-3d::after {
             content: ''; position: absolute;
             top: 10px; left: 10px; right: 10px; bottom: 10px;
             border: 1px solid rgba(241,196,15,0.35);
             border-radius: 2px; pointer-events: none;
+            z-index: 2;
         }
 
         /* Cover Color Variants */
@@ -362,7 +377,7 @@
                 gap: 12px; padding: 12px;
             }
             .book-card { height: 340px; }
-            .book-cover-3d { width: 105px; height: 150px; padding: 12px 8px; }
+            .book-cover-3d { width: 105px; height: 150px; padding: 0; }
             .book-cover-title { font-size: 0.7rem; }
             .book-cover-icon { font-size: 1.3rem; }
             .book-card-title { font-size: 0.88rem; }
@@ -666,7 +681,7 @@
                 <div class="book-card">
                     <div class="book-inner">
                         <div class="book-front">
-                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-wine"><img src="https://dn790000.ca.archive.org/0/items/WAQ83936/cover.jpg" class="book-cover-img" alt="إحياء علوم الدين"></div></div>
+                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-wine"><img src="images/ihya-uloom-al-din.jpg" class="book-cover-img" alt="إحياء علوم الدين"></div></div>
                             <div class="book-card-info"><h3 class="book-card-title">إحياء علوم الدين</h3><p class="book-card-author">أبو حامد الغزالي</p></div>
                         </div>
                         <div class="book-back">
@@ -694,7 +709,7 @@
                 <div class="book-card">
                     <div class="book-inner">
                         <div class="book-front">
-                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-emerald"><img src="https://m.media-amazon.com/images/I/912cpEQwQiL._UF1000,1000_QL80_.jpg" class="book-cover-img" alt="زاد المعاد"></div></div>
+                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-emerald"><img src="images/zad-al-maad.jpg" class="book-cover-img" alt="زاد المعاد"></div></div>
                             <div class="book-card-info"><h3 class="book-card-title">زاد المعاد</h3><p class="book-card-author">ابن قيم الجوزية</p></div>
                         </div>
                         <div class="book-back">
