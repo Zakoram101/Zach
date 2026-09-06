@@ -28,6 +28,12 @@
         return dpr;
     }
 
+    function clamp(value, min, max) {
+        if (value < min) return min;
+        if (value > max) return max;
+        return value;
+    }
+
     function loadScript(src) {
         return new Promise(function (resolve, reject) {
             if (window.pdfjsLib) {
@@ -67,43 +73,26 @@
         var holder = document.createElement("div");
         holder.className = "pdf-viewer";
         holder.setAttribute("title", "عرض الكتاب");
+        holder.setAttribute("dir", "ltr");
         holder.style.overflow = "auto";
+        holder.style.overflowX = "auto";
+        holder.style.overflowY = "auto";
         holder.style.width = "100%";
         holder.style.height = "100%";
         holder.style.border = "none";
         holder.style.background = "#ffffff";
         holder.style.webkitOverflowScrolling = "touch";
-        holder.style.touchAction = "pan-y pinch-zoom";
-
-        var toolbar = document.createElement("div");
-        toolbar.setAttribute("dir", "ltr");
-        toolbar.style.cssText = "position:sticky;top:0;z-index:3;display:flex;align-items:center;justify-content:center;gap:10px;padding:6px 8px;background:rgba(255,255,255,0.94);font-family:Tajawal,sans-serif;font-size:14px;color:#333;";
-
-        function makeZoomBtn(label, title) {
-            var btn = document.createElement("button");
-            btn.type = "button";
-            btn.textContent = label;
-            btn.title = title;
-            btn.style.cssText = "width:32px;height:32px;border:0;border-radius:8px;background:#007bff;color:#fff;font-size:18px;line-height:1;cursor:pointer;";
-            return btn;
-        }
-
-        var zoomOutBtn = makeZoomBtn("−", "تصغير");
-        var zoomLabel = document.createElement("span");
-        zoomLabel.style.cssText = "min-width:52px;text-align:center;font-weight:700;";
-        var zoomInBtn = makeZoomBtn("+", "تكبير");
-        toolbar.appendChild(zoomOutBtn);
-        toolbar.appendChild(zoomLabel);
-        toolbar.appendChild(zoomInBtn);
+        holder.style.touchAction = "pan-x pan-y";
+        holder.style.overscrollBehavior = "contain";
 
         var pagesWrap = document.createElement("div");
-        pagesWrap.style.cssText = "padding:0 0 12px;";
+        pagesWrap.setAttribute("dir", "ltr");
+        pagesWrap.style.cssText = "box-sizing:border-box;min-width:100%;width:max-content;max-width:none;";
 
         var loading = document.createElement("p");
         loading.textContent = "جاري فتح الكتاب…";
         loading.style.cssText = "text-align:center;padding:24px;margin:0;color:#333;font-family:Tajawal,sans-serif;";
 
-        holder.appendChild(toolbar);
         holder.appendChild(pagesWrap);
         holder.appendChild(loading);
 
@@ -130,21 +119,27 @@
             var rerenderTimer = 0;
             var pinchStart = 0;
             var pinchZoom = 1;
-
-            function clampZoom(value) {
-                if (value < MIN_ZOOM) return MIN_ZOOM;
-                if (value > MAX_ZOOM) return MAX_ZOOM;
-                return Math.round(value * 100) / 100;
-            }
-
-            function updateZoomLabel() {
-                zoomLabel.textContent = Math.round(userZoom * 100) + "%";
-            }
+            var panLastX = 0;
+            var panLastY = 0;
+            var panning = false;
 
             function cssScaleFor(page) {
                 var base = page.getViewport({ scale: 1 });
                 var width = Math.max(holder.clientWidth - CSS_PAD, 280);
                 return (width / base.width) * userZoom;
+            }
+
+            function maxScrollLeft() {
+                return Math.max(0, holder.scrollWidth - holder.clientWidth);
+            }
+
+            function maxScrollTop() {
+                return Math.max(0, holder.scrollHeight - holder.clientHeight);
+            }
+
+            function setScroll(left, top) {
+                holder.scrollLeft = clamp(left, 0, maxScrollLeft());
+                holder.scrollTop = clamp(top, 0, maxScrollTop());
             }
 
             function paintSlot(slot) {
@@ -167,9 +162,15 @@
                 canvas.style.width = cssWidth + "px";
                 canvas.style.height = cssHeight + "px";
                 canvas.style.display = "block";
-                canvas.style.margin = "8px auto";
+                canvas.style.maxWidth = "none";
                 canvas.style.background = "#ffffff";
                 canvas.dataset.outputScale = String(scale);
+
+                if (cssWidth <= holder.clientWidth) {
+                    canvas.style.margin = "8px auto";
+                } else {
+                    canvas.style.margin = "8px 0";
+                }
 
                 var ctx = canvas.getContext("2d", { alpha: false });
                 if (!ctx) return Promise.resolve();
@@ -207,16 +208,27 @@
                 });
             }
 
+            function snapshotView() {
+                return {
+                    x: holder.scrollWidth ? (holder.scrollLeft + holder.clientWidth / 2) / holder.scrollWidth : 0.5,
+                    y: holder.scrollHeight ? (holder.scrollTop + holder.clientHeight / 2) / holder.scrollHeight : 0
+                };
+            }
+
+            function restoreView(snap) {
+                var left = snap.x * holder.scrollWidth - holder.clientWidth / 2;
+                var top = snap.y * holder.scrollHeight - holder.clientHeight / 2;
+                setScroll(left, top);
+            }
+
             function rerenderAll() {
-                var ratio = holder.scrollHeight
-                    ? holder.scrollTop / holder.scrollHeight
-                    : 0;
+                var snap = snapshotView();
                 var chain = Promise.resolve();
                 slots.forEach(function (slot) {
                     chain = chain.then(function () { return paintSlot(slot); });
                 });
                 return chain.then(function () {
-                    holder.scrollTop = ratio * holder.scrollHeight;
+                    restoreView(snap);
                 }).catch(function () {});
             }
 
@@ -229,10 +241,7 @@
             }
 
             function setZoom(nextZoom, rerender) {
-                userZoom = clampZoom(nextZoom);
-                updateZoomLabel();
-                zoomOutBtn.disabled = userZoom <= MIN_ZOOM;
-                zoomInBtn.disabled = userZoom >= MAX_ZOOM;
+                userZoom = clamp(Math.round(nextZoom * 100) / 100, MIN_ZOOM, MAX_ZOOM);
                 if (rerender) scheduleRerender();
             }
 
@@ -251,21 +260,13 @@
                 chain.then(function () { loadingMore = false; }).catch(function () { loadingMore = false; });
             }
 
-            setZoom(1, false);
             loadMore();
 
             holder.addEventListener("scroll", function () {
                 if (holder.scrollTop + holder.clientHeight > holder.scrollHeight - 480) {
                     loadMore();
                 }
-            });
-
-            zoomInBtn.addEventListener("click", function () {
-                setZoom(userZoom + 0.25, true);
-            });
-            zoomOutBtn.addEventListener("click", function () {
-                setZoom(userZoom - 0.25, true);
-            });
+            }, { passive: true });
 
             holder.addEventListener("wheel", function (event) {
                 if (!(event.ctrlKey || event.metaKey)) return;
@@ -275,22 +276,55 @@
             }, { passive: false });
 
             holder.addEventListener("touchstart", function (event) {
-                if (event.touches.length !== 2) return;
-                var a = event.touches[0];
-                var b = event.touches[1];
-                pinchStart = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
-                pinchZoom = userZoom;
+                if (event.touches.length === 1) {
+                    panning = maxScrollLeft() > 0;
+                    panLastX = event.touches[0].clientX;
+                    panLastY = event.touches[0].clientY;
+                    pinchStart = 0;
+                    return;
+                }
+                if (event.touches.length === 2) {
+                    panning = false;
+                    var a = event.touches[0];
+                    var b = event.touches[1];
+                    pinchStart = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+                    pinchZoom = userZoom;
+                    panLastX = (a.clientX + b.clientX) / 2;
+                    panLastY = (a.clientY + b.clientY) / 2;
+                }
             }, { passive: true });
 
             holder.addEventListener("touchmove", function (event) {
-                if (event.touches.length !== 2 || !pinchStart) return;
-                var a = event.touches[0];
-                var b = event.touches[1];
-                var dist = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
-                setZoom(pinchZoom * (dist / pinchStart), false);
-            }, { passive: true });
+                if (event.touches.length === 1 && panning) {
+                    event.preventDefault();
+                    var touch = event.touches[0];
+                    setScroll(
+                        holder.scrollLeft - (touch.clientX - panLastX),
+                        holder.scrollTop - (touch.clientY - panLastY)
+                    );
+                    panLastX = touch.clientX;
+                    panLastY = touch.clientY;
+                    return;
+                }
+                if (event.touches.length === 2 && pinchStart) {
+                    event.preventDefault();
+                    var a = event.touches[0];
+                    var b = event.touches[1];
+                    var dist = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+                    var midX = (a.clientX + b.clientX) / 2;
+                    var midY = (a.clientY + b.clientY) / 2;
+                    setScroll(
+                        holder.scrollLeft - (midX - panLastX),
+                        holder.scrollTop - (midY - panLastY)
+                    );
+                    panLastX = midX;
+                    panLastY = midY;
+                    setZoom(pinchZoom * (dist / pinchStart), false);
+                }
+            }, { passive: false });
 
             holder.addEventListener("touchend", function (event) {
+                if (event.touches.length === 0) panning = false;
                 if (event.touches.length < 2 && pinchStart) {
                     pinchStart = 0;
                     scheduleRerender();
