@@ -1,16 +1,17 @@
 <!DOCTYPE html>
+
 <html dir="rtl" lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-    <link rel="shortcut icon" href="../favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مكتبتك للكتب الدينية - اقرأ كتابك</title>
-    <meta name="description" content="تصفح أهم الكتب الإسلامية والتراث الديني: الحديث، التفسير، الفقه، والسلوك.">
-    <style>
+<meta charset="utf-8"/>
+<link href="../favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="../favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="../favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="../favicon.ico" rel="shortcut icon"/>
+<link href="../apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>مكتبتك للكتب الدينية - اقرأ كتابك</title>
+<meta content="تصفح أهم الكتب الإسلامية والتراث الديني: الحديث، التفسير، الفقه، والسلوك." name="description"/>
+<style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap');
 
         /* ===== Variables ===== */
@@ -393,672 +394,630 @@
     </style>
 </head>
 <body>
+<div class="decoration deco1"></div>
+<div class="decoration deco2"></div>
+<div class="decoration deco3"></div>
+<div class="light-effect" id="lightEffect"></div>
+<div class="container">
+<header>
+<div class="header-bg"></div>
+<h1>مكتبتك للكتب الدينية - اقرأ كتابك</h1>
+<p class="subtitle">أهم الكتب الإسلامية والتراث الديني القيم</p>
+</header>
+<div class="navigation">
+<h3 class="nav-title">القوائم المتوفرة</h3>
+<div class="category-nav">
+<button class="category-btn active" onclick="scrollToCategory('category1')">القائمة 1</button>
+<button class="category-btn" onclick="scrollToCategory('category2')">القائمة 2</button>
+<button class="category-btn" onclick="scrollToCategory('category3')">القائمة 3</button>
+<button class="category-btn" onclick="scrollToCategory('category4')">القائمة 4</button>
+<button class="category-btn" onclick="scrollToCategory('category5')">القائمة 5</button>
+<button class="category-btn" onclick="scrollToCategory('category6')">القائمة 6</button>
+<button class="category-btn" onclick="scrollToCategory('category7')">القائمة 7</button>
+<button class="category-btn" onclick="scrollToCategory('category8')">القائمة 8</button>
+<button class="category-btn" onclick="scrollToCategory('category9')">القائمة 9</button>
+<button class="category-btn" onclick="scrollToCategory('category10')">القائمة 10</button>
+<button class="category-btn" onclick="window.location.href='favorites.html'">المفضلة</button>
+<button class="category-btn" onclick="openCategoryMenu()">المزيد...</button>
+</div>
+</div>
+<!-- ===== القائمة الأولى ===== -->
+<div class="category-section" id="category1">
+<div class="category-header"><h2>القائمة الأولى</h2></div>
+<div class="books-grid">
 
-    <div class="decoration deco1"></div>
-    <div class="decoration deco2"></div>
-    <div class="decoration deco3"></div>
-    <div class="light-effect" id="lightEffect"></div>
 
-    <div class="container">
 
-        <header>
-            <div class="header-bg"></div>
-            <h1>مكتبتك للكتب الدينية - اقرأ كتابك</h1>
-            <p class="subtitle">أهم الكتب الإسلامية والتراث الديني القيم</p>
-        </header>
 
-        <div class="navigation">
-            <h3 class="nav-title">القوائم المتوفرة</h3>
-            <div class="category-nav">
-                <button class="category-btn active" onclick="scrollToCategory('category1')">القائمة 1</button>
-                <button class="category-btn" onclick="scrollToCategory('category2')">القائمة 2</button>
-                <button class="category-btn" onclick="scrollToCategory('category3')">القائمة 3</button>
-                <button class="category-btn" onclick="scrollToCategory('category4')">القائمة 4</button>
-                <button class="category-btn" onclick="scrollToCategory('category5')">القائمة 5</button>
-                <button class="category-btn" onclick="scrollToCategory('category6')">القائمة 6</button>
-                <button class="category-btn" onclick="scrollToCategory('category7')">القائمة 7</button>
-                <button class="category-btn" onclick="scrollToCategory('category8')">القائمة 8</button>
-                <button class="category-btn" onclick="scrollToCategory('category9')">القائمة 9</button>
-                <button class="category-btn" onclick="scrollToCategory('category10')">القائمة 10</button>
-                <button class="category-btn" onclick="window.location.href='favorites.html'">المفضلة</button>
-                <button class="category-btn" onclick="openCategoryMenu()">المزيد...</button>
-            </div>
-        </div>
 
-        <!-- ===== القائمة الأولى ===== -->
-        <div id="category1" class="category-section">
-            <div class="category-header"><h2>القائمة الأولى</h2></div>
-            <div class="books-grid">
 
-                <div class="book-card">
-                    <div class="book-inner">
-                        <div class="book-front">
-                            <div class="book-cover-wrapper">
-                                <div class="book-cover-3d cover-emerald">
-                                    <img src="images/bukhari.jpg" class="book-cover-img" alt="صحيح البخاري">
-                                </div>
-                            </div>
-                            <div class="book-card-info">
-                                <h3 class="book-card-title">صحيح البخاري</h3>
-                                <p class="book-card-author">الإمام محمد بن إسماعيل البخاري</p>
-                            </div>
-                        </div>
-                        <div class="book-back">
-                            <h3 class="book-back-title">صحيح البخاري</h3>
-                            <p class="book-back-desc">أصح كتب الحديث النبوي الشريف، جمع فيه الإمام البخاري الأحاديث الصحيحة المسندة إلى النبي ﷺ بأعلى درجات التحقيق.</p>
-                            <div class="book-back-actions">
-                                <a href="book-details.html?id=1" class="btn btn-primary">اقرأ الآن</a>
-                                <button class="btn btn-outline" onclick="addToFav(event,'صحيح البخاري')">♡ أضف للمفضلة</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="book-card">
-                    <div class="book-inner">
-                        <div class="book-front">
-                            <div class="book-cover-wrapper">
-                                <div class="book-cover-3d cover-navy">
-                                    <img src="images/muslim.jpg" class="book-cover-img" alt="صحيح مسلم">
-                                </div>
-                            </div>
-                            <div class="book-card-info">
-                                <h3 class="book-card-title">صحيح مسلم</h3>
-                                <p class="book-card-author">الإمام مسلم بن الحجاج النيسابوري</p>
-                            </div>
-                        </div>
-                        <div class="book-back">
-                            <h3 class="book-back-title">صحيح مسلم</h3>
-                            <p class="book-back-desc">ثاني أصح كتب الحديث بعد صحيح البخاري، يتميز بحسن الترتيب والتبويب وجمع طرق الحديث في مكان واحد.</p>
-                            <div class="book-back-actions">
-                                <a href="book-details.html?id=2" class="btn btn-primary">اقرأ الآن</a>
-                                <button class="btn btn-outline" onclick="addToFav(event,'صحيح مسلم')">♡ أضف للمفضلة</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="book-card">
-                    <div class="book-inner">
-                        <div class="book-front">
-                            <div class="book-cover-wrapper">
-                                <div class="book-cover-3d cover-wine">
-                                    <img src="images/abu-dawood.jpg" class="book-cover-img" alt="سنن أبي داود">
-                                </div>
-                            </div>
-                            <div class="book-card-info">
-                                <h3 class="book-card-title">سنن أبي داود</h3>
-                                <p class="book-card-author">أبو داود سليمان بن الأشعث</p>
-                            </div>
-                        </div>
-                        <div class="book-back">
-                            <h3 class="book-back-title">سنن أبي داود</h3>
-                            <p class="book-back-desc">من أمهات كتب الحديث الستة، يركز على أحاديث الأحكام الفقهية ويعد مرجعًا أساسيًا للفقهاء.</p>
-                            <div class="book-back-actions">
-                                <a href="book-details.html?id=3" class="btn btn-primary">اقرأ الآن</a>
-                                <button class="btn btn-outline" onclick="addToFav(event,'سنن أبي داود')">♡ أضف للمفضلة</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="book-card">
-                    <div class="book-inner">
-                        <div class="book-front">
-                            <div class="book-cover-wrapper">
-                                <div class="book-cover-3d cover-earth">
-                                    <img src="images/tirmidhi.jpg" class="book-cover-img" alt="جامع الترمذي">
-                                </div>
-                            </div>
-                            <div class="book-card-info">
-                                <h3 class="book-card-title">جامع الترمذي</h3>
-                                <p class="book-card-author">محمد بن عيسى الترمذي</p>
-                            </div>
-                        </div>
-                        <div class="book-back">
-                            <h3 class="book-back-title">جامع الترمذي</h3>
-                            <p class="book-back-desc">يتميز ببيان درجة الأحاديث من صحة وضعف وذكر مذاهب الفقهاء واختلافهم في المسائل.</p>
-                            <div class="book-back-actions">
-                                <a href="book-details.html?id=4" class="btn btn-primary">اقرأ الآن</a>
-                                <button class="btn btn-outline" onclick="addToFav(event,'جامع الترمذي')">♡ أضف للمفضلة</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="book-card">
-                    <div class="book-inner">
-                        <div class="book-front">
-                            <div class="book-cover-wrapper">
-                                <div class="book-cover-3d cover-emerald">
-                                    <img src="images/nasai.jpg" class="book-cover-img" alt="سنن النسائي">
-                                </div>
-                            </div>
-                            <div class="book-card-info">
-                                <h3 class="book-card-title">سنن النسائي</h3>
-                                <p class="book-card-author">أحمد بن شعيب النسائي</p>
-                            </div>
-                        </div>
-                        <div class="book-back">
-                            <h3 class="book-back-title">سنن النسائي</h3>
-                            <p class="book-back-desc">من أقل كتب السنن أحاديث ضعيفة بعد الصحيحين، يتميز بدقة الترتيب وحسن التبويب.</p>
-                            <div class="book-back-actions">
-                                <a href="book-details.html?id=5" class="btn btn-primary">اقرأ الآن</a>
-                                <button class="btn btn-outline" onclick="addToFav(event,'سنن النسائي')">♡ أضف للمفضلة</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<div class="book-card">
+<div class="book-inner">
+<div class="book-front">
+<div class="book-cover-wrapper">
+<div class="book-cover-3d cover-emerald">
+<img alt="صحيح البخاري" class="book-cover-img" src="images/bukhari.jpg"/>
+</div>
+</div>
+<div class="book-card-info">
+<h3 class="book-card-title">صحيح البخاري</h3>
+<p class="book-card-author">الإمام محمد بن إسماعيل البخاري</p>
+</div>
+</div>
+<div class="book-back">
+<h3 class="book-back-title">صحيح البخاري</h3>
+<p class="book-back-desc">أصح كتب الحديث النبوي الشريف، جمع فيه الإمام البخاري الأحاديث الصحيحة المسندة إلى النبي ﷺ بأعلى درجات التحقيق.</p>
+<div class="book-back-actions">
+<a class="btn btn-primary" href="book-details.html?id=1">اقرأ الآن</a>
+<button class="btn btn-outline" onclick="addToFav(event,'صحيح البخاري')">♡ أضف للمفضلة</button>
+</div>
+</div>
+</div>
+</div><div class="book-card">
+<div class="book-inner">
+<div class="book-front">
+<div class="book-cover-wrapper">
+<div class="book-cover-3d cover-navy">
+<img alt="صحيح مسلم" class="book-cover-img" src="images/muslim.jpg"/>
+</div>
+</div>
+<div class="book-card-info">
+<h3 class="book-card-title">صحيح مسلم</h3>
+<p class="book-card-author">الإمام مسلم بن الحجاج النيسابوري</p>
+</div>
+</div>
+<div class="book-back">
+<h3 class="book-back-title">صحيح مسلم</h3>
+<p class="book-back-desc">ثاني أصح كتب الحديث بعد صحيح البخاري، يتميز بحسن الترتيب والتبويب وجمع طرق الحديث في مكان واحد.</p>
+<div class="book-back-actions">
+<a class="btn btn-primary" href="book-details.html?id=2">اقرأ الآن</a>
+<button class="btn btn-outline" onclick="addToFav(event,'صحيح مسلم')">♡ أضف للمفضلة</button>
+</div>
+</div>
+</div>
+</div><div class="book-card">
+<div class="book-inner">
+<div class="book-front">
+<div class="book-cover-wrapper"><div class="book-cover-3d cover-wine"><img alt="إحياء علوم الدين" class="book-cover-img" src="images/ihya-uloom-al-din.jpg"/></div></div>
+<div class="book-card-info"><h3 class="book-card-title">إحياء علوم الدين</h3><p class="book-card-author">أبو حامد الغزالي</p></div>
+</div>
+<div class="book-back">
+<h3 class="book-back-title">إحياء علوم الدين</h3>
+<p class="book-back-desc">موسوعة شاملة في التزكية والأخلاق والعبادات، يربط بين العلم والعمل وأحوال القلوب.</p>
+<div class="book-back-actions"><a class="btn btn-primary" href="book-details.html?id=11">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'إحياء علوم الدين')">♡ أضف للمفضلة</button></div>
+</div>
+</div>
+</div><div class="book-card">
+<div class="book-inner">
+<div class="book-front">
+<div class="book-cover-wrapper"><div class="book-cover-3d cover-emerald"><img alt="زاد المعاد" class="book-cover-img" src="images/zad-al-maad.jpg"/></div></div>
+<div class="book-card-info"><h3 class="book-card-title">زاد المعاد</h3><p class="book-card-author">ابن قيم الجوزية</p></div>
+</div>
+<div class="book-back">
+<h3 class="book-back-title">زاد المعاد</h3>
+<p class="book-back-desc">في هدي خير العباد، يجمع بين السيرة النبوية والفقه العملي المستنبط من حياة النبي ﷺ.</p>
+<div class="book-back-actions"><a class="btn btn-primary" href="book-details.html?id=13">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'زاد المعاد')">♡ أضف للمفضلة</button></div>
+</div>
+</div>
+</div><div class="book-card">
+<div class="book-inner">
+<div class="book-front">
+<div class="book-cover-wrapper"><div class="book-cover-3d cover-earth"><img alt="رياض الصالحين" class="book-cover-img" src="images/riyadh-al-saliheen.jpg"/></div></div>
+<div class="book-card-info"><h3 class="book-card-title">رياض الصالحين</h3><p class="book-card-author">الإمام النووي</p></div>
+</div>
+<div class="book-back">
+<h3 class="book-back-title">رياض الصالحين</h3>
+<p class="book-back-desc">مختصر جامع في الأحاديث الصحيحة مرتب على الأبواب، من أكثر الكتب انتشارًا ونفعًا.</p>
+<div class="book-back-actions"><a class="btn btn-primary" href="book-details.html?id=16">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'رياض الصالحين')">♡ أضف للمفضلة</button></div>
+</div>
+</div>
+</div><div class="book-card">
+<div class="book-inner">
+<div class="book-front">
+<div class="book-cover-wrapper"><div class="book-cover-3d cover-navy"><img alt="أثر اعتبار المصالح والمفاسد في الفتوى" class="book-cover-img" src="images/athar-masalih-mafasid.jpg"/></div></div>
+<div class="book-card-info"><h3 class="book-card-title">أثر اعتبار المصالح والمفاسد في الفتوى</h3><p class="book-card-author">د. عبد الله بن بيه</p></div>
+</div>
+<div class="book-back">
+<h3 class="book-back-title">أثر اعتبار المصالح والمفاسد في الفتوى</h3>
+<p class="book-back-desc">بحث في مراعاة المصالح والمفاسد وأثرها في ترشيد الفتوى وتنزيل الأحكام على الوقائع.</p>
+<div class="book-back-actions"><a class="btn btn-primary" href="book-details.html?id=29">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'أثر اعتبار المصالح والمفاسد في الفتوى')">♡ أضف للمفضلة</button></div>
+</div>
+</div>
+</div><div class="book-card">
+<div class="book-inner">
+<div class="book-front">
+<div class="book-cover-wrapper"><div class="book-cover-3d cover-navy"><img alt="الأربعون النووية وتتمتها" class="book-cover-img" src="images/arbaeen-nawawi.jpg"/></div></div>
+<div class="book-card-info"><h3 class="book-card-title">الأربعون النووية وتتمتها</h3><p class="book-card-author">الإمام النووي</p></div>
+</div>
+<div class="book-back">
+<h3 class="book-back-title">الأربعون النووية وتتمتها</h3>
+<p class="book-back-desc">مجموعة جامعة من الأحاديث النبوية في أصول الدين والعبادات والأخلاق، مع تتمة الأحاديث المختارة.</p>
+<div class="book-back-actions"><a class="btn btn-primary" href="book-details.html?id=30">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'الأربعون النووية وتتمتها')">♡ أضف للمفضلة</button></div>
+</div>
+</div>
+</div></div>
+</div>
+<!-- ===== القائمة الثانية ===== -->
+<div class="category-section" id="category2">
+<div class="category-header"><h2>القائمة الثانية</h2></div>
+<div class="books-grid">
 
-                <div class="book-card">
-                    <div class="book-inner">
-                        <div class="book-front">
-                            <div class="book-cover-wrapper">
-                                <div class="book-cover-3d cover-navy">
-                                    <img src="images/ibn-majah.jpg" class="book-cover-img" alt="سنن ابن ماجه">
-                                </div>
-                            </div>
-                            <div class="book-card-info">
-                                <h3 class="book-card-title">سنن ابن ماجه</h3>
-                                <p class="book-card-author">محمد بن يزيد ابن ماجه</p>
-                            </div>
-                        </div>
-                        <div class="book-back">
-                            <h3 class="book-back-title">سنن ابن ماجه</h3>
-                            <p class="book-back-desc">أحد الكتب الستة في الحديث النبوي الشريف، يضم أبوابًا مهمة في الفقه والعبادات والمعاملات.</p>
-                            <div class="book-back-actions">
-                                <a href="book-details.html?id=6" class="btn btn-primary">اقرأ الآن</a>
-                                <button class="btn btn-outline" onclick="addToFav(event,'سنن ابن ماجه')">♡ أضف للمفضلة</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="book-card">
-                    <div class="book-inner">
-                        <div class="book-front">
-                            <div class="book-cover-wrapper">
-                                <div class="book-cover-3d cover-wine">
-                                    <img src="images/muwatta.jpg" class="book-cover-img" alt="الموطأ">
-                                </div>
-                            </div>
-                            <div class="book-card-info">
-                                <h3 class="book-card-title">الموطأ</h3>
-                                <p class="book-card-author">الإمام مالك بن أنس</p>
-                            </div>
-                        </div>
-                        <div class="book-back">
-                            <h3 class="book-back-title">الموطأ</h3>
-                            <p class="book-back-desc">أول كتاب حديث مرتب على أبواب الفقه، يجمع بين الحديث والفقه وعمل أهل المدينة.</p>
-                            <div class="book-back-actions">
-                                <a href="book-details.html?id=7" class="btn btn-primary">اقرأ الآن</a>
-                                <button class="btn btn-outline" onclick="addToFav(event,'الموطأ')">♡ أضف للمفضلة</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="book-card">
-                    <div class="book-inner">
-                        <div class="book-front">
-                            <div class="book-cover-wrapper">
-                                <div class="book-cover-3d cover-earth">
-                                    <img src="images/musnad-ahmad.jpg" class="book-cover-img" alt="مسند الإمام أحمد">
-                                </div>
-                            </div>
-                            <div class="book-card-info">
-                                <h3 class="book-card-title">مسند الإمام أحمد</h3>
-                                <p class="book-card-author">الإمام أحمد بن حنبل</p>
-                            </div>
-                        </div>
-                        <div class="book-back">
-                            <h3 class="book-back-title">مسند الإمام أحمد</h3>
-                            <p class="book-back-desc">من أوسع كتب الحديث النبوي، يضم أكثر من سبعة وعشرين ألف حديث مرتبة على مسانيد الصحابة.</p>
-                            <div class="book-back-actions">
-                                <a href="book-details.html?id=8" class="btn btn-primary">اقرأ الآن</a>
-                                <button class="btn btn-outline" onclick="addToFav(event,'مسند الإمام أحمد')">♡ أضف للمفضلة</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="book-card">
-                    <div class="book-inner">
-                        <div class="book-front">
-                            <div class="book-cover-wrapper">
-                                <div class="book-cover-3d cover-emerald">
-                                    <img src="images/tafsir-tabari.jpg" class="book-cover-img" alt="تفسير الطبري">
-                                </div>
-                            </div>
-                            <div class="book-card-info">
-                                <h3 class="book-card-title">تفسير الطبري</h3>
-                                <p class="book-card-author">محمد بن جرير الطبري</p>
-                            </div>
-                        </div>
-                        <div class="book-back">
-                            <h3 class="book-back-title">تفسير الطبري</h3>
-                            <p class="book-back-desc">أعظم كتب التفسير بالمأثور وأشملها، يعتمد على الآثار والروايات في بيان معاني القرآن الكريم.</p>
-                            <div class="book-back-actions">
-                                <a href="book-details.html?id=9" class="btn btn-primary">اقرأ الآن</a>
-                                <button class="btn btn-outline" onclick="addToFav(event,'تفسير الطبري')">♡ أضف للمفضلة</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="book-card">
-                    <div class="book-inner">
-                        <div class="book-front">
-                            <div class="book-cover-wrapper">
-                                <div class="book-cover-3d cover-navy">
-                                    <img src="images/tafsir-ibn-kathir.jpg" class="book-cover-img" alt="تفسير ابن كثير">
-                                </div>
-                            </div>
-                            <div class="book-card-info">
-                                <h3 class="book-card-title">تفسير ابن كثير</h3>
-                                <p class="book-card-author">إسماعيل بن عمر بن كثير</p>
-                            </div>
-                        </div>
-                        <div class="book-back">
-                            <h3 class="book-back-title">تفسير ابن كثير</h3>
-                            <p class="book-back-desc">من أشهر كتب التفسير بالمأثور وأيسرها، يفسر القرآن بالقرآن ثم بالسنة ثم بأقوال الصحابة.</p>
-                            <div class="book-back-actions">
-                                <a href="book-details.html?id=10" class="btn btn-primary">اقرأ الآن</a>
-                                <button class="btn btn-outline" onclick="addToFav(event,'تفسير ابن كثير')">♡ أضف للمفضلة</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-            </div>
-        </div>
 
-        <!-- ===== القائمة الثانية ===== -->
-        <div id="category2" class="category-section">
-            <div class="category-header"><h2>القائمة الثانية</h2></div>
-            <div class="books-grid">
 
-                <div class="book-card">
-                    <div class="book-inner">
-                        <div class="book-front">
-                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-wine"><img src="images/ihya-uloom-al-din.jpg" class="book-cover-img" alt="إحياء علوم الدين"></div></div>
-                            <div class="book-card-info"><h3 class="book-card-title">إحياء علوم الدين</h3><p class="book-card-author">أبو حامد الغزالي</p></div>
-                        </div>
-                        <div class="book-back">
-                            <h3 class="book-back-title">إحياء علوم الدين</h3>
-                            <p class="book-back-desc">موسوعة شاملة في التزكية والأخلاق والعبادات، يربط بين العلم والعمل وأحوال القلوب.</p>
-                            <div class="book-back-actions"><a href="book-details.html?id=11" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'إحياء علوم الدين')">♡ أضف للمفضلة</button></div>
-                        </div>
-                    </div>
-                </div>
+<div class="book-card">
+<div class="book-inner">
+<div class="book-front">
+<div class="book-cover-wrapper"><div class="book-cover-3d cover-navy"><img alt="الزهري" class="book-cover-img" src="images/al-zuhri.jpg"/></div></div>
+<div class="book-card-info"><h3 class="book-card-title">الزهري</h3><p class="book-card-author">محمد بن مسلم الزهري</p></div>
+</div>
+<div class="book-back">
+<h3 class="book-back-title">الزهري</h3>
+<p class="book-back-desc">عرض موجز لترجمة الإمام الزهري ومكانته العلمية وإسهاماته في حفظ السنة ورواية الحديث.</p>
+<div class="book-back-actions"><a class="btn btn-primary" href="book-details.html?id=31">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'الزهري')">♡ أضف للمفضلة</button></div>
+</div>
+</div>
+</div><div class="book-card">
+<div class="book-inner">
+<div class="book-front">
+<div class="book-cover-wrapper"><div class="book-cover-3d cover-navy"><img alt="العقيدة الواسطية" class="book-cover-img" src="images/aqeeda-wasitiyya.jpg"/></div></div>
+<div class="book-card-info"><h3 class="book-card-title">العقيدة الواسطية</h3><p class="book-card-author">شيخ الإسلام ابن تيمية</p></div>
+</div>
+<div class="book-back">
+<h3 class="book-back-title">العقيدة الواسطية</h3>
+<p class="book-back-desc">رسالة مختصرة جامعة في أصول اعتقاد أهل السنة والجماعة في أسماء الله وصفاته وأبواب الإيمان.</p>
+<div class="book-back-actions"><a class="btn btn-primary" href="book-details.html?id=32">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'العقيدة الواسطية')">♡ أضف للمفضلة</button></div>
+</div>
+</div>
+</div><div class="book-card">
+<div class="book-inner">
+<div class="book-front">
+<div class="book-cover-wrapper"><div class="book-cover-3d cover-navy"><img alt="الملخص في شرح كتاب التوحيد" class="book-cover-img" src="images/mulakhkhas-tawhid.jpg"/></div></div>
+<div class="book-card-info"><h3 class="book-card-title">الملخص في شرح كتاب التوحيد</h3><p class="book-card-author">صالح بن فوزان الفوزان</p></div>
+</div>
+<div class="book-back">
+<h3 class="book-back-title">الملخص في شرح كتاب التوحيد</h3>
+<p class="book-back-desc">شرح مبسط لأبواب كتاب التوحيد، يوضح مسائل العقيدة وأدلتها بأسلوب تعليمي واضح.</p>
+<div class="book-back-actions"><a class="btn btn-primary" href="book-details.html?id=33">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'الملخص في شرح كتاب التوحيد')">♡ أضف للمفضلة</button></div>
+</div>
+</div>
+</div><div class="book-card">
+<div class="book-inner">
+<div class="book-front">
+<div class="book-cover-wrapper"><div class="book-cover-3d cover-navy"><img alt="بلوغ المرام من أدلة الأحكام" class="book-cover-img" src="images/bulugh-maram.jpg"/></div></div>
+<div class="book-card-info"><h3 class="book-card-title">بلوغ المرام من أدلة الأحكام</h3><p class="book-card-author">ابن حجر العسقلاني</p></div>
+</div>
+<div class="book-back">
+<h3 class="book-back-title">بلوغ المرام من أدلة الأحكام</h3>
+<p class="book-back-desc">كتاب حديثي يجمع أحاديث الأحكام مرتبة على أبواب الفقه، مع عناية بالتخريج والشرح.</p>
+<div class="book-back-actions"><a class="btn btn-primary" href="book-details.html?id=34">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'بلوغ المرام من أدلة الأحكام')">♡ أضف للمفضلة</button></div>
+</div>
+</div>
+</div><div class="book-card">
+<div class="book-inner">
+<div class="book-front">
+<div class="book-cover-wrapper"><div class="book-cover-3d cover-navy"><img alt="صحيح ابن حبان" class="book-cover-img" src="images/sahih-ibn-hibban.jpg"/></div></div>
+<div class="book-card-info"><h3 class="book-card-title">صحيح ابن حبان</h3><p class="book-card-author">الإمام ابن حبان البستي</p></div>
+</div>
+<div class="book-back">
+<h3 class="book-back-title">صحيح ابن حبان</h3>
+<p class="book-back-desc">من دواوين السنة المشهورة، جمع فيه المؤلف الأحاديث الصحيحة ورتبها في أبواب جامعة.</p>
+<div class="book-back-actions"><a class="btn btn-primary" href="book-details.html?id=35">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'صحيح ابن حبان')">♡ أضف للمفضلة</button></div>
+</div>
+</div>
+</div><div class="book-card">
+<div class="book-inner">
+<div class="book-front">
+<div class="book-cover-wrapper"><div class="book-cover-3d cover-navy"><img alt="صحيح سنن ابن ماجة" class="book-cover-img" src="images/sahih-sunan-ibn-majah.jpg"/></div></div>
+<div class="book-card-info"><h3 class="book-card-title">صحيح سنن ابن ماجة</h3><p class="book-card-author">محمد ناصر الدين الألباني</p></div>
+</div>
+<div class="book-back">
+<h3 class="book-back-title">صحيح سنن ابن ماجة</h3>
+<p class="book-back-desc">تحقيق لأحاديث سنن ابن ماجة مع تمييز الصحيح وبيان درجته وفق منهج المحدثين.</p>
+<div class="book-back-actions"><a class="btn btn-primary" href="book-details.html?id=36">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'صحيح سنن ابن ماجة')">♡ أضف للمفضلة</button></div>
+</div>
+</div>
+</div></div>
+</div>
+<!-- ===== القائمة الثالثة ===== -->
+<div class="category-section" id="category3">
+<div class="category-header"><h2>القائمة الثالثة</h2></div>
+<div class="books-grid">
 
-                <div class="book-card">
-                    <div class="book-inner">
-                        <div class="book-front">
-                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-earth"><img src="images/madarij-al-salikeen.jpg" class="book-cover-img" alt="مدارج السالكين"></div></div>
-                            <div class="book-card-info"><h3 class="book-card-title">مدارج السالكين</h3><p class="book-card-author">ابن قيم الجوزية</p></div>
-                        </div>
-                        <div class="book-back">
-                            <h3 class="book-back-title">مدارج السالكين</h3>
-                            <p class="book-back-desc">شرح منازل السائرين في طريق العبودية لله تعالى، من أعمق كتب السلوك والتربية الإيمانية.</p>
-                            <div class="book-back-actions"><a href="book-details.html?id=12" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'مدارج السالكين')">♡ أضف للمفضلة</button></div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="book-card">
-                    <div class="book-inner">
-                        <div class="book-front">
-                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-emerald"><img src="images/zad-al-maad.jpg" class="book-cover-img" alt="زاد المعاد"></div></div>
-                            <div class="book-card-info"><h3 class="book-card-title">زاد المعاد</h3><p class="book-card-author">ابن قيم الجوزية</p></div>
-                        </div>
-                        <div class="book-back">
-                            <h3 class="book-back-title">زاد المعاد</h3>
-                            <p class="book-back-desc">في هدي خير العباد، يجمع بين السيرة النبوية والفقه العملي المستنبط من حياة النبي ﷺ.</p>
-                            <div class="book-back-actions"><a href="book-details.html?id=13" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'زاد المعاد')">♡ أضف للمفضلة</button></div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="book-card">
-                    <div class="book-inner">
-                        <div class="book-front">
-                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-navy"><img src="images/rahiq-makhtum.jpg" class="book-cover-img" alt="الرحيق المختوم"></div></div>
-                            <div class="book-card-info"><h3 class="book-card-title">الرحيق المختوم</h3><p class="book-card-author">صفي الرحمن المباركفوري</p></div>
-                        </div>
-                        <div class="book-back">
-                            <h3 class="book-back-title">الرحيق المختوم</h3>
-                            <p class="book-back-desc">سيرة نبوية مختصرة شاملة حازت على المركز الأول في مسابقة رابطة العالم الإسلامي.</p>
-                            <div class="book-back-actions"><a href="book-details.html?id=14" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'الرحيق المختوم')">♡ أضف للمفضلة</button></div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="book-card">
-                    <div class="book-inner">
-                        <div class="book-front">
-                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-wine"><img src="images/fiqh-al-sunna.jpg" class="book-cover-img" alt="فقه السنة"></div></div>
-                            <div class="book-card-info"><h3 class="book-card-title">فقه السنة</h3><p class="book-card-author">السيد سابق</p></div>
-                        </div>
-                        <div class="book-back">
-                            <h3 class="book-back-title">فقه السنة</h3>
-                            <p class="book-back-desc">كتاب فقهي معاصر ميسر يجمع أدلة الأحكام الشرعية من الكتاب والسنة بأسلوب واضح.</p>
-                            <div class="book-back-actions"><a href="book-details.html?id=15" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'فقه السنة')">♡ أضف للمفضلة</button></div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="book-card">
-                    <div class="book-inner">
-                        <div class="book-front">
-                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-earth"><img src="images/riyadh-al-saliheen.jpg" class="book-cover-img" alt="رياض الصالحين"></div></div>
-                            <div class="book-card-info"><h3 class="book-card-title">رياض الصالحين</h3><p class="book-card-author">الإمام النووي</p></div>
-                        </div>
-                        <div class="book-back">
-                            <h3 class="book-back-title">رياض الصالحين</h3>
-                            <p class="book-back-desc">مختصر جامع في الأحاديث الصحيحة مرتب على الأبواب، من أكثر الكتب انتشارًا ونفعًا.</p>
-                            <div class="book-back-actions"><a href="book-details.html?id=16" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'رياض الصالحين')">♡ أضف للمفضلة</button></div>
-                        </div>
-                    </div>
-                </div>
+<div class="book-card">
+<div class="book-inner">
+<div class="book-front">
+<div class="book-cover-wrapper">
+<div class="book-cover-3d cover-wine">
+<img alt="سنن أبي داود" class="book-cover-img" src="images/abu-dawood.jpg"/>
+</div>
+</div>
+<div class="book-card-info">
+<h3 class="book-card-title">سنن أبي داود</h3>
+<p class="book-card-author">أبو داود سليمان بن الأشعث</p>
+</div>
+</div>
+<div class="book-back">
+<h3 class="book-back-title">سنن أبي داود</h3>
+<p class="book-back-desc">من أمهات كتب الحديث الستة، يركز على أحاديث الأحكام الفقهية ويعد مرجعًا أساسيًا للفقهاء.</p>
+<div class="book-back-actions">
+<a class="btn btn-primary" href="book-details.html?id=3">اقرأ الآن</a>
+<button class="btn btn-outline" onclick="addToFav(event,'سنن أبي داود')">♡ أضف للمفضلة</button>
+</div>
+</div>
+</div>
+</div><div class="book-card">
+<div class="book-inner">
+<div class="book-front">
+<div class="book-cover-wrapper">
+<div class="book-cover-3d cover-earth">
+<img alt="جامع الترمذي" class="book-cover-img" src="images/tirmidhi.jpg"/>
+</div>
+</div>
+<div class="book-card-info">
+<h3 class="book-card-title">جامع الترمذي</h3>
+<p class="book-card-author">محمد بن عيسى الترمذي</p>
+</div>
+</div>
+<div class="book-back">
+<h3 class="book-back-title">جامع الترمذي</h3>
+<p class="book-back-desc">يتميز ببيان درجة الأحاديث من صحة وضعف وذكر مذاهب الفقهاء واختلافهم في المسائل.</p>
+<div class="book-back-actions">
+<a class="btn btn-primary" href="book-details.html?id=4">اقرأ الآن</a>
+<button class="btn btn-outline" onclick="addToFav(event,'جامع الترمذي')">♡ أضف للمفضلة</button>
+</div>
+</div>
+</div>
+</div><div class="book-card">
+<div class="book-inner">
+<div class="book-front">
+<div class="book-cover-wrapper">
+<div class="book-cover-3d cover-emerald">
+<img alt="سنن النسائي" class="book-cover-img" src="images/nasai.jpg"/>
+</div>
+</div>
+<div class="book-card-info">
+<h3 class="book-card-title">سنن النسائي</h3>
+<p class="book-card-author">أحمد بن شعيب النسائي</p>
+</div>
+</div>
+<div class="book-back">
+<h3 class="book-back-title">سنن النسائي</h3>
+<p class="book-back-desc">من أقل كتب السنن أحاديث ضعيفة بعد الصحيحين، يتميز بدقة الترتيب وحسن التبويب.</p>
+<div class="book-back-actions">
+<a class="btn btn-primary" href="book-details.html?id=5">اقرأ الآن</a>
+<button class="btn btn-outline" onclick="addToFav(event,'سنن النسائي')">♡ أضف للمفضلة</button>
+</div>
+</div>
+</div>
+</div><div class="book-card">
+<div class="book-inner">
+<div class="book-front">
+<div class="book-cover-wrapper">
+<div class="book-cover-3d cover-navy">
+<img alt="سنن ابن ماجه" class="book-cover-img" src="images/ibn-majah.jpg"/>
+</div>
+</div>
+<div class="book-card-info">
+<h3 class="book-card-title">سنن ابن ماجه</h3>
+<p class="book-card-author">محمد بن يزيد ابن ماجه</p>
+</div>
+</div>
+<div class="book-back">
+<h3 class="book-back-title">سنن ابن ماجه</h3>
+<p class="book-back-desc">أحد الكتب الستة في الحديث النبوي الشريف، يضم أبوابًا مهمة في الفقه والعبادات والمعاملات.</p>
+<div class="book-back-actions">
+<a class="btn btn-primary" href="book-details.html?id=6">اقرأ الآن</a>
+<button class="btn btn-outline" onclick="addToFav(event,'سنن ابن ماجه')">♡ أضف للمفضلة</button>
+</div>
+</div>
+</div>
+</div><div class="book-card">
+<div class="book-inner">
+<div class="book-front">
+<div class="book-cover-wrapper">
+<div class="book-cover-3d cover-wine">
+<img alt="الموطأ" class="book-cover-img" src="images/muwatta.jpg"/>
+</div>
+</div>
+<div class="book-card-info">
+<h3 class="book-card-title">الموطأ</h3>
+<p class="book-card-author">الإمام مالك بن أنس</p>
+</div>
+</div>
+<div class="book-back">
+<h3 class="book-back-title">الموطأ</h3>
+<p class="book-back-desc">أول كتاب حديث مرتب على أبواب الفقه، يجمع بين الحديث والفقه وعمل أهل المدينة.</p>
+<div class="book-back-actions">
+<a class="btn btn-primary" href="book-details.html?id=7">اقرأ الآن</a>
+<button class="btn btn-outline" onclick="addToFav(event,'الموطأ')">♡ أضف للمفضلة</button>
+</div>
+</div>
+</div>
+</div><div class="book-card">
+<div class="book-inner">
+<div class="book-front">
+<div class="book-cover-wrapper">
+<div class="book-cover-3d cover-earth">
+<img alt="مسند الإمام أحمد" class="book-cover-img" src="images/musnad-ahmad.jpg"/>
+</div>
+</div>
+<div class="book-card-info">
+<h3 class="book-card-title">مسند الإمام أحمد</h3>
+<p class="book-card-author">الإمام أحمد بن حنبل</p>
+</div>
+</div>
+<div class="book-back">
+<h3 class="book-back-title">مسند الإمام أحمد</h3>
+<p class="book-back-desc">من أوسع كتب الحديث النبوي، يضم أكثر من سبعة وعشرين ألف حديث مرتبة على مسانيد الصحابة.</p>
+<div class="book-back-actions">
+<a class="btn btn-primary" href="book-details.html?id=8">اقرأ الآن</a>
+<button class="btn btn-outline" onclick="addToFav(event,'مسند الإمام أحمد')">♡ أضف للمفضلة</button>
+</div>
+</div>
+</div>
+</div><div class="book-card">
+<div class="book-inner">
+<div class="book-front">
+<div class="book-cover-wrapper">
+<div class="book-cover-3d cover-emerald">
+<img alt="تفسير الطبري" class="book-cover-img" src="images/tafsir-tabari.jpg"/>
+</div>
+</div>
+<div class="book-card-info">
+<h3 class="book-card-title">تفسير الطبري</h3>
+<p class="book-card-author">محمد بن جرير الطبري</p>
+</div>
+</div>
+<div class="book-back">
+<h3 class="book-back-title">تفسير الطبري</h3>
+<p class="book-back-desc">أعظم كتب التفسير بالمأثور وأشملها، يعتمد على الآثار والروايات في بيان معاني القرآن الكريم.</p>
+<div class="book-back-actions">
+<a class="btn btn-primary" href="book-details.html?id=9">اقرأ الآن</a>
+<button class="btn btn-outline" onclick="addToFav(event,'تفسير الطبري')">♡ أضف للمفضلة</button>
+</div>
+</div>
+</div>
+</div><div class="book-card">
+<div class="book-inner">
+<div class="book-front">
+<div class="book-cover-wrapper">
+<div class="book-cover-3d cover-navy">
+<img alt="تفسير ابن كثير" class="book-cover-img" src="images/tafsir-ibn-kathir.jpg"/>
+</div>
+</div>
+<div class="book-card-info">
+<h3 class="book-card-title">تفسير ابن كثير</h3>
+<p class="book-card-author">إسماعيل بن عمر بن كثير</p>
+</div>
+</div>
+<div class="book-back">
+<h3 class="book-back-title">تفسير ابن كثير</h3>
+<p class="book-back-desc">من أشهر كتب التفسير بالمأثور وأيسرها، يفسر القرآن بالقرآن ثم بالسنة ثم بأقوال الصحابة.</p>
+<div class="book-back-actions">
+<a class="btn btn-primary" href="book-details.html?id=10">اقرأ الآن</a>
+<button class="btn btn-outline" onclick="addToFav(event,'تفسير ابن كثير')">♡ أضف للمفضلة</button>
+</div>
+</div>
+</div>
+</div><div class="book-card">
+<div class="book-inner">
+<div class="book-front">
+<div class="book-cover-wrapper"><div class="book-cover-3d cover-earth"><img alt="مدارج السالكين" class="book-cover-img" src="images/madarij-al-salikeen.jpg"/></div></div>
+<div class="book-card-info"><h3 class="book-card-title">مدارج السالكين</h3><p class="book-card-author">ابن قيم الجوزية</p></div>
+</div>
+<div class="book-back">
+<h3 class="book-back-title">مدارج السالكين</h3>
+<p class="book-back-desc">شرح منازل السائرين في طريق العبودية لله تعالى، من أعمق كتب السلوك والتربية الإيمانية.</p>
+<div class="book-back-actions"><a class="btn btn-primary" href="book-details.html?id=12">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'مدارج السالكين')">♡ أضف للمفضلة</button></div>
+</div>
+</div>
+</div><div class="book-card">
+<div class="book-inner">
+<div class="book-front">
+<div class="book-cover-wrapper"><div class="book-cover-3d cover-navy"><img alt="الرحيق المختوم" class="book-cover-img" src="images/rahiq-makhtum.jpg"/></div></div>
+<div class="book-card-info"><h3 class="book-card-title">الرحيق المختوم</h3><p class="book-card-author">صفي الرحمن المباركفوري</p></div>
+</div>
+<div class="book-back">
+<h3 class="book-back-title">الرحيق المختوم</h3>
+<p class="book-back-desc">سيرة نبوية مختصرة شاملة حازت على المركز الأول في مسابقة رابطة العالم الإسلامي.</p>
+<div class="book-back-actions"><a class="btn btn-primary" href="book-details.html?id=14">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'الرحيق المختوم')">♡ أضف للمفضلة</button></div>
+</div>
+</div>
+</div><div class="book-card">
+<div class="book-inner">
+<div class="book-front">
+<div class="book-cover-wrapper"><div class="book-cover-3d cover-wine"><img alt="فقه السنة" class="book-cover-img" src="images/fiqh-al-sunna.jpg"/></div></div>
+<div class="book-card-info"><h3 class="book-card-title">فقه السنة</h3><p class="book-card-author">السيد سابق</p></div>
+</div>
+<div class="book-back">
+<h3 class="book-back-title">فقه السنة</h3>
+<p class="book-back-desc">كتاب فقهي معاصر ميسر يجمع أدلة الأحكام الشرعية من الكتاب والسنة بأسلوب واضح.</p>
+<div class="book-back-actions"><a class="btn btn-primary" href="book-details.html?id=15">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'فقه السنة')">♡ أضف للمفضلة</button></div>
+</div>
+</div>
+</div><div class="book-card">
+<div class="book-inner">
+<div class="book-front">
+<div class="book-cover-wrapper"><div class="book-cover-3d cover-emerald"><img alt="الأدب المفرد" class="book-cover-img" src="images/adab-al-mufrad.jpg"/></div></div>
+<div class="book-card-info"><h3 class="book-card-title">الأدب المفرد</h3><p class="book-card-author">الإمام البخاري</p></div>
+</div>
+<div class="book-back">
+<h3 class="book-back-title">الأدب المفرد</h3>
+<p class="book-back-desc">كتاب جامع في آداب الإسلام وأخلاقه، يضم أحاديث نبوية في حسن الخلق والمعاملة.</p>
+<div class="book-back-actions"><a class="btn btn-primary" href="book-details.html?id=17">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'الأدب المفرد')">♡ أضف للمفضلة</button></div>
+</div>
+</div>
+</div></div>
+</div>
+<!-- ===== القائمة الرابعة ===== -->
+<div class="category-section" id="category4">
+<div class="category-header"><h2>القائمة الرابعة</h2></div>
+<div class="books-grid">
 
-                <div class="book-card">
-                    <div class="book-inner">
-                        <div class="book-front">
-                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-emerald"><img src="images/adab-al-mufrad.jpg" class="book-cover-img" alt="الأدب المفرد"></div></div>
-                            <div class="book-card-info"><h3 class="book-card-title">الأدب المفرد</h3><p class="book-card-author">الإمام البخاري</p></div>
-                        </div>
-                        <div class="book-back">
-                            <h3 class="book-back-title">الأدب المفرد</h3>
-                            <p class="book-back-desc">كتاب جامع في آداب الإسلام وأخلاقه، يضم أحاديث نبوية في حسن الخلق والمعاملة.</p>
-                            <div class="book-back-actions"><a href="book-details.html?id=17" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'الأدب المفرد')">♡ أضف للمفضلة</button></div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="book-card">
-                    <div class="book-inner">
-                        <div class="book-front">
-                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-navy"><img src="images/tafsir-al-saadi.jpg" class="book-cover-img" alt="تفسير السعدي"></div></div>
-                            <div class="book-card-info"><h3 class="book-card-title">تفسير السعدي</h3><p class="book-card-author">عبد الرحمن بن ناصر السعدي</p></div>
-                        </div>
-                        <div class="book-back">
-                            <h3 class="book-back-title">تفسير السعدي</h3>
-                            <p class="book-back-desc">تفسير ميسر واضح العبارة سهل الفهم، يعتمد على استنباط الفوائد والهدايات القرآنية.</p>
-                            <div class="book-back-actions"><a href="book-details.html?id=18" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'تفسير السعدي')">♡ أضف للمفضلة</button></div>
-                        </div>
-                    </div>
-                </div>
 
-            </div>
-        </div>
 
-        <!-- ===== القائمة الثالثة ===== -->
-        <div id="category3" class="category-section">
-            <div class="category-header"><h2>القائمة الثالثة</h2></div>
-            <div class="books-grid">
 
-                <div class="book-card">
-                    <div class="book-inner">
-                        <div class="book-front">
-                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-wine"><img src="images/al-umm.jpg" class="book-cover-img" alt="الأم"></div></div>
-                            <div class="book-card-info"><h3 class="book-card-title">الأم</h3><p class="book-card-author">الإمام الشافعي</p></div>
-                        </div>
-                        <div class="book-back">
-                            <h3 class="book-back-title">الأم</h3>
-                            <p class="book-back-desc">أهم كتب الفقه الشافعي ومرجع أساسي في الاجتهاد والاستدلال بالكتاب والسنة.</p>
-                            <div class="book-back-actions"><a href="book-details.html?id=19" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'الأم')">♡ أضف للمفضلة</button></div>
-                        </div>
-                    </div>
-                </div>
+<div class="book-card">
+<div class="book-inner">
+<div class="book-front">
+<div class="book-cover-wrapper"><div class="book-cover-3d cover-navy"><img alt="تفسير السعدي" class="book-cover-img" src="images/tafsir-al-saadi.jpg"/></div></div>
+<div class="book-card-info"><h3 class="book-card-title">تفسير السعدي</h3><p class="book-card-author">عبد الرحمن بن ناصر السعدي</p></div>
+</div>
+<div class="book-back">
+<h3 class="book-back-title">تفسير السعدي</h3>
+<p class="book-back-desc">تفسير ميسر واضح العبارة سهل الفهم، يعتمد على استنباط الفوائد والهدايات القرآنية.</p>
+<div class="book-back-actions"><a class="btn btn-primary" href="book-details.html?id=18">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'تفسير السعدي')">♡ أضف للمفضلة</button></div>
+</div>
+</div>
+</div><div class="book-card">
+<div class="book-inner">
+<div class="book-front">
+<div class="book-cover-wrapper"><div class="book-cover-3d cover-wine"><img alt="الأم" class="book-cover-img" src="images/al-umm.jpg"/></div></div>
+<div class="book-card-info"><h3 class="book-card-title">الأم</h3><p class="book-card-author">الإمام الشافعي</p></div>
+</div>
+<div class="book-back">
+<h3 class="book-back-title">الأم</h3>
+<p class="book-back-desc">أهم كتب الفقه الشافعي ومرجع أساسي في الاجتهاد والاستدلال بالكتاب والسنة.</p>
+<div class="book-back-actions"><a class="btn btn-primary" href="book-details.html?id=19">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'الأم')">♡ أضف للمفضلة</button></div>
+</div>
+</div>
+</div><div class="book-card">
+<div class="book-inner">
+<div class="book-front">
+<div class="book-cover-wrapper"><div class="book-cover-3d cover-earth"><img alt="المغني" class="book-cover-img" src="images/al-mughni.jpg"/></div></div>
+<div class="book-card-info"><h3 class="book-card-title">المغني</h3><p class="book-card-author">ابن قدامة المقدسي</p></div>
+</div>
+<div class="book-back">
+<h3 class="book-back-title">المغني</h3>
+<p class="book-back-desc">موسوعة فقهية مقارنة شاملة في الفقه الحنبلي مع عرض أقوال المذاهب الأخرى وأدلتها.</p>
+<div class="book-back-actions"><a class="btn btn-primary" href="book-details.html?id=20">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'المغني')">♡ أضف للمفضلة</button></div>
+</div>
+</div>
+</div><div class="book-card">
+<div class="book-inner">
+<div class="book-front">
+<div class="book-cover-wrapper"><div class="book-cover-3d cover-emerald"><img alt="المحلى" class="book-cover-img" src="images/al-muhalla.jpg"/></div></div>
+<div class="book-card-info"><h3 class="book-card-title">المحلى</h3><p class="book-card-author">ابن حزم الظاهري</p></div>
+</div>
+<div class="book-back">
+<h3 class="book-back-title">المحلى</h3>
+<p class="book-back-desc">كتاب فقهي فريد على منهج الظاهرية، يعتمد على النصوص الشرعية مباشرة مع المناقشة العلمية.</p>
+<div class="book-back-actions"><a class="btn btn-primary" href="book-details.html?id=21">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'المحلى')">♡ أضف للمفضلة</button></div>
+</div>
+</div>
+</div><div class="book-card">
+<div class="book-inner">
+<div class="book-front">
+<div class="book-cover-wrapper"><div class="book-cover-3d cover-navy"><img alt="بداية المجتهد" class="book-cover-img" src="images/bidayat-al-mujtahid.jpg"/></div></div>
+<div class="book-card-info"><h3 class="book-card-title">بداية المجتهد ونهاية المقتصد</h3><p class="book-card-author">ابن رشد</p></div>
+</div>
+<div class="book-back">
+<h3 class="book-back-title">بداية المجتهد</h3>
+<p class="book-back-desc">كتاب فقه مقارن فريد يعرض أسباب اختلاف الفقهاء ومآخذ استدلالهم بأسلوب علمي رصين.</p>
+<div class="book-back-actions"><a class="btn btn-primary" href="book-details.html?id=22">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'بداية المجتهد')">♡ أضف للمفضلة</button></div>
+</div>
+</div>
+</div><div class="book-card">
+<div class="book-inner">
+<div class="book-front">
+<div class="book-cover-wrapper"><div class="book-cover-3d cover-wine"><img alt="الفتاوى الكبرى" class="book-cover-img" src="images/fatawa-kubra.jpg"/></div></div>
+<div class="book-card-info"><h3 class="book-card-title">الفتاوى الكبرى</h3><p class="book-card-author">ابن تيمية</p></div>
+</div>
+<div class="book-back">
+<h3 class="book-back-title">الفتاوى الكبرى</h3>
+<p class="book-back-desc">مجموع فتاوى شيخ الإسلام ابن تيمية في مسائل العقيدة والفقه والتفسير وعلوم متنوعة.</p>
+<div class="book-back-actions"><a class="btn btn-primary" href="book-details.html?id=23">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'الفتاوى الكبرى')">♡ أضف للمفضلة</button></div>
+</div>
+</div>
+</div><div class="book-card">
+<div class="book-inner">
+<div class="book-front">
+<div class="book-cover-wrapper"><div class="book-cover-3d cover-earth"><img alt="إعلام الموقعين" class="book-cover-img" src="images/ilam-al-muwaqqiin.jpg"/></div></div>
+<div class="book-card-info"><h3 class="book-card-title">إعلام الموقعين عن رب العالمين</h3><p class="book-card-author">ابن القيم الجوزية</p></div>
+</div>
+<div class="book-back">
+<h3 class="book-back-title">إعلام الموقعين</h3>
+<p class="book-back-desc">كتاب عظيم في أصول الفقه والفتوى وآدابها، يبين منهج الاستنباط من الكتاب والسنة.</p>
+<div class="book-back-actions"><a class="btn btn-primary" href="book-details.html?id=24">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'إعلام الموقعين')">♡ أضف للمفضلة</button></div>
+</div>
+</div>
+</div><div class="book-card">
+<div class="book-inner">
+<div class="book-front">
+<div class="book-cover-wrapper"><div class="book-cover-3d cover-emerald"><img alt="الرسالة" class="book-cover-img" src="images/al-risala.jpg"/></div></div>
+<div class="book-card-info"><h3 class="book-card-title">الرسالة</h3><p class="book-card-author">الإمام الشافعي</p></div>
+</div>
+<div class="book-back">
+<h3 class="book-back-title">الرسالة</h3>
+<p class="book-back-desc">أول كتاب وُضع في أصول الفقه الإسلامي، أسس فيه الشافعي قواعد الاستدلال والاجتهاد.</p>
+<div class="book-back-actions"><a class="btn btn-primary" href="book-details.html?id=25">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'الرسالة')">♡ أضف للمفضلة</button></div>
+</div>
+</div>
+</div><div class="book-card">
+<div class="book-inner">
+<div class="book-front">
+<div class="book-cover-wrapper"><div class="book-cover-3d cover-navy"><img alt="التمهيد" class="book-cover-img" src="images/al-tamhid.jpg"/></div></div>
+<div class="book-card-info"><h3 class="book-card-title">التمهيد لما في الموطأ من المعاني والأسانيد</h3><p class="book-card-author">ابن عبد البر</p></div>
+</div>
+<div class="book-back">
+<h3 class="book-back-title">التمهيد</h3>
+<p class="book-back-desc">شرح موسوعي لأحاديث الموطأ مرتبة على الأسانيد، يجمع بين الحديث والفقه والرجال.</p>
+<div class="book-back-actions"><a class="btn btn-primary" href="book-details.html?id=26">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'التمهيد')">♡ أضف للمفضلة</button></div>
+</div>
+</div>
+</div><div class="book-card">
+<div class="book-inner">
+<div class="book-front">
+<div class="book-cover-wrapper"><div class="book-cover-3d cover-wine"><img alt="المدونة الكبرى" class="book-cover-img" src="images/al-mudawwana.jpg"/></div></div>
+<div class="book-card-info"><h3 class="book-card-title">المدونة الكبرى</h3><p class="book-card-author">سحنون</p></div>
+</div>
+<div class="book-back">
+<h3 class="book-back-title">المدونة الكبرى</h3>
+<p class="book-back-desc">أهم مراجع الفقه المالكي، تضم مسائل الإمام مالك برواية ابن القاسم وتدوين سحنون.</p>
+<div class="book-back-actions"><a class="btn btn-primary" href="book-details.html?id=27">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'المدونة الكبرى')">♡ أضف للمفضلة</button></div>
+</div>
+</div>
+</div><div class="book-card">
+<div class="book-inner">
+<div class="book-front">
+<div class="book-cover-wrapper"><div class="book-cover-3d cover-earth"><img alt="الموافقات" class="book-cover-img" src="images/al-muwafaqat.jpg"/></div></div>
+<div class="book-card-info"><h3 class="book-card-title">الموافقات</h3><p class="book-card-author">الشاطبي</p></div>
+</div>
+<div class="book-back">
+<h3 class="book-back-title">الموافقات</h3>
+<p class="book-back-desc">كتاب رائد في مقاصد الشريعة وأصولها، يؤسس لفهم عميق لحكم التشريع ومقاصده.</p>
+<div class="book-back-actions"><a class="btn btn-primary" href="book-details.html?id=28">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'الموافقات')">♡ أضف للمفضلة</button></div>
+</div>
+</div>
+</div></div>
 
-                <div class="book-card">
-                    <div class="book-inner">
-                        <div class="book-front">
-                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-earth"><img src="images/al-mughni.jpg" class="book-cover-img" alt="المغني"></div></div>
-                            <div class="book-card-info"><h3 class="book-card-title">المغني</h3><p class="book-card-author">ابن قدامة المقدسي</p></div>
-                        </div>
-                        <div class="book-back">
-                            <h3 class="book-back-title">المغني</h3>
-                            <p class="book-back-desc">موسوعة فقهية مقارنة شاملة في الفقه الحنبلي مع عرض أقوال المذاهب الأخرى وأدلتها.</p>
-                            <div class="book-back-actions"><a href="book-details.html?id=20" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'المغني')">♡ أضف للمفضلة</button></div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="book-card">
-                    <div class="book-inner">
-                        <div class="book-front">
-                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-emerald"><img src="images/al-muhalla.jpg" class="book-cover-img" alt="المحلى"></div></div>
-                            <div class="book-card-info"><h3 class="book-card-title">المحلى</h3><p class="book-card-author">ابن حزم الظاهري</p></div>
-                        </div>
-                        <div class="book-back">
-                            <h3 class="book-back-title">المحلى</h3>
-                            <p class="book-back-desc">كتاب فقهي فريد على منهج الظاهرية، يعتمد على النصوص الشرعية مباشرة مع المناقشة العلمية.</p>
-                            <div class="book-back-actions"><a href="book-details.html?id=21" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'المحلى')">♡ أضف للمفضلة</button></div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="book-card">
-                    <div class="book-inner">
-                        <div class="book-front">
-                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-navy"><img src="images/bidayat-al-mujtahid.jpg" class="book-cover-img" alt="بداية المجتهد"></div></div>
-                            <div class="book-card-info"><h3 class="book-card-title">بداية المجتهد ونهاية المقتصد</h3><p class="book-card-author">ابن رشد</p></div>
-                        </div>
-                        <div class="book-back">
-                            <h3 class="book-back-title">بداية المجتهد</h3>
-                            <p class="book-back-desc">كتاب فقه مقارن فريد يعرض أسباب اختلاف الفقهاء ومآخذ استدلالهم بأسلوب علمي رصين.</p>
-                            <div class="book-back-actions"><a href="book-details.html?id=22" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'بداية المجتهد')">♡ أضف للمفضلة</button></div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="book-card">
-                    <div class="book-inner">
-                        <div class="book-front">
-                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-wine"><img src="images/fatawa-kubra.jpg" class="book-cover-img" alt="الفتاوى الكبرى"></div></div>
-                            <div class="book-card-info"><h3 class="book-card-title">الفتاوى الكبرى</h3><p class="book-card-author">ابن تيمية</p></div>
-                        </div>
-                        <div class="book-back">
-                            <h3 class="book-back-title">الفتاوى الكبرى</h3>
-                            <p class="book-back-desc">مجموع فتاوى شيخ الإسلام ابن تيمية في مسائل العقيدة والفقه والتفسير وعلوم متنوعة.</p>
-                            <div class="book-back-actions"><a href="book-details.html?id=23" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'الفتاوى الكبرى')">♡ أضف للمفضلة</button></div>
-                        </div>
-                    </div>
-                </div>
 
-            </div>
-        </div>
 
-        <!-- ===== القائمة الرابعة ===== -->
-        <div id="category4" class="category-section">
-            <div class="category-header"><h2>القائمة الرابعة</h2></div>
-            <div class="books-grid">
 
-                <div class="book-card">
-                    <div class="book-inner">
-                        <div class="book-front">
-                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-earth"><img src="images/ilam-al-muwaqqiin.jpg" class="book-cover-img" alt="إعلام الموقعين"></div></div>
-                            <div class="book-card-info"><h3 class="book-card-title">إعلام الموقعين عن رب العالمين</h3><p class="book-card-author">ابن القيم الجوزية</p></div>
-                        </div>
-                        <div class="book-back">
-                            <h3 class="book-back-title">إعلام الموقعين</h3>
-                            <p class="book-back-desc">كتاب عظيم في أصول الفقه والفتوى وآدابها، يبين منهج الاستنباط من الكتاب والسنة.</p>
-                            <div class="book-back-actions"><a href="book-details.html?id=24" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'إعلام الموقعين')">♡ أضف للمفضلة</button></div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="book-card">
-                    <div class="book-inner">
-                        <div class="book-front">
-                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-emerald"><img src="images/al-risala.jpg" class="book-cover-img" alt="الرسالة"></div></div>
-                            <div class="book-card-info"><h3 class="book-card-title">الرسالة</h3><p class="book-card-author">الإمام الشافعي</p></div>
-                        </div>
-                        <div class="book-back">
-                            <h3 class="book-back-title">الرسالة</h3>
-                            <p class="book-back-desc">أول كتاب وُضع في أصول الفقه الإسلامي، أسس فيه الشافعي قواعد الاستدلال والاجتهاد.</p>
-                            <div class="book-back-actions"><a href="book-details.html?id=25" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'الرسالة')">♡ أضف للمفضلة</button></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="book-card">
-                    <div class="book-inner">
-                        <div class="book-front">
-                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-navy"><img src="images/al-tamhid.jpg" class="book-cover-img" alt="التمهيد"></div></div>
-                            <div class="book-card-info"><h3 class="book-card-title">التمهيد لما في الموطأ من المعاني والأسانيد</h3><p class="book-card-author">ابن عبد البر</p></div>
-                        </div>
-                        <div class="book-back">
-                            <h3 class="book-back-title">التمهيد</h3>
-                            <p class="book-back-desc">شرح موسوعي لأحاديث الموطأ مرتبة على الأسانيد، يجمع بين الحديث والفقه والرجال.</p>
-                            <div class="book-back-actions"><a href="book-details.html?id=26" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'التمهيد')">♡ أضف للمفضلة</button></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="book-card">
-                    <div class="book-inner">
-                        <div class="book-front">
-                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-wine"><img src="images/al-mudawwana.jpg" class="book-cover-img" alt="المدونة الكبرى"></div></div>
-                            <div class="book-card-info"><h3 class="book-card-title">المدونة الكبرى</h3><p class="book-card-author">سحنون</p></div>
-                        </div>
-                        <div class="book-back">
-                            <h3 class="book-back-title">المدونة الكبرى</h3>
-                            <p class="book-back-desc">أهم مراجع الفقه المالكي، تضم مسائل الإمام مالك برواية ابن القاسم وتدوين سحنون.</p>
-                            <div class="book-back-actions"><a href="book-details.html?id=27" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'المدونة الكبرى')">♡ أضف للمفضلة</button></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="book-card">
-                    <div class="book-inner">
-                        <div class="book-front">
-                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-earth"><img src="images/al-muwafaqat.jpg" class="book-cover-img" alt="الموافقات"></div></div>
-                            <div class="book-card-info"><h3 class="book-card-title">الموافقات</h3><p class="book-card-author">الشاطبي</p></div>
-                        </div>
-                        <div class="book-back">
-                            <h3 class="book-back-title">الموافقات</h3>
-                            <p class="book-back-desc">كتاب رائد في مقاصد الشريعة وأصولها، يؤسس لفهم عميق لحكم التشريع ومقاصده.</p>
-                            <div class="book-back-actions"><a href="book-details.html?id=28" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'الموافقات')">♡ أضف للمفضلة</button></div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-                <div class="book-card">
-                    <div class="book-inner">
-                        <div class="book-front">
-                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-navy"><img src="images/athar-masalih-mafasid.jpg" class="book-cover-img" alt="أثر اعتبار المصالح والمفاسد في الفتوى"></div></div>
-                            <div class="book-card-info"><h3 class="book-card-title">أثر اعتبار المصالح والمفاسد في الفتوى</h3><p class="book-card-author">د. عبد الله بن بيه</p></div>
-                        </div>
-                        <div class="book-back">
-                            <h3 class="book-back-title">أثر اعتبار المصالح والمفاسد في الفتوى</h3>
-                            <p class="book-back-desc">بحث في مراعاة المصالح والمفاسد وأثرها في ترشيد الفتوى وتنزيل الأحكام على الوقائع.</p>
-                            <div class="book-back-actions"><a href="book-details.html?id=29" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'أثر اعتبار المصالح والمفاسد في الفتوى')">♡ أضف للمفضلة</button></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="book-card">
-                    <div class="book-inner">
-                        <div class="book-front">
-                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-navy"><img src="images/arbaeen-nawawi.jpg" class="book-cover-img" alt="الأربعون النووية وتتمتها"></div></div>
-                            <div class="book-card-info"><h3 class="book-card-title">الأربعون النووية وتتمتها</h3><p class="book-card-author">الإمام النووي</p></div>
-                        </div>
-                        <div class="book-back">
-                            <h3 class="book-back-title">الأربعون النووية وتتمتها</h3>
-                            <p class="book-back-desc">مجموعة جامعة من الأحاديث النبوية في أصول الدين والعبادات والأخلاق، مع تتمة الأحاديث المختارة.</p>
-                            <div class="book-back-actions"><a href="book-details.html?id=30" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'الأربعون النووية وتتمتها')">♡ أضف للمفضلة</button></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="book-card">
-                    <div class="book-inner">
-                        <div class="book-front">
-                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-navy"><img src="images/al-zuhri.jpg" class="book-cover-img" alt="الزهري"></div></div>
-                            <div class="book-card-info"><h3 class="book-card-title">الزهري</h3><p class="book-card-author">محمد بن مسلم الزهري</p></div>
-                        </div>
-                        <div class="book-back">
-                            <h3 class="book-back-title">الزهري</h3>
-                            <p class="book-back-desc">عرض موجز لترجمة الإمام الزهري ومكانته العلمية وإسهاماته في حفظ السنة ورواية الحديث.</p>
-                            <div class="book-back-actions"><a href="book-details.html?id=31" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'الزهري')">♡ أضف للمفضلة</button></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="book-card">
-                    <div class="book-inner">
-                        <div class="book-front">
-                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-navy"><img src="images/aqeeda-wasitiyya.jpg" class="book-cover-img" alt="العقيدة الواسطية"></div></div>
-                            <div class="book-card-info"><h3 class="book-card-title">العقيدة الواسطية</h3><p class="book-card-author">شيخ الإسلام ابن تيمية</p></div>
-                        </div>
-                        <div class="book-back">
-                            <h3 class="book-back-title">العقيدة الواسطية</h3>
-                            <p class="book-back-desc">رسالة مختصرة جامعة في أصول اعتقاد أهل السنة والجماعة في أسماء الله وصفاته وأبواب الإيمان.</p>
-                            <div class="book-back-actions"><a href="book-details.html?id=32" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'العقيدة الواسطية')">♡ أضف للمفضلة</button></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="book-card">
-                    <div class="book-inner">
-                        <div class="book-front">
-                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-navy"><img src="images/mulakhkhas-tawhid.jpg" class="book-cover-img" alt="الملخص في شرح كتاب التوحيد"></div></div>
-                            <div class="book-card-info"><h3 class="book-card-title">الملخص في شرح كتاب التوحيد</h3><p class="book-card-author">صالح بن فوزان الفوزان</p></div>
-                        </div>
-                        <div class="book-back">
-                            <h3 class="book-back-title">الملخص في شرح كتاب التوحيد</h3>
-                            <p class="book-back-desc">شرح مبسط لأبواب كتاب التوحيد، يوضح مسائل العقيدة وأدلتها بأسلوب تعليمي واضح.</p>
-                            <div class="book-back-actions"><a href="book-details.html?id=33" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'الملخص في شرح كتاب التوحيد')">♡ أضف للمفضلة</button></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="book-card">
-                    <div class="book-inner">
-                        <div class="book-front">
-                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-navy"><img src="images/bulugh-maram.jpg" class="book-cover-img" alt="بلوغ المرام من أدلة الأحكام"></div></div>
-                            <div class="book-card-info"><h3 class="book-card-title">بلوغ المرام من أدلة الأحكام</h3><p class="book-card-author">ابن حجر العسقلاني</p></div>
-                        </div>
-                        <div class="book-back">
-                            <h3 class="book-back-title">بلوغ المرام من أدلة الأحكام</h3>
-                            <p class="book-back-desc">كتاب حديثي يجمع أحاديث الأحكام مرتبة على أبواب الفقه، مع عناية بالتخريج والشرح.</p>
-                            <div class="book-back-actions"><a href="book-details.html?id=34" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'بلوغ المرام من أدلة الأحكام')">♡ أضف للمفضلة</button></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="book-card">
-                    <div class="book-inner">
-                        <div class="book-front">
-                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-navy"><img src="images/sahih-ibn-hibban.jpg" class="book-cover-img" alt="صحيح ابن حبان"></div></div>
-                            <div class="book-card-info"><h3 class="book-card-title">صحيح ابن حبان</h3><p class="book-card-author">الإمام ابن حبان البستي</p></div>
-                        </div>
-                        <div class="book-back">
-                            <h3 class="book-back-title">صحيح ابن حبان</h3>
-                            <p class="book-back-desc">من دواوين السنة المشهورة، جمع فيه المؤلف الأحاديث الصحيحة ورتبها في أبواب جامعة.</p>
-                            <div class="book-back-actions"><a href="book-details.html?id=35" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'صحيح ابن حبان')">♡ أضف للمفضلة</button></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="book-card">
-                    <div class="book-inner">
-                        <div class="book-front">
-                            <div class="book-cover-wrapper"><div class="book-cover-3d cover-navy"><img src="images/sahih-sunan-ibn-majah.jpg" class="book-cover-img" alt="صحيح سنن ابن ماجة"></div></div>
-                            <div class="book-card-info"><h3 class="book-card-title">صحيح سنن ابن ماجة</h3><p class="book-card-author">محمد ناصر الدين الألباني</p></div>
-                        </div>
-                        <div class="book-back">
-                            <h3 class="book-back-title">صحيح سنن ابن ماجة</h3>
-                            <p class="book-back-desc">تحقيق لأحاديث سنن ابن ماجة مع تمييز الصحيح وبيان درجته وفق منهج المحدثين.</p>
-                            <div class="book-back-actions"><a href="book-details.html?id=36" class="btn btn-primary">اقرأ الآن</a><button class="btn btn-outline" onclick="addToFav(event,'صحيح سنن ابن ماجة')">♡ أضف للمفضلة</button></div>
-                        </div>
-                    </div>
-                </div>
-        </div>
-
-    </div>
-
-    <div class="back-to-top" id="backToTop" role="button" tabindex="0" aria-label="العودة للأعلى">
-        <img src="https://em-content.zobj.net/source/telegram/386/top-arrow_1f51d.webp" alt="⬆" width="30">
-    </div>
-  <script src="../js/favorites-data.js"></script>
+</div>
+</div>
+<div aria-label="العودة للأعلى" class="back-to-top" id="backToTop" role="button" tabindex="0">
+<img alt="⬆" src="https://em-content.zobj.net/source/telegram/386/top-arrow_1f51d.webp" width="30"/>
+</div>
+<script src="../js/favorites-data.js"></script>
 <script>
 
 (function () {
@@ -1415,6 +1374,5 @@
 })();
 
 </script>
-
 </body>
 </html>
