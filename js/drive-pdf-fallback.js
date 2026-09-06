@@ -2,7 +2,6 @@
     "use strict";
 
     var PROXY = "https://mishkat-drive-proxy.netlify.app/drive-pdf";
-    var SIZE_LIMIT = 25 * 1024 * 1024;
     var PDFJS_CDN = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js";
     var PDFJS_WORKER = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
     var MIN_ZOOM = 0.6;
@@ -48,18 +47,19 @@
         });
     }
 
-    async function fileTooLarge(id) {
+    async function canOpenWithPdfJs(id) {
         try {
             var response = await fetch(proxyUrl(id), {
                 method: "GET",
-                headers: { Range: "bytes=0-0" }
+                headers: { Range: "bytes=0-7" }
             });
-            var range = response.headers.get("content-range") || "";
-            var total = 0;
-            var match = range.match(/\/(\d+)$/);
-            if (match) total = parseInt(match[1], 10);
-            else total = parseInt(response.headers.get("content-length") || "0", 10);
-            return total >= SIZE_LIMIT;
+            if (!response.ok && response.status !== 206) return false;
+            var bytes = new Uint8Array(await response.arrayBuffer());
+            return bytes.length >= 4 &&
+                bytes[0] === 0x25 &&
+                bytes[1] === 0x50 &&
+                bytes[2] === 0x44 &&
+                bytes[3] === 0x46;
         } catch (error) {
             return false;
         }
@@ -355,8 +355,8 @@
         if (!iframe) return;
         var id = fileIdFromIframe(iframe);
         if (!id) return;
-        fileTooLarge(id).then(function (tooLarge) {
-            if (tooLarge) mountPdfJs(iframe, id);
+        canOpenWithPdfJs(id).then(function (canOpen) {
+            if (canOpen) mountPdfJs(iframe, id);
         });
         iframe.addEventListener("error", function () {
             mountPdfJs(iframe, id);
