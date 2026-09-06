@@ -1,91 +1,77 @@
-/* Shared outer shell for Mishkat book-reading pages. PDF.js/Drive viewer rules remain untouched. */
+/* Shared outer shell for Mishkat book-reading pages. Visual only — PDF.js / Drive / proxy remain untouched. */
 :root {
     --reader-primary: #2c3e50;
     --reader-dark: #34495e;
     --reader-accent: #e74c3c;
-    --reader-paper: rgba(255, 255, 255, 0.97);
-    --reader-line: rgba(44, 62, 80, 0.12);
+    --reader-bg: #e8edf1;
+    --reader-paper: #f6f3ee;
+    --reader-ink: #2c3e50;
+    --reader-muted: #5d6d7e;
+    --reader-line: rgba(44, 62, 80, 0.1);
+    --reader-shadow: 0 10px 28px rgba(44, 62, 80, 0.12);
 }
 
 html {
     min-height: 100%;
-    background: var(--reader-primary);
+    background: var(--reader-bg);
 }
 
 body {
+    display: flex !important;
+    flex-direction: column;
     min-height: 100dvh;
-    padding: clamp(14px, 2.5vw, 34px);
-    background:
-        radial-gradient(circle at 10% 8%, rgba(231, 76, 60, 0.2), transparent 28%),
-        radial-gradient(circle at 92% 88%, rgba(255, 255, 255, 0.08), transparent 30%),
-        linear-gradient(135deg, var(--reader-primary) 0%, var(--reader-dark) 62%, #263746 100%);
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: var(--reader-bg) !important;
+    color: var(--reader-ink);
 }
 
 .container {
     position: relative;
     isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    width: 100% !important;
+    max-width: none !important;
+    min-height: 100dvh !important;
+    margin: 0 !important;
+    padding: 10px 12px 12px !important;
     overflow: hidden;
-    max-width: 1180px;
-    width: min(94vw, 1180px);
-    min-height: min(92dvh, 980px);
-    margin: auto;
-    padding: 30px clamp(18px, 3vw, 42px) 32px;
-    background: var(--reader-paper);
-    border: 1px solid rgba(255, 255, 255, 0.82);
-    border-top: 5px solid var(--reader-accent);
-    border-radius: 18px;
-    box-shadow: 0 24px 60px rgba(13, 25, 35, 0.35);
+    background: var(--reader-bg) !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
 }
 
-.container::before {
-    content: "";
-    position: absolute;
-    inset: 0 0 auto;
-    height: 104px;
-    background: linear-gradient(180deg, rgba(44, 62, 80, 0.07), transparent);
-    pointer-events: none;
-    z-index: -1;
-}
-
+.container::before,
 .container::after {
-    content: "";
-    position: absolute;
-    top: 22px;
-    left: 50%;
-    width: 92px;
-    height: 3px;
-    border-radius: 999px;
-    background: var(--reader-accent);
-    opacity: 0.18;
-    transform: translateX(-50%);
-    pointer-events: none;
+    content: none !important;
+    display: none !important;
 }
 
 .title {
     position: relative;
-    z-index: 1;
+    z-index: 2;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 12px;
-    margin: 0 auto 24px;
-    padding: 6px 0 18px;
-    color: var(--reader-primary);
-    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    justify-content: flex-start;
+    gap: 8px;
+    width: calc(100% - 118px);
+    margin: 0 0 8px !important;
+    padding: 2px 0 0 !important;
+    color: var(--reader-primary) !important;
+    border-bottom: 0 !important;
+    font-size: 1.02rem !important;
+    font-weight: 700;
     letter-spacing: 0;
-    text-wrap: balance;
+    line-height: 1.35;
 }
 
 .title::after {
-    content: "";
-    position: absolute;
-    right: 50%;
-    bottom: 0;
-    width: 82px;
-    height: 3px;
-    border-radius: 999px;
-    background: linear-gradient(90deg, var(--reader-accent), rgba(231, 76, 60, 0.25));
-    transform: translateX(50%);
+    content: none !important;
+    display: none !important;
 }
 
 .title-icon {
@@ -93,72 +79,202 @@ body {
     flex: 0 0 auto;
     align-items: center;
     justify-content: center;
-    width: 42px;
-    height: 42px;
-    color: var(--reader-accent);
+    width: 28px;
+    height: 28px;
+    color: var(--reader-primary);
+    background: rgba(44, 62, 80, 0.08);
+    border: 1px solid var(--reader-line);
+    border-radius: 8px;
 }
 
-.title-icon svg {
-    display: block;
+.title-icon svg,
+.title-icon img {
+    display: none !important;
+}
+
+.title-icon::before {
+    content: "";
+    width: 13px;
+    height: 16px;
+    border: 1.6px solid currentColor;
+    border-radius: 1px 5px 5px 1px;
+    box-shadow: inset -5px 0 0 -3.4px currentColor;
+}
+
+.watermark {
+    position: absolute !important;
+    top: 12px;
+    left: 12px;
+    transform: none !important;
+    z-index: 6;
+    padding: 5px 10px;
+    color: var(--reader-primary) !important;
+    background: #fff;
+    border: 1px solid var(--reader-line);
+    border-radius: 999px;
+    box-shadow: 0 2px 8px rgba(44, 62, 80, 0.06);
+    font-size: 0.72rem !important;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+.pdf-container {
+    position: relative;
+    z-index: 1;
+    flex: 1 1 auto;
+    width: 100%;
+    height: calc(100dvh - 96px) !important;
+    max-height: none !important;
+    min-height: 0;
+    overflow: hidden;
+    background:
+        linear-gradient(180deg, rgba(44, 62, 80, 0.03), transparent 18%),
+        var(--reader-paper);
+    border: 1px solid var(--reader-line);
+    border-radius: 14px;
+    box-shadow: var(--reader-shadow);
+}
+
+.pdf-container .pdf-viewer {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: var(--reader-paper) !important;
+}
+
+.pdf-container .pdf-viewer > p {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 0 !important;
+    padding: 20px 16px !important;
+    background:
+        radial-gradient(circle at 50% 42%, rgba(255, 255, 255, 0.9), transparent 46%),
+        var(--reader-paper);
+    color: var(--reader-primary) !important;
+    font-family: 'Tajawal', sans-serif !important;
+    font-size: 0.95rem !important;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    text-align: center !important;
+}
+
+.pdf-container .pdf-viewer > p::before {
+    content: "";
     width: 34px;
     height: 34px;
-    stroke: currentColor;
-    filter: drop-shadow(0 3px 4px rgba(44, 62, 80, 0.18));
+    border: 3px solid rgba(44, 62, 80, 0.14);
+    border-top-color: var(--reader-accent);
+    border-radius: 50%;
+    animation: mishkat-reader-spin 0.8s linear infinite;
+}
+
+.pdf-container .pdf-viewer > p::after {
+    content: "مشكاة";
+    color: var(--reader-muted);
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
 }
 
 .action-buttons {
     position: relative;
-    z-index: 1;
-    margin-top: 22px;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px !important;
 }
 
 .action-buttons .btn {
-    min-height: 44px;
-    padding-inline: 22px;
+    width: auto !important;
+    min-height: 36px;
+    padding: 6px 14px !important;
     background: var(--reader-primary);
     border: 1px solid var(--reader-primary);
-    box-shadow: 0 8px 18px rgba(44, 62, 80, 0.18);
+    border-radius: 999px;
+    box-shadow: 0 4px 12px rgba(44, 62, 80, 0.16);
+    color: #fff;
+    font-size: 0.82rem !important;
+    font-weight: 700;
 }
 
 .action-buttons .btn:hover {
-    background: var(--reader-accent);
-    border-color: var(--reader-accent);
+    background: var(--reader-dark);
+    border-color: var(--reader-dark);
 }
 
 .action-buttons .btn:focus-visible {
-    outline: 3px solid rgba(231, 76, 60, 0.35);
+    outline: 3px solid rgba(44, 62, 80, 0.28);
     outline-offset: 3px;
 }
 
-@media (max-width: 600px) {
-    body {
-        padding: 10px;
+@keyframes mishkat-reader-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (min-width: 768px) {
+    body,
+    .container {
+        background:
+            radial-gradient(circle at 12% 0%, rgba(44, 62, 80, 0.06), transparent 32%),
+            var(--reader-bg) !important;
     }
 
     .container {
-        width: 96vw;
-        min-height: calc(100dvh - 20px);
-        padding: 24px 12px 24px;
-        border-radius: 14px;
+        width: min(960px, 100%) !important;
+        max-width: 960px !important;
+        min-height: calc(100dvh - 24px) !important;
+        margin: 12px auto !important;
+        padding: 14px 16px 16px !important;
+        border: 1px solid var(--reader-line) !important;
+        border-radius: 18px !important;
+        box-shadow: var(--reader-shadow) !important;
     }
 
     .title {
-        gap: 8px;
-        margin-bottom: 18px;
-        font-size: clamp(1.55rem, 8vw, 2.15rem);
+        font-size: 1.12rem !important;
     }
 
-    .title-icon {
-        width: 34px;
-        height: 34px;
+    .watermark {
+        top: 16px;
+        left: 16px;
     }
 
-    .title-icon svg {
-        width: 28px;
-        height: 28px;
+    .pdf-container {
+        height: calc(100dvh - 132px) !important;
+        border-radius: 16px;
+    }
+}
+
+@media (max-width: 600px) {
+    .action-buttons {
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: center !important;
     }
 
     .action-buttons .btn {
-        width: min(100%, 280px);
+        width: auto !important;
+        max-width: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .pdf-container .pdf-viewer > p::before {
+        animation: none;
+        border-top-color: var(--reader-primary);
     }
 }
