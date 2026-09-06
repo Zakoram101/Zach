@@ -1,0 +1,84 @@
+/* Shared outer shell for Mishkat book-reading pages. The PDF.js/Drive viewer styles remain untouched. */
+:root {
+    --reader-primary: #2c3e50;
+    --reader-dark: #34495e;
+    --reader-accent: #e74c3c;
+    --reader-paper: rgba(255, 255, 255, 0.96);
+}
+
+body {
+    background:
+        radial-gradient(circle at 12% 10%, rgba(231, 76, 60, 0.18), transparent 30%),
+        linear-gradient(135deg, var(--reader-primary) 0%, var(--reader-dark) 62%, #263746 100%);
+}
+
+.container {
+    max-width: 1180px;
+    width: min(94vw, 1180px);
+    padding: 28px clamp(18px, 3vw, 42px) 30px;
+    background: var(--reader-paper);
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    border-top: 5px solid var(--reader-accent);
+    border-radius: 18px;
+    box-shadow: 0 24px 60px rgba(13, 25, 35, 0.35);
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: var(--reader-primary);
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    letter-spacing: 0;
+}
+
+.title-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    color: var(--reader-accent);
+}
+
+.title-icon svg {
+    display: block;
+    width: 34px;
+    height: 34px;
+    stroke: currentColor;
+    filter: drop-shadow(0 3px 4px rgba(44, 62, 80, 0.18));
+}
+
+.action-buttons {
+    margin-top: 22px;
+}
+
+.action-buttons .btn {
+    background: var(--reader-primary);
+    border: 1px solid var(--reader-primary);
+    box-shadow: 0 8px 18px rgba(44, 62, 80, 0.18);
+}
+
+.action-buttons .btn:hover {
+    background: var(--reader-accent);
+    border-color: var(--reader-accent);
+}
+
+@media (max-width: 600px) {
+    .container {
+        width: 94vw;
+        padding: 22px 14px 24px;
+        border-radius: 14px;
+    }
+
+    .title-icon {
+        width: 34px;
+        height: 34px;
+    }
+
+    .title-icon svg {
+        width: 28px;
+        height: 28px;
+    }
+}
