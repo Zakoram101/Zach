@@ -922,28 +922,37 @@ footer {
 
 .close-search {
     position: fixed;
-    top: 30px;
-    right: 30px;
-    width: 45px;
-    height: 45px;
+    top: 20px;
+    right: 20px;
+    width: 48px;
+    height: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
-    font-size: 2rem;
+    font-size: 1.85rem;
+    font-weight: 700;
+    line-height: 1;
     cursor: pointer;
     z-index: 201;
     border-radius: 50%;
+    background: rgba(255, 255, 255, 0.16);
+    box-shadow: var(--shadow-md);
     overflow: hidden;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, background 0.2s ease;
     outline: none;
     -webkit-tap-highlight-color: transparent;
     user-select: none;
 }
 
 .close-search:hover {
-    transform: rotate(90deg) scale(1.1);
-    color: var(--accent-color);
+    transform: rotate(90deg) scale(1.08);
+    background: var(--accent-color);
+    color: white;
+}
+
+.close-search:active {
+    transform: scale(0.92);
 }
 
 .search-panel .books-showcase.search-results {
@@ -1386,6 +1395,13 @@ box-shadow:
         padding-top: 10vh;
     }
 
+    .close-search {
+        top: 12px;
+        right: 12px;
+        width: 48px;
+        height: 48px;
+    }
+
     .search-form {
         width: 90%;
     }
@@ -1527,7 +1543,15 @@ box-shadow:
     }
 
     .search-panel {
-        padding-top: 8vh;
+        padding-top: max(8vh, 76px);
+    }
+
+    .close-search {
+        top: 10px;
+        right: 10px;
+        width: 48px;
+        height: 48px;
+        font-size: 1.9rem;
     }
 
     .search-form {
