@@ -1,40 +1,96 @@
-/* Shared outer shell for Mishkat book-reading pages. The PDF.js/Drive viewer styles remain untouched. */
+/* Shared outer shell for Mishkat book-reading pages. PDF.js/Drive viewer rules remain untouched. */
 :root {
     --reader-primary: #2c3e50;
     --reader-dark: #34495e;
     --reader-accent: #e74c3c;
-    --reader-paper: rgba(255, 255, 255, 0.96);
+    --reader-paper: rgba(255, 255, 255, 0.97);
+    --reader-line: rgba(44, 62, 80, 0.12);
+}
+
+html {
+    min-height: 100%;
+    background: var(--reader-primary);
 }
 
 body {
+    min-height: 100dvh;
+    padding: clamp(14px, 2.5vw, 34px);
     background:
-        radial-gradient(circle at 12% 10%, rgba(231, 76, 60, 0.18), transparent 30%),
+        radial-gradient(circle at 10% 8%, rgba(231, 76, 60, 0.2), transparent 28%),
+        radial-gradient(circle at 92% 88%, rgba(255, 255, 255, 0.08), transparent 30%),
         linear-gradient(135deg, var(--reader-primary) 0%, var(--reader-dark) 62%, #263746 100%);
 }
 
 .container {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
     max-width: 1180px;
     width: min(94vw, 1180px);
-    padding: 28px clamp(18px, 3vw, 42px) 30px;
+    min-height: min(92dvh, 980px);
+    margin: auto;
+    padding: 30px clamp(18px, 3vw, 42px) 32px;
     background: var(--reader-paper);
-    border: 1px solid rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.82);
     border-top: 5px solid var(--reader-accent);
     border-radius: 18px;
     box-shadow: 0 24px 60px rgba(13, 25, 35, 0.35);
 }
 
+.container::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 104px;
+    background: linear-gradient(180deg, rgba(44, 62, 80, 0.07), transparent);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.container::after {
+    content: "";
+    position: absolute;
+    top: 22px;
+    left: 50%;
+    width: 92px;
+    height: 3px;
+    border-radius: 999px;
+    background: var(--reader-accent);
+    opacity: 0.18;
+    transform: translateX(-50%);
+    pointer-events: none;
+}
+
 .title {
+    position: relative;
+    z-index: 1;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 12px;
+    margin: 0 auto 24px;
+    padding: 6px 0 18px;
     color: var(--reader-primary);
     font-size: clamp(1.8rem, 3vw, 2.8rem);
     letter-spacing: 0;
+    text-wrap: balance;
+}
+
+.title::after {
+    content: "";
+    position: absolute;
+    right: 50%;
+    bottom: 0;
+    width: 82px;
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--reader-accent), rgba(231, 76, 60, 0.25));
+    transform: translateX(50%);
 }
 
 .title-icon {
     display: inline-flex;
+    flex: 0 0 auto;
     align-items: center;
     justify-content: center;
     width: 42px;
@@ -51,10 +107,14 @@ body {
 }
 
 .action-buttons {
+    position: relative;
+    z-index: 1;
     margin-top: 22px;
 }
 
 .action-buttons .btn {
+    min-height: 44px;
+    padding-inline: 22px;
     background: var(--reader-primary);
     border: 1px solid var(--reader-primary);
     box-shadow: 0 8px 18px rgba(44, 62, 80, 0.18);
@@ -65,11 +125,27 @@ body {
     border-color: var(--reader-accent);
 }
 
+.action-buttons .btn:focus-visible {
+    outline: 3px solid rgba(231, 76, 60, 0.35);
+    outline-offset: 3px;
+}
+
 @media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+
     .container {
-        width: 94vw;
-        padding: 22px 14px 24px;
+        width: 96vw;
+        min-height: calc(100dvh - 20px);
+        padding: 24px 12px 24px;
         border-radius: 14px;
+    }
+
+    .title {
+        gap: 8px;
+        margin-bottom: 18px;
+        font-size: clamp(1.55rem, 8vw, 2.15rem);
     }
 
     .title-icon {
@@ -80,5 +156,9 @@ body {
     .title-icon svg {
         width: 28px;
         height: 28px;
+    }
+
+    .action-buttons .btn {
+        width: min(100%, 280px);
     }
 }
