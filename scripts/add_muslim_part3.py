@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-"""Create Sahih Muslim part 3 from the original Drive PDF without altering existing parts."""
 from __future__ import annotations
 
 import subprocess
@@ -8,14 +7,18 @@ from pathlib import Path
 
 DRIVE_ID = "18X7wttZJ4mj27IxpuEjRWuZkGgEH4DeH"
 SRC = Path("/tmp/sahih-muslim-original.pdf")
-PART1 = Path("Book/صحيح مسلم_جزء1.pdf")
-PART2 = Path("Book/صحيح مسلم_جزء2.pdf")
-PART3 = Path("Book/صحيح مسلم_جزء3.pdf")
+OLD1 = Path("Book/صحيح مسلم_جزء1.pdf")
+OLD2 = Path("Book/صحيح مسلم_جزء2.pdf")
+NEW = [
+    Path("Book/صحيح مسلم_جزء1.pdf"),
+    Path("Book/صحيح مسلم_جزء2.pdf"),
+    Path("Book/صحيح مسلم_جزء3.pdf"),
+]
 JS = Path("js/book-parts.js")
+MOON = Path("Moon/moon4.html")
 
 
 def download_original() -> None:
-    SRC.parent.mkdir(parents=True, exist_ok=True)
     cmd = [
         sys.executable, "-m", "gdown",
         f"https://drive.google.com/uc?id={DRIVE_ID}",
@@ -44,7 +47,7 @@ def write_range(src: Path, dest: Path, start: int, end: int) -> None:
     dest.parent.mkdir(parents=True, exist_ok=True)
     with dest.open("wb") as fh:
         writer.write(fh)
-    print("wrote", dest, "pages", start + 1, "-", end, "size", dest.stat().st_size)
+    print("wrote", dest.name, "pages", start + 1, "-", end, "size", dest.stat().st_size)
 
 
 def patch_catalog() -> None:
@@ -54,15 +57,17 @@ def patch_catalog() -> None:
     new = """                { title: "صحيح مسلم — الجزء الأول", file: "صحيح مسلم_جزء1.pdf" },
                 { title: "صحيح مسلم — الجزء الثاني", file: "صحيح مسلم_جزء2.pdf" },
                 { title: "صحيح مسلم — الجزء الثالث", file: "صحيح مسلم_جزء3.pdf" }"""
+    if "صحيح مسلم_جزء3.pdf" in text:
+        print("catalog already has part 3")
+        return
     if old not in text:
         raise SystemExit("muslim catalog block not found")
     JS.write_text(text.replace(old, new, 1), encoding="utf-8")
     print("patched book-parts.js")
 
 
-def patch_moon4_links() -> None:
-    p = Path("Moon/moon4.html")
-    t = p.read_text(encoding="utf-8")
+def patch_moon4() -> None:
+    t = MOON.read_text(encoding="utf-8")
     needle = "'صحيح مسلم_جزء2.pdf': '../Book/' + encodeURIComponent('صحيح مسلم_جزء2.pdf')"
     extra = needle + ",\n            'صحيح مسلم_جزء3.pdf': '../Book/' + encodeURIComponent('صحيح مسلم_جزء3.pdf')"
     if "صحيح مسلم_جزء3.pdf" in t:
@@ -70,30 +75,31 @@ def patch_moon4_links() -> None:
         return
     if needle not in t:
         raise SystemExit("moon4 muslim links not found")
-    p.write_text(t.replace(needle, extra, 1), encoding="utf-8")
-    print("patched moon4.html links")
+    MOON.write_text(t.replace(needle, extra, 1), encoding="utf-8")
+    print("patched moon4.html")
 
 
 def main() -> None:
     download_original()
     orig_pages = page_count(SRC)
-    p1 = page_count(PART1) if PART1.exists() else 0
-    p2 = page_count(PART2) if PART2.exists() else 0
-    print("pages original/part1/part2", orig_pages, p1, p2)
+    old1 = page_count(OLD1) if OLD1.exists() else 0
+    old2 = page_count(OLD2) if OLD2.exists() else 0
+    print("pages original/old1/old2", orig_pages, old1, old2)
 
-    covered = p1 + p2
+    covered = old1 + old2
     if covered < orig_pages:
-        write_range(SRC, PART3, covered, orig_pages)
+        print("missing remainder pages", orig_pages - covered)
+        write_range(SRC, NEW[2], covered, orig_pages)
     else:
-        # Existing two parts already cover the file. Rebuild a true third volume
-        # from the last third of the original without touching part 1 or 2 files.
+        # Keep existing part 1 and 2 files untouched. Add part 3 as the last third.
         start = (orig_pages * 2) // 3
-        write_range(SRC, PART3, start, orig_pages)
+        print("existing parts cover the book; adding last-third file as part 3 from page", start + 1)
+        write_range(SRC, NEW[2], start, orig_pages)
 
-    if PART3.read_bytes()[:4] != b"%PDF" or PART3.stat().st_size < 100_000:
+    if NEW[2].read_bytes()[:4] != b"%PDF" or NEW[2].stat().st_size < 100_000:
         raise SystemExit("part 3 invalid")
     patch_catalog()
-    patch_moon4_links()
+    patch_moon4()
 
 
 if __name__ == "__main__":
