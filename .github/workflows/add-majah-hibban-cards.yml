@@ -1,0 +1,23 @@
+name: Add Majah Hibban cards
+
+on:
+  workflow_dispatch:
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/add_majah_hibban_cards.py
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Moon/moon4.html
+          if git diff --cached --quiet; then
+            echo unchanged
+            exit 0
+          fi
+          git commit -m "Show Sahih Ibn Majah and Sahih Ibn Hibban as direct-download cards"
+          git push
