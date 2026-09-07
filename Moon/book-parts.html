@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أجزاء الكتاب</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap');
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+            --gold-color: #f1c40f;
+            --font-main: 'Tajawal', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-main); }
+        body { background-color: var(--light-color); overflow-x: hidden; padding: 20px; direction: rtl; }
+        .container { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
+        .decoration { position: fixed; opacity: 0.05; z-index: 0; border-radius: 50%; }
+        .deco1 { top: 10%; right: 5%; width: 300px; height: 300px; background: var(--accent-color); }
+        .deco2 { bottom: 10%; left: 5%; width: 200px; height: 200px; background: var(--primary-color); }
+        .deco3 { top: 40%; left: 10%; width: 150px; height: 150px; background: var(--gold-color); }
+        header {
+            text-align: center; margin-bottom: 40px; padding: 40px 20px; color: white;
+            border-radius: 15px; box-shadow: 0 5px 25px rgba(0,0,0,0.2); position: relative; overflow: hidden;
+        }
+        .header-bg { position: absolute; inset: 0; background: linear-gradient(135deg, var(--primary-color), var(--dark-color)); z-index: -1; }
+        header h1 { font-size: 2.2rem; margin-bottom: 12px; position: relative; }
+        header h1::after {
+            content: ''; position: absolute; bottom: -10px; right: 50%; transform: translateX(50%);
+            width: 100px; height: 3px; background-color: var(--accent-color);
+        }
+        .subtitle { font-size: 1.1rem; color: var(--light-color); opacity: 0.85; margin-top: 18px; }
+        .back-link {
+            display: inline-flex; align-items: center; justify-content: center;
+            background-color: var(--primary-color); color: white; text-decoration: none;
+            padding: 8px 18px; border-radius: 25px; font-size: 0.85rem; margin-top: 18px; border: 1px solid rgba(255,255,255,0.25);
+        }
+        .back-link:hover { background-color: var(--accent-color); }
+        .book-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; margin-bottom: 40px; }
+        .book-item {
+            background-color: white; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s ease; overflow: hidden; display: flex; flex-direction: column;
+            align-items: center; padding: 20px;
+        }
+        .book-item:hover { transform: translateY(-10px); box-shadow: 0 15px 35px rgba(0,0,0,0.15); }
+        .book-info { text-align: center; width: 100%; }
+        .book-title { font-size: 1.2rem; font-weight: 700; color: var(--dark-color); margin-bottom: 5px; }
+        .book-author { font-size: 0.9rem; color: var(--accent-color); margin-bottom: 15px; }
+        .download-btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            background-color: var(--primary-color); color: white; text-decoration: none;
+            padding: 10px 20px; border-radius: 25px; font-size: 0.9rem; width: 80%;
+            margin-top: 10px; border: none; cursor: pointer;
+        }
+        .download-btn:hover { background-color: var(--accent-color); }
+        .download-popup {
+            position: fixed; inset: 0; background-color: rgba(0,0,0,0.7);
+            display: none; justify-content: center; align-items: center; z-index: 999;
+        }
+        .popup-content {
+            background-color: white; border-radius: 15px; padding: 40px; text-align: center;
+            position: relative; max-width: 400px; width: 90%; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .close-popup { position: absolute; top: 15px; right: 15px; font-size: 1.5rem; color: var(--dark-color); cursor: pointer; }
+        .popup-title { font-size: 1.3rem; color: var(--dark-color); margin-bottom: 15px; }
+        .popup-message, #downloadMessage { font-size: 0.9rem; color: var(--dark-color); margin-bottom: 20px; }
+        #progressContainer { width: 100%; height: 10px; background-color: #f0f0f0; border-radius: 5px; margin: 15px 0; overflow: hidden; }
+        #progressBar { height: 100%; width: 0%; background-color: var(--accent-color); }
+        #startDownload {
+            background-color: var(--accent-color); color: white; border: none;
+            padding: 12px 30px; border-radius: 25px; font-size: 1rem; cursor: pointer; width: 100%;
+        }
+        .empty-note {
+            text-align: center; color: var(--dark-color); background: white;
+            border-radius: 15px; padding: 30px 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        @media (max-width: 768px) {
+            .book-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+            header h1 { font-size: 1.7rem; }
+        }
+        @media (max-width: 480px) { .book-grid { grid-template-columns: 1fr; } }
+    </style>
+    <link rel="stylesheet" href="../css/button-effects.css">
+</head>
+<body>
+    <div class="decoration deco1"></div>
+    <div class="decoration deco2"></div>
+    <div class="decoration deco3"></div>
+    <div class="container">
+        <header>
+            <div class="header-bg"></div>
+            <h1 id="pageTitle">أجزاء الكتاب</h1>
+            <p class="subtitle" id="pageAuthor"></p>
+            <a class="back-link" href="moon4.html">العودة إلى المكتبة</a>
+        </header>
+        <div class="book-grid" id="partsGrid"></div>
+        <p class="empty-note" id="emptyNote" style="display:none;">تعذر العثور على أجزاء هذا الكتاب.</p>
+    </div>
+    <div class="download-popup" id="downloadPopup">
+        <div class="popup-content">
+            <span class="close-popup" id="closePopup">&times;</span>
+            <h3 class="popup-title" id="popupBookTitle">تحميل الكتاب</h3>
+            <p class="popup-message">اضغط للبدء بتحميل الملف إلى جهازك</p>
+            <div id="downloadMessage"></div>
+            <div id="progressContainer" style="display:none;"><div id="progressBar"></div></div>
+            <button id="startDownload">بدء التحميل</button>
+        </div>
+    </div>
+    <script src="../js/book-parts.js"></script>
+    <script>
+        const bookSet = window.MishkatBookParts && window.MishkatBookParts.getSet(new URLSearchParams(location.search).get("book"));
+        const bookLinks = {};
+        let currentBookFile = "";
+        let downloadBusy = false;
+        let downloadTimer = null;
+        const grid = document.getElementById("partsGrid");
+        if (bookSet) {
+            document.title = "أجزاء " + bookSet.title;
+            document.getElementById("pageTitle").textContent = bookSet.title;
+            document.getElementById("pageAuthor").textContent = bookSet.author;
+            bookSet.parts.forEach(function (part) {
+                bookLinks[part.file] = "../Book/" + encodeURIComponent(part.file);
+                const item = document.createElement("div");
+                item.className = "book-item";
+                item.innerHTML = '<div class="book-info"><h3 class="book-title"></h3><p class="book-author"></p><button class="download-btn" type="button">تحميل مباشر</button></div>';
+                item.querySelector(".book-title").textContent = part.title;
+                item.querySelector(".book-author").textContent = bookSet.author;
+                const btn = item.querySelector(".download-btn");
+                btn.setAttribute("data-book", part.title);
+                btn.setAttribute("data-author", bookSet.author);
+                btn.setAttribute("data-file", part.file);
+                grid.appendChild(item);
+            });
+        } else {
+            document.getElementById("emptyNote").style.display = "block";
+        }
+        document.addEventListener("DOMContentLoaded", function () {
+            const downloadPopup = document.getElementById("downloadPopup");
+            const startDownloadBtn = document.getElementById("startDownload");
+            const downloadMessage = document.getElementById("downloadMessage");
+            const progressContainer = document.getElementById("progressContainer");
+            const progressBar = document.getElementById("progressBar");
+            function closeDownloadPopup() {
+                downloadPopup.style.display = "none";
+                downloadBusy = false;
+                startDownloadBtn.disabled = false;
+                startDownloadBtn.style.display = "";
+                progressContainer.style.display = "none";
+                progressBar.style.width = "0%";
+                downloadMessage.textContent = "";
+                if (downloadTimer) { clearInterval(downloadTimer); downloadTimer = null; }
+            }
+            grid.addEventListener("click", function (event) {
+                const btn = event.target.closest(".download-btn");
+                if (!btn) return;
+                currentBookFile = btn.getAttribute("data-file");
+                document.getElementById("popupBookTitle").textContent = btn.getAttribute("data-book") || "تحميل الكتاب";
+                downloadPopup.style.display = "flex";
+            });
+            document.getElementById("closePopup").addEventListener("click", closeDownloadPopup);
+            downloadPopup.addEventListener("click", function (event) {
+                if (event.target === downloadPopup) closeDownloadPopup();
+            });
+            startDownloadBtn.addEventListener("click", function () {
+                if (downloadBusy) return;
+                const fileUrl = bookLinks[currentBookFile];
+                if (!currentBookFile || !fileUrl) {
+                    downloadMessage.textContent = "حدث خطأ في التحميل، يرجى المحاولة مرة أخرى";
+                    return;
+                }
+                downloadBusy = true;
+                startDownloadBtn.disabled = true;
+                startDownloadBtn.style.display = "none";
+                progressContainer.style.display = "block";
+                downloadMessage.textContent = "جاري تحميل الكتاب...";
+                let progress = 0;
+                downloadTimer = setInterval(function () {
+                    progress += Math.random() * 10;
+                    if (progress >= 100) {
+                        progress = 100;
+                        clearInterval(downloadTimer);
+                        downloadTimer = null;
+                        setTimeout(function () {
+                            downloadMessage.textContent = "تم التحميل بنجاح!";
+                            setTimeout(function () {
+                                closeDownloadPopup();
+                                const a = document.createElement("a");
+                                a.style.display = "none";
+                                a.href = fileUrl;
+                                a.setAttribute("download", currentBookFile);
+                                a.rel = "noopener";
+                                document.body.appendChild(a);
+                                a.click();
+                                setTimeout(function () { if (a.parentNode) a.parentNode.removeChild(a); }, 100);
+                            }, 1000);
+                        }, 500);
+                    }
+                    progressBar.style.width = progress + "%";
+                }, 200);
+            });
+        });
+    </script>
+</body>
+</html>
