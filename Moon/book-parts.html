@@ -126,7 +126,7 @@
             document.getElementById("pageTitle").textContent = bookSet.title;
             document.getElementById("pageAuthor").textContent = bookSet.author;
             bookSet.parts.forEach(function (part) {
-                bookLinks[part.file] = "../Book/" + encodeURIComponent(part.file);
+                bookLinks[part.file] = window.MishkatBookParts.partUrl(part);
                 const item = document.createElement("div");
                 item.className = "book-item";
                 item.innerHTML = '<div class="book-info"><h3 class="book-title"></h3><p class="book-author"></p><button class="download-btn" type="button">تحميل مباشر</button></div>';
