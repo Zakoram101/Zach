@@ -1,0 +1,126 @@
+name: Import Drive books
+
+on:
+  workflow_dispatch:
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install pypdf
+        run: python3 -m pip install --user pypdf
+
+      - name: Download new books into Book/
+        run: |
+          python3 << 'PY'
+          import re, subprocess, sys
+          from pathlib import Path
+          from pypdf import PdfReader, PdfWriter
+
+          BOOK = Path("Book")
+          BOOK.mkdir(exist_ok=True)
+          LIMIT = 48 * 1024 * 1024
+
+          NEW_BOOKS = [
+              ("19GCCnzkxUAcpfVcG2Ft0pfYWBHByEouc", "أثر اعتبار المصالح والمفاسد في الفتوى.pdf"),
+              ("19DYHwD4gX4VXJjfb7Iqe_68XziDA80HP", "الأربعون النووية وتتمتها.pdf"),
+              ("19XfpkaEytCG6ad2XmVHPKtSxEQ2s3exl", "الزهري.pdf"),
+              ("19akReVbxMRizWHdqThPi2nsuibQoQccx", "العقيدة الواسطية.pdf"),
+              ("19h4-zGZ-NCsF4LNFUj3iiWe0AfsRPeYB", "الملخص في شرح كتاب التوحيد.pdf"),
+              ("192rh9gimU0AXfnRVVrkGM5owk3lQ5HJQ", "بلوغ المرام من أدلة الأحكام.pdf"),
+              ("11SvrkrfyXv8l4GCqM2eicEdi4mDrSeXc", "ثلاثة الأصول وأدلتها.pdf"),
+              ("19ZIAHIHLo8GvEwDAcos2Lufil1_wW0Hs", "زاد المعاد في هدي خير العباد.pdf"),
+              ("1900MfJhTDTRD2ZbYg6XGdyEbSeY8jJOQ", "صحيح ابن حبان.pdf"),
+              ("191uL9tmD4EPj2vZLZgT3iTrN_jx-LSzW", "صحيح سنن ابن ماجة.pdf"),
+              ("18u8IdP7D5JrbPu4IBmzRrXZSNww61-Q4", "صحيح البخاري.pdf"),
+              ("18X7wttZJ4mj27IxpuEjRWuZkGgEH4DeH", "صحيح مسلم.pdf"),
+          ]
+
+          def norm(name):
+              text = Path(name).stem.lower()
+              text = text.replace("_", " ").replace("-", " ")
+              text = re.sub(r"\s+", " ", text)
+              text = re.sub(r"(جزء|جز\s*|part)\s*\d+", "", text)
+              return text.strip()
+
+          existing = {norm(p.name) for p in BOOK.iterdir() if p.is_file()}
+          # also keep raw names to avoid overwrite
+          existing_names = {p.name for p in BOOK.iterdir() if p.is_file()}
+
+          def already_there(dest_name):
+              key = norm(dest_name)
+              if dest_name in existing_names:
+                  return True
+              if key in existing:
+                  return True
+              for item in existing:
+                  if key and (key in item or item in key):
+                      return True
+              return False
+
+          def download(file_id, dest):
+              url = f"https://drive.usercontent.google.com/download?id={file_id}&export=download&confirm=t"
+              dest.parent.mkdir(parents=True, exist_ok=True)
+              subprocess.check_call(["curl", "-L", "--fail", "--retry", "5", "-o", str(dest), url])
+              if dest.stat().st_size < 1000 or dest.read_bytes()[:4] != b"%PDF":
+                  raise SystemExit(f"download did not return a PDF: {dest}")
+
+          def split_pdf(src, base_name):
+              reader = PdfReader(str(src))
+              mid = max(1, len(reader.pages) // 2)
+              parts = [(1, reader.pages[:mid]), (2, reader.pages[mid:])]
+              written = []
+              stem = Path(base_name).stem
+              for idx, pages in parts:
+                  writer = PdfWriter()
+                  for page in pages:
+                      writer.add_page(page)
+                  out = BOOK / f"{stem}_جزء{idx}.pdf"
+                  with out.open("wb") as fh:
+                      writer.write(fh)
+                  written.append(out)
+                  print("wrote", out, out.stat().st_size)
+              src.unlink()
+              return written
+
+          added = []
+          for file_id, dest_name in NEW_BOOKS:
+              if already_there(dest_name):
+                  print("skip existing", dest_name)
+                  continue
+              tmp = Path("/tmp") / dest_name
+              print("download", dest_name)
+              download(file_id, tmp)
+              if tmp.stat().st_size > LIMIT:
+                  print("split large file", dest_name, tmp.stat().st_size)
+                  written = split_pdf(tmp, dest_name)
+                  added.extend(p.name for p in written)
+                  for p in written:
+                      existing.add(norm(p.name))
+                      existing_names.add(p.name)
+              else:
+                  final = BOOK / dest_name
+                  tmp.replace(final)
+                  added.append(final.name)
+                  existing.add(norm(final.name))
+                  existing_names.add(final.name)
+                  print("added", final.name, final.stat().st_size)
+
+          print("ADDED", added)
+          PY
+
+      - name: Commit new books
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Book
+          if git diff --cached --quiet; then
+            echo "no new books"
+            exit 0
+          fi
+          git commit -m "Add new Drive PDF books to Book folder"
+          git push
