@@ -15,12 +15,7 @@ MOON = Path("Moon/moon4.html")
 
 
 def download_original() -> None:
-    cmd = [
-        sys.executable, "-m", "gdown",
-        f"https://drive.google.com/uc?id={DRIVE_ID}",
-        "-O", str(SRC),
-        "--fuzzy",
-    ]
+    cmd = [sys.executable, "-m", "gdown", DRIVE_ID, "-O", str(SRC)]
     print("download", " ".join(cmd))
     subprocess.check_call(cmd)
     head = SRC.read_bytes()[:5]
@@ -85,8 +80,6 @@ def main() -> None:
     if covered < orig_pages:
         write_range(SRC, PART3, covered, orig_pages)
     else:
-        # Old split already covers the book. Still add a dedicated third file
-        # from the last third so the parts page can offer 3 downloads.
         start = (orig_pages * 2) // 3
         write_range(SRC, PART3, start, orig_pages)
     if PART3.read_bytes()[:4] != b"%PDF" or PART3.stat().st_size < 100_000:
