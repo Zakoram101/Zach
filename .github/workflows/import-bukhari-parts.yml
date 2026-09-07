@@ -1,0 +1,57 @@
+name: Import Bukhari parts and parts UI
+
+on:
+  workflow_dispatch:
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download Bukhari 7 parts from Drive
+        run: |
+          python3 << 'PY'
+          import subprocess
+          from pathlib import Path
+
+          BOOK = Path("Book")
+          BOOK.mkdir(exist_ok=True)
+          PARTS = [
+              ("13JvGvE_Z8ChX7X6OmeHzR_52tPPEVobb", "صحيح البخاري - الجزء 1 من 7.pdf"),
+              ("1sDeRu8N6EtCEr3Nr5_p24qVIAJxTAULF", "صحيح البخاري - الجزء 2 من 7.pdf"),
+              ("1X9xr-Vewg7bJtnHDoLu3sWnLEhEjcwqC", "صحيح البخاري - الجزء 3 من 7.pdf"),
+              ("1F1EkBhi2_LJXZMrtf72fGEpHaRd809Bj", "صحيح البخاري - الجزء 4 من 7.pdf"),
+              ("1AyOeFyMa7Ms0MQkPq1Llh1TlcRWBhixZ", "صحيح البخاري - الجزء 5 من 7.pdf"),
+              ("1rpAvx1exXnkrKi8-cTedF_07lWBZdU3k", "صحيح البخاري - الجزء 6 من 7.pdf"),
+              ("1ThwGxU6MjsthtztTnPe9Iov8GMJbx_l2", "صحيح البخاري - الجزء 7 من 7.pdf"),
+          ]
+          for file_id, name in PARTS:
+              dest = BOOK / name
+              if dest.exists() and dest.stat().st_size > 10000:
+                  print("skip existing", name)
+                  continue
+              url = f"https://drive.usercontent.google.com/download?id={file_id}&export=download&confirm=t"
+              print("download", name)
+              subprocess.check_call(["curl", "-L", "--fail", "--retry", "5", "-o", str(dest), url])
+              if dest.stat().st_size < 1000 or dest.read_bytes()[:4] != b"%PDF":
+                  raise SystemExit(f"not a pdf: {name} size={dest.stat().st_size}")
+              print("ok", name, dest.stat().st_size)
+          PY
+
+      - name: Apply library parts UI
+        run: python3 scripts/apply_parts_ui.py
+
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Book Moon/moon4.html Moon/book-parts.html js/book-parts.js
+          if git diff --cached --quiet; then
+            echo unchanged
+            exit 0
+          fi
+          git commit -m "Add Bukhari 7-part downloads and parts library pages"
+          git push
