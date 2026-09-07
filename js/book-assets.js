@@ -70,7 +70,7 @@
         var url = "https://api.github.com/repos/" +
             encodeURIComponent(repo.owner) + "/" +
             encodeURIComponent(repo.repo) + "/contents/Book";
-        return fetch(url, { headers: { Accept: "application/vnd.github+json" } })
+        return fetch(url)
             .then(function (res) {
                 if (!res.ok) throw new Error("github list failed");
                 return res.json();
@@ -82,13 +82,35 @@
         return fetchJson(localListUrl()).then(normalize);
     }
 
+    function mergeFiles(a, b) {
+        var seen = {};
+        var out = [];
+        function add(list) {
+            (list || []).forEach(function (item) {
+                var name = item && item.name;
+                if (!name || seen[name]) return;
+                seen[name] = true;
+                out.push({ name: name });
+            });
+        }
+        add(a);
+        add(b);
+        return out;
+    }
+
     function listBookFiles() {
         var cached = readCache();
-        if (cached) return Promise.resolve(cached);
+        if (cached && cached.length) return Promise.resolve(cached);
 
-        return fetchFromGitHub().catch(fetchFromLocalIndex).then(function (files) {
-            writeCache(files);
-            return files;
+        return fetchFromLocalIndex().catch(function () { return []; }).then(function (local) {
+            return fetchFromGitHub().then(function (remote) {
+                var files = mergeFiles(local, remote);
+                if (files.length) writeCache(files);
+                return files;
+            }).catch(function () {
+                if (local.length) writeCache(local);
+                return local;
+            });
         });
     }
 
