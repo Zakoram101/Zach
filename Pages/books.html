@@ -327,20 +327,85 @@
 
         /* ===== Back to Top ===== */
         .back-to-top {
-            position: fixed; bottom: 30px; left: 30px;
-            width: 50px; height: 50px;
-            background: var(--primary-color); color: white;
-            border-radius: 50%; display: flex;
-            justify-content: center; align-items: center;
-            cursor: pointer; box-shadow: var(--shadow-md);
-            transition: all var(--transition-fast);
-            z-index: 99; opacity: 0; visibility: hidden; border: none;
+            position: fixed;
+            bottom: max(20px, calc(env(safe-area-inset-bottom, 0px) + 16px));
+            left: max(16px, calc(env(safe-area-inset-left, 0px) + 12px));
+            width: 52px;
+            height: 52px;
+            background: var(--primary-color);
+            color: var(--gold-color);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 8px 22px rgba(44, 62, 80, 0.28), 0 2px 6px rgba(0, 0, 0, 0.12);
+            transition: transform var(--transition-fast), background-color var(--transition-fast),
+                box-shadow var(--transition-fast), opacity var(--transition-fast), visibility var(--transition-fast);
+            z-index: 99;
+            opacity: 0;
+            visibility: hidden;
+            border: none;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
         }
-        .back-to-top.visible { opacity: 1; visibility: visible; }
-        .back-to-top:hover {
-            background: var(--accent-color);
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
+        .back-to-top::before {
+            content: '';
+            position: absolute;
+            inset: 6px;
+            border-radius: 50%;
+            border: 1.5px solid rgba(241, 196, 15, 0.55);
+            pointer-events: none;
+        }
+        .back-to-top-icon {
+            width: 22px;
+            height: 22px;
+            display: block;
+            position: relative;
+            z-index: 1;
+        }
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        .back-to-top.visible .back-to-top-icon {
+            animation: topRise 2.6s ease-in-out infinite;
+        }
+        @media (hover: hover) and (pointer: fine) {
+            .back-to-top:hover {
+                background: var(--accent-color);
+                color: #fff;
+                transform: translateY(-4px);
+                box-shadow: 0 12px 28px rgba(231, 76, 60, 0.38);
+            }
+            .back-to-top:hover::before {
+                border-color: rgba(255, 255, 255, 0.45);
+            }
+        }
+        .back-to-top:active {
+            transform: translateY(-1px) scale(0.96);
+        }
+        .back-to-top:focus-visible {
+            box-shadow: 0 0 0 3px var(--light-color), 0 0 0 5px var(--accent-color);
+        }
+        @keyframes topRise {
+            0%, 100% { transform: translateY(1px); }
+            50% { transform: translateY(-2px); }
+        }
+        @media (max-width: 768px) {
+            .back-to-top {
+                width: 48px;
+                height: 48px;
+                bottom: max(16px, calc(env(safe-area-inset-bottom, 0px) + 12px));
+                left: max(12px, calc(env(safe-area-inset-left, 0px) + 8px));
+            }
+            .back-to-top-icon { width: 20px; height: 20px; }
+            .back-to-top::before { inset: 5px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .back-to-top { transition: opacity 0.2s ease, visibility 0.2s ease; }
+            .back-to-top.visible .back-to-top-icon { animation: none; }
+            .back-to-top:hover, .back-to-top:active { transform: none; }
         }
 
         /* ===== Animations ===== */
@@ -1005,8 +1070,12 @@
 
 </div>
 </div>
-<div aria-label="العودة للأعلى" class="back-to-top" id="backToTop" role="button" tabindex="0">
-<img alt="⬆" src="https://em-content.zobj.net/source/telegram/386/top-arrow_1f51d.webp" width="30"/>
+<div aria-label="العودة للأعلى" class="back-to-top" id="backToTop" role="button" tabindex="0" title="العودة للأعلى">
+<svg aria-hidden="true" class="back-to-top-icon" fill="none" viewBox="0 0 24 24">
+<path d="M6.4 12.2L12 6.4l5.6 5.8" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"/>
+<path d="M12 7.2v10.4" stroke="currentColor" stroke-linecap="round" stroke-width="2.2"/>
+<path d="M8 19.2h8" stroke="currentColor" stroke-linecap="round" stroke-width="2"/>
+</svg>
 </div>
 <script src="../js/favorites-data.js"></script>
 <script>
