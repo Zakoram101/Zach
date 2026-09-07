@@ -464,10 +464,10 @@
             <!-- كتاب 5 -->
             <div class="book-item">
                 <div class="book-info">
-                    <h3 class="book-title">إحياء علوم الدين جزء الأول</h3>
+                    <h3 class="book-title">إحياء علوم الدين</h3>
                     <p class="book-author">أبو حامد الغزالي</p>
-                    <button class="download-btn" data-book="إحياء علوم الدين جزء الأول" data-author="أبو حامد الغزالي" data-file="إحياء_علوم_الدين_جزء1.pdf">
-                        تحميل مباشر
+                    <button class="download-btn" data-parts="ihya" data-book="إحياء علوم الدين" data-author="أبو حامد الغزالي">
+                        تحميل الأجزاء
                     </button>
                 </div>    
             </div>
@@ -475,10 +475,10 @@
             <!-- كتاب 6 -->
             <div class="book-item">
                 <div class="book-info">
-                    <h3 class="book-title">إحياء علوم الدين جزء الثاني</h3>
-                    <p class="book-author">أبو حامد الغزالي</p>
-                    <button class="download-btn" data-book="إحياء علوم الدين جزء الثاني" data-author="أبو حامد الغزالي" data-file="إحياء_علوم_الدين_جزء2.pdf">
-                        تحميل مباشر
+                    <h3 class="book-title">صحيح البخاري</h3>
+                    <p class="book-author">الإمام محمد بن إسماعيل البخاري</p>
+                    <button class="download-btn" data-parts="bukhari" data-book="صحيح البخاري" data-author="الإمام محمد بن إسماعيل البخاري">
+                        تحميل الأجزاء
                     </button>
                 </div>    
             </div>
@@ -587,6 +587,7 @@
     </div>
     
     <script src="../js/book-assets.js"></script>
+    <script src="../js/book-parts.js"></script>
     <script>
         // تخزين روابط الكتب
         const bookLinks = {
@@ -639,6 +640,7 @@
 
         function attachNewBookFile(fileName) {
             if (!fileName || bookLinks[fileName]) return false;
+            if (window.MishkatBookParts && window.MishkatBookParts.isPartFile(fileName)) return false;
             const placeholder = document.querySelector('.download-btn[data-file="nun"]');
             if (!placeholder) return false;
 
@@ -670,6 +672,17 @@
         
         // تفعيل نافذة التحميل المنبثقة
         document.addEventListener('DOMContentLoaded', function() {
+            document.addEventListener('click', function(event) {
+                const partsBtn = event.target.closest('.download-btn[data-parts]');
+                if (!partsBtn) return;
+                event.preventDefault();
+                event.stopPropagation();
+                const partsId = partsBtn.getAttribute('data-parts');
+                if (partsId) {
+                    window.location.href = 'book-parts.html?book=' + encodeURIComponent(partsId);
+                }
+            }, true);
+
             const downloadButtons = document.querySelectorAll('.download-btn');
             const downloadPopup = document.getElementById('downloadPopup');
             const closePopup = document.getElementById('closePopup');
