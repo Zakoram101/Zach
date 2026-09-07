@@ -1,0 +1,31 @@
+name: Add Muslim part 3
+
+on:
+  workflow_dispatch:
+
+jobs:
+  add:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 -m pip install --user gdown pypdf
+      - run: python3 scripts/add_muslim_part3.py
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          python3 - << 'PY'
+          from pathlib import Path
+          p = Path('Book/صحيح مسلم_جزء3.pdf')
+          if not p.exists() or p.read_bytes()[:4] != b'%PDF' or p.stat().st_size < 100000:
+              raise SystemExit('part 3 missing or invalid')
+          print('part3 ok', p.stat().st_size)
+          PY
+          git add "Book/صحيح مسلم_جزء3.pdf" js/book-parts.js Moon/moon4.html
+          if git diff --cached --quiet; then
+            echo unchanged
+            exit 0
+          fi
+          git commit -m "Add the missing third part of Sahih Muslim"
+          git push
