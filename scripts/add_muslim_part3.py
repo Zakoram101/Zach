@@ -9,11 +9,7 @@ DRIVE_ID = "18X7wttZJ4mj27IxpuEjRWuZkGgEH4DeH"
 SRC = Path("/tmp/sahih-muslim-original.pdf")
 OLD1 = Path("Book/صحيح مسلم_جزء1.pdf")
 OLD2 = Path("Book/صحيح مسلم_جزء2.pdf")
-NEW = [
-    Path("Book/صحيح مسلم_جزء1.pdf"),
-    Path("Book/صحيح مسلم_جزء2.pdf"),
-    Path("Book/صحيح مسلم_جزء3.pdf"),
-]
+PART3 = Path("Book/صحيح مسلم_جزء3.pdf")
 JS = Path("js/book-parts.js")
 MOON = Path("Moon/moon4.html")
 
@@ -85,18 +81,15 @@ def main() -> None:
     old1 = page_count(OLD1) if OLD1.exists() else 0
     old2 = page_count(OLD2) if OLD2.exists() else 0
     print("pages original/old1/old2", orig_pages, old1, old2)
-
     covered = old1 + old2
     if covered < orig_pages:
-        print("missing remainder pages", orig_pages - covered)
-        write_range(SRC, NEW[2], covered, orig_pages)
+        write_range(SRC, PART3, covered, orig_pages)
     else:
-        # Keep existing part 1 and 2 files untouched. Add part 3 as the last third.
+        # Old split already covers the book. Still add a dedicated third file
+        # from the last third so the parts page can offer 3 downloads.
         start = (orig_pages * 2) // 3
-        print("existing parts cover the book; adding last-third file as part 3 from page", start + 1)
-        write_range(SRC, NEW[2], start, orig_pages)
-
-    if NEW[2].read_bytes()[:4] != b"%PDF" or NEW[2].stat().st_size < 100_000:
+        write_range(SRC, PART3, start, orig_pages)
+    if PART3.read_bytes()[:4] != b"%PDF" or PART3.stat().st_size < 100_000:
         raise SystemExit("part 3 invalid")
     patch_catalog()
     patch_moon4()
