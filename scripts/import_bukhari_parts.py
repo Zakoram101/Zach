@@ -22,14 +22,8 @@ def is_pdf(path):
 def download(file_id, dest):
     if dest.exists():
         dest.unlink()
-    subprocess.check_call([
-        "gdown",
-        "--id",
-        file_id,
-        "-O",
-        str(dest),
-        "--fuzzy",
-    ])
+    url = f"https://drive.google.com/uc?id={file_id}"
+    subprocess.check_call(["gdown", url, "-O", str(dest)])
     if not is_pdf(dest):
         if dest.exists():
             dest.unlink()
