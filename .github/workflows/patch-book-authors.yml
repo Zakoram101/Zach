@@ -1,0 +1,90 @@
+name: Patch book authors
+
+on:
+  workflow_dispatch:
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Insert author names for new download cards
+        run: |
+          python3 << 'PY'
+          from pathlib import Path
+          p = Path("Moon/moon4.html")
+          t = p.read_text(encoding="utf-8")
+          old = '''        function attachNewBookFile(fileName) {
+            if (!fileName || bookLinks[fileName]) return false;
+            const placeholder = document.querySelector('.download-btn[data-file="nun"]');
+            if (!placeholder) return false;
+
+            bookLinks[fileName] = "../Book/" + encodeURIComponent(fileName);
+            placeholder.setAttribute("data-book", titleFromFileName(fileName));
+            placeholder.setAttribute("data-author", "");
+            placeholder.setAttribute("data-file", fileName);
+
+            const item = placeholder.closest(".book-item");
+            if (item) {
+                const titleEl = item.querySelector(".book-title");
+                const authorEl = item.querySelector(".book-author");
+                if (titleEl) titleEl.textContent = titleFromFileName(fileName);
+                if (authorEl) authorEl.textContent = "\\u00a0";
+            }
+            return true;
+        }'''
+          new = '''        const bookAuthors = {
+            "أثر اعتبار المصالح والمفاسد في الفتوى.pdf": "فارس فالح الخزرجي",
+            "الأربعون النووية وتتمتها.pdf": "الإمام النووي وابن رجب",
+            "الزهري.pdf": "ابن عساكر",
+            "العقيدة الواسطية.pdf": "شيخ الإسلام ابن تيمية",
+            "الملخص في شرح كتاب التوحيد.pdf": "صالح بن فوزان الفوزان",
+            "بلوغ المرام من أدلة الأحكام.pdf": "ابن حجر العسقلاني",
+            "ثلاثة الأصول وأدلتها.pdf": "محمد بن عبد الوهاب",
+            "زاد المعاد في هدي خير العباد.pdf": "ابن قيم الجوزية",
+            "صحيح ابن حبان.pdf": "الإمام ابن حبان البستي",
+            "صحيح سنن ابن ماجة.pdf": "ابن ماجه والألباني",
+            "صحيح البخاري_جزء1.pdf": "الإمام محمد بن إسماعيل البخاري",
+            "صحيح البخاري_جزء2.pdf": "الإمام محمد بن إسماعيل البخاري",
+            "صحيح مسلم_جزء1.pdf": "الإمام مسلم بن الحجاج النيسابوري",
+            "صحيح مسلم_جزء2.pdf": "الإمام مسلم بن الحجاج النيسابوري"
+        };
+
+        function attachNewBookFile(fileName) {
+            if (!fileName || bookLinks[fileName]) return false;
+            const placeholder = document.querySelector('.download-btn[data-file="nun"]');
+            if (!placeholder) return false;
+
+            const author = bookAuthors[fileName] || "";
+            bookLinks[fileName] = "../Book/" + encodeURIComponent(fileName);
+            placeholder.setAttribute("data-book", titleFromFileName(fileName));
+            placeholder.setAttribute("data-author", author);
+            placeholder.setAttribute("data-file", fileName);
+
+            const item = placeholder.closest(".book-item");
+            if (item) {
+                const titleEl = item.querySelector(".book-title");
+                const authorEl = item.querySelector(".book-author");
+                if (titleEl) titleEl.textContent = titleFromFileName(fileName);
+                if (authorEl) authorEl.textContent = author || "\\u00a0";
+            }
+            return true;
+        }'''
+          if old not in t:
+              raise SystemExit("target function not found")
+          p.write_text(t.replace(old, new, 1), encoding="utf-8")
+          print("patched")
+          PY
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Moon/moon4.html
+          if git diff --cached --quiet; then
+            echo unchanged
+            exit 0
+          fi
+          git commit -m "Show real authors on new download cards"
+          git push
