@@ -2,6 +2,7 @@
     "use strict";
 
     var BOOK_EXT = /\.(pdf|zip|epub)$/i;
+    var PART_SUFFIX = /(?:[_\s\-–]+الجزء\s*\d+.*|[_\s]*جزء\s*\d+.*)$/;
     var CACHE_KEY = "mishkat-book-assets";
     var CACHE_MS = 60 * 1000;
 
@@ -26,6 +27,28 @@
         return items.filter(isBookFile).map(function (item) {
             return { name: typeof item === "string" ? item : item.name };
         });
+    }
+
+    function stemBookName(name) {
+        return String(name || "")
+            .replace(BOOK_EXT, "")
+            .replace(PART_SUFFIX, "")
+            .replace(/[_\s]+$/g, "")
+            .trim();
+    }
+
+    function uniqueBookCount(files) {
+        var seen = {};
+        var count = 0;
+        (files || []).forEach(function (item) {
+            var name = item && (typeof item === "string" ? item : item.name);
+            if (!name) return;
+            var key = stemBookName(name);
+            if (!key || seen[key]) return;
+            seen[key] = true;
+            count += 1;
+        });
+        return count;
     }
 
     function readCache() {
@@ -117,8 +140,9 @@
     function updateDownloadCount(el) {
         if (!el) return Promise.resolve();
         return listBookFiles().then(function (files) {
-            el.textContent = String(files.length);
-            return files.length;
+            var count = uniqueBookCount(files);
+            el.textContent = String(count);
+            return count;
         }).catch(function () {
             return null;
         });
@@ -126,6 +150,7 @@
 
     root.MishkatBooks = {
         listBookFiles: listBookFiles,
+        uniqueBookCount: uniqueBookCount,
         updateDownloadCount: updateDownloadCount
     };
 })(window);
