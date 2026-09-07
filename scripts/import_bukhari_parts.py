@@ -1,4 +1,3 @@
-import re
 import subprocess
 from pathlib import Path
 
@@ -15,55 +14,26 @@ PARTS = [
     ("1ThwGxU6MjsthtztTnPe9Iov8GMJbx_l2", "صحيح البخاري - الجزء 7 من 7.pdf"),
 ]
 
-COOKIE = Path("/tmp/gdrive.cookies")
-
-
-def curl(url, dest, extra=None):
-    cmd = ["curl", "-L", "--retry", "5", "-c", str(COOKIE), "-b", str(COOKIE), "-o", str(dest)]
-    if extra:
-        cmd.extend(extra)
-    cmd.append(url)
-    subprocess.check_call(cmd)
-
 
 def is_pdf(path):
-    return path.exists() and path.stat().st_size > 10000 and path.read_bytes()[:4] == b"%PDF"
-
-
-def confirm_token(path):
-    text = path.read_text(encoding="utf-8", errors="ignore")
-    match = re.search(r"confirm=([0-9A-Za-z_\-]+)", text)
-    if match:
-        return match.group(1)
-    match = re.search(r"name=\"confirm\"\s+value=\"([^\"]+)\"", text)
-    if match:
-        return match.group(1)
-    match = re.search(r"id=\"download-form\".*?action=\"([^\"]+)\"", text, re.S)
-    return None
+    return path.exists() and path.stat().st_size > 1_000_000 and path.read_bytes()[:4] == b"%PDF"
 
 
 def download(file_id, dest):
-    urls = [
-        f"https://drive.google.com/uc?export=download&id={file_id}&confirm=t",
-        f"https://drive.usercontent.google.com/download?id={file_id}&export=download&confirm=t",
-    ]
-    for url in urls:
-        print("try", url)
-        curl(url, dest)
-        if is_pdf(dest):
-            return
-        token = confirm_token(dest)
-        if token:
-            confirmed = f"https://drive.google.com/uc?export=download&id={file_id}&confirm={token}"
-            print("retry with confirm", token)
-            curl(confirmed, dest)
-            if is_pdf(dest):
-                return
-            confirmed2 = f"https://drive.usercontent.google.com/download?id={file_id}&export=download&confirm={token}"
-            curl(confirmed2, dest)
-            if is_pdf(dest):
-                return
-    raise SystemExit(f"failed to download pdf: {dest.name} size={dest.stat().st_size if dest.exists() else 0}")
+    if dest.exists():
+        dest.unlink()
+    subprocess.check_call([
+        "gdown",
+        "--id",
+        file_id,
+        "-O",
+        str(dest),
+        "--fuzzy",
+    ])
+    if not is_pdf(dest):
+        if dest.exists():
+            dest.unlink()
+        raise SystemExit(f"not a pdf after gdown: {dest.name}")
 
 
 def main():
