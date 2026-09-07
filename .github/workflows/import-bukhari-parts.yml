@@ -11,21 +11,30 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install gdown
+        run: python3 -m pip install --user gdown
+
       - name: Download Bukhari 7 parts from Drive
-        continue-on-error: true
         run: python3 scripts/import_bukhari_parts.py
 
-      - name: Apply library parts UI
-        run: python3 scripts/apply_parts_ui.py
-
-      - name: Commit
+      - name: Commit PDFs only
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add Book Moon/moon4.html Moon/book-parts.html js/book-parts.js
+          python3 - << 'PY'
+          from pathlib import Path
+          import subprocess
+          book = Path('Book')
+          for p in book.glob('صحيح البخاري - الجزء * من 7.pdf'):
+              head = p.read_bytes()[:4] if p.exists() else b''
+              if head != b'%PDF' or p.stat().st_size < 1000000:
+                  print('refuse', p, p.stat().st_size if p.exists() else 0)
+                  continue
+              subprocess.check_call(['git', 'add', str(p)])
+          PY
           if git diff --cached --quiet; then
-            echo unchanged
+            echo no valid pdfs
             exit 0
           fi
-          git commit -m "Add Bukhari 7-part downloads and parts library pages"
+          git commit -m "Add Sahih al-Bukhari 7 original parts from Drive"
           git push
