@@ -17,7 +17,7 @@ jobs:
       - name: Download new books into Book/
         run: |
           python3 << 'PY'
-          import re, subprocess, sys
+          import re, subprocess
           from pathlib import Path
           from pypdf import PdfReader, PdfWriter
 
@@ -44,27 +44,17 @@ jobs:
               text = Path(name).stem.lower()
               text = text.replace("_", " ").replace("-", " ")
               text = re.sub(r"\s+", " ", text)
-              text = re.sub(r"(جزء|جز\s*|part)\s*\d+", "", text)
+              text = re.sub(r"(جزء|part)\s*\d+", "", text)
               return text.strip()
 
           existing = {norm(p.name) for p in BOOK.iterdir() if p.is_file()}
-          # also keep raw names to avoid overwrite
           existing_names = {p.name for p in BOOK.iterdir() if p.is_file()}
 
           def already_there(dest_name):
-              key = norm(dest_name)
-              if dest_name in existing_names:
-                  return True
-              if key in existing:
-                  return True
-              for item in existing:
-                  if key and (key in item or item in key):
-                      return True
-              return False
+              return dest_name in existing_names or norm(dest_name) in existing
 
           def download(file_id, dest):
               url = f"https://drive.usercontent.google.com/download?id={file_id}&export=download&confirm=t"
-              dest.parent.mkdir(parents=True, exist_ok=True)
               subprocess.check_call(["curl", "-L", "--fail", "--retry", "5", "-o", str(dest), url])
               if dest.stat().st_size < 1000 or dest.read_bytes()[:4] != b"%PDF":
                   raise SystemExit(f"download did not return a PDF: {dest}")
@@ -72,10 +62,9 @@ jobs:
           def split_pdf(src, base_name):
               reader = PdfReader(str(src))
               mid = max(1, len(reader.pages) // 2)
-              parts = [(1, reader.pages[:mid]), (2, reader.pages[mid:])]
               written = []
               stem = Path(base_name).stem
-              for idx, pages in parts:
+              for idx, pages in ((1, reader.pages[:mid]), (2, reader.pages[mid:])):
                   writer = PdfWriter()
                   for page in pages:
                       writer.add_page(page)
@@ -99,9 +88,9 @@ jobs:
                   print("split large file", dest_name, tmp.stat().st_size)
                   written = split_pdf(tmp, dest_name)
                   added.extend(p.name for p in written)
-                  for p in written:
-                      existing.add(norm(p.name))
-                      existing_names.add(p.name)
+                  for path in written:
+                      existing.add(norm(path.name))
+                      existing_names.add(path.name)
               else:
                   final = BOOK / dest_name
                   tmp.replace(final)
