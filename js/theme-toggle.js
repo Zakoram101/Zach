@@ -25,13 +25,13 @@
         return document.documentElement.classList.contains("theme-dark") ? DARK : LIGHT;
     }
 
-    function applyTheme(theme) {
+    function applyTheme(theme, persist) {
         var isDark = theme === DARK;
         document.documentElement.classList.toggle("theme-dark", isDark);
         if (document.body) {
             document.body.classList.toggle("theme-dark", isDark);
         }
-        safeSet(isDark ? DARK : LIGHT);
+        if (persist !== false) safeSet(isDark ? DARK : LIGHT);
         syncButtons(isDark);
     }
 
@@ -54,16 +54,19 @@
         );
     }
 
+    function makeButton() {
+        var wrap = document.createElement("span");
+        wrap.innerHTML = buttonHtml();
+        return wrap.firstChild;
+    }
+
     function placeButton() {
         if (document.querySelector("[data-theme-toggle]")) {
             syncButtons(currentTheme() === DARK);
             return;
         }
 
-        var wrap = document.createElement("span");
-        wrap.innerHTML = buttonHtml();
-        var btn = wrap.firstChild;
-
+        var btn = makeButton();
         var topBar = document.querySelector(".top-bar");
         if (topBar) {
             var homeLink = topBar.querySelector("a");
@@ -83,24 +86,25 @@
 
         var navigation = document.querySelector(".navigation");
         if (navigation) {
-            navigation.insertBefore(btn, navigation.firstChild);
+            navigation.style.position = navigation.style.position || "relative";
             btn.style.position = "absolute";
             btn.style.top = "12px";
             btn.style.left = "12px";
-            navigation.style.position = navigation.style.position || "relative";
+            navigation.insertBefore(btn, navigation.firstChild);
             return;
         }
 
         var header = document.querySelector("header");
         if (header) {
+            header.style.position = header.style.position || "relative";
             btn.style.position = "absolute";
             btn.style.top = "16px";
             btn.style.left = "16px";
-            header.style.position = header.style.position || "relative";
             header.appendChild(btn);
             return;
         }
 
+        btn.classList.add("theme-toggle--floating");
         btn.style.position = "fixed";
         btn.style.top = "14px";
         btn.style.left = "14px";
@@ -108,15 +112,24 @@
         document.body.appendChild(btn);
     }
 
-    applyTheme(currentTheme());
+    applyTheme(currentTheme(), false);
 
     function onReady() {
         placeButton();
         syncButtons(currentTheme() === DARK);
         document.addEventListener("click", function (event) {
-            var btn = event.target.closest("[data-theme-toggle]");
+            var target = event.target;
+            if (!target || !target.closest) return;
+            var btn = target.closest("[data-theme-toggle]");
             if (!btn) return;
+            event.preventDefault();
             applyTheme(currentTheme() === DARK ? LIGHT : DARK);
+        });
+        window.addEventListener("storage", function (event) {
+            if (event.key !== STORAGE_KEY) return;
+            if (event.newValue === DARK || event.newValue === LIGHT) {
+                applyTheme(event.newValue, false);
+            }
         });
     }
 

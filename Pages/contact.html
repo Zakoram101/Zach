@@ -13,6 +13,7 @@
     <script>(function(){try{var t=localStorage.getItem('mishkat-theme');if(t==='dark')document.documentElement.classList.add('theme-dark');}catch(e){}})();</script>
 </head>
 <body>
+<script src="../js/theme-toggle.js" defer></script>
 <script>
 (function () {
     var source = 'https://raw.githubusercontent.com/Zakoram101/Zach/9cdb46a5ceeb8a9af7e4661efc0d4fe0658619ee/Pages/contact.html';
@@ -46,8 +47,11 @@
                 'if (subjectModal.classList.contains(\'show\'))',
                 'if (subjectModal && subjectModal.classList.contains(\'show\'))'
             );
-            var patch = '<script src="./web3forms-plain.js"><\/script>\n    <script src="../js/theme-toggle.js" defer></script>
-</body>';
+            var headPatch = '<link rel="stylesheet" href="../css/theme-toggle.css">\n    <script>(function(){try{var t=localStorage.getItem(\'mishkat-theme\');if(t===\'dark\')document.documentElement.classList.add(\'theme-dark\');}catch(e){}})();<\/script>\n</head>';
+            if (html.indexOf('theme-toggle.css') === -1 && html.indexOf('</head>') !== -1) {
+                html = html.replace('</head>', headPatch);
+            }
+            var patch = '<script src="./web3forms-plain.js"><\/script>\n    <script src="../js/theme-toggle.js" defer><\/script>\n</body>';
             if (html.indexOf('</body>') !== -1) html = html.replace('</body>', patch);
             else html += patch;
             document.open();
