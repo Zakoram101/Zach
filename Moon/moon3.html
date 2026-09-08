@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html dir="rtl" lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <link rel="icon" type="image/svg+xml" href="../favicon.svg">
@@ -8,1307 +8,367 @@
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< Updated upstream
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="هل تعلم؟ — معلومات إسلامية قصيرة موثقة عن الصحابة والعلماء والكتب الإسلامية وأحداث السيرة والتاريخ الإسلامي، مع ذكر المصدر والمرجع لكل معلومة.">
-    <title>هل تعلم؟ | أخذ فكرة — Mishkat books</title>
+    <title>أخذ فكرة | بطاقات معرفية</title>
+    <meta name="description" content="بطاقات معرفية قصيرة موثّقة في الصحابة والعلماء والكتب الإسلامية والسيرة والتاريخ، مع ذكر المصدر وتنبيه الخلاف المعتبر.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/button-effects.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
-
         :root {
             --primary-color: #2c3e50;
             --accent-color: #e74c3c;
             --light-color: #ecf0f1;
             --dark-color: #34495e;
+            --gold-color: #f1c40f;
+            --card-bg: #fff;
             --font-main: 'Tajawal', sans-serif;
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: var(--font-main);
-            background: linear-gradient(135deg, var(--light-color) 0%, #dde4e6 100%);
+            background: #ecf0f1;
+            color: var(--primary-color);
+            line-height: 1.8;
             min-height: 100vh;
-            color: var(--primary-color);
-            position: relative;
-            overflow-x: hidden;
         }
-
-        /* الزخارف والعناصر العائمة (نفس هوية الموقع) */
-        .decorative-element {
-            position: fixed;
-            border: 1px solid var(--dark-color);
-            opacity: 0.2;
-            z-index: 0;
-            pointer-events: none;
+        .top-bar {
+            background: var(--primary-color);
+            color: #fff;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
         }
-
-        .element-1 {
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            top: 10%;
-            left: 10%;
-            animation: float 15s infinite ease-in-out;
-            background: radial-gradient(circle at 30% 30%, rgba(44, 62, 80, 0.05), transparent);
+        .top-bar a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 6px 14px;
+            border-radius: 20px;
         }
-
-        .element-2 {
-            width: 200px;
-            height: 200px;
-            bottom: 10%;
-            right: 15%;
-            transform: rotate(45deg);
-            animation: float 12s infinite ease-in-out reverse;
-            border-color: var(--accent-color);
-        }
-
-        .element-3 {
-            width: 150px;
-            height: 150px;
-            border-radius: 30%;
-            top: 25%;
-            right: 20%;
-            animation: float 10s infinite ease-in-out 2s;
-            border-color: var(--primary-color);
-        }
-
-        .element-4 {
-            width: 180px;
-            height: 180px;
-            border-radius: 5px;
-            bottom: 15%;
-            left: 20%;
-            transform: rotate(15deg);
-            animation: float 14s infinite ease-in-out 1s;
-            border-style: dashed;
-            border-color: var(--accent-color);
-        }
-
-        .arabic-decoration {
-            position: fixed;
-            font-family: var(--font-main);
-            font-size: 8rem;
-            opacity: 0.03;
-            color: var(--primary-color);
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        .decoration-1 {
-            top: 5%;
-            left: 5%;
-            transform: rotate(-15deg);
-        }
-
-        .decoration-2 {
-            bottom: 5%;
-            right: 5%;
-            transform: rotate(15deg);
-        }
-
-        @keyframes float {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            25% { transform: translate(15px, 20px) rotate(5deg); }
-            50% { transform: translate(8px, -15px) rotate(2deg); }
-            75% { transform: translate(-12px, 8px) rotate(-3deg); }
-            100% { transform: translate(0, 0) rotate(0deg); }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* الترويسة */
-        .page-header {
+        .top-bar a:hover { background: rgba(255,255,255,.15); }
+        header {
             text-align: center;
-            padding: 3rem 1.5rem 1rem;
-            position: relative;
-            z-index: 2;
+            padding: 42px 20px 28px;
+            background: linear-gradient(135deg, var(--primary-color), #1a252f);
+            color: #fff;
+            margin-bottom: 28px;
         }
-
-        .page-header h1 {
-            font-size: 2.8rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            opacity: 0;
-            animation: fadeIn 2s ease forwards;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
+        header h1 { font-size: 2.2rem; }
+        header h1::after {
+            content: "";
+            display: block;
+            width: 90px;
+            height: 3px;
+            background: var(--accent-color);
+            margin: 12px auto 0;
         }
-
-        .page-header .subtitle {
-            font-size: 1.2rem;
-            color: var(--dark-color);
-            margin-top: 0.75rem;
-            opacity: 0;
-            animation: fadeIn 2s ease forwards 0.3s;
+        header p {
+            font-size: 1.05rem;
+            opacity: .9;
+            max-width: 740px;
+            margin: 14px auto 0;
         }
-
-        .separator {
-            width: 120px;
-            height: 2px;
-            background: linear-gradient(to right, transparent, var(--accent-color), transparent);
-            margin: 2rem auto;
-            position: relative;
-            opacity: 0;
-            animation: fadeIn 2s ease forwards 0.5s;
+        .count-pill {
+            display: inline-block;
+            margin-top: 16px;
+            background: var(--accent-color);
+            color: #fff;
+            border-radius: 20px;
+            padding: 4px 14px;
+            font-size: .9rem;
         }
-
-        .separator::before, .separator::after {
-            content: "●";
-            position: absolute;
-            top: -9px;
-            color: var(--accent-color);
-            font-size: 12px;
+        .container {
+            max-width: 980px;
+            margin: 0 auto 50px;
+            padding: 0 18px;
         }
-
-        .separator::before { left: 0; }
-        .separator::after { right: 0; }
-
-        /* أزرار التصنيف */
+        .intro-box {
+            background: var(--card-bg);
+            border-radius: 14px;
+            padding: 18px 20px;
+            margin-bottom: 18px;
+            box-shadow: 0 6px 20px rgba(44,62,80,.08);
+            border-right: 5px solid var(--accent-color);
+        }
+        .search-box {
+            width: 100%;
+            margin-bottom: 16px;
+            padding: 12px 16px;
+            border: 1px solid rgba(44,62,80,.15);
+            border-radius: 12px;
+            font-family: var(--font-main);
+            font-size: 1rem;
+            color: var(--primary-color);
+            background: #fff;
+        }
+        .search-box:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(231,76,60,.15);
+        }
         .filters {
             display: flex;
             flex-wrap: wrap;
-            justify-content: center;
-            gap: 0.75rem;
-            padding: 0 1.5rem 2rem;
-            position: relative;
-            z-index: 2;
-            opacity: 0;
-            animation: fadeIn 2s ease forwards 0.7s;
+            gap: 8px;
+            margin-bottom: 18px;
         }
-
         .filter-btn {
             font-family: var(--font-main);
-            font-size: 1rem;
+            font-size: .92rem;
             font-weight: 700;
-            padding: 0.5rem 1.5rem;
-            border-radius: 25px;
+            padding: 6px 14px;
+            border-radius: 20px;
             border: 1px solid var(--primary-color);
-            background: rgba(255, 255, 255, 0.35);
+            background: #fff;
             color: var(--primary-color);
             cursor: pointer;
-            transition: all 0.3s ease;
         }
-
-        .filter-btn:hover {
-            background: var(--primary-color);
-            color: var(--light-color);
-            transform: translateY(-2px);
-        }
-
+        .filter-btn:hover { background: var(--primary-color); color: #fff; }
         .filter-btn.active {
             background: var(--accent-color);
             border-color: var(--accent-color);
             color: #fff;
-            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
         }
-
-        /* بطاقات المعلومات */
-        .facts-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 1.5rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1.5rem 4rem;
-            position: relative;
-            z-index: 2;
-        }
-
+        .facts-list { display: flex; flex-direction: column; gap: 14px; }
         .fact-card {
-            background: rgba(255, 255, 255, 0.55);
-            backdrop-filter: blur(5px);
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            box-shadow: 0 8px 32px rgba(44, 62, 80, 0.1);
-            padding: 1.75rem;
+            background: var(--card-bg);
+            border-radius: 14px;
+            padding: 20px 18px;
+            box-shadow: 0 6px 18px rgba(44,62,80,.07);
+        }
+        .fact-head {
             display: flex;
-            flex-direction: column;
-            gap: 0.9rem;
-            opacity: 0;
-            animation: fadeIn 1.2s ease forwards;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
         }
-
-        .fact-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 40px rgba(44, 62, 80, 0.18);
-        }
-
-        .fact-card.hidden { display: none; }
-
-        .fact-category {
-            align-self: flex-start;
-            font-size: 0.8rem;
+        .num {
+            background: var(--accent-color);
+            color: #fff;
+            min-width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .9rem;
             font-weight: 700;
-            padding: 0.25rem 0.9rem;
-            border-radius: 20px;
+        }
+        .badge {
             background: var(--primary-color);
-            color: var(--light-color);
+            color: #fff;
+            border-radius: 20px;
+            padding: 3px 10px;
+            font-size: .8rem;
+            font-weight: 700;
         }
-
-        .fact-card[data-category="السيرة"] .fact-category { background: var(--accent-color); }
-
-        .fact-text {
-            font-size: 1.05rem;
-            line-height: 1.9;
-            color: var(--primary-color);
+        .fact-card[data-cat="sira"] .badge { background: var(--accent-color); }
+        .fact-card[data-cat="books"] .badge { background: #1a5276; }
+        .fact-card[data-cat="scholars"] .badge { background: #1e8449; }
+        .fact-title { font-size: 1.08rem; font-weight: 700; color: var(--accent-color); }
+        .fact-text { color: var(--dark-color); margin: 8px 0 12px; }
+        .source {
+            background: #eef6ff;
+            border-right: 3px solid #3498db;
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: .92rem;
+            color: #1a3a5c;
         }
-
-        .fact-text strong {
-            color: var(--accent-color);
-        }
-
-        .fact-note {
-            font-size: 0.9rem;
-            line-height: 1.8;
-            color: var(--dark-color);
-            background: rgba(44, 62, 80, 0.06);
+        .dispute {
+            margin-top: 10px;
+            background: #fdecea;
             border-right: 3px solid var(--accent-color);
             border-radius: 8px;
-            padding: 0.6rem 0.9rem;
+            padding: 10px 14px;
+            font-size: .92rem;
+            color: #7b241c;
         }
-
-        .fact-source {
-            margin-top: auto;
-            font-size: 0.85rem;
+        .empty-state {
+            text-align: center;
+            background: #fff;
+            border-radius: 14px;
+            padding: 28px 16px;
             color: var(--dark-color);
-            border-top: 1px dashed rgba(44, 62, 80, 0.25);
-            padding-top: 0.8rem;
         }
-
-        .fact-source span {
-            font-weight: 700;
-            color: var(--primary-color);
-        }
-
-        /* زر العودة */
-        .back-link {
-            position: fixed;
-            top: 1.25rem;
-            right: 1.25rem;
-            z-index: 10;
+        .controls { text-align: center; margin-top: 18px; }
+        #loadMoreBtn {
             font-family: var(--font-main);
             font-weight: 700;
-            font-size: 0.95rem;
-            text-decoration: none;
-            color: var(--primary-color);
-            background: rgba(255, 255, 255, 0.55);
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            border-radius: 25px;
-            padding: 0.5rem 1.4rem;
-            box-shadow: 0 4px 15px rgba(44, 62, 80, 0.12);
-            transition: all 0.3s ease;
+            background: var(--primary-color);
+            color: #fff;
+            border: none;
+            border-radius: 24px;
+            padding: 10px 22px;
+            cursor: pointer;
         }
-
-        .back-link:hover {
+        #loadMoreBtn:hover { background: var(--accent-color); }
+        .hidden { display: none; }
+        footer {
+            text-align: center;
+            padding: 24px 16px;
             background: var(--primary-color);
             color: var(--light-color);
+            font-size: .95rem;
         }
-
-        @media (max-width: 768px) {
-            .page-header h1 { font-size: 2.2rem; }
-            .page-header .subtitle { font-size: 1rem; }
-            .element-1, .element-2, .element-3, .element-4 { width: 100px; height: 100px; }
-            .arabic-decoration { font-size: 5rem; }
-            .facts-grid { grid-template-columns: 1fr; }
+        footer a { color: var(--gold-color); text-decoration: none; }
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.65rem; }
+            .fact-card { padding: 16px 14px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            * { animation: none !important; transition: none !important; }
         }
     </style>
 </head>
 <body>
-    <div class="arabic-decoration decoration-1">عِلْم</div>
-    <div class="arabic-decoration decoration-2">نُور</div>
-
-    <div class="decorative-element element-1"></div>
-    <div class="decorative-element element-2"></div>
-    <div class="decorative-element element-3"></div>
-    <div class="decorative-element element-4"></div>
-
-    <a class="back-link" href="../index.html">← العودة للرئيسية</a>
-
-    <header class="page-header">
-        <h1>هل تعلم؟</h1>
-        <p class="subtitle">معلومات إسلامية قصيرة موثقة بمصادرها — من قسم «أخذ فكرة»</p>
-        <div class="separator"></div>
-    </header>
-
-    <nav class="filters" aria-label="تصنيفات المعلومات">
-        <button class="filter-btn active" data-filter="all">الكل</button>
-        <button class="filter-btn" data-filter="الصحابة">الصحابة رضي الله عنهم</button>
-        <button class="filter-btn" data-filter="العلماء">العلماء</button>
-        <button class="filter-btn" data-filter="الكتب">الكتب الإسلامية</button>
-        <button class="filter-btn" data-filter="السيرة">السيرة والتاريخ</button>
-    </nav>
-
-    <main class="facts-grid">
-
-        <!-- الصحابة رضي الله عنهم -->
-        <article class="fact-card" data-category="الصحابة">
-            <span class="fact-category">الصحابة رضي الله عنهم</span>
-            <p class="fact-text"><strong>هل تعلم</strong> أن أول من أسلم من الناس: خديجة بنت خويلد رضي الله عنها؟ فهي أول من آمن بالنبي ﷺ حين نزل عليه الوحي في غار حراء.</p>
-            <p class="fact-note">تنبيه: ورد في «أول من أسلم» أقوال بتفصيل مشهور عند أهل العلم: أول من أسلم من النساء خديجة، ومن الرجال الأحرار أبو بكر، ومن الصبيان علي بن أبي طالب، ومن الموالي زيد بن حارثة رضي الله عنهم، فلا تعارض بين الأقوال مع هذا التفصيل.</p>
-            <p class="fact-source"><span>المصدر:</span> سيرة ابن هشام (باب بدء الوحي)، وصحيح البخاري، كتاب بدء الوحي، حديث عائشة رقم ٣.</p>
-        </article>
-
-        <article class="fact-card" data-category="الصحابة">
-            <span class="fact-category">الصحابة رضي الله عنهم</span>
-            <p class="fact-text"><strong>هل تعلم</strong> أن زيد بن حارثة رضي الله عنه هو الصحابي الوحيد الذي ذُكر اسمه صراحة في القرآن الكريم، في قوله تعالى: ﴿فَلَمَّا قَضَىٰ زَيْدٌ مِّنْهَا وَطَرًا﴾؟</p>
-            <p class="fact-source"><span>المصدر:</span> سورة الأحزاب، الآية ٣٧.</p>
-        </article>
-
-        <article class="fact-card" data-category="الصحابة">
-            <span class="fact-category">الصحابة رضي الله عنهم</span>
-            <p class="fact-text"><strong>هل تعلم</strong> أن التأريخ بالهجرة النبوية بدأ في خلافة عمر بن الخطاب رضي الله عنه، بعد أن استشار الصحابة، فاتفقوا على جعل الهجرة بداية التاريخ الإسلامي؟</p>
-            <p class="fact-source"><span>المصدر:</span> تاريخ الطبري؛ وتذكره كتب التاريخ والسير في أحداث خلافة عمر رضي الله عنه.</p>
-        </article>
-
-        <article class="fact-card" data-category="الصحابة">
-            <span class="fact-category">الصحابة رضي الله عنهم</span>
-            <p class="fact-text"><strong>هل تعلم</strong> أن أبو هريرة رضي الله عنه أكثر الصحابة رواية للحديث عن النبي ﷺ على الإطلاق، مع أن صحبته له ﷺ كانت نحو أربع سنوات فقط؟ قال عن نفسه إنه كان لازمًا للنبي ﷺ ولا شغل له بتجارة ولا زرع.</p>
-            <p class="fact-source"><span>المصدر:</span> صحيح البخاري، كتاب العلم، حديث ١١٨؛ وصحيح مسلم، كتاب فضائل الصحابة، حديث ٢٤٩٢.</p>
-        </article>
-
-        <!-- العلماء -->
-        <article class="fact-card" data-category="العلماء">
-            <span class="fact-category">العلماء</span>
-            <p class="fact-text"><strong>هل تعلم</strong> أن الإمام البخاري رحمه الله انتقى أحاديث «صحيح البخاري» من نحو ستمائة ألف حديث، وأنه أمضى في تصنيفه نحو ست عشرة سنة؟</p>
-            <p class="fact-source"><span>المصدر:</span> هداية الساري مقدمة فتح الباري لابن حجر العسقلاني؛ وتاريخ بغداد للخطيب البغدادي (ترجمة البخاري).</p>
-        </article>
-
-        <article class="fact-card" data-category="العلماء">
-            <span class="fact-category">العلماء</span>
-            <p class="fact-text"><strong>هل تعلم</strong> أن الإمام النووي رحمه الله توفي وعمره نحو خمس وأربعين سنة فقط، ومع ذلك ترك مؤلفات عظيمة منها: «رياض الصالحين» و«الأربعون النووية» وشرح صحيح مسلم؟</p>
-            <p class="fact-source"><span>المصدر:</span> وفيات الأعيان لابن خلكان (ترجمة النووي)؛ وتذكرة الحفاظ للذهبي.</p>
-        </article>
-
-        <article class="fact-card" data-category="العلماء">
-            <span class="fact-category">العلماء</span>
-            <p class="fact-text"><strong>هل تعلم</strong> أن الإمام الشافعي رحمه الله يُعد أول من صنّف كتابًا مستقلًا في علم أصول الفقه، وهو كتابه المشهور «الرسالة»؟</p>
-            <p class="fact-note">تنبيه: اشتهر عند المؤرخين أن الرسالة أول مصنف جامع في أصول الفقه، ويُذكر أن بعض العلماء كتب في بعض مسائل الأصول قبله، لكن التصنيف المستقل الجامع يُنسب للشافعي.</p>
-            <p class="fact-source"><span>المصدر:</span> تاريخ بغداد للخطيب البغدادي (ترجمة الشافعي)؛ ومناقب الشافعي للبيهقي.</p>
-        </article>
-
-        <article class="fact-card" data-category="العلماء">
-            <span class="fact-category">العلماء</span>
-            <p class="fact-text"><strong>هل تعلم</strong> أن الإمام مالك بن أنس رحمه الله كان لا يحدّث إلا على طهارة، تعظيمًا لحديث رسول الله ﷺ؟</p>
-            <p class="fact-source"><span>المصدر:</span> الجامع لأخلاق الراوي وآداب السامع للخطيب البغدادي؛ وترتيب المدارك للقاضي عياض (ترجمة مالك).</p>
-        </article>
-
-        <!-- الكتب الإسلامية -->
-        <article class="fact-card" data-category="الكتب">
-            <span class="fact-category">الكتب الإسلامية</span>
-            <p class="fact-text"><strong>هل تعلم</strong> أن «صحيح البخاري» يُعد أصح كتاب بعد كتاب الله عز وجل عند أهل العلم؟ قال الإمام النووي: «وأجمعوا على أن أصحها بعد كتاب الله: الصحيحان البخاري ومسلم».</p>
-            <p class="fact-source"><span>المصدر:</span> شرح النووي على صحيح مسلم (المقدمة).</p>
-        </article>
-
-        <article class="fact-card" data-category="الكتب">
-            <span class="fact-category">الكتب الإسلامية</span>
-            <p class="fact-text"><strong>هل تعلم</strong> أن «الموطأ» للإمام مالك من أقدم المصنفات الحديثية الباقية، وأنه لقي قبولًا عظيمًا حتى قال فيه الشافعي: «ما على وجه الأرض بعد كتاب الله كتاب أصح من كتاب مالك»؟</p>
-            <p class="fact-note">تنبيه: قول الشافعي هذا كان قبل ظهور الصحيحين، وقد أشار العلماء إلى ذلك.</p>
-            <p class="fact-source"><span>المصدر:</span> ترتيب المدارك للقاضي عياض؛ ومقدمة ابن الصلاح في علوم الحديث.</p>
-        </article>
-
-        <article class="fact-card" data-category="الكتب">
-            <span class="fact-category">الكتب الإسلامية</span>
-            <p class="fact-text"><strong>هل تعلم</strong> أن تفسير الطبري «جامع البيان عن تأويل آي القرآن» يُعد أقدم التفاسير الكاملة الباقية المعتمدة على المأثور عن الصحابة والتابعين بأسانيدها؟</p>
-            <p class="fact-source"><span>المصدر:</span> الطبقات الكبرى لابن سعد (ترجمة الطبري)؛ ووفيات الأعيان لابن خلكان.</p>
-        </article>
-
-        <article class="fact-card" data-category="الكتب">
-            <span class="fact-category">الكتب الإسلامية</span>
-            <p class="fact-text"><strong>هل تعلم</strong> أن كتاب «الأربعين النووية» جمع فيه الإمام النووي اثنين وأربعين حديثًا جامعة لقواعد الدين، وأنه استمد فكرته من أربعينيات من تقدمه كابن الصلاح؟</p>
-            <p class="fact-source"><span>المصدر:</span> مقدمة الإمام النووي على كتابه «الأربعون».</p>
-        </article>
-
-        <!-- السيرة والتاريخ -->
-        <article class="fact-card" data-category="السيرة">
-            <span class="fact-category">السيرة والتاريخ</span>
-            <p class="fact-text"><strong>هل تعلم</strong> أن غزوة بدر الكبرى وقعت في السابع عشر من رمضان سنة ٢هـ، وكان عدد المسلمين فيها نحو ثلاثمائة وثلاثة عشر رجلًا؟</p>
-            <p class="fact-source"><span>المصدر:</span> صحيح البخاري، كتاب المغازي، حديث ٣٩٩٢ (فيه ذكر عدد أهل بدر وأنهم أزيد من ثلاثمائة وعشرة)؛ وسيرة ابن هشام.</p>
-        </article>
-
-        <article class="fact-card" data-category="السيرة">
-            <span class="fact-category">السيرة والتاريخ</span>
-            <p class="fact-text"><strong>هل تعلم</strong> أن القبلة حُوّلت من بيت المقدس إلى الكعبة في السنة الثانية من الهجرة، وأن المسجد الذي نزل فيه التحويل أثناء الصلاة سُمي «مسجد القبلتين»؟</p>
-            <p class="fact-source"><span>المصدر:</span> صحيح البخاري، كتاب الصلاة، حديث ٣٩٩؛ وسورة البقرة، الآية ١٤٤.</p>
-        </article>
-
-        <article class="fact-card" data-category="السيرة">
-            <span class="fact-category">السيرة والتاريخ</span>
-            <p class="fact-text"><strong>هل تعلم</strong> أن النبي ﷺ اختبأ مع أبي بكر رضي الله عنه في غار ثور ثلاث ليالٍ في طريق الهجرة، وأن الله ذكر ذلك في القرآن: ﴿إِذْ هُمَا فِي الْغَارِ﴾؟</p>
-            <p class="fact-source"><span>المصدر:</span> سورة التوبة، الآية ٤٠؛ وصحيح البخاري، كتاب فضائل أصحاب النبي ﷺ، حديث ٣٦٥٣.</p>
-        </article>
-
-        <article class="fact-card" data-category="السيرة">
-            <span class="fact-category">السيرة والتاريخ</span>
-            <p class="fact-text"><strong>هل تعلم</strong> أن عام الوفود هو السنة التاسعة للهجرة، حيث توافدت وفود القبائل العربية على المدينة معلنة إسلامها، حتى قيل: لم يُرَ قبله عام أكثر وفودًا منه؟</p>
-            <p class="fact-source"><span>المصدر:</span> سيرة ابن هشام (ذكر الوفود)؛ والبداية والنهاية لابن كثير (أحداث السنة التاسعة).</p>
-        </article>
-
-    </main>
-
-    <script>
-        document.querySelectorAll('.filter-btn').forEach(function (btn) {
-            btn.addEventListener('click', function () {
-                document.querySelectorAll('.filter-btn').forEach(function (b) { b.classList.remove('active'); });
-                btn.classList.add('active');
-                var filter = btn.getAttribute('data-filter');
-                document.querySelectorAll('.fact-card').forEach(function (card) {
-                    var show = filter === 'all' || card.getAttribute('data-category') === filter;
-                    card.classList.toggle('hidden', !show);
-                    if (show) {
-                        card.style.animation = 'none';
-                        card.offsetHeight;
-                        card.style.animation = '';
-                    }
-                });
-            });
-        });
-=======
-    <title>أخذ فكرة | بطاقات معرفية</title>
-    <meta name="description" content="ستون معلومة موثّقة في الصحابة والعلماء والكتب الإسلامية والسيرة والتاريخ، مع ذكر المصدر وتنبيه الخلاف المعتبر.">
-    <style>
-    @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap');
-
-:root {
-    --primary-color: #2c3e50;
-    --accent-color: #e74c3c;
-    --light-color: #ecf0f1;
-    --dark-color: #34495e;
-    --font-main: 'Tajawal', sans-serif;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: var(--font-main);
-}
-
-body {
-    background-color: var(--light-color);
-    overflow-x: hidden;
-    position: relative;
-    padding: 20px;
-}
-
-header {
-    text-align: center;
-    margin-bottom: 30px;
-    padding: 20px;
-    background-color: var(--primary-color);
-    color: white;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-}
-
-header h1 {
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-    color: white;
-}
-
-header h2 {
-    font-size: 1.2rem;
-    font-weight: 400;
-    color: var(--light-color);
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.search-container {
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: center;
-}
-
-.search-box {
-    width: 100%;
-    max-width: 500px;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 25px;
-    font-size: 1rem;
-    background-color: white;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    transition: all 0.3s ease;
-}
-
-.search-box:focus {
-    outline: none;
-    box-shadow: 0 5px 20px rgba(231, 76, 60, 0.3);
-}
-
-.category-nav {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8px;
-    margin-bottom: 28px;
-}
-
-.category-btn {
-    background: white;
-    color: var(--dark-color);
-    border: none;
-    border-radius: 25px;
-    padding: 8px 18px;
-    font-size: 0.9rem;
-    font-family: var(--font-main);
-    cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    transition: all 0.3s ease;
-}
-
-.category-btn:hover,
-.category-btn.active {
-    background: var(--accent-color);
-    color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(231,76,60,0.3);
-}
-
-.note-banner {
-    background: white;
-    border-radius: 10px;
-    padding: 14px 18px;
-    margin-bottom: 25px;
-    color: var(--dark-color);
-    line-height: 1.8;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-    border-right: 4px solid var(--accent-color);
-    font-size: 0.95rem;
-}
-
-.quotes-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 25px;
-    margin-bottom: 40px;
-}
-
-.quote-card {
-    background-color: white;
-    border-radius: 10px;
-    padding: 25px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    animation: fadeIn 0.5s ease forwards;
-}
-
-.quote-card::before {
-    content: """;
-    position: absolute;
-    top: -20px;
-    right: 20px;
-    font-size: 6rem;
-    color: var(--accent-color);
-    opacity: 0.1;
-}
-
-.quote-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
-}
-
-.fact-badge {
-    display: inline-block;
-    background: var(--light-color);
-    color: var(--primary-color);
-    font-size: 0.78rem;
-    font-weight: 700;
-    padding: 4px 12px;
-    border-radius: 20px;
-    margin-bottom: 12px;
-}
-
-.fact-title {
-    font-size: 1.08rem;
-    font-weight: 700;
-    color: var(--primary-color);
-    margin-bottom: 10px;
-    line-height: 1.5;
-}
-
-.quote-text {
-    margin-bottom: 15px;
-    line-height: 1.8;
-    font-size: 1rem;
-    color: var(--dark-color);
-}
-
-.scholar-name {
-    color: var(--accent-color);
-    font-weight: 500;
-    font-size: 0.9rem;
-    text-align: right;
-    border-top: 1px solid rgba(0,0,0,0.1);
-    padding-top: 10px;
-}
-
-.fact-dispute {
-    margin-top: 12px;
-    padding: 10px 12px;
-    background: rgba(231,76,60,0.08);
-    border-right: 3px solid var(--accent-color);
-    border-radius: 6px;
-    font-size: 0.86rem;
-    line-height: 1.7;
-    color: var(--dark-color);
-}
-
-.fact-dispute strong {
-    color: var(--accent-color);
-}
-
-.controls {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 40px;
-}
-
-#loadMoreBtn {
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    padding: 12px 30px;
-    border-radius: 25px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-#loadMoreBtn:hover {
-    background-color: var(--accent-color);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-}
-
-#loadMoreBtn.hidden {
-    display: none;
-}
-
-.empty-state {
-    grid-column: 1 / -1;
-    text-align: center;
-    color: var(--dark-color);
-    padding: 30px 10px;
-}
-
-footer {
-    text-align: center;
-    padding: 20px;
-    background-color: var(--primary-color);
-    color: var(--light-color);
-    margin-top: 30px;
-    border-radius: 10px;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.quotes-container .quote-card:nth-child(1) { animation-delay: 0.05s; }
-.quotes-container .quote-card:nth-child(2) { animation-delay: 0.1s; }
-.quotes-container .quote-card:nth-child(3) { animation-delay: 0.15s; }
-.quotes-container .quote-card:nth-child(4) { animation-delay: 0.2s; }
-.quotes-container .quote-card:nth-child(5) { animation-delay: 0.25s; }
-.quotes-container .quote-card:nth-child(6) { animation-delay: 0.3s; }
-
-@media (max-width: 768px) {
-    .quotes-container {
-        grid-template-columns: 1fr;
-    }
-
-    header h1 {
-        font-size: 2rem;
-    }
-
-    header h2 {
-        font-size: 1rem;
-    }
-
-    .quote-card {
-        padding: 20px;
-    }
-
-    .category-nav {
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        justify-content: flex-start;
-        padding-bottom: 8px;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-    }
-
-    .category-nav::-webkit-scrollbar { display: none; }
-    .category-btn { flex-shrink: 0; }
-}
-    </style>
-</head>
-<body>
+    <div class="top-bar">
+        <a href="../index.html">← الرئيسية</a>
+        <span>أخذ فكرة · بطاقات معرفية</span>
+        <a href="../Pages/books.html">الكتب</a>
+    </div>
     <header>
         <h1>أخذ فكرة</h1>
-        <h2>بطاقات معرفية في الصحابة والعلماء والكتب والسيرة</h2>
+        <p>معلومات قصيرة في الصحابة والعلماء والكتب والسيرة، كل بطاقة بمصدرها. إن وُجد خلاف معتبر ذُكر تنبيهًا دون حسم لغير المشهور.</p>
+        <span class="count-pill" id="factsCount">0 معلومة موثّقة</span>
     </header>
-
     <div class="container">
-        <div class="search-container">
-            <input type="text" class="search-box" placeholder="ابحث في المعلومات أو المصادر..." id="searchInput" aria-label="ابحث في البطاقات">
+        <div class="intro-box">
+            <p>القسم لأخذ فكرة سريعة لا للاستقصاء. الاعتماد على الصحيحين وكتب السير المعتمدة، مع بيان موضع الخلاف إن وُجد.</p>
         </div>
-
-        <div class="category-nav" id="categoryNav">
-            <button type="button" class="category-btn active" data-cat="all">الكل (60)</button>
-            <button type="button" class="category-btn" data-cat="sahaba">الصحابة</button>
-            <button type="button" class="category-btn" data-cat="scholars">العلماء</button>
-            <button type="button" class="category-btn" data-cat="books">الكتب الإسلامية</button>
-            <button type="button" class="category-btn" data-cat="sira">السيرة والتاريخ</button>
-        </div>
-
-        <p class="note-banner">كل بطاقة مذكور معها مصدرها. إذا كان في المسألة خلاف معتبر بين أهل العلم وُضع تنبيه أحمر واضح، دون حسم لغير الراجح المشهور.</p>
-
-        <div class="quotes-container" id="quotesContainer"></div>
-
+        <label class="hidden" for="searchInput">بحث</label>
+        <input type="search" id="searchInput" class="search-box" placeholder="ابحث في العنوان أو النص أو المصدر..." autocomplete="off">
+        <nav class="filters" id="categoryNav" aria-label="تصنيف البطاقات"></nav>
+        <div class="facts-list" id="factsList"></div>
         <div class="controls">
-            <button type="button" id="loadMoreBtn">عرض المزيد</button>
+            <button type="button" id="loadMoreBtn" class="hidden">عرض المزيد</button>
         </div>
     </div>
-
     <footer>
-        <p>أخذ فكرة — ستون معلومة موثّقة من كتب الحديث والسيرة والتاريخ</p>
+        <p>MishKat · أخذ فكرة</p>
+        <p style="margin-top:8px;"><a href="../index.html">العودة إلى الرئيسية</a></p>
     </footer>
-
+    <script src="../js/akhud-fikra.js"></script>
     <script>
-(function () {
-    var CATS = {
-        sahaba: "الصحابة",
-        scholars: "العلماء",
-        books: "الكتب الإسلامية",
-        sira: "السيرة والتاريخ"
-    };
+        (function () {
+            var CATS = {
+                sahaba: "الصحابة",
+                scholars: "العلماء",
+                books: "الكتب الإسلامية",
+                sira: "السيرة والتاريخ"
+            };
+            var facts = window.MishkatFikra || [];
+            var state = { cat: "all", query: "", shown: 0, perPage: 12 };
+            var listEl = document.getElementById("factsList");
+            var navEl = document.getElementById("categoryNav");
+            var moreBtn = document.getElementById("loadMoreBtn");
+            var searchInput = document.getElementById("searchInput");
+            var countEl = document.getElementById("factsCount");
 
-    var facts = [
-        /* ===== الصحابة (15) ===== */
-        {
-            cat: "sahaba",
-            title: "سعد بن أبي وقاص أول من رمى بسهم في سبيل الله",
-            text: "قال سعد بن أبي وقاص رضي الله عنه: «إني لأول العرب رمى بسهم في سبيل الله». وكان ذلك في أولى السرايا بعد الهجرة، وهو أحد العشرة المبشَّرين بالجنة وأحد الستة أهل الشورى.",
-            source: "صحيح البخاري (3728)، وصحيح مسلم (2966)",
-            dispute: ""
-        },
-        {
-            cat: "sahaba",
-            title: "خديجة رضي الله عنها أول من آمن من النساء",
-            text: "كانت خديجة بنت خويلد أول من صدّق النبي ﷺ حين نزل الوحي، وثبّتته بقولها: «كلا والله لا يخزيك الله أبدًا». وهي أول أزواج النبي ﷺ وأم عامة بنيه.",
-            source: "صحيح البخاري (3) في بدء الوحي، وسيرة ابن هشام",
-            dispute: ""
-        },
-        {
-            cat: "sahaba",
-            title: "من أول من أسلم بعد النبي ﷺ؟",
-            text: "اشتهر أن أبا بكر الصديق أول من أسلم من الرجال الأحرار، وعليًّا أول من أسلم من الصبيان وهو في حجر النبي ﷺ، وزيد بن حارثة أول من أسلم من الموالي، وخديجة أول النساء.",
-            source: "سيرة ابن هشام عن ابن إسحاق، والبداية والنهاية لابن كثير",
-            dispute: "اختلف أهل السير في «أول من أسلم» مطلقًا بين أبي بكر وعليّ وزيد وخديجة، والجمع الشائع تقييد كل واحد بفئته كما أعلاه."
-        },
-        {
-            cat: "sahaba",
-            title: "بلال بن رباح مؤذن رسول الله ﷺ",
-            text: "أمر النبي ﷺ بلالًا أن يشفع الأذان ويوتر الإقامة، فكان مؤذنه في حياته، وأذّن لأبي بكر بعد وفاته ثم ترك الأذان حزنًا إلا نادرًا.",
-            source: "صحيح البخاري (603) و(604)، وسيرة ابن هشام",
-            dispute: ""
-        },
-        {
-            cat: "sahaba",
-            title: "عثمان جهّز جيش العسرة واشترى بئر رومة",
-            text: "ندب النبي ﷺ إلى تجهيز جيش تبوك (جيش العسرة) فجهّزه عثمان رضي الله عنه بماله، واشترى بئر رومة وجعلها للمسلمين، فقال النبي ﷺ في معناها: من جهّز جيش العسرة فله الجنة.",
-            source: "سنن الترمذي (3701) و(3703) وقال حسن صحيح، وعلّقه البخاري في كتاب الشرب",
-            dispute: ""
-        },
-        {
-            cat: "sahaba",
-            title: "علي بن أبي طالب بمنزلة هارون من موسى",
-            text: "قال النبي ﷺ لعلي رضي الله عنه حين خلّفه في غزوة تبوك: «أما ترضى أن تكون مني بمنزلة هارون من موسى، إلا أنه لا نبي بعدي». وهو ابن عم النبي ﷺ وزوج فاطمة وأبو الحسنين.",
-            source: "صحيح البخاري (3706)، وصحيح مسلم (2404)",
-            dispute: ""
-        },
-        {
-            cat: "sahaba",
-            title: "أبو هريرة أكثر الصحابة رواية للحديث",
-            text: "أسلم أبو هريرة عام خيبر سنة 7هـ ولازم النبي ﷺ، فكثرت روايته. قال الذهبي: مسند أبي هريرة خمسة آلاف وثلاث مئة وأربعة وسبعون حديثًا بالمكرر في الكتب.",
-            source: "سير أعلام النبلاء للذهبي، وحديث «وعاءين» في صحيح البخاري (120)",
-            dispute: ""
-        },
-        {
-            cat: "sahaba",
-            title: "دعاء النبي ﷺ لابن عباس بالفقه في الدين",
-            text: "ضمّ النبي ﷺ عبد الله بن عباس إلى صدره وقال: «اللهم علّمه الكتاب» وفي رواية: «اللهم فقّهه في الدين». فصار حبر الأمة وترجمان القرآن.",
-            source: "صحيح البخاري (75)، وصحيح مسلم (2477)",
-            dispute: ""
-        },
-        {
-            cat: "sahaba",
-            title: "حمزة بن عبد المطلب استُشهد يوم أحد",
-            text: "أسلم حمزة في السنة الثانية من البعثة، وشهد بدرًا، وقُتل يوم أحد سنة 3هـ، ومثّل المشركون بجسده. يُلقَّب بأسد الله وورد تسميته سيد الشهداء في روايات خارجة عن الصحيحين.",
-            source: "سيرة ابن هشام، وصحيح البخاري (4072) في قتل حمزة يوم أحد",
-            dispute: ""
-        },
-        {
-            cat: "sahaba",
-            title: "سلمان الفارسي صاحب فكرة الخندق",
-            text: "لما تحزّبت قريش وغطفان على المدينة أشار سلمان رضي الله عنه بحفر الخندق على عادة الفرس، فأخذ النبي ﷺ برأيه وعمل فيه بنفسه مع الصحابة.",
-            source: "سيرة ابن هشام، والبداية والنهاية لابن كثير في غزوة الخندق",
-            dispute: ""
-        },
-        {
-            cat: "sahaba",
-            title: "زيد بن حارثة الحبّ المذكور باسمه في القرآن",
-            text: "زيد بن حارثة الكلبي مولى رسول الله ﷺ ومتبنّاه قبل النسخ، وهو الصحابي الوحيد الذي سُمّي صريحًا في القرآن في قوله تعالى: ﴿فَلَمَّا قَضَىٰ زَيْدٌ مِّنْهَا وَطَرًا﴾. استُشهد أميرًا في مؤتة.",
-            source: "سورة الأحزاب (37)، وسيرة ابن هشام، وصحيح البخاري (4250) في مؤتة",
-            dispute: ""
-        },
-        {
-            cat: "sahaba",
-            title: "جعفر بن أبي طالب قُتل في مؤتة",
-            text: "بعث النبي ﷺ ثلاثة أمراء إلى مؤتة سنة 8هـ: زيد بن حارثة ثم جعفر ثم عبد الله بن رواحة، فقُتلوا جميعًا. أخبر النبي ﷺ بخبرهم وهو في المدينة قبل قدوم الرسل.",
-            source: "صحيح البخاري (4262)، وسيرة ابن هشام",
-            dispute: ""
-        },
-        {
-            cat: "sahaba",
-            title: "مصعب بن عمير أول سفير للإسلام في المدينة",
-            text: "بعد بيعة العقبة الأولى بعث النبي ﷺ مصعب بن عمير إلى الأوس والخزرج يعلّمهم القرآن، فأسلم على يديه أسيد بن حضير وسعد بن معاذ ثم قومهما، حتى فشا الإسلام في يثرب قبل الهجرة.",
-            source: "سيرة ابن هشام عن ابن إسحاق",
-            dispute: ""
-        },
-        {
-            cat: "sahaba",
-            title: "العشرة المبشَّرون بالجنة",
-            text: "صحّ عن النبي ﷺ أنه قال: «أبو بكر في الجنة، وعمر في الجنة، وعثمان في الجنة، وعلي في الجنة، وطلحة في الجنة، والزبير في الجنة، وعبد الرحمن بن عوف في الجنة، وسعد بن أبي وقاص في الجنة، وسعيد بن زيد في الجنة، وأبو عبيدة بن الجراح في الجنة».",
-            source: "سنن الترمذي (3747) وقال حسن، ومسند أحمد",
-            dispute: ""
-        },
-        {
-            cat: "sahaba",
-            title: "عائشة أعلم أزواج النبي ﷺ وأكثرهن رواية",
-            text: "تزوجها النبي ﷺ وبني بها بعد الهجرة، وروى عنها الكبار كعمر وابن عمر وأبي هريرة. انفردت بفقه كثير في الطهارة والنكاح والمغازي، حتى قال أبو موسى: ما أشكل علينا حديث فسألنا عائشة إلا وجدنا عندها منه علمًا.",
-            source: "صحيح البخاري (3768) و(5133)، وسنن الترمذي (3883)",
-            dispute: ""
-        },
+            function escapeText(value) {
+                var node = document.createElement("div");
+                node.textContent = value == null ? "" : String(value);
+                return node.innerHTML;
+            }
 
-        /* ===== العلماء (15) ===== */
-        {
-            cat: "scholars",
-            title: "أبو حنيفة النعمان: مولده ووفاته",
-            text: "وُلد الإمام أبو حنيفة بالكوفة سنة 80هـ وتوفي ببغداد سنة 150هـ. وهو إمام المذهب الحنفي، لقي جماعة من التابعين وأخذ عن حماد بن أبي سليمان، وعُرف بالرأي والقياس مع تعظيم الأثر.",
-            source: "سير أعلام النبلاء للذهبي، وتاريخ بغداد للخطيب",
-            dispute: "هل يُعدّ تابعيًّا؟ قيل رأى أنس بن مالك، والجمهور على أنه من أتباع التابعين لأن السماع منه لم يثبت عند المحققين كالذهبي."
-        },
-        {
-            cat: "scholars",
-            title: "مالك إمام دار الهجرة",
-            text: "وُلد مالك بن أنس بالمدينة نحو 93هـ وتوفي بها سنة 179هـ. صنّف الموطأ، وكان لا يروي إلا عن ثقة، وعُرف بعمل أهل المدينة. قال الشافعي: إذا ذُكر العلماء فمالك النجم.",
-            source: "سير أعلام النبلاء للذهبي، وترتيب المدارك للقاضي عياض",
-            dispute: ""
-        },
-        {
-            cat: "scholars",
-            title: "الشافعي وُلد بغزة سنة 150هـ",
-            text: "محمد بن إدريس الشافعي وُلد بغزة سنة 150هـ (سنة وفاة أبي حنيفة) ونشأ بمكة، وأخذ الموطأ عن مالك، ثم استقلّ بمذهبه، وتوفي بمصر سنة 204هـ. وهو واضع علم أصول الفقه في كتاب الرسالة.",
-            source: "سير أعلام النبلاء للذهبي، وتاريخ بغداد للخطيب",
-            dispute: ""
-        },
-        {
-            cat: "scholars",
-            title: "أحمد بن حنبل ومحنة خلق القرآن",
-            text: "وُلد أحمد بن حنبل ببغداد سنة 164هـ، وجمع المسند، وامتحن في فتنة القول بخلق القرآن سنة 218هـ في خلافة المأمون ثم المعتصم، فثبت على أن القرآن كلام الله غير مخلوق، وتوفي سنة 241هـ.",
-            source: "سير أعلام النبلاء للذهبي، والبداية والنهاية لابن كثير",
-            dispute: ""
-        },
-        {
-            cat: "scholars",
-            title: "البخاري انتخب الصحيح من ست مئة ألف حديث",
-            text: "وُلد محمد بن إسماعيل البخاري ببخارى سنة 194هـ وتوفي بخرتنك سنة 256هـ. قال: أخرجت هذا الكتاب (الجامع الصحيح) من زهاء ست مئة ألف حديث، وما وضعت فيه حديثًا إلا بعد أن أستخير الله.",
-            source: "تاريخ بغداد للخطيب، وسير أعلام النبلاء للذهبي",
-            dispute: ""
-        },
-        {
-            cat: "scholars",
-            title: "مسلم بن الحجاج النيسابوري",
-            text: "وُلد مسلم بن الحجاج بنيسابور سنة 204هـ وتوفي بها سنة 261هـ. لازم البخاري وأخذ عن أحمد وابن راهويه، وصنّف الصحيح على الأبواب مع جمع الطرق، وهو ثاني أصح الكتب بعد البخاري عند جمهور المحدّثين.",
-            source: "سير أعلام النبلاء للذهبي، وتاريخ بغداد للخطيب",
-            dispute: ""
-        },
-        {
-            cat: "scholars",
-            title: "الطبري صاحب التفسير والتاريخ",
-            text: "محمد بن جرير الطبري وُلد بآمل طبرستان سنة 224هـ وتوفي ببغداد سنة 310هـ. صنّف جامع البيان في تأويل آي القرآن، وتاريخ الرسل والملوك، وهما عمدة المأثور في التفسير والتاريخ.",
-            source: "تاريخ بغداد للخطيب، وسير أعلام النبلاء للذهبي",
-            dispute: ""
-        },
-        {
-            cat: "scholars",
-            title: "الخطيب البغدادي صاحب تاريخ بغداد",
-            text: "أحمد بن علي الخطيب البغدادي وُلد سنة 392هـ وتوفي سنة 463هـ. كتابه تاريخ بغداد (أو تاريخ مدينة السلام) ديوان ضخم لتراجم المحدّثين والفقهاء من ورد بغداد، وعليه مدار من جاء بعده في تراجم البغداديين.",
-            source: "سير أعلام النبلاء للذهبي، ومقدمة تاريخ بغداد",
-            dispute: ""
-        },
-        {
-            cat: "scholars",
-            title: "الغزالي حجة الإسلام",
-            text: "أبو حامد محمد الغزالي وُلد بطوس سنة 450هـ وتوفي بها سنة 505هـ. درّس بالنظامية ثم انقطع للعبادة، وصنّف إحياء علوم الدين والمستصفى في الأصول. وهو شافعي أشعري، وفي الإحياء أحاديث ضعيفة نبّه عليها المحدّثون.",
-            source: "سير أعلام النبلاء للذهبي",
-            dispute: ""
-        },
-        {
-            cat: "scholars",
-            title: "النووي شيخ المذهب الشافعي في زمنه",
-            text: "يحيى بن شرف النووي وُلد بنوى سنة 631هـ وتوفي بها سنة 676هـ ولم يتزوج. شرح مسلم، وصنّف رياض الصالحين والأربعين والمجموع. عُرف بالورع واختصار العلم مع الضبط.",
-            source: "طبقات الشافعية للسبكي، وتذكرة الحفاظ للذهبي",
-            dispute: ""
-        },
-        {
-            cat: "scholars",
-            title: "ابن تيمية توفي بقلعة دمشق سنة 728هـ",
-            text: "أحمد بن عبد الحليم ابن تيمية وُلد بحرّان سنة 661هـ، ونبغ في الحديث والفقه والأصول، وامتحن وحُبس أكثر من مرة، وتوفي معتقلاً بقلعة دمشق في 20 ذي القعدة 728هـ. من تلاميذه ابن القيم والذهبي وابن كثير.",
-            source: "البداية والنهاية لابن كثير، والدرر الكامنة لابن حجر",
-            dispute: ""
-        },
-        {
-            cat: "scholars",
-            title: "الذهبي صاحب سير أعلام النبلاء",
-            text: "محمد بن أحمد الذهبي وُلد بدمشق سنة 673هـ وتوفي سنة 748هـ. إمام الجرح والتعديل في عصره، صنّف سير أعلام النبلاء وتاريخ الإسلام وميزان الاعتدال وتذكرة الحفاظ.",
-            source: "الدرر الكامنة لابن حجر، وطبقات الشافعية للسبكي",
-            dispute: ""
-        },
-        {
-            cat: "scholars",
-            title: "ابن كثير صاحب التفسير والبداية والنهاية",
-            text: "إسماعيل بن عمر بن كثير وُلد ببصري الشام سنة 701هـ وتوفي بدمشق سنة 774هـ. أخذ عن المزي والذهبي وابن تيمية. تفسيره بالمأثور، وكتابه البداية والنهاية عمدة في السيرة والتاريخ الإسلامي إلى زمانه.",
-            source: "الدرر الكامنة لابن حجر، وإنباء الغمر",
-            dispute: ""
-        },
-        {
-            cat: "scholars",
-            title: "ابن حجر العسقلاني صاحب فتح الباري",
-            text: "أحمد بن علي بن حجر وُلد بمصر سنة 773هـ وتوفي سنة 852هـ. انتهت إليه رئاسة الحديث، وشرح البخاري في فتح الباري، وصنّف الإصابة في تمييز الصحابة وتهذيب التهذيب وتقريب التهذيب.",
-            source: "الضوء اللامع للسخاوي، وحسن المحاضرة للسيوطي",
-            dispute: ""
-        },
-        {
-            cat: "scholars",
-            title: "ابن قيم الجوزية تلميذ ابن تيمية",
-            text: "محمد بن أبي بكر ابن قيم الجوزية وُلد سنة 691هـ وتوفي بدمشق سنة 751هـ. لازم ابن تيمية، وصنّف زاد المعاد ومدارج السالكين وإعلام الموقعين والداء والدواء. جمع بين الحديث والفقه والسلوك.",
-            source: "الدرر الكامنة لابن حجر، والبداية والنهاية لابن كثير",
-            dispute: ""
-        },
+            function counts() {
+                var map = { all: facts.length };
+                Object.keys(CATS).forEach(function (key) { map[key] = 0; });
+                facts.forEach(function (item) {
+                    if (map[item.cat] != null) map[item.cat] += 1;
+                });
+                return map;
+            }
 
-        /* ===== الكتب الإسلامية (15) ===== */
-        {
-            cat: "books",
-            title: "صحيح البخاري أصح كتاب بعد القرآن",
-            text: "اتفق جمهور أهل السنة على أن صحيح البخاري أصح الكتب بعد كتاب الله، ثم صحيح مسلم. شرط البخاري المعاصرة مع ثبوت اللقاء، وهو أدق شرطًا من مسلم في الاتصال.",
-            source: "مقدمة النووي على صحيح مسلم، وهدي الساري لابن حجر",
-            dispute: ""
-        },
-        {
-            cat: "books",
-            title: "كم حديثًا في صحيح البخاري؟",
-            text: "أحصى ابن حجر أحاديث البخاري المسندة بالمكرر بنحو سبعة آلاف وثلاث مئة، ومن غير المكرر نحو ألفين وست مئة حديث مرفوع. ويختلف العدّ بإدخال المعلّقات والمتابعات وآثار الصحابة.",
-            source: "هدي الساري مقدمة فتح الباري لابن حجر",
-            dispute: "الخلاف في العدّ لا في الصحة: الأقوال تدور بين نحو 4000 بغير المكرر عند بعضهم، و7397 بالمكرر عند ابن حجر، بحسب ما يُحسب من المعلق والموقوف."
-        },
-        {
-            cat: "books",
-            title: "صحيح مسلم وحسن ترتيبه",
-            text: "رتّب مسلم الأحاديث على الأبواب وجمع طرق الحديث في موضع واحد، فامتاز على البخاري في الترتيب، وامتنع من الرواية بالمعنى أكثر من غيره. شرحه النووي في المنهاج.",
-            source: "مقدمة صحيح مسلم، وشرح النووي على مسلم",
-            dispute: ""
-        },
-        {
-            cat: "books",
-            title: "ما هي الكتب الستة؟",
-            text: "اشتهر عند المتأخرين أن الكتب الستة: صحيح البخاري، وصحيح مسلم، وسنن أبي داود، وجامع الترمذي، وسنن النسائي، وسنن ابن ماجه. وأول من عدّ ابن ماجه سادسًا ابن طاهر المقدسي.",
-            source: "شروط الأئمة الستة لابن طاهر، وتدريب الراوي للسيوطي",
-            dispute: "جعل رزين العبدري وابن الأثير في جامع الأصول الموطأ سادسًا بدل ابن ماجه، لأن في ابن ماجه أحاديث واهية أكثر مما في الموطأ."
-        },
-        {
-            cat: "books",
-            title: "موطأ مالك من أقدم المصنفات المرتبة",
-            text: "صنّف مالك الموطأ على أبواب الفقه جامعًا الحديث وقول الصحابي وعمل أهل المدينة. قال الشافعي: ما على ظهر الأرض كتاب بعد كتاب الله أصح من كتاب مالك. وذلك قبل وجود الصحيحين.",
-            source: "مقدمة ابن الصلاح، وتهذيب التهذيب لابن حجر",
-            dispute: ""
-        },
-        {
-            cat: "books",
-            title: "مسند أحمد أوسع المسانيد",
-            text: "رتّب الإمام أحمد مسنده على مسانيد الصحابة لا على الأبواب، ويُقدَّر ما فيه بنحو أربعين ألف حديث بالمكرر. قال ابن كثير: فيه الصحيح والحسن والضعيف، ونادرًا ما فيه موضوع.",
-            source: "سير أعلام النبلاء للذهبي، واختصار علوم الحديث لابن كثير",
-            dispute: ""
-        },
-        {
-            cat: "books",
-            title: "سنن أبي داود كتاب أحكام",
-            text: "جمع أبو داود في سننه أحاديث الأحكام، وقال: ذكرت فيه الصحيح وما يشبهه وما يقاربه، وما كان فيه وهن شديد بيّنته. وهو عمدة الفقهاء في أدلة الفروع.",
-            source: "رسالة أبي داود إلى أهل مكة، وسير أعلام النبلاء",
-            dispute: ""
-        },
-        {
-            cat: "books",
-            title: "جامع الترمذي وبيان علل الحديث",
-            text: "امتاز الترمذي بالحكم على الحديث (صحيح/حسن/غريب) وذكر مذاهب الفقهاء بعد الحديث، وهو أصل مصطلح «الحسن». توفي الترمذي سنة 279هـ.",
-            source: "جامع الترمذي، وشرح علل الترمذي لابن رجب",
-            dispute: ""
-        },
-        {
-            cat: "books",
-            title: "تفسير الطبري إمام تفاسير المأثور",
-            text: "جامع البيان للطبري أجمع كتب التفسير بالمأثور: يورد الآية ثم الأسانيد عن الصحابة والتابعين، ويرجّح بالعربية. قال السيوطي: وكتابه أجلّ التفاسير وأعظمها.",
-            source: "الإتقان في علوم القرآن للسيوطي، وسير أعلام النبلاء",
-            dispute: ""
-        },
-        {
-            cat: "books",
-            title: "تفسير ابن كثير يفسّر القرآن بالقرآن ثم السنة",
-            text: "يعتمد ابن كثير تفسير القرآن بالقرآن، ثم بالسنة، ثم بأقوال الصحابة، وينبّه على الإسرائيليات. وهو من أيسر التفاسير بالمأثور بعد الطبري وأشهرها تداولًا.",
-            source: "مقدمة تفسير ابن كثير",
-            dispute: ""
-        },
-        {
-            cat: "books",
-            title: "الرسالة للشافعي أول مصنَّف في أصول الفقه",
-            text: "كتب الشافعي الرسالة بطلب عبد الرحمن بن مهدي، فقعّد فيها البيان والخاص والعام والناسخ وخبر الواحد والإجماع والقياس. وعليها مدار كتب الأصول بعدَه.",
-            source: "الرسالة للشافعي، والفهرست لابن النديم",
-            dispute: ""
-        },
-        {
-            cat: "books",
-            title: "إحياء علوم الدين للغزالي",
-            text: "موسوعة في العبادات والعادات والمهلكات والمنجيات، قصد بها الغزالي إحياء العمل بالعلم. انتفع به الناس في السلوك، ونبّه العراقي وابن الجوزي وغيرهما على أحاديث واهية فيه.",
-            source: "سير أعلام النبلاء للذهبي، والمغني عن حمل الأسفار للعراقي",
-            dispute: ""
-        },
-        {
-            cat: "books",
-            title: "رياض الصالحين للنووي",
-            text: "جمع النووي فيه أحاديث الترغيب والأخلاق والأذكار مرتبة على الأبواب، وقدّم لكل باب آية. وهو من أكثر كتب الحديث انتشارًا في التعليم والمساجد.",
-            source: "مقدمة رياض الصالحين للنووي",
-            dispute: ""
-        },
-        {
-            cat: "books",
-            title: "فتح الباري شرح صحيح البخاري",
-            text: "شرح ابن حجر البخاري في نحو ربع قرن، وجمع روايات اليونيني وحرّر الأسماء والعلل والفقه. قال الشوكاني: لا هجرة بعد الفتح، يعني فتح الباري.",
-            source: "هدي الساري لابن حجر، والبدر الطالع للشوكاني",
-            dispute: ""
-        },
-        {
-            cat: "books",
-            title: "سيرة ابن هشام تهذيب لسيرة ابن إسحاق",
-            text: "محمد بن إسحاق إمام المغازي، وهذّب عبد الملك بن هشام سيرته فحذف ما رآه ضعيفًا أو لا يليق، وزاد نسب قريش وشعرًا. وعليها اعتماد من صنّف في السيرة بعدها.",
-            source: "مقدمة سيرة ابن هشام، والبداية والنهاية لابن كثير",
-            dispute: ""
-        },
+            function buildNav() {
+                var map = counts();
+                var buttons = [{ key: "all", label: "الكل" }].concat(
+                    Object.keys(CATS).map(function (key) {
+                        return { key: key, label: CATS[key] };
+                    })
+                );
+                navEl.innerHTML = buttons.map(function (btn) {
+                    var active = btn.key === state.cat ? " active" : "";
+                    return '<button type="button" class="filter-btn' + active + '" data-cat="' +
+                        btn.key + '">' + btn.label + " (" + (map[btn.key] || 0) + ")</button>";
+                }).join("");
+            }
 
-        /* ===== السيرة والتاريخ (15) ===== */
-        {
-            cat: "sira",
-            title: "مولد النبي ﷺ عام الفيل",
-            text: "وُلد النبي ﷺ بمكة عام الفيل، في ربيع الأول على المشهور، يتيم الأب ثم الأم، وكفله عبد المطلب ثم أبو طالب. وقصة الفيل مذكورة في سورة الفيل.",
-            source: "سيرة ابن هشام، والبداية والنهاية لابن كثير",
-            dispute: ""
-        },
-        {
-            cat: "sira",
-            title: "بُعث على رأس أربعين سنة",
-            text: "نزل الوحي على النبي ﷺ وهو ابن أربعين سنة في غار حراء، فمكث بمكة ثلاث عشرة سنة يوحى إليه، ثم هاجر فأقام بالمدينة عشرًا.",
-            source: "صحيح البخاري (3902) و(3535)، وسيرة ابن هشام",
-            dispute: ""
-        },
-        {
-            cat: "sira",
-            title: "الهجرة إلى المدينة سنة 1هـ",
-            text: "خرج النبي ﷺ وأبو بكر إلى الغار ثم إلى المدينة، وقدم قباء ثم بني النجار. واتخذ المسلمون بعد ذلك سنة الهجرة مبدأ للتاريخ في خلافة عمر.",
-            source: "صحيح البخاري (3905)، وسيرة ابن هشام، والبداية والنهاية",
-            dispute: ""
-        },
-        {
-            cat: "sira",
-            title: "غزوة بدر في 17 رمضان سنة 2هـ",
-            text: "كانت بدر أول مواجهة كبرى، عُدّ فيها المسلمون ثلاث مئة وثلاثة عشر أو بضعة عشر، والمشركون نحو ألف. وسُمّي أهلها أهل بدر وفضّلهم الله في القرآن.",
-            source: "سيرة ابن هشام، وصحيح البخاري (3952) وما بعده، والبداية والنهاية",
-            dispute: ""
-        },
-        {
-            cat: "sira",
-            title: "غزوة أحد في شوال سنة 3هـ",
-            text: "خرج المشركون يطلبون ثأر بدر، واستُشهد نحو سبعين من المسلمين منهم حمزة ومصعب، وخالف الرماة أمر النبي ﷺ فنزل ما نزل. وفيها نزلت آيات آل عمران في الصبر.",
-            source: "سيرة ابن هشام، وصحيح البخاري (4067)، والبداية والنهاية",
-            dispute: ""
-        },
-        {
-            cat: "sira",
-            title: "غزوة الخندق (الأحزاب)",
-            text: "تحزّبت قريش وغطفان ويهود على المدينة في نحو عشرة آلاف، والمسلمون نحو ثلاثة آلاف، فأشار سلمان بحفر الخندق، وحاصر الأحزاب قريبًا من شهر ثم فرّقهم الله بالريح.",
-            source: "سيرة ابن هشام، وصحيح البخاري (4103)، والبداية والنهاية",
-            dispute: "جمهور أهل المغازي على شوال سنة 5هـ (ابن إسحاق وابن هشام وابن كثير)، وقيل سنة 4هـ؛ ووجّه ابن حجر الخلاف بأن من قال بالأربع أسقط أشهر ما قبل ربيع الأول من سنة الهجرة."
-        },
-        {
-            cat: "sira",
-            title: "صلح الحديبية سنة 6هـ",
-            text: "خرج النبي ﷺ معتمرًا فصدّته قريش بالحديبية، فكتب الصلح على وضع الحرب عشر سنين. وعدّه الله فتحًا في سورة الفتح، وكان مقدمة فتح مكة.",
-            source: "صحيح البخاري (2731) حديث المسور، وسيرة ابن هشام",
-            dispute: ""
-        },
-        {
-            cat: "sira",
-            title: "فتح مكة في رمضان سنة 8هـ",
-            text: "دخل النبي ﷺ مكة في عشرين ألفًا بعد نقض قريش الصلح، وأمّن الناس عند الكعبة وقال: «اذهبوا فأنتم الطلقاء». وكُسرت الأصنام حول البيت.",
-            source: "سيرة ابن هشام، وصحيح البخاري (4280)، والبداية والنهاية",
-            dispute: ""
-        },
-        {
-            cat: "sira",
-            title: "حجة الوداع سنة 10هـ",
-            text: "حج النبي ﷺ حجة واحدة بعد الهجرة، وخطب الناس يوم عرفة: «إن دماءكم وأموالكم عليكم حرام». وفيها نزل: ﴿الْيَوْمَ أَكْمَلْتُ لَكُمْ دِينَكُمْ﴾. وحديث جابر أتم رواية لمناسكه.",
-            source: "صحيح مسلم (1218) حديث جابر، وصحيح البخاري (4406)",
-            dispute: ""
-        },
-        {
-            cat: "sira",
-            title: "وفاة النبي ﷺ وسنّه",
-            text: "توفي النبي ﷺ بالمدينة يوم الاثنين في ربيع الأول سنة 11هـ، ودُفن في حجرة عائشة. والأشهر أنه توفي وهو ابن ثلاث وستين سنة: أربعون قبل الوحي، وثلاث عشرة بمكة، وعشر بالمدينة.",
-            source: "صحيح البخاري (3536)، وصحيح مسلم (2349)",
-            dispute: "رواية عائشة وأنس في الصحيحين أنه توفي ابن ثلاث وستين، وروي ابن خمس وستين، وفي الموطأ عن ربيعة ابن ستين. والجمهور على الثلاث والستين، وجمع بعضهم بأن من زاد عدّ سنة الولادة وسنة الوفاة."
-        },
-        {
-            cat: "sira",
-            title: "الإسراء والمعراج",
-            text: "أُسري بالنبي ﷺ من المسجد الحرام إلى المسجد الأقصى، ثم عُرج به إلى السماء، وفُرضت الصلاة خمسًا. وحديث أنس الطويل في المعراج في الصحيحين.",
-            source: "سورة الإسراء (1)، وصحيح البخاري (3207) و(3887)، وصحيح مسلم (162)",
-            dispute: "قيل قبل الهجرة بسنة، وقيل بثلاث، واختلف في الشهر بين رجب وربيع الأول وربيع الآخر. الثابت قطعًا وقوع الحادثة، لا تعيين الشهر."
-        },
-        {
-            cat: "sira",
-            title: "جمع القرآن في عهد أبي بكر ثم توحيد المصحف في عهد عثمان",
-            text: "بعد مقتل القرّاء باليمامة أمر أبو بكر زيد بن ثابت بجمع القرآن من العسب والرقاع وصدور الرجال. ثم نسخ عثمان في خلافته المصاحف على حرف قريش وبعث بها إلى الأمصار وأمر بما سواه أن يُحرق.",
-            source: "صحيح البخاري (4986) و(4987)",
-            dispute: ""
-        },
-        {
-            cat: "sira",
-            title: "عدد المسلمين والمشركين يوم الخندق",
-            text: "أقبلت قريش وأحابيشها ومن تبعهم في عشرة آلاف، وخرجت غطفان من نجد، وخرج النبي ﷺ في ثلاثة آلاف وجعل الخندق بينه وبين القوم، واستعمل على المدينة ابن أم مكتوم.",
-            source: "سيرة ابن هشام، والبداية والنهاية لابن كثير",
-            dispute: ""
-        },
-        {
-            cat: "sira",
-            title: "خلافة أبي بكر سنتان وعمر عشر سنين",
-            text: "بويع أبو بكر بعد الوفاة فكانت خلافته نحو سنتين وثلاثة أشهر (11–13هـ)، ثم عمر عشر سنين ونصفًا (13–23هـ)، وعثمان نحو اثنتي عشرة سنة، وعلي نحو خمس سنين، ثم الحسن أشهرًا حتى الصلح.",
-            source: "البداية والنهاية لابن كثير، وتاريخ الطبري",
-            dispute: ""
-        },
-        {
-            cat: "sira",
-            title: "القادسية في خلافة عمر بن الخطاب",
-            text: "قاد سعد بن أبي وقاص جيش المسلمين فهزم الفرس بالقادسية نحو سنة 15هـ، ثم فُتحت المدائن. وهي من ملاحم الفتوح التي أوردها الطبري وابن كثير بطرق أهل السير.",
-            source: "تاريخ الطبري، والبداية والنهاية لابن كثير",
-            dispute: ""
-        }
-    ];
+            function filtered() {
+                var q = state.query;
+                return facts.filter(function (item) {
+                    if (state.cat !== "all" && item.cat !== state.cat) return false;
+                    if (!q) return true;
+                    var blob = [item.title, item.text, item.source, item.dispute, CATS[item.cat]].join(" ");
+                    return blob.indexOf(q) !== -1;
+                });
+            }
 
-    var state = {
-        cat: "all",
-        query: "",
-        shown: 0,
-        perPage: 12
-    };
+            function cardHtml(item, index) {
+                var dispute = item.dispute
+                    ? '<p class="dispute"><strong>تنبيه — خلاف معتبر:</strong> ' + escapeText(item.dispute) + "</p>"
+                    : "";
+                return '<article class="fact-card" data-cat="' + escapeText(item.cat) + '">' +
+                    '<div class="fact-head"><span class="num">' + (index + 1) + '</span>' +
+                    '<span class="badge">' + escapeText(CATS[item.cat] || item.cat) + "</span></div>" +
+                    '<h3 class="fact-title">' + escapeText(item.title) + "</h3>" +
+                    '<p class="fact-text">' + escapeText(item.text) + "</p>" +
+                    '<p class="source">المصدر: ' + escapeText(item.source) + "</p>" +
+                    dispute +
+                    "</article>";
+            }
 
-    var container = document.getElementById("quotesContainer");
-    var loadMoreBtn = document.getElementById("loadMoreBtn");
-    var searchInput = document.getElementById("searchInput");
+            function render(reset) {
+                var items = filtered();
+                if (reset) {
+                    state.shown = 0;
+                    listEl.innerHTML = "";
+                }
+                countEl.textContent = items.length + " معلومة موثّقة";
+                if (!items.length) {
+                    listEl.innerHTML = '<p class="empty-state">لم يتم العثور على نتائج</p>';
+                    moreBtn.classList.add("hidden");
+                    return;
+                }
+                var next = items.slice(state.shown, state.shown + state.perPage);
+                var start = state.shown;
+                listEl.insertAdjacentHTML("beforeend", next.map(function (item, i) {
+                    return cardHtml(item, start + i);
+                }).join(""));
+                state.shown += next.length;
+                moreBtn.classList.toggle("hidden", state.shown >= items.length);
+            }
 
-    function filtered() {
-        var q = state.query;
-        return facts.filter(function (f) {
-            if (state.cat !== "all" && f.cat !== state.cat) return false;
-            if (!q) return true;
-            return (f.title + " " + f.text + " " + f.source + " " + (f.dispute || "") + " " + CATS[f.cat])
-                .indexOf(q) !== -1;
-        });
-    }
+            navEl.addEventListener("click", function (event) {
+                var btn = event.target.closest(".filter-btn");
+                if (!btn) return;
+                state.cat = btn.getAttribute("data-cat") || "all";
+                navEl.querySelectorAll(".filter-btn").forEach(function (node) {
+                    node.classList.toggle("active", node === btn);
+                });
+                render(true);
+            });
 
-    function cardHtml(f) {
-        var dispute = f.dispute
-            ? '<p class="fact-dispute"><strong>تنبيه — خلاف معتبر:</strong> ' + f.dispute + "</p>"
-            : "";
-        return '<article class="quote-card">' +
-            '<span class="fact-badge">' + CATS[f.cat] + "</span>" +
-            '<h3 class="fact-title">' + f.title + "</h3>" +
-            '<p class="quote-text">' + f.text + "</p>" +
-            '<p class="scholar-name">المصدر: ' + f.source + "</p>" +
-            dispute +
-            "</article>";
-    }
+            var timer;
+            searchInput.addEventListener("input", function () {
+                clearTimeout(timer);
+                timer = setTimeout(function () {
+                    state.query = searchInput.value.trim();
+                    render(true);
+                }, 180);
+            });
 
-    function render(reset) {
-        var list = filtered();
-        if (reset) {
-            state.shown = 0;
-            container.innerHTML = "";
-        }
-        if (list.length === 0) {
-            container.innerHTML = '<p class="empty-state">لم يتم العثور على نتائج</p>';
-            loadMoreBtn.classList.add("hidden");
-            return;
-        }
-        var next = list.slice(state.shown, state.shown + state.perPage);
-        container.insertAdjacentHTML("beforeend", next.map(cardHtml).join(""));
-        state.shown += next.length;
-        if (state.shown >= list.length) loadMoreBtn.classList.add("hidden");
-        else loadMoreBtn.classList.remove("hidden");
-    }
+            moreBtn.addEventListener("click", function () { render(false); });
 
-    document.getElementById("categoryNav").addEventListener("click", function (e) {
-        var btn = e.target.closest(".category-btn");
-        if (!btn) return;
-        state.cat = btn.getAttribute("data-cat");
-        document.querySelectorAll(".category-btn").forEach(function (b) {
-            b.classList.toggle("active", b === btn);
-        });
-        render(true);
-    });
-
-    var searchTimer;
-    searchInput.addEventListener("input", function () {
-        clearTimeout(searchTimer);
-        searchTimer = setTimeout(function () {
-            state.query = searchInput.value.trim();
+            countEl.textContent = facts.length + " معلومة موثّقة";
+            buildNav();
             render(true);
-        }, 200);
-    });
-
-    loadMoreBtn.addEventListener("click", function () {
-        render(false);
-    });
-
-    render(true);
-})();
->>>>>>> Stashed changes
+        })();
     </script>
 </body>
 </html>
