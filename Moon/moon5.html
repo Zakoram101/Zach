@@ -53,7 +53,7 @@
     </header>
     <div class="container">
         <div class="intro-box">
-            <p>لا يُقبل سبب النزول إلا بالنقل عمن شاهد التنزيل. جُمعت هنا الروايات المشهورة في الصحيحين أو السنن، وما حرّره الواحدي في <strong>أسباب نزول القرآن</strong> والسيوطي في <strong>لباب النقول</strong>، مع تقديم ما في البخاري ومسلم عند التعارض.</p>
+            <p>لا يُقبل سبب النزول إلا بالنقل عمّن شاهد التنزيل. جُمعت هنا الروايات المشهورة في الصحيحين أو السنن، وما حرّره الواحدي في <strong>أسباب نزول القرآن</strong> والسيوطي في <strong>لباب النقول</strong>، مع تقديم ما في البخاري ومسلم عند التعارض.</p>
         </div>
         <div id="asbabList"></div>
         <div class="intro-box" style="border-right-color:#27ae60;">
@@ -77,7 +77,7 @@
                 art.innerHTML = '<div class="comment-head"><span class="num"></span><span class="surah"></span></div><div class="verse"></div><p class="reason"></p><p class="source"></p>';
                 art.querySelector(".num").textContent = String(i + 1);
                 art.querySelector(".surah").textContent = item.s;
-                art.querySelector(".verse").textContent = "۔" + item.v + "ە";
+                art.querySelector(".verse").textContent = "\uFD3F" + item.v + "\uFD3E";
                 art.querySelector(".reason").textContent = item.r;
                 art.querySelector(".source").textContent = "المصدر: " + item.src;
                 list.appendChild(art);
