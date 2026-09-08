@@ -88,6 +88,8 @@
         @media (max-width: 480px) { .book-grid { grid-template-columns: 1fr; } }
     </style>
     <link rel="stylesheet" href="../css/button-effects.css">
+    <link rel="stylesheet" href="../css/theme-toggle.css">
+    <script>(function(){try{var t=localStorage.getItem('mishkat-theme');if(t==='dark')document.documentElement.classList.add('theme-dark');}catch(e){}})();</script>
 </head>
 <body>
     <div class="decoration deco1"></div>
@@ -207,5 +209,6 @@
             });
         });
     </script>
+    <script src="../js/theme-toggle.js" defer></script>
 </body>
 </html>
