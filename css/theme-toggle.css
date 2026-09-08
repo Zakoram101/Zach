@@ -1,0 +1,230 @@
+/* Mishkat theme toggle + dark surfaces
+   Identity kept: navy #2c3e50, accent #e74c3c, gold #f1c40f, Tajawal
+*/
+
+:root {
+    --theme-navy: #2c3e50;
+    --theme-accent: #e74c3c;
+    --theme-gold: #f1c40f;
+}
+
+.theme-toggle {
+    --tt-size: 38px;
+    flex: 0 0 auto;
+    width: var(--tt-size);
+    height: var(--tt-size);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    line-height: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+    transition: background 0.25s ease, transform 0.2s ease, border-color 0.25s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.theme-toggle:hover {
+    background: var(--theme-accent, #e74c3c);
+    border-color: var(--theme-accent, #e74c3c);
+    transform: translateY(-1px);
+}
+
+.theme-toggle:focus-visible {
+    outline: 2px solid var(--theme-gold, #f1c40f);
+    outline-offset: 2px;
+}
+
+.theme-toggle svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+}
+
+.theme-toggle .icon-sun,
+html.theme-dark .theme-toggle .icon-moon {
+    display: none;
+}
+
+html.theme-dark .theme-toggle .icon-sun,
+.theme-toggle .icon-moon {
+    display: block;
+}
+
+.nav-bookmark .theme-toggle {
+    margin-bottom: 4px;
+    background: var(--theme-navy, #2c3e50);
+    color: #fff;
+    transform: translateX(20px);
+}
+
+.nav-bookmark .theme-toggle:hover {
+    transform: translateX(0);
+}
+
+.top-bar .theme-toggle {
+    margin-inline: 4px;
+}
+
+.navigation .theme-toggle,
+header .theme-toggle,
+.container > header .theme-toggle {
+    background: var(--theme-navy, #2c3e50);
+    color: #fff;
+}
+
+html.theme-dark {
+    color-scheme: dark;
+    --primary-color: #1b2836;
+    --accent-color: #e74c3c;
+    --light-color: #151b22;
+    --dark-color: #d5dee6;
+    --gold-color: #f1c40f;
+    --card-bg: #22303c;
+    --verse-bg: #2a241c;
+    --page-bg: #12181f;
+    --text-color: #ecf0f1;
+    --muted-text: #b8c2cc;
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
+    --shadow-md: 0 5px 18px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 28px rgba(0, 0, 0, 0.45);
+}
+
+html.theme-dark body {
+    background: var(--page-bg, #12181f);
+    background-color: var(--page-bg, #12181f);
+    color: var(--text-color, #ecf0f1);
+}
+
+html.theme-dark .book-pages,
+html.theme-dark .intro-container,
+html.theme-dark .container {
+    background: transparent;
+    background-color: transparent;
+}
+
+html.theme-dark .book-pages {
+    background: var(--page-bg, #12181f);
+}
+
+html.theme-dark .section-title,
+html.theme-dark .book-title,
+html.theme-dark .fact-title,
+html.theme-dark .surah,
+html.theme-dark .category-name,
+html.theme-dark .book-card-title,
+html.theme-dark .popup-title,
+html.theme-dark h1,
+html.theme-dark h2,
+html.theme-dark h3 {
+    color: var(--text-color, #ecf0f1);
+}
+
+html.theme-dark .reason,
+html.theme-dark .fact-text,
+html.theme-dark .book-author,
+html.theme-dark .subtitle,
+html.theme-dark p {
+    color: var(--muted-text, #b8c2cc);
+}
+
+html.theme-dark .comment-card,
+html.theme-dark .fact-card,
+html.theme-dark .intro-box,
+html.theme-dark .book-item,
+html.theme-dark .book-front,
+html.theme-dark .category-item,
+html.theme-dark .navigation,
+html.theme-dark .books-grid,
+html.theme-dark .popup-content,
+html.theme-dark .search-box,
+html.theme-dark .search-panel,
+html.theme-dark .empty-state,
+html.theme-dark .custom-alert {
+    background: var(--card-bg, #22303c);
+    background-color: var(--card-bg, #22303c);
+    color: var(--text-color, #ecf0f1);
+    box-shadow: var(--shadow-md);
+}
+
+html.theme-dark .verse {
+    background: var(--verse-bg, #2a241c);
+    color: #f6e7c9;
+}
+
+html.theme-dark .source {
+    background: #1b2c3d;
+    color: #c5d9ee;
+    border-right-color: #5dade2;
+}
+
+html.theme-dark .dispute {
+    background: #3a2424;
+    color: #f5b7b1;
+}
+
+html.theme-dark .filter-btn,
+html.theme-dark .category-btn {
+    background: #1b2836;
+    color: #ecf0f1;
+    border-color: #34495e;
+}
+
+html.theme-dark .filter-btn.active,
+html.theme-dark .category-btn.active,
+html.theme-dark .filter-btn:hover,
+html.theme-dark .category-btn:hover {
+    background: var(--theme-accent, #e74c3c);
+    color: #fff;
+    border-color: var(--theme-accent, #e74c3c);
+}
+
+html.theme-dark input,
+html.theme-dark .search-input,
+html.theme-dark .search-box {
+    background: #1b2836;
+    color: #ecf0f1;
+    border-color: #3d5163;
+}
+
+html.theme-dark footer {
+    background: #0f151b;
+    color: #d0d7de;
+}
+
+html.theme-dark .top-bar {
+    background: #0f151b;
+}
+
+html.theme-dark header {
+    color: #fff;
+}
+
+html.theme-dark .book-back {
+    background: #1b2836;
+    color: #ecf0f1;
+}
+
+html.theme-dark .featured-btn {
+    background: #ecf0f1;
+    color: #1b2836;
+}
+
+html.theme-dark li {
+    background: #1b2836;
+    color: #ecf0f1;
+}
+
+html.theme-dark li:hover {
+    background: #243545;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .theme-toggle {
+        transition: none;
+    }
+}
