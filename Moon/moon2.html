@@ -29,32 +29,61 @@
 }
 
 body {
-    background-color: var(--light-color);
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 12% 8%, rgba(231, 76, 60, 0.14), transparent 28%),
+        radial-gradient(circle at 88% 92%, rgba(44, 62, 80, 0.12), transparent 32%),
+        linear-gradient(135deg, #ecf0f1 0%, #dfe7ea 100%);
     overflow-x: hidden;
     position: relative;
-    padding: 20px;
+    padding: clamp(14px, 3vw, 34px);
+    color: var(--dark-color);
 }
 
 header {
+    position: relative;
+    isolation: isolate;
+    max-width: 1200px;
+    margin: 0 auto 28px;
+    padding: clamp(24px, 4vw, 38px) 20px;
     text-align: center;
-    margin-bottom: 30px;
-    padding: 20px;
-    background-color: var(--primary-color);
+    background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
     color: white;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-top: 5px solid var(--accent-color);
+    border-radius: 16px;
+    box-shadow: 0 18px 36px rgba(44, 62, 80, 0.22);
+    overflow: hidden;
+}
+
+header::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 14px;
+    width: 76px;
+    height: 3px;
+    border-radius: 999px;
+    background: var(--accent-color);
+    transform: translateX(-50%);
+    opacity: 0.9;
 }
 
 header h1 {
-    font-size: 2.5rem;
+    position: relative;
+    z-index: 1;
     margin-bottom: 10px;
     color: white;
+    font-size: clamp(2rem, 5vw, 3rem);
+    letter-spacing: 0.02em;
 }
 
 header h2 {
-    font-size: 1.2rem;
+    position: relative;
+    z-index: 1;
+    color: rgba(236, 240, 241, 0.9);
+    font-size: clamp(1rem, 2.2vw, 1.2rem);
     font-weight: 400;
-    color: var(--light-color);
 }
 
 .container {
@@ -63,98 +92,127 @@ header h2 {
 }
 
 .search-container {
-    margin-bottom: 30px;
     display: flex;
     justify-content: center;
+    margin: 0 auto 28px;
 }
 
 .search-box {
     width: 100%;
-    max-width: 500px;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 25px;
+    max-width: 560px;
+    min-height: 50px;
+    padding: 13px 22px;
+    color: var(--primary-color);
+    background: rgba(255, 255, 255, 0.94);
+    border: 1px solid rgba(44, 62, 80, 0.12);
+    border-radius: 999px;
     font-size: 1rem;
-    background-color: white;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    transition: all 0.3s ease;
+    box-shadow: 0 10px 24px rgba(44, 62, 80, 0.12);
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.search-box::placeholder {
+    color: rgba(52, 73, 94, 0.62);
 }
 
 .search-box:focus {
     outline: none;
-    box-shadow: 0 5px 20px rgba(231, 76, 60, 0.3);
+    border-color: rgba(231, 76, 60, 0.58);
+    box-shadow: 0 0 0 4px rgba(231, 76, 60, 0.12), 0 12px 26px rgba(44, 62, 80, 0.14);
+    transform: translateY(-1px);
 }
 
 .quotes-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 25px;
-    margin-bottom: 40px;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 290px), 1fr));
+    gap: 22px;
+    margin-bottom: 36px;
 }
 
 .quote-card {
-    background-color: white;
-    border-radius: 10px;
-    padding: 25px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-    transition: all 0.3s ease;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 190px;
+    padding: 25px 24px 22px;
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid rgba(44, 62, 80, 0.08);
+    border-radius: 14px;
+    box-shadow: 0 12px 26px rgba(44, 62, 80, 0.12);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
     overflow: hidden;
 }
 
 .quote-card::before {
-    content: """;
+    content: "“";
     position: absolute;
-    top: -20px;
-    right: 20px;
-    font-size: 6rem;
+    top: -24px;
+    right: 16px;
     color: var(--accent-color);
+    font-family: Georgia, serif;
+    font-size: 6.5rem;
+    line-height: 1;
     opacity: 0.1;
+    pointer-events: none;
 }
 
 .quote-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    transform: translateY(-6px);
+    border-color: rgba(231, 76, 60, 0.22);
+    box-shadow: 0 18px 34px rgba(44, 62, 80, 0.18);
 }
 
 .quote-text {
-    margin-bottom: 15px;
-    line-height: 1.8;
-    font-size: 1rem;
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    margin-bottom: 18px;
     color: var(--dark-color);
+    font-size: 1.02rem;
+    line-height: 1.95;
 }
 
 .scholar-name {
+    position: relative;
+    z-index: 1;
+    padding-top: 12px;
     color: var(--accent-color);
-    font-weight: 500;
+    border-top: 1px solid rgba(44, 62, 80, 0.1);
     font-size: 0.9rem;
+    font-weight: 700;
     text-align: left;
-    border-top: 1px solid rgba(0,0,0,0.1);
-    padding-top: 10px;
 }
 
 .controls {
     display: flex;
     justify-content: center;
-    margin-bottom: 40px;
+    margin-bottom: 34px;
 }
 
 #loadMoreBtn {
-    background-color: var(--primary-color);
+    min-height: 48px;
+    padding: 12px 28px;
     color: white;
-    border: none;
-    padding: 12px 30px;
-    border-radius: 25px;
+    background: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    border-radius: 999px;
     font-size: 1rem;
+    font-weight: 700;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: background-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: 0 10px 20px rgba(44, 62, 80, 0.18);
 }
 
 #loadMoreBtn:hover {
-    background-color: var(--accent-color);
+    background: var(--accent-color);
+    border-color: var(--accent-color);
     transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    box-shadow: 0 14px 24px rgba(231, 76, 60, 0.22);
+}
+
+#loadMoreBtn:focus-visible {
+    outline: 3px solid rgba(231, 76, 60, 0.34);
+    outline-offset: 3px;
 }
 
 footer {
@@ -172,20 +230,37 @@ footer {
 
 /* تجاوب الموقع مع أحجام الشاشات المختلفة */
 @media (max-width: 768px) {
+    body {
+        padding: 12px;
+    }
+
+    header {
+        margin-bottom: 22px;
+        border-radius: 14px;
+    }
+
     .quotes-container {
         grid-template-columns: 1fr;
+        gap: 16px;
     }
 
-    header h1 {
-        font-size: 2rem;
-    }
-
-    header h2 {
-        font-size: 1rem;
-    }
-    
     .quote-card {
-        padding: 20px;
+        min-height: 0;
+        padding: 21px 19px 19px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .quote-card,
+    .search-box,
+    #loadMoreBtn {
+        transition-duration: 0.01ms;
+        animation: none;
+    }
+
+    .quote-card:hover,
+    #loadMoreBtn:hover {
+        transform: none;
     }
 }
 
