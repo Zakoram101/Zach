@@ -8,10 +8,12 @@
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عد قريبا</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="هل تعلم؟ — معلومات إسلامية قصيرة موثقة عن الصحابة والعلماء والكتب الإسلامية وأحداث السيرة والتاريخ الإسلامي، مع ذكر المصدر والمرجع لكل معلومة.">
+    <title>هل تعلم؟ | أخذ فكرة — Mishkat books</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
-        
+
         :root {
             --primary-color: #2c3e50;
             --accent-color: #e74c3c;
@@ -19,92 +21,31 @@
             --dark-color: #34495e;
             --font-main: 'Tajawal', sans-serif;
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: var(--font-main);
             background: linear-gradient(135deg, var(--light-color) 0%, #dde4e6 100%);
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            min-height: 100vh;
             color: var(--primary-color);
-            overflow: hidden;
             position: relative;
+            overflow-x: hidden;
         }
-        
-        .container {
-            text-align: center;
-            padding: 3rem;
-            position: relative;
-            z-index: 2;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(5px);
-            border-radius: 15px;
-            box-shadow: 0 8px 32px rgba(44, 62, 80, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            max-width: 600px;
-            width: 90%;
-        }
-        
-        h1 {
-            font-family: var(--font-main);
-            font-size: 2.8rem;
-            margin-bottom: 1rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            letter-spacing: 1px;
-            opacity: 0;
-            animation: fadeIn 2s ease forwards;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
-        }
-        
-        .subtitle {
-            font-family: var(--font-main);
-            font-size: 1.8rem;
-            opacity: 0;
-            animation: fadeIn 2s ease forwards 0.3s;
-            color: var(--dark-color);
-        }
-        
-        .separator {
-            width: 120px;
-            height: 2px;
-            background: linear-gradient(to right, transparent, var(--accent-color), transparent);
-            margin: 2rem auto;
-            position: relative;
-            opacity: 0;
-            animation: fadeIn 2s ease forwards 0.5s;
-        }
-        
-        .separator::before, .separator::after {
-            content: "●";
-            position: absolute;
-            top: -9px;
-            color: var(--accent-color);
-            font-size: 12px;
-        }
-        
-        .separator::before {
-            left: 0;
-        }
-        
-        .separator::after {
-            right: 0;
-        }
-        
+
+        /* الزخارف والعناصر العائمة (نفس هوية الموقع) */
         .decorative-element {
-            position: absolute;
+            position: fixed;
             border: 1px solid var(--dark-color);
             opacity: 0.2;
-            z-index: 1;
+            z-index: 0;
+            pointer-events: none;
         }
-        
+
         .element-1 {
             width: 300px;
             height: 300px;
@@ -114,7 +55,7 @@
             animation: float 15s infinite ease-in-out;
             background: radial-gradient(circle at 30% 30%, rgba(44, 62, 80, 0.05), transparent);
         }
-        
+
         .element-2 {
             width: 200px;
             height: 200px;
@@ -124,7 +65,7 @@
             animation: float 12s infinite ease-in-out reverse;
             border-color: var(--accent-color);
         }
-        
+
         .element-3 {
             width: 150px;
             height: 150px;
@@ -134,7 +75,7 @@
             animation: float 10s infinite ease-in-out 2s;
             border-color: var(--primary-color);
         }
-        
+
         .element-4 {
             width: 180px;
             height: 180px;
@@ -146,28 +87,29 @@
             border-style: dashed;
             border-color: var(--accent-color);
         }
-        
+
         .arabic-decoration {
-            position: absolute;
+            position: fixed;
             font-family: var(--font-main);
             font-size: 8rem;
             opacity: 0.03;
             color: var(--primary-color);
             z-index: 0;
+            pointer-events: none;
         }
-        
+
         .decoration-1 {
             top: 5%;
             left: 5%;
             transform: rotate(-15deg);
         }
-        
+
         .decoration-2 {
             bottom: 5%;
             right: 5%;
             transform: rotate(15deg);
         }
-        
+
         @keyframes float {
             0% { transform: translate(0, 0) rotate(0deg); }
             25% { transform: translate(15px, 20px) rotate(5deg); }
@@ -175,100 +117,359 @@
             75% { transform: translate(-12px, 8px) rotate(-3deg); }
             100% { transform: translate(0, 0) rotate(0deg); }
         }
-        
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        
-        .loader {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            margin: 2.5rem auto 1rem;
+
+        /* الترويسة */
+        .page-header {
+            text-align: center;
+            padding: 3rem 1.5rem 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .page-header h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            opacity: 0;
+            animation: fadeIn 2s ease forwards;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .page-header .subtitle {
+            font-size: 1.2rem;
+            color: var(--dark-color);
+            margin-top: 0.75rem;
+            opacity: 0;
+            animation: fadeIn 2s ease forwards 0.3s;
+        }
+
+        .separator {
+            width: 120px;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--accent-color), transparent);
+            margin: 2rem auto;
             position: relative;
             opacity: 0;
-            animation: fadeIn 2s ease forwards 1s;
+            animation: fadeIn 2s ease forwards 0.5s;
         }
-        
-        .loader::before, .loader::after {
-            content: "";
+
+        .separator::before, .separator::after {
+            content: "●";
             position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            border: 2px solid transparent;
+            top: -9px;
+            color: var(--accent-color);
+            font-size: 12px;
         }
-        
-        .loader::before {
-            border-top-color: var(--accent-color);
-            border-right-color: var(--accent-color);
-            animation: spin 2.5s linear infinite;
-        }
-        
-        .loader::after {
-            width: 80%;
-            height: 80%;
-            left: 10%;
-            top: 10%;
-            border-bottom-color: var(--primary-color);
-            border-left-color: var(--primary-color);
-            animation: spin 2s linear infinite reverse;
-        }
-        
-        .date {
-            font-size: 0.9rem;
-            color: var(--dark-color);
-            margin-top: 1.5rem;
+
+        .separator::before { left: 0; }
+        .separator::after { right: 0; }
+
+        /* أزرار التصنيف */
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 0 1.5rem 2rem;
+            position: relative;
+            z-index: 2;
             opacity: 0;
-            animation: fadeIn 2s ease forwards 1.5s;
-            letter-spacing: 1px;
+            animation: fadeIn 2s ease forwards 0.7s;
         }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+
+        .filter-btn {
+            font-family: var(--font-main);
+            font-size: 1rem;
+            font-weight: 700;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            border: 1px solid var(--primary-color);
+            background: rgba(255, 255, 255, 0.35);
+            color: var(--primary-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
-        
+
+        .filter-btn:hover {
+            background: var(--primary-color);
+            color: var(--light-color);
+            transform: translateY(-2px);
+        }
+
+        .filter-btn.active {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+        }
+
+        /* بطاقات المعلومات */
+        .facts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem 4rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .fact-card {
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(5px);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 8px 32px rgba(44, 62, 80, 0.1);
+            padding: 1.75rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.9rem;
+            opacity: 0;
+            animation: fadeIn 1.2s ease forwards;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .fact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(44, 62, 80, 0.18);
+        }
+
+        .fact-card.hidden { display: none; }
+
+        .fact-category {
+            align-self: flex-start;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 0.25rem 0.9rem;
+            border-radius: 20px;
+            background: var(--primary-color);
+            color: var(--light-color);
+        }
+
+        .fact-card[data-category="السيرة"] .fact-category { background: var(--accent-color); }
+
+        .fact-text {
+            font-size: 1.05rem;
+            line-height: 1.9;
+            color: var(--primary-color);
+        }
+
+        .fact-text strong {
+            color: var(--accent-color);
+        }
+
+        .fact-note {
+            font-size: 0.9rem;
+            line-height: 1.8;
+            color: var(--dark-color);
+            background: rgba(44, 62, 80, 0.06);
+            border-right: 3px solid var(--accent-color);
+            border-radius: 8px;
+            padding: 0.6rem 0.9rem;
+        }
+
+        .fact-source {
+            margin-top: auto;
+            font-size: 0.85rem;
+            color: var(--dark-color);
+            border-top: 1px dashed rgba(44, 62, 80, 0.25);
+            padding-top: 0.8rem;
+        }
+
+        .fact-source span {
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        /* زر العودة */
+        .back-link {
+            position: fixed;
+            top: 1.25rem;
+            right: 1.25rem;
+            z-index: 10;
+            font-family: var(--font-main);
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-decoration: none;
+            color: var(--primary-color);
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 25px;
+            padding: 0.5rem 1.4rem;
+            box-shadow: 0 4px 15px rgba(44, 62, 80, 0.12);
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: var(--primary-color);
+            color: var(--light-color);
+        }
+
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2.2rem;
-            }
-            
-            .subtitle {
-                font-size: 1.5rem;
-            }
-            
-            .element-1, .element-2, .element-3, .element-4 {
-                width: 100px;
-                height: 100px;
-            }
-            
-            .container {
-                padding: 2rem;
-            }
-            
-            .arabic-decoration {
-                font-size: 5rem;
-            }
+            .page-header h1 { font-size: 2.2rem; }
+            .page-header .subtitle { font-size: 1rem; }
+            .element-1, .element-2, .element-3, .element-4 { width: 100px; height: 100px; }
+            .arabic-decoration { font-size: 5rem; }
+            .facts-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-    <div class="arabic-decoration decoration-1">ع</div>
-    <div class="arabic-decoration decoration-2">م</div>
-    
+    <div class="arabic-decoration decoration-1">عِلْم</div>
+    <div class="arabic-decoration decoration-2">نُور</div>
+
     <div class="decorative-element element-1"></div>
     <div class="decorative-element element-2"></div>
     <div class="decorative-element element-3"></div>
     <div class="decorative-element element-4"></div>
-    
-    <div class="container">
-        <h1>لا يوجد محتوى حاليا</h1>
+
+    <a class="back-link" href="../index.html">← العودة للرئيسية</a>
+
+    <header class="page-header">
+        <h1>هل تعلم؟</h1>
+        <p class="subtitle">معلومات إسلامية قصيرة موثقة بمصادرها — من قسم «أخذ فكرة»</p>
         <div class="separator"></div>
-        <h1 class="subtitle">عد قريبا</h1>
-        <div class="loader"></div>
-        <div class="date">٢٠٢٥ - ٠٣ - ٠٧</div>
-    </div>
+    </header>
+
+    <nav class="filters" aria-label="تصنيفات المعلومات">
+        <button class="filter-btn active" data-filter="all">الكل</button>
+        <button class="filter-btn" data-filter="الصحابة">الصحابة رضي الله عنهم</button>
+        <button class="filter-btn" data-filter="العلماء">العلماء</button>
+        <button class="filter-btn" data-filter="الكتب">الكتب الإسلامية</button>
+        <button class="filter-btn" data-filter="السيرة">السيرة والتاريخ</button>
+    </nav>
+
+    <main class="facts-grid">
+
+        <!-- الصحابة رضي الله عنهم -->
+        <article class="fact-card" data-category="الصحابة">
+            <span class="fact-category">الصحابة رضي الله عنهم</span>
+            <p class="fact-text"><strong>هل تعلم</strong> أن أول من أسلم من الناس: خديجة بنت خويلد رضي الله عنها؟ فهي أول من آمن بالنبي ﷺ حين نزل عليه الوحي في غار حراء.</p>
+            <p class="fact-note">تنبيه: ورد في «أول من أسلم» أقوال بتفصيل مشهور عند أهل العلم: أول من أسلم من النساء خديجة، ومن الرجال الأحرار أبو بكر، ومن الصبيان علي بن أبي طالب، ومن الموالي زيد بن حارثة رضي الله عنهم، فلا تعارض بين الأقوال مع هذا التفصيل.</p>
+            <p class="fact-source"><span>المصدر:</span> سيرة ابن هشام (باب بدء الوحي)، وصحيح البخاري، كتاب بدء الوحي، حديث عائشة رقم ٣.</p>
+        </article>
+
+        <article class="fact-card" data-category="الصحابة">
+            <span class="fact-category">الصحابة رضي الله عنهم</span>
+            <p class="fact-text"><strong>هل تعلم</strong> أن زيد بن حارثة رضي الله عنه هو الصحابي الوحيد الذي ذُكر اسمه صراحة في القرآن الكريم، في قوله تعالى: ﴿فَلَمَّا قَضَىٰ زَيْدٌ مِّنْهَا وَطَرًا﴾؟</p>
+            <p class="fact-source"><span>المصدر:</span> سورة الأحزاب، الآية ٣٧.</p>
+        </article>
+
+        <article class="fact-card" data-category="الصحابة">
+            <span class="fact-category">الصحابة رضي الله عنهم</span>
+            <p class="fact-text"><strong>هل تعلم</strong> أن التأريخ بالهجرة النبوية بدأ في خلافة عمر بن الخطاب رضي الله عنه، بعد أن استشار الصحابة، فاتفقوا على جعل الهجرة بداية التاريخ الإسلامي؟</p>
+            <p class="fact-source"><span>المصدر:</span> تاريخ الطبري؛ وتذكره كتب التاريخ والسير في أحداث خلافة عمر رضي الله عنه.</p>
+        </article>
+
+        <article class="fact-card" data-category="الصحابة">
+            <span class="fact-category">الصحابة رضي الله عنهم</span>
+            <p class="fact-text"><strong>هل تعلم</strong> أن أبو هريرة رضي الله عنه أكثر الصحابة رواية للحديث عن النبي ﷺ على الإطلاق، مع أن صحبته له ﷺ كانت نحو أربع سنوات فقط؟ قال عن نفسه إنه كان لازمًا للنبي ﷺ ولا شغل له بتجارة ولا زرع.</p>
+            <p class="fact-source"><span>المصدر:</span> صحيح البخاري، كتاب العلم، حديث ١١٨؛ وصحيح مسلم، كتاب فضائل الصحابة، حديث ٢٤٩٢.</p>
+        </article>
+
+        <!-- العلماء -->
+        <article class="fact-card" data-category="العلماء">
+            <span class="fact-category">العلماء</span>
+            <p class="fact-text"><strong>هل تعلم</strong> أن الإمام البخاري رحمه الله انتقى أحاديث «صحيح البخاري» من نحو ستمائة ألف حديث، وأنه أمضى في تصنيفه نحو ست عشرة سنة؟</p>
+            <p class="fact-source"><span>المصدر:</span> هداية الساري مقدمة فتح الباري لابن حجر العسقلاني؛ وتاريخ بغداد للخطيب البغدادي (ترجمة البخاري).</p>
+        </article>
+
+        <article class="fact-card" data-category="العلماء">
+            <span class="fact-category">العلماء</span>
+            <p class="fact-text"><strong>هل تعلم</strong> أن الإمام النووي رحمه الله توفي وعمره نحو خمس وأربعين سنة فقط، ومع ذلك ترك مؤلفات عظيمة منها: «رياض الصالحين» و«الأربعون النووية» وشرح صحيح مسلم؟</p>
+            <p class="fact-source"><span>المصدر:</span> وفيات الأعيان لابن خلكان (ترجمة النووي)؛ وتذكرة الحفاظ للذهبي.</p>
+        </article>
+
+        <article class="fact-card" data-category="العلماء">
+            <span class="fact-category">العلماء</span>
+            <p class="fact-text"><strong>هل تعلم</strong> أن الإمام الشافعي رحمه الله يُعد أول من صنّف كتابًا مستقلًا في علم أصول الفقه، وهو كتابه المشهور «الرسالة»؟</p>
+            <p class="fact-note">تنبيه: اشتهر عند المؤرخين أن الرسالة أول مصنف جامع في أصول الفقه، ويُذكر أن بعض العلماء كتب في بعض مسائل الأصول قبله، لكن التصنيف المستقل الجامع يُنسب للشافعي.</p>
+            <p class="fact-source"><span>المصدر:</span> تاريخ بغداد للخطيب البغدادي (ترجمة الشافعي)؛ ومناقب الشافعي للبيهقي.</p>
+        </article>
+
+        <article class="fact-card" data-category="العلماء">
+            <span class="fact-category">العلماء</span>
+            <p class="fact-text"><strong>هل تعلم</strong> أن الإمام مالك بن أنس رحمه الله كان لا يحدّث إلا على طهارة، تعظيمًا لحديث رسول الله ﷺ؟</p>
+            <p class="fact-source"><span>المصدر:</span> الجامع لأخلاق الراوي وآداب السامع للخطيب البغدادي؛ وترتيب المدارك للقاضي عياض (ترجمة مالك).</p>
+        </article>
+
+        <!-- الكتب الإسلامية -->
+        <article class="fact-card" data-category="الكتب">
+            <span class="fact-category">الكتب الإسلامية</span>
+            <p class="fact-text"><strong>هل تعلم</strong> أن «صحيح البخاري» يُعد أصح كتاب بعد كتاب الله عز وجل عند أهل العلم؟ قال الإمام النووي: «وأجمعوا على أن أصحها بعد كتاب الله: الصحيحان البخاري ومسلم».</p>
+            <p class="fact-source"><span>المصدر:</span> شرح النووي على صحيح مسلم (المقدمة).</p>
+        </article>
+
+        <article class="fact-card" data-category="الكتب">
+            <span class="fact-category">الكتب الإسلامية</span>
+            <p class="fact-text"><strong>هل تعلم</strong> أن «الموطأ» للإمام مالك من أقدم المصنفات الحديثية الباقية، وأنه لقي قبولًا عظيمًا حتى قال فيه الشافعي: «ما على وجه الأرض بعد كتاب الله كتاب أصح من كتاب مالك»؟</p>
+            <p class="fact-note">تنبيه: قول الشافعي هذا كان قبل ظهور الصحيحين، وقد أشار العلماء إلى ذلك.</p>
+            <p class="fact-source"><span>المصدر:</span> ترتيب المدارك للقاضي عياض؛ ومقدمة ابن الصلاح في علوم الحديث.</p>
+        </article>
+
+        <article class="fact-card" data-category="الكتب">
+            <span class="fact-category">الكتب الإسلامية</span>
+            <p class="fact-text"><strong>هل تعلم</strong> أن تفسير الطبري «جامع البيان عن تأويل آي القرآن» يُعد أقدم التفاسير الكاملة الباقية المعتمدة على المأثور عن الصحابة والتابعين بأسانيدها؟</p>
+            <p class="fact-source"><span>المصدر:</span> الطبقات الكبرى لابن سعد (ترجمة الطبري)؛ ووفيات الأعيان لابن خلكان.</p>
+        </article>
+
+        <article class="fact-card" data-category="الكتب">
+            <span class="fact-category">الكتب الإسلامية</span>
+            <p class="fact-text"><strong>هل تعلم</strong> أن كتاب «الأربعين النووية» جمع فيه الإمام النووي اثنين وأربعين حديثًا جامعة لقواعد الدين، وأنه استمد فكرته من أربعينيات من تقدمه كابن الصلاح؟</p>
+            <p class="fact-source"><span>المصدر:</span> مقدمة الإمام النووي على كتابه «الأربعون».</p>
+        </article>
+
+        <!-- السيرة والتاريخ -->
+        <article class="fact-card" data-category="السيرة">
+            <span class="fact-category">السيرة والتاريخ</span>
+            <p class="fact-text"><strong>هل تعلم</strong> أن غزوة بدر الكبرى وقعت في السابع عشر من رمضان سنة ٢هـ، وكان عدد المسلمين فيها نحو ثلاثمائة وثلاثة عشر رجلًا؟</p>
+            <p class="fact-source"><span>المصدر:</span> صحيح البخاري، كتاب المغازي، حديث ٣٩٩٢ (فيه ذكر عدد أهل بدر وأنهم أزيد من ثلاثمائة وعشرة)؛ وسيرة ابن هشام.</p>
+        </article>
+
+        <article class="fact-card" data-category="السيرة">
+            <span class="fact-category">السيرة والتاريخ</span>
+            <p class="fact-text"><strong>هل تعلم</strong> أن القبلة حُوّلت من بيت المقدس إلى الكعبة في السنة الثانية من الهجرة، وأن المسجد الذي نزل فيه التحويل أثناء الصلاة سُمي «مسجد القبلتين»؟</p>
+            <p class="fact-source"><span>المصدر:</span> صحيح البخاري، كتاب الصلاة، حديث ٣٩٩؛ وسورة البقرة، الآية ١٤٤.</p>
+        </article>
+
+        <article class="fact-card" data-category="السيرة">
+            <span class="fact-category">السيرة والتاريخ</span>
+            <p class="fact-text"><strong>هل تعلم</strong> أن النبي ﷺ اختبأ مع أبي بكر رضي الله عنه في غار ثور ثلاث ليالٍ في طريق الهجرة، وأن الله ذكر ذلك في القرآن: ﴿إِذْ هُمَا فِي الْغَارِ﴾؟</p>
+            <p class="fact-source"><span>المصدر:</span> سورة التوبة، الآية ٤٠؛ وصحيح البخاري، كتاب فضائل أصحاب النبي ﷺ، حديث ٣٦٥٣.</p>
+        </article>
+
+        <article class="fact-card" data-category="السيرة">
+            <span class="fact-category">السيرة والتاريخ</span>
+            <p class="fact-text"><strong>هل تعلم</strong> أن عام الوفود هو السنة التاسعة للهجرة، حيث توافدت وفود القبائل العربية على المدينة معلنة إسلامها، حتى قيل: لم يُرَ قبله عام أكثر وفودًا منه؟</p>
+            <p class="fact-source"><span>المصدر:</span> سيرة ابن هشام (ذكر الوفود)؛ والبداية والنهاية لابن كثير (أحداث السنة التاسعة).</p>
+        </article>
+
+    </main>
+
+    <script>
+        document.querySelectorAll('.filter-btn').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                document.querySelectorAll('.filter-btn').forEach(function (b) { b.classList.remove('active'); });
+                btn.classList.add('active');
+                var filter = btn.getAttribute('data-filter');
+                document.querySelectorAll('.fact-card').forEach(function (card) {
+                    var show = filter === 'all' || card.getAttribute('data-category') === filter;
+                    card.classList.toggle('hidden', !show);
+                    if (show) {
+                        card.style.animation = 'none';
+                        card.offsetHeight;
+                        card.style.animation = '';
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
