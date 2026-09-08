@@ -8,369 +8,81 @@
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>توضيح | منهج فهم الآيات القرآنية</title>
-    <meta name="description" content="منهج علمي لفهم الآيات القرآنية: أسباب النزول، دلالة السياق، المقصود العام للسورة، التفسير المقارن، المأثور، ودمج العقل بالنقل.">
+    <title>توضيح | أسباب النزول الصريحة</title>
+    <meta name="description" content="تعليقات مرتبة في أسباب نزول الآيات المرتبطة بواقعة أو سؤال أو موقف محدد، مع مصادر موثقة.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/button-effects.css">
     <style>
-        :root {
-            --primary-color: #2c3e50;
-            --accent-color: #e74c3c;
-            --light-color: #ecf0f1;
-            --dark-color: #34495e;
-            --card-bg: #ffffff;
-            --verse-bg: #f8f1e9;
-            --font-main: 'Tajawal', sans-serif;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: var(--font-main);
-            background: linear-gradient(160deg, #f5f7fa 0%, #e8eef3 100%);
-            color: var(--primary-color);
-            line-height: 1.8;
-            min-height: 100vh;
-        }
-
-        .top-bar {
-            background: var(--primary-color);
-            color: white;
-            padding: 12px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .top-bar a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            padding: 6px 14px;
-            border-radius: 20px;
-            transition: background 0.25s;
-        }
-
-        .top-bar a:hover {
-            background: rgba(255,255,255,0.15);
-        }
-
-        header {
-            text-align: center;
-            padding: 40px 20px 20px;
-            background: linear-gradient(135deg, var(--primary-color), #1a252f);
-            color: white;
-            margin-bottom: 30px;
-        }
-
-        header h1 {
-            font-size: 2.2rem;
-            margin-bottom: 8px;
-            font-weight: 700;
-        }
-
-        header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto 50px;
-            padding: 0 18px;
-        }
-
-        .intro-box {
-            background: var(--card-bg);
-            border-radius: 14px;
-            padding: 24px;
-            margin-bottom: 28px;
-            box-shadow: 0 6px 20px rgba(44, 62, 80, 0.08);
-            border-right: 5px solid var(--accent-color);
-        }
-
-        .intro-box p {
-            font-size: 1.05rem;
-            color: var(--dark-color);
-        }
-
-        .section-card {
-            background: var(--card-bg);
-            border-radius: 14px;
-            padding: 26px 24px;
-            margin-bottom: 24px;
-            box-shadow: 0 6px 18px rgba(44, 62, 80, 0.07);
-            transition: transform 0.25s, box-shadow 0.25s;
-        }
-
-        .section-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 28px rgba(44, 62, 80, 0.12);
-        }
-
-        .section-card h2 {
-            font-size: 1.35rem;
-            color: var(--primary-color);
-            margin-bottom: 14px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .section-card h2 .num {
-            background: var(--accent-color);
-            color: white;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.95rem;
-            flex-shrink: 0;
-        }
-
-        .section-card p,
-        .section-card li {
-            color: var(--dark-color);
-            margin-bottom: 10px;
-            font-size: 1.02rem;
-        }
-
-        .section-card ul {
-            padding-right: 22px;
-            margin: 12px 0;
-        }
-
-        .verse {
-            background: var(--verse-bg);
-            border-radius: 10px;
-            padding: 16px 18px;
-            margin: 16px 0;
-            border-right: 4px solid #c9a227;
-            font-size: 1.08rem;
-            line-height: 2;
-            color: #2c2c2c;
-        }
-
-        .verse .ref {
-            display: block;
-            margin-top: 8px;
-            font-size: 0.9rem;
-            color: #7a5c00;
-            font-weight: 500;
-        }
-
-        .note {
-            background: #eef6ff;
-            border-radius: 8px;
-            padding: 12px 16px;
-            margin-top: 12px;
-            font-size: 0.95rem;
-            color: #1a3a5c;
-            border-right: 3px solid #3498db;
-        }
-
-        footer {
-            text-align: center;
-            padding: 24px 16px;
-            background: var(--primary-color);
-            color: var(--light-color);
-            font-size: 0.95rem;
-        }
-
-        footer a {
-            color: #f1c40f;
-            text-decoration: none;
-        }
-
-        @media (max-width: 600px) {
-            header h1 { font-size: 1.7rem; }
-            .section-card { padding: 20px 16px; }
-            .section-card h2 { font-size: 1.2rem; }
-        }
+        :root{--primary-color:#2c3e50;--accent-color:#e74c3c;--light-color:#ecf0f1;--dark-color:#34495e;--gold-color:#f1c40f;--card-bg:#fff;--verse-bg:#f8f1e9;--font-main:'Tajawal',sans-serif;}
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{font-family:var(--font-main);background:#ecf0f1;color:var(--primary-color);line-height:1.8;min-height:100vh;}
+        .top-bar{background:var(--primary-color);color:#fff;padding:12px 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+        .top-bar a{color:#fff;text-decoration:none;font-weight:500;padding:6px 14px;border-radius:20px;}
+        .top-bar a:hover{background:rgba(255,255,255,.15);}
+        header{text-align:center;padding:42px 20px 28px;background:linear-gradient(135deg,var(--primary-color),#1a252f);color:#fff;margin-bottom:28px;}
+        header h1{font-size:2.2rem;}
+        header h1::after{content:"";display:block;width:90px;height:3px;background:var(--accent-color);margin:12px auto 0;}
+        header p{font-size:1.05rem;opacity:.9;max-width:740px;margin:14px auto 0;}
+        .count-pill{display:inline-block;margin-top:16px;background:var(--accent-color);color:#fff;border-radius:20px;padding:4px 14px;font-size:.9rem;}
+        .container{max-width:900px;margin:0 auto 50px;padding:0 18px;}
+        .intro-box{background:var(--card-bg);border-radius:14px;padding:22px;margin-bottom:22px;box-shadow:0 6px 20px rgba(44,62,80,.08);border-right:5px solid var(--accent-color);}
+        .comment-card{background:var(--card-bg);border-radius:14px;padding:22px 20px;margin-bottom:16px;box-shadow:0 6px 18px rgba(44,62,80,.07);}
+        .comment-head{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+        .num{background:var(--accent-color);color:#fff;min-width:32px;height:32px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.9rem;font-weight:700;}
+        .surah{color:var(--accent-color);font-weight:700;font-size:1.02rem;}
+        .verse{background:var(--verse-bg);border-radius:10px;padding:14px 16px;margin:10px 0 12px;border-right:4px solid #c9a227;font-size:1.05rem;line-height:2;}
+        .reason{color:var(--dark-color);font-size:1.02rem;margin-bottom:10px;}
+        .source{background:#eef6ff;border-right:3px solid #3498db;border-radius:8px;padding:10px 14px;font-size:.92rem;color:#1a3a5c;}
+        footer{text-align:center;padding:24px 16px;background:var(--primary-color);color:var(--light-color);font-size:.95rem;}
+        footer a{color:var(--gold-color);text-decoration:none;}
+        @media (max-width:600px){header h1{font-size:1.65rem;}.comment-card{padding:18px 14px;}}
     </style>
 </head>
 <body>
-
     <div class="top-bar">
         <a href="../index.html">← الرئيسية</a>
-        <span>توضيح · منهج فهم الآيات</span>
+        <span>توضيح · أسباب النزول</span>
         <a href="../Pages/books.html">الكتب</a>
     </div>
-
     <header>
-        <h1>توضيح</h1>
-        <p>منهج عملي لفهم الآيات القرآنية على ضوء أسباب النزول والسياق والتفسير المقارن والمأثور</p>
+        <h1>أسباب النزول الصريحة</h1>
+        <p>تعليقات مرتبة للآيات التي نزلت في حادثة معيّنة، أو سؤال طرحه الصحابة، أو موقف محدد. استُبعد ما نزل للهداية العامة أو التشريع الابتدائي غير المرتبط بواقعة.</p>
+        <span class="count-pill" id="asbabCount">0 تعليقًا موثّقًا</span>
     </header>
-
     <div class="container">
-
         <div class="intro-box">
-            <p>
-                فهم كتاب الله لا يكون بالانقطاع عن سياقه أو بفصل الآية عن جارتها، ولا بترك ما ورد عن النبي ﷺ وأصحابه.
-                هذه الصفحة تلخص خطوات منهجية تساعد القارئ على تدبّر الآيات بعلم وأمانة، مستندة إلى أصول التفسير المعتبرة.
-            </p>
+            <p>لا يُقبل سبب النزول إلا بالنقل عمن شاهد التنزيل. جُمعت هنا الروايات المشهورة في الصحيحين أو السنن، وما حرّره الواحدي في <strong>أسباب نزول القرآن</strong> والسيوطي في <strong>لباب النقول</strong>، مع تقديم ما في البخاري ومسلم عند التعارض.</p>
         </div>
-
-        <!-- 1 -->
-        <article class="section-card">
-            <h2><span class="num">1</span> معرفة أسباب النزول</h2>
-            <p>
-                أسباب النزول هي الحوادث أو الأسئلة أو الأحوال التي نزلت الآية أو الآيات بشأنها.
-                معرفتها تكشف السياق النفسي والاجتماعي والزمني، وتُظهر الأشخاص أو الوقائع المرتبطة بالنص.
-            </p>
-            <ul>
-                <li>تساعد على فهم المقصود الحقيقي دون تحميل الآية ما لا تحتمل.</li>
-                <li>توضح أن بعض الأحكام أو التوجيهات ارتبطت بواقعة معيّنة، مع بقاء العبرة بعموم اللفظ.</li>
-                <li>تُستقى من روايات صحيحة عن الصحابة والتابعين، لا من القصص المرسلة دون سند.</li>
-            </ul>
-            <div class="verse">
-                ﴿وَأَنزَلْنَا إِلَيْكَ الذِّكْرَ لِتُبَيِّنَ لِلنَّاسِ مَا نُزِّلَ إِلَيْهِمْ وَلَعَلَّهُمْ يَتَفَكَّرُونَ﴾
-                <span class="ref">النحل: 44</span>
-            </div>
-            <div class="note">
-                النبي ﷺ بيّن للناس ما نُزّل إليهم بالقول والفعل؛ وأسباب النزول جزء من هذا البيان المأثور.
-            </div>
-        </article>
-
-        <!-- 2 -->
-        <article class="section-card">
-            <h2><span class="num">2</span> فهم دلالة السياق (السباق واللحاق)</h2>
-            <p>
-                الآية لا تُقرأ منفردة عن جارتها. <strong>السباق</strong> ما قبلها، و<strong>اللحاق</strong> ما بعدها.
-                قراءة السياق المباشر تمنع اقتطاع النص وتحميله معنىً بعيدًا عن مراده.
-            </p>
-            <ul>
-                <li>السياق يحدد المراد من الألفاظ المشتركة أو المجملة.</li>
-                <li>يربط الآية بما قبلها وما بعدها في بناء السورة وموضوعها.</li>
-                <li>يمنع الاستدلال الجزئي الذي يُخرج النص عن غايته.</li>
-            </ul>
-            <div class="verse">
-                ﴿أَفَلَا يَتَدَبَّرُونَ الْقُرْآنَ أَمْ عَلَىٰ قُلُوبٍ أَقْفَالُهَا﴾
-                <span class="ref">محمد: 24</span>
-            </div>
-            <div class="note">
-                التدبر يشمل النظر في ترتيب الآيات وارتباط بعضها ببعض، لا مجرد قراءة الألفاظ.
-            </div>
-        </article>
-
-        <!-- 3 -->
-        <article class="section-card">
-            <h2><span class="num">3</span> الإحاطة بالمقصود العام للسورة</h2>
-            <p>
-                لكل سورة محور رئيسي وفكرة مركزية تدور حولها آياتها.
-                معرفة هذا المحور تمنع التشتت في التفاصيل، وتربط الآية بغرض السورة الكلي.
-            </p>
-            <ul>
-                <li>مثال: سورة البقرة تدور حول بناء الأمة المؤمنة وأحكامها وعلاقتها بالأمم السابقة.</li>
-                <li>سورة يوسف محورها الابتلاء والصبر وحسن العاقبة مع تدبير الله.</li>
-                <li>معرفة المقصد العام تجعل التفسير منسجمًا غير متناقض.</li>
-            </ul>
-            <div class="verse">
-                ﴿كِتَابٌ أَنزَلْنَاهُ إِلَيْكَ مُبَارَكٌ لِّيَدَّبَّرُوا آيَاتِهِ وَلِيَتَذَكَّرَ أُولُو الْأَلْبَابِ﴾
-                <span class="ref">ص: 29</span>
-            </div>
-        </article>
-
-        <!-- 4 -->
-        <article class="section-card">
-            <h2><span class="num">4</span> التفسير المقارن: القرآن يفسّر بعضه بعضًا</h2>
-            <p>
-                من أعظم أصول التفسير أن يُردّ المتشابه إلى المحكم، وأن تُجمع الآيات التي تناولت الموضوع نفسه في مواضع مختلفة.
-                المجمل في مكان قد يُفصّل في مكان آخر، والمطلق يُقيَّد، والعام يُخصَّص بما ورد في نص آخر.
-            </p>
-            <ul>
-                <li><strong>جمع الآيات المتشابهة:</strong> البحث عن كل ما ورد في الموضوع الواحد عبر المصحف.</li>
-                <li>النصوص يكمل بعضها بعضًا؛ فلا يُكتفى بآية واحدة مع وجود بيان أوضح في غيرها.</li>
-                <li>هذا المنهج يمنع التعارض الظاهر ويُظهر وحدة الرسالة القرآنية.</li>
-            </ul>
-            <div class="verse">
-                ﴿اللَّهُ نَزَّلَ أَحْسَنَ الْحَدِيثِ كِتَابًا مُّتَشَابِهًا مَّثَانِيَ﴾
-                <span class="ref">الزمر: 23</span>
-            </div>
-            <div class="note">
-                «متشابهًا» هنا بمعنى يشبه بعضه بعضًا في الصدق والبيان، ويُثنّى (يُكرّر) بأساليب مختلفة لزيادة الوضوح.
-            </div>
-        </article>
-
-        <!-- 5 -->
-        <article class="section-card">
-            <h2><span class="num">5</span> الرجوع إلى المأثور</h2>
-            <p>
-                التفسير المأثور هو ما ورد عن النبي ﷺ أو الصحابة أو التابعين في بيان معنى الآية.
-                يُستعان بكتب التفسير الموثوقة التي جمعت هذه الأقوال وميّزت صحيحها من ضعيفها.
-            </p>
-            <ul>
-                <li><strong>تفسير الطبري</strong> (جامع البيان): من أوسع ما جمع أقوال السلف مع الإسناد.</li>
-                <li><strong>تفسير ابن كثير</strong>: يعتمد على القرآن ثم السنة ثم أقوال الصحابة، مع نقد للروايات.</li>
-                <li>يُقدَّم قول النبي ﷺ ثم الصحابة ثم التابعين عند الاختلاف.</li>
-            </ul>
-            <div class="verse">
-                ﴿وَمَا أَنزَلْنَا عَلَيْكَ الْكِتَابَ إِلَّا لِتُبَيِّنَ لَهُمُ الَّذِي اخْتَلَفُوا فِيهِ﴾
-                <span class="ref">النحل: 64</span>
-            </div>
-        </article>
-
-        <!-- 6 -->
-        <article class="section-card">
-            <h2><span class="num">6</span> دمج العقل بالنقل</h2>
-            <p>
-                النقل الصحيح لا يتعارض مع العقل الصريح. يُعمَل العقل لتوسيع مدارك الفهم والاستعانة بالحقائق العلمية والكونية المقطوع بها،
-                بشرط ألا يُحمَّل النص ما لا يحتمله، ولا تُلوى أعناق الآيات لتوافق فرضيات غير ثابتة.
-            </p>
-            <ul>
-                <li>العقل يفهم دلالة الألفاظ ويربطها بالواقع دون مخالفة النص الصريح.</li>
-                <li>الحقائق الكونية الثابتة قد تُوضّح بعض الإشارات القرآنية، لا أن تُفرض على النص فرضًا.</li>
-                <li>القاعدة: لا تعارض بين وحي صحيح وعقل سليم؛ فإن وُجد تعارض ظاهري فالخلل في فهم أحدهما.</li>
-            </ul>
-            <div class="verse">
-                ﴿إِنَّ فِي خَلْقِ السَّمَاوَاتِ وَالْأَرْضِ وَاخْتِلَافِ اللَّيْلِ وَالنَّهَارِ لَآيَاتٍ لِّأُولِي الْأَلْبَابِ﴾
-                <span class="ref">آل عمران: 190</span>
-            </div>
-        </article>
-
-        <!-- 7 -->
-        <article class="section-card">
-            <h2><span class="num">7</span> الحواشي والشروح على كتب التفسير</h2>
-            <p>
-                كتب التفسير الكبرى حظيت بشروح وحواشٍ توضّح غامضها، وتصحّح رواياتها، وتربط أقوال المفسرين بأصول اللغة والفقه والعقيدة.
-                الرجوع إلى هذه الحواشي يعمّق الفهم ويجنّب سوء الفهم الناتج عن قراءة النص دون أدواته.
-            </p>
-            <ul>
-                <li>شروح على تفسير الجلالين، والبيضاوي، وأبي السعود، وغيرها.</li>
-                <li>حواشٍ على تفسير الطبري وابن كثير توضّح الأسانيد والمعاني اللغوية.</li>
-                <li>الاستفادة منها تكون بعد استيعاب أصل الكتاب، لا كبديل عنه.</li>
-            </ul>
-            <div class="note">
-                الهدف من كل هذه الخطوات: أن يُفهم كلام الله كما أُريد أن يُفهم، بلا زيادة ولا نقصان، مع الخشية والتدبر.
-            </div>
-        </article>
-
-        <div class="intro-box" style="border-right-color: #27ae60; margin-top: 10px;">
-            <p style="margin:0;">
-                <strong>خلاصة المنهج:</strong>
-                ابدأ بأسباب النزول إن وُجدت، ثم اقرأ السياق، ثم انظر إلى مقصد السورة، ثم اجمع الآيات المتقاربة، ثم راجع المأثور،
-                ثم أعمل عقلك في ضوء النقل دون ليّ للنصوص. بذلك يقترب الفهم من مراد الله تعالى.
-            </p>
+        <div id="asbabList"></div>
+        <div class="intro-box" style="border-right-color:#27ae60;">
+            <p>لم تُدرج الآيات التي نزلت ابتداءً للهداية أو التشريع العام دون سؤال أو حادثة، ولا قصص الأمم السابقة لأنها ليست أسباب نزول بالمعنى الذي حرّره السيوطي.</p>
         </div>
-
     </div>
-
     <footer>
-        <p>MishKat · توضيح منهج فهم الآيات القرآنية</p>
+        <p>MishKat · توضيح أسباب النزول</p>
         <p style="margin-top:8px;"><a href="../index.html">العودة إلى الرئيسية</a></p>
     </footer>
-
+    <script src="../js/asbab-nuzul.js"></script>
+    <script>
+        (function () {
+            var items = window.MishkatAsbab || [];
+            var list = document.getElementById("asbabList");
+            var count = document.getElementById("asbabCount");
+            count.textContent = items.length + " تعليقًا موثّقًا";
+            items.forEach(function (item, i) {
+                var art = document.createElement("article");
+                art.className = "comment-card";
+                art.innerHTML = '<div class="comment-head"><span class="num"></span><span class="surah"></span></div><div class="verse"></div><p class="reason"></p><p class="source"></p>';
+                art.querySelector(".num").textContent = String(i + 1);
+                art.querySelector(".surah").textContent = item.s;
+                art.querySelector(".verse").textContent = "۔" + item.v + "ە";
+                art.querySelector(".reason").textContent = item.r;
+                art.querySelector(".source").textContent = "المصدر: " + item.src;
+                list.appendChild(art);
+            });
+        })();
+    </script>
 </body>
 </html>
