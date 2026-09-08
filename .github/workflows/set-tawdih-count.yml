@@ -1,0 +1,51 @@
+name: Set Tawdih count
+
+on:
+  push:
+    paths:
+      - ".github/workflows/set-tawdih-count.yml"
+  workflow_dispatch:
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set Tawdih category count to 72
+        run: |
+          python3 << 'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          t = p.read_text(encoding='utf-8')
+          old = '''                    <a href="Moon/moon5.html" class="category-item btn">
+                        <div class="category-icon">
+                            <img src="https://i.pinimg.com/originals/68/49/58/684958aab526a221805b0036275937b4.gif" alt="توضيح" loading="lazy" width="80" height="80">
+                        </div>
+                        <div class="category-name">توضيح</div>
+                        <div class="category-count">45</div>'''
+          new = old.replace('>45</div>', '>72</div>')
+          if old not in t:
+              # already patched or markup changed
+              t2 = t.replace('<div class="category-name">توضيح</div>\n                        <div class="category-count">45</div>',
+                             '<div class="category-name">توضيح</div>\n                        <div class="category-count">72</div>', 1)
+              if t2 == t:
+                  raise SystemExit('could not find Tawdih count 45')
+              t = t2
+          else:
+              t = t.replace(old, new, 1)
+          p.write_text(t, encoding='utf-8')
+          print('patched Tawdih count to 72')
+          PY
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          if git diff --cached --quiet; then
+            echo unchanged
+            exit 0
+          fi
+          git commit -m "Set Tawdih homepage count to 72 documented comments"
+          git push
