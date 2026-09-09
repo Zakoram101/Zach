@@ -224,6 +224,18 @@ html.theme-dark .search-box {
     border-color: #3d5163;
 }
 
+html.theme-dark .search-form .search-btn {
+    background: #1b2836;
+    border: 1.5px solid var(--theme-gold);
+    color: var(--theme-gold);
+}
+
+html.theme-dark .search-form .search-btn:hover,
+html.theme-dark .search-form .search-btn.btn:hover {
+    background: var(--theme-accent);
+    border-color: var(--theme-accent);
+}
+
 html.theme-dark input::placeholder,
 html.theme-dark textarea::placeholder,
 html.theme-dark .search-box::placeholder {

@@ -893,9 +893,18 @@ footer {
     flex-shrink: 0;
 }
 
+.search-field {
+    --search-btn-size: 40px;
+    position: relative;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
 .search-input {
-    flex: 1;
+    width: 100%;
+    box-sizing: border-box;
     padding: 20px 25px;
+    padding-inline-end: calc(var(--search-btn-size) + 16px);
     border: none;
     border-radius: 50px;
     font-size: 1.1rem;
@@ -905,19 +914,53 @@ footer {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
-.search-btn {
+.search-form .search-btn {
     position: absolute;
     top: 50%;
-    left: 10px;
+    left: 8px;
+    right: auto;
     transform: translateY(-50%);
-    background: none;
+    width: var(--search-btn-size);
+    height: var(--search-btn-size);
+    padding: 0;
+    margin: 0;
     border: none;
-    color: var(--primary-color);
-    font-size: 1.2rem;
+    border-radius: 50%;
+    background: var(--primary-color);
+    color: #fff;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
+    line-height: 0;
+    flex: none;
+    box-shadow: 0 2px 8px rgba(44, 62, 80, 0.28);
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+    z-index: 2;
+}
+
+.search-form .search-btn:hover,
+.search-form .search-btn.btn:hover {
+    background: var(--accent-color);
+    transform: translateY(-50%);
+    box-shadow: 0 4px 12px rgba(231, 76, 60, 0.35);
+}
+
+.search-form .search-btn:active,
+.search-form .search-btn.btn:active {
+    transform: translateY(-50%);
+}
+
+.search-form .search-btn img {
+    width: 22px;
+    height: 22px;
+    max-width: 22px;
+    max-height: 22px;
+    display: block;
+    object-fit: contain;
+    pointer-events: none;
+    flex-shrink: 0;
 }
 
 .close-search {
@@ -1521,8 +1564,13 @@ html.theme-dark .custom-alert-btn:hover {
         width: 90%;
     }
 
+    .search-field {
+        --search-btn-size: 38px;
+    }
+
     .search-input {
         padding: 15px 20px;
+        padding-inline-end: calc(var(--search-btn-size) + 14px);
         font-size: 1rem;
     }
 
@@ -1675,18 +1723,35 @@ html.theme-dark .custom-alert-btn:hover {
         justify-content: center;
     }
 
+    .search-field {
+        --search-btn-size: 36px;
+        width: 100%;
+        flex: 1 1 100%;
+    }
+
     .search-input {
         width: 100%;
         padding: 14px 18px;
+        padding-inline-end: calc(var(--search-btn-size) + 12px);
         font-size: 0.95rem;
         border-radius: 30px;
     }
 
-    .search-btn {
-        position: relative;
-        top: auto;
-        left: auto;
-        transform: none;
+    .search-form .search-btn {
+        position: absolute;
+        top: 50%;
+        left: 6px;
+        right: auto;
+        transform: translateY(-50%);
+        width: var(--search-btn-size);
+        height: var(--search-btn-size);
+    }
+
+    .search-form .search-btn img {
+        width: 20px;
+        height: 20px;
+        max-width: 20px;
+        max-height: 20px;
     }
 
     .search-panel .books-showcase.search-results {
