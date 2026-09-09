@@ -48,8 +48,8 @@
     function buttonHtml() {
         return (
             '<button type="button" class="theme-toggle" data-theme-toggle aria-pressed="false" aria-label="التبديل إلى الوضع الليلي" title="الوضع الليلي">' +
-            '<svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 13.2A8.8 8.8 0 1 1 10.8 3.2 6.8 6.8 0 1 0 20.8 13.2z"></path></svg>' +
-            '<svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 8a3 3 0 1 1 0-6 3 3 0 0 1 0 6zM12 2a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1zm0 16a1 1 0 0 1-1 1v2a1 1 0 1 1 2 0v-2a1 1 0 0 1-1-1zM4.2 4.2a1 1 0 0 1 1.4 0l1.4 1.4a1 1 0 0 1-1.4 1.4L4.2 5.6a1 1 0 0 1 0-1.4zm14 14a1 1 0 0 1 0 1.4l-1.4 1.4a1 1 0 0 1-1.4-1.4l1.4-1.4a1 1 0 0 1 1.4 0zM2 12a1 1 0 0 1 1-1h2a1 1 0 1 1 0 2H3a1 1 0 0 1-1-1zm16 0a1 1 0 0 1 1-1h2a1 1 0 1 1 0 2h-2a1 1 0 0 1-1-1zM5.6 18.4a1 1 0 0 1 0-1.4l1.4-1.4a1 1 0 1 1 1.4 1.4l-1.4 1.4a1 1 0 0 1-1.4 0zm12.8-12.8a1 1 0 0 1 0 1.4l-1.4 1.4a1 1 0 0 1-1.4-1.4l1.4-1.4a1 1 0 0 1 1.4 0z"></path></svg>' +
+            '<svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path transform="rotate(-22 12 12)" d="M15.05 3.4A8.85 8.85 0 1 0 20.7 16.55 6.55 6.55 0 0 1 15.05 3.4z"></path></svg>' +
+            '<svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.85"></circle><g><rect x="11.2" y="1.55" width="1.6" height="3.55" rx="0.8"></rect><rect x="11.2" y="1.55" width="1.6" height="3.55" rx="0.8" transform="rotate(45 12 12)"></rect><rect x="11.2" y="1.55" width="1.6" height="3.55" rx="0.8" transform="rotate(90 12 12)"></rect><rect x="11.2" y="1.55" width="1.6" height="3.55" rx="0.8" transform="rotate(135 12 12)"></rect><rect x="11.2" y="1.55" width="1.6" height="3.55" rx="0.8" transform="rotate(180 12 12)"></rect><rect x="11.2" y="1.55" width="1.6" height="3.55" rx="0.8" transform="rotate(225 12 12)"></rect><rect x="11.2" y="1.55" width="1.6" height="3.55" rx="0.8" transform="rotate(270 12 12)"></rect><rect x="11.2" y="1.55" width="1.6" height="3.55" rx="0.8" transform="rotate(315 12 12)"></rect></g></svg>' +
             "</button>"
         );
     }

@@ -9,11 +9,11 @@
     <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>خدمة الدعم</title>
-    <link rel="stylesheet" href="../css/theme-toggle.css?v=2">
+    <link rel="stylesheet" href="../css/theme-toggle.css?v=3">
     <script>(function(){try{var t=localStorage.getItem('mishkat-theme');if(t==='dark')document.documentElement.classList.add('theme-dark');}catch(e){}})();</script>
 </head>
 <body>
-<script src="../js/theme-toggle.js?v=2" defer></script>
+<script src="../js/theme-toggle.js?v=3" defer></script>
 <script>
 (function () {
     var source = 'https://raw.githubusercontent.com/Zakoram101/Zach/9cdb46a5ceeb8a9af7e4661efc0d4fe0658619ee/Pages/contact.html';
@@ -47,11 +47,11 @@
                 'if (subjectModal.classList.contains(\'show\'))',
                 'if (subjectModal && subjectModal.classList.contains(\'show\'))'
             );
-            var headPatch = '<link rel="stylesheet" href="../css/theme-toggle.css?v=2">\n    <script>(function(){try{var t=localStorage.getItem(\'mishkat-theme\');if(t===\'dark\')document.documentElement.classList.add(\'theme-dark\');}catch(e){}})();<\/script>\n</head>';
+            var headPatch = '<link rel="stylesheet" href="../css/theme-toggle.css?v=3">\n    <script>(function(){try{var t=localStorage.getItem(\'mishkat-theme\');if(t===\'dark\')document.documentElement.classList.add(\'theme-dark\');}catch(e){}})();<\/script>\n</head>';
             if (html.indexOf('theme-toggle.css') === -1 && html.indexOf('</head>') !== -1) {
                 html = html.replace('</head>', headPatch);
             }
-            var patch = '<script src="./web3forms-plain.js"><\/script>\n    <script src="../js/theme-toggle.js?v=2" defer><\/script>\n</body>';
+            var patch = '<script src="./web3forms-plain.js"><\/script>\n    <script src="../js/theme-toggle.js?v=3" defer><\/script>\n</body>';
             if (html.indexOf('</body>') !== -1) html = html.replace('</body>', patch);
             else html += patch;
             document.open();
