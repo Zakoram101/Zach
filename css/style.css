@@ -654,29 +654,98 @@ li:hover {
    15. COMPONENT — FOOTER
    ============================================================ */
 footer {
-    background: var(--primary-color);
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(180deg, #33495e 0%, var(--primary-color) 42%, #22313f 100%);
     color: white;
-    padding: 50px;
+    padding: 56px 36px 32px;
     text-align: center;
 }
 
+footer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent-color), #f1c40f, var(--accent-color));
+    pointer-events: none;
+}
+
+footer::after {
+    content: "";
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    right: -90px;
+    top: -90px;
+    border-radius: 50%;
+    background: var(--accent-color);
+    opacity: 0.12;
+    pointer-events: none;
+}
+
 .footer-content {
-    max-width: 800px;
+    position: relative;
+    z-index: 1;
+    max-width: 920px;
     margin: 0 auto;
 }
 
-.footer-content > p {
-    color: rgba(255, 255, 255, 0.85);
-    line-height: 1.8;
-    font-size: 0.95rem;
+.footer-content::before {
+    content: "";
+    position: absolute;
+    width: 160px;
+    height: 160px;
+    left: -70px;
+    bottom: -80px;
+    border-radius: 50%;
+    background: #f1c40f;
+    opacity: 0.08;
+    pointer-events: none;
 }
 
 .logo-footer {
-    font-size: 2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 1.9rem;
     font-weight: bold;
-    margin-bottom: 20px;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
     color: white;
+    position: relative;
+    margin: 0 0 18px;
+    padding-bottom: 12px;
+}
+
+.logo-footer::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 84px;
+    height: 3px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, transparent, #f1c40f, transparent);
+}
+
+.footer-mark {
+    width: 28px;
+    height: 28px;
+    display: block;
+    flex-shrink: 0;
+}
+
+.footer-tagline,
+.footer-content > p:not(.copyright) {
+    color: rgba(255, 255, 255, 0.82);
+    line-height: 1.9;
+    font-size: 0.95rem;
+    max-width: 640px;
+    margin: 0 auto;
 }
 
 .footer {
@@ -688,89 +757,116 @@ footer {
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    gap: 15px;
-    margin: 30px 0;
+    gap: 2px 0;
+    margin: 28px 0 8px;
 }
 
-.glow-btn {
-    color: rgba(255, 255, 255, 0.85);
+.footer-nav a {
+    position: relative;
+    color: rgba(255, 255, 255, 0.9);
     text-decoration: none;
     padding: 8px 18px;
-    border-radius: var(--radius-lg);
     font-size: 0.95rem;
     font-family: var(--font-main);
-    font-weight: 600;
+    font-weight: 700;
+    letter-spacing: 0.2px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    background: rgba(255, 255, 255, 0.05);
-    transition: var(--transition);
     white-space: nowrap;
+    transition: color 0.22s ease;
 }
 
-.glow-btn:hover {
-    color: white;
-    background: var(--accent-color);
-    border-color: var(--accent-color);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.35);
+.footer-nav a::before {
+    content: "";
+    position: absolute;
+    right: 16px;
+    left: 16px;
+    bottom: 3px;
+    height: 2px;
+    border-radius: 2px;
+    background: #f1c40f;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.22s ease;
+}
+
+.footer-nav a:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    inset-inline-end: -2px;
+    top: 50%;
+    width: 6px;
+    height: 6px;
+    transform: translateY(-50%) rotate(45deg);
+    background: #f1c40f;
+    box-shadow: 0 0 0 3px rgba(241, 196, 15, 0.12);
+    pointer-events: none;
+}
+
+.footer-nav a:hover,
+.footer-nav a:focus-visible {
+    color: #f1c40f;
     text-decoration: none;
 }
 
-.glow-btn:visited {
-    color: rgba(255, 255, 255, 0.85);
-    text-decoration: none;
+.footer-nav a:hover::before,
+.footer-nav a:focus-visible::before {
+    transform: scaleX(1);
 }
 
-.glow-btn:visited:hover {
-    color: white;
+.footer-nav a:focus-visible {
+    outline: 2px solid #f1c40f;
+    outline-offset: 3px;
+    border-radius: 8px;
 }
 
 .social-icons {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 15px;
-    margin: 30px 0;
+    gap: 12px;
+    margin: 22px 0 4px;
 }
 
-.social-icons .glow-btn {
+.social-icons .social-btn {
     width: 42px;
     height: 42px;
     border-radius: 50%;
     padding: 0;
-    font-size: 0.9rem;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #f1c40f;
+    background: rgba(241, 196, 15, 0.08);
+    border: 1.5px solid rgba(241, 196, 15, 0.5);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+    transition: background 0.22s ease, border-color 0.22s ease, color 0.22s ease, transform 0.2s ease, box-shadow 0.22s ease;
+    -webkit-tap-highlight-color: transparent;
 }
 
-.social-icons .glow-btn:hover {
-    transform: translateY(-5px);
+.social-icons .social-btn svg {
+    width: 17px;
+    height: 17px;
+    display: block;
+    fill: currentColor;
+    flex-shrink: 0;
 }
 
-.social-icons .glow-btn.facebook:hover {
-    background: #3b5998;
-    border-color: #3b5998;
-    box-shadow: 0 5px 15px rgba(59, 89, 152, 0.4);
+.social-icons .social-btn:hover,
+.social-icons .social-btn:focus-visible {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+    color: #fff;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(231, 76, 60, 0.35);
+    text-decoration: none;
 }
 
-.social-icons .glow-btn.twitter:hover {
-    background: #1da1f2;
-    border-color: #1da1f2;
-    box-shadow: 0 5px 15px rgba(29, 161, 242, 0.4);
-}
-
-.social-icons .glow-btn.linkedin:hover {
-    background: #0077b5;
-    border-color: #0077b5;
-    box-shadow: 0 5px 15px rgba(0, 119, 181, 0.4);
-}
-
-.social-icons .glow-btn.instagram:hover {
-    background: #e4405f;
-    border-color: #e4405f;
-    box-shadow: 0 5px 15px rgba(228, 64, 95, 0.4);
+.social-icons .social-btn:focus-visible {
+    outline: 2px solid #f1c40f;
+    outline-offset: 3px;
 }
 
 .footer-link {
@@ -783,28 +879,19 @@ footer {
     color: var(--accent-color);
 }
 
-.social-icon {
-    width: 40px;
-    height: 40px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 1.2rem;
-    transition: var(--transition);
-}
-
-.social-icon:hover {
-    background: var(--accent-color);
-    transform: translateY(-5px);
-}
-
 .copyright {
-    margin-top: 30px;
-    opacity: 0.7;
-    font-size: 0.9rem;
+    margin-top: 22px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(241, 196, 15, 0.16);
+    opacity: 0.72;
+    font-size: 0.88rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .footer-nav a::before,
+    .social-icons .social-btn {
+        transition: none;
+    }
 }
 
 /* ============================================================
@@ -1520,17 +1607,20 @@ html.theme-dark .custom-alert-btn:hover {
     }
 
     footer {
-        padding: 30px 20px;
+        padding: 40px 20px 28px;
     }
 
     .footer-nav {
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
+        gap: 0;
+    }
+
+    .footer-nav a {
+        padding: 8px 14px;
+        font-size: 0.9rem;
     }
 
     .social-icons {
-        gap: 12px;
+        gap: 10px;
     }
 
     .book-card {
@@ -1683,26 +1773,27 @@ html.theme-dark .custom-alert-btn:hover {
     }
 
     footer {
-        padding: 25px 15px;
+        padding: 32px 16px 24px;
     }
 
     .logo-footer {
-        font-size: 1.6rem;
+        font-size: 1.55rem;
+        letter-spacing: 2px;
     }
 
-    .footer-nav {
-        gap: 8px;
-    }
-
-    .glow-btn {
-        padding: 6px 14px;
+    .footer-nav a {
+        padding: 7px 12px;
         font-size: 0.85rem;
     }
 
-    .social-icons .glow-btn {
-        width: 38px;
-        height: 38px;
-        font-size: 0.8rem;
+    .footer-nav a:not(:last-child)::after {
+        width: 5px;
+        height: 5px;
+    }
+
+    .social-icons .social-btn {
+        width: 40px;
+        height: 40px;
     }
 
     .search-panel {

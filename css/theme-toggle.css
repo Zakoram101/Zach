@@ -303,12 +303,30 @@ html.theme-dark .quote-card {
     border-color: rgba(236, 240, 241, 0.08);
 }
 
-html.theme-dark .glow-btn {
+html.theme-dark .footer-nav a {
+    color: rgba(236, 240, 241, 0.9);
+}
+
+html.theme-dark .footer-nav a:hover,
+html.theme-dark .footer-nav a:focus-visible {
     color: #f1c40f;
 }
 
 html.theme-dark .copyright {
     color: #9aa8b5;
+}
+
+html.theme-dark .social-icons .social-btn {
+    color: #f1c40f;
+    background: rgba(241, 196, 15, 0.08);
+    border-color: rgba(241, 196, 15, 0.45);
+}
+
+html.theme-dark .social-icons .social-btn:hover,
+html.theme-dark .social-icons .social-btn:focus-visible {
+    background: var(--theme-accent);
+    border-color: var(--theme-accent);
+    color: #fff;
 }
 
 html.theme-dark .fav-toast {
