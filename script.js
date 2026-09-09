@@ -45,6 +45,7 @@
         constructor() {
             this.initialized = false;
             this.favToastTimer = null;
+            this.alertTimer = null;
             this.initializeElements();
         }
 
@@ -67,24 +68,28 @@
             }
         }
 
-        searchBooks() {
+        searchBooks(fromSubmit) {
             const { searchInput, books, noResults, resetBtn, booksShowcase } = this.elements;
             if (!searchInput || !books) return false;
 
             const query = searchInput.value.trim().toLowerCase();
-            let found = false;
 
             if (query.length === 0) {
-                this.showAlert();
                 if (booksShowcase) booksShowcase.style.display = 'none';
                 if (resetBtn) resetBtn.style.display = 'none';
+                if (noResults) noResults.style.display = 'none';
+                if (fromSubmit) this.showAlert();
+                else this.closeAlert();
                 return false;
             }
+
+            this.closeAlert();
 
             utils.setLocalStorage("lastSearch", query);
 
             if (booksShowcase) booksShowcase.style.display = '';
 
+            let found = false;
             books.forEach(book => {
                 const titleEl = book.querySelector(".book-title");
                 const authorEl = book.querySelector(".book-author");
@@ -122,19 +127,46 @@
             if (noResults) noResults.style.display = 'none';
             if (resetBtn) resetBtn.style.display = 'none';
             if (booksShowcase) booksShowcase.style.display = 'none';
+            this.closeAlert();
 
             utils.setLocalStorage("lastSearch", "");
         }
 
         showAlert() {
             const { alertBox } = this.elements;
-            if (alertBox) {
-                alertBox.style.display = 'block';
-                setTimeout(() => {
-                    if (alertBox.style.display === 'block') {
-                        alertBox.style.display = 'none';
+            if (!alertBox) return;
+
+            alertBox.hidden = false;
+            void alertBox.offsetWidth;
+            alertBox.classList.add('is-open');
+
+            const okBtn = alertBox.querySelector('[data-alert-ok]');
+            if (okBtn) okBtn.focus();
+
+            if (this.alertTimer) clearTimeout(this.alertTimer);
+            this.alertTimer = setTimeout(() => {
+                this.closeAlert();
+            }, 4500);
+        }
+
+        closeAlert() {
+            const { alertBox, searchInput, searchPanel } = this.elements;
+            if (this.alertTimer) {
+                clearTimeout(this.alertTimer);
+                this.alertTimer = null;
+            }
+            if (alertBox && alertBox.classList.contains('is-open')) {
+                alertBox.classList.remove('is-open');
+                setTimeout(function () {
+                    if (alertBox && !alertBox.classList.contains('is-open')) {
+                        alertBox.hidden = true;
                     }
-                }, 2000);
+                }, 260);
+            } else if (alertBox) {
+                alertBox.hidden = true;
+            }
+            if (searchInput && searchPanel && searchPanel.classList.contains('active')) {
+                searchInput.focus();
             }
         }
 
@@ -155,6 +187,7 @@
                     searchInput.focus();
                 }
             } else {
+                this.closeAlert();
                 this.resetSearch();
             }
         }
@@ -206,11 +239,25 @@
 
         setupEventListeners() {
             utils.safeAddEventListener(document, 'keydown', (e) => {
-                const { searchPanel } = this.elements;
-                if (e.key === 'Escape' && searchPanel && searchPanel.classList.contains('active')) {
+                const { searchPanel, alertBox } = this.elements;
+                if (e.key !== 'Escape') return;
+                if (alertBox && alertBox.classList.contains('is-open')) {
+                    e.preventDefault();
+                    this.closeAlert();
+                    return;
+                }
+                if (searchPanel && searchPanel.classList.contains('active')) {
                     this.toggleSearch();
                 }
             });
+
+            if (this.elements.alertBox) {
+                utils.safeAddEventListener(this.elements.alertBox, 'click', (e) => {
+                    if (e.target && e.target.closest && e.target.closest('[data-alert-close]')) {
+                        this.closeAlert();
+                    }
+                });
+            }
         }
 
         showFavToast(message) {
@@ -288,8 +335,8 @@
         getApp().toggleSearch();
     };
 
-    window.searchBooks = function() {
-        return getApp().searchBooks();
+    window.searchBooks = function(fromSubmit) {
+        return getApp().searchBooks(fromSubmit === true);
     };
 
     window.resetSearch = function() {
@@ -297,8 +344,7 @@
     };
 
     window.closeAlert = function() {
-        const alertBox = document.getElementById('customAlert');
-        if (alertBox) alertBox.style.display = 'none';
+        getApp().closeAlert();
     };
 
     window.openCategoryMenu = function(bookId) {

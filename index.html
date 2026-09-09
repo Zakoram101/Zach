@@ -15,10 +15,10 @@
     <link rel="canonical" href="https://zakoram101.github.io/Zach/">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=4">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/button-effects.css">
-    <link rel="stylesheet" href="css/theme-toggle.css?v=3">
+    <link rel="stylesheet" href="css/theme-toggle.css?v=4">
     <script>(function(){try{var t=localStorage.getItem('mishkat-theme');if(t==='dark')document.documentElement.classList.add('theme-dark');}catch(e){}})();</script>
 </head>
 <body>
@@ -102,8 +102,8 @@
 
             <div class="search-panel">
                 <div class="close-search" role="button" tabindex="0" aria-label="إغلاق البحث" onclick="toggleSearch()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleSearch();}">×</div>
-                <form class="search-form" onsubmit="return searchBooks()">
-                    <input type="text" id="search-input" class="search-input" placeholder="ابحث عن كتاب، مؤلف، تصنيف..." oninput="searchBooks()" aria-label="ابحث عن كتاب أو مؤلف">
+                <form class="search-form" onsubmit="return searchBooks(true)">
+                    <input type="text" id="search-input" class="search-input" placeholder="ابحث عن كتاب، مؤلف، تصنيف..." oninput="searchBooks()" aria-label="ابحث عن كتاب أو مؤلف" autocomplete="off">
                     <button type="button" class="reset-btn btn" onclick="resetSearch()">عودة</button>
                     <button type="submit" class="search-btn btn">
                         <img src="https://www.emojiall.com/images/240/telegram/telemoji-november-2023/1f50e.gif" alt="Search" style="width: 25px; height: 25px;">
@@ -168,9 +168,19 @@
                 <p id="no-results" style="display: none; color: red; text-align: center;">لم يتم العثور على نتائج</p>
             </div>
 
-            <div class="custom-alert" id="customAlert" style="display: none;">
-                <p>يرجى إدخال كلمة للبحث!</p>
-                <button class="btn" onclick="closeAlert()">حسناً</button>
+            <div class="custom-alert" id="customAlert" hidden>
+                <div class="custom-alert-backdrop" data-alert-close></div>
+                <div class="custom-alert-card" role="alertdialog" aria-modal="true" aria-labelledby="searchAlertTitle" aria-describedby="searchAlertMsg">
+                    <div class="custom-alert-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24">
+                            <circle cx="10.5" cy="10.5" r="6.25" stroke-width="2.2"></circle>
+                            <path d="M15.2 15.2L20 20" stroke-width="2.2" stroke-linecap="round"></path>
+                        </svg>
+                    </div>
+                    <h3 class="custom-alert-title" id="searchAlertTitle">تنبيه</h3>
+                    <p id="searchAlertMsg">يرجى إدخال كلمة للبحث</p>
+                    <button type="button" class="custom-alert-btn btn" data-alert-ok data-alert-close>حسناً</button>
+                </div>
             </div>
 
             <section class="categories-section">
@@ -287,7 +297,7 @@
 
     <script src="js/favorites-data.js"></script>
     <script src="js/book-assets.js?v=unique-17"></script>
-    <script src="script.js"></script>
+    <script src="script.js?v=4"></script>
     <script src="js/theme-toggle.js?v=3" defer></script>
 </body>
 </html>
